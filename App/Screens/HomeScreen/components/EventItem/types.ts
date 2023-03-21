@@ -1,0 +1,26 @@
+export const JoinedUsers = [
+  {
+    avatar:
+      'https://images.unsplash.com/photo-1678884399113-0a2b079a31f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+  },
+  {
+    avatar:
+      'https://images.unsplash.com/photo-1678884399113-0a2b079a31f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+  },
+  {
+    avatar:
+      'https://images.unsplash.com/photo-1678884399113-0a2b079a31f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+  },
+  {
+    avatar:
+      'https://images.unsplash.com/photo-1678884399113-0a2b079a31f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+  },
+  {
+    avatar:
+      'https://images.unsplash.com/photo-1678884399113-0a2b079a31f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+  },
+  {
+    avatar:
+      'https://images.unsplash.com/photo-1678884399113-0a2b079a31f5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
+  },
+];

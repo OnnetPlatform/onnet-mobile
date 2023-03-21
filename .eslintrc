@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": "@react-native-community",
+  "plugins": ["simple-import-sort", "@typescript-eslint", "import"],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "sort-imports": "off",
+    "import/newline-after-import": "off",
+    "import/first": "error",
+    "react-hooks/exhaustive-deps": "off"
+  }
+}
