@@ -13,7 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import LinearGradient from 'react-native-linear-gradient';
 import { useColors } from '../../../Theme';
-
+import styles from './AppLogo.styles';
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
 const AppLogo: React.FC<{}> = () => {
@@ -61,7 +61,7 @@ const AppLogo: React.FC<{}> = () => {
   return (
     <MaskedView
       maskElement={
-        <Text weight="black" style={{ textAlign: 'center', width: 200 }} fontSize={40}>
+        <Text weight="black" style={styles.logo} fontSize={40}>
           ONNET
         </Text>
       }>

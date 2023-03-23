@@ -64,3 +64,19 @@ export default (colors: ThemeColors) =>
       marginTop: 16,
     },
   });
+
+export const indicatorStyle = (colors: ThemeColors, layout: any) =>
+  StyleSheet.create({
+    indicator: {
+      height: 24,
+      width: 2,
+      backgroundColor: colors.cyan,
+      position: 'absolute',
+      bottom: -24,
+      transform: [
+        {
+          translateX: layout ? layout.pageX - 1 + layout.width / 2 : 0,
+        },
+      ],
+    },
+  });

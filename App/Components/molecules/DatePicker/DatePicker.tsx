@@ -14,7 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useColors } from '../../../Theme';
 import { Icon, Text } from '../../atoms';
-import styles from './DatePicker.styles';
+import styles, { indicatorStyle } from './DatePicker.styles';
 import numeral from 'numeral';
 import { BlurView } from '@react-native-community/blur';
 import { LayoutInsets } from '../Calendar/components/Slot/types';
@@ -170,20 +170,7 @@ export const DatePicker: React.FC<{
             <Text>{hour > 12 ? 'PM' : 'AM'}</Text>
           </View>
         </AnimatedBlur>
-        <Animated.View
-          style={{
-            height: 24,
-            width: 2,
-            backgroundColor: colors.cyan,
-            position: 'absolute',
-            bottom: -24,
-            transform: [
-              {
-                translateX: layout ? layout.pageX - 1 + layout.width / 2 : 0,
-              },
-            ],
-          }}
-        />
+        <Animated.View style={indicatorStyle(colors, layout).indicator} />
       </Animated.View>
     </Modal>
   );

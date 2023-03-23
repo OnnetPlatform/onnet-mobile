@@ -19,19 +19,14 @@ export type CollapsibleRef = {
 };
 
 type CollapsibleProps = {
-  children: React.ReactElement | React.ReactElement[];
+  children: React.ReactElement | React.ReactElement[] | any;
   ref?: ForwardedRef<CollapsibleRef>;
-  onCollpaseEnd?(): void;
-  onExpandEnd?(): void;
   expanded?: boolean;
   animatedValue?: SharedValue<number>;
 };
 
 export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
-  (
-    { children, onCollpaseEnd, onExpandEnd, expanded = false, animatedValue = useSharedValue(0) },
-    ref
-  ) => {
+  ({ children, expanded = false, animatedValue = useSharedValue(0) }, ref) => {
     const contentRef = useAnimatedRef<Animated.View>();
     const height = useSharedValue(0);
     const open = useSharedValue(false);
@@ -69,7 +64,8 @@ export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
     const measureLayout = () => {
       runOnUI(() => {
         'worklet';
-        const measured = measure(contentRef).height;
+
+        const measured = measure(contentRef)?.height;
         if (measured > 0) height.value = measured;
       })();
     };
@@ -85,6 +81,8 @@ export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
       height.value = 0;
       open.value = false;
     }, []);
+
+    useEffect(() => {}, [animatedValue]);
 
     return (
       <Animated.View style={[animatedStyle, { overflow: 'hidden' }]}>

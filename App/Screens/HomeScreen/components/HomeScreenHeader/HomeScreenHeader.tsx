@@ -18,9 +18,9 @@ import { useFakerData } from '../EventsList/Data';
 import styles, { withColors, withInsets } from './HomeScreen.styles';
 
 export const HomseScreenHeader: React.FC<{
-  onCreatePressed(): void;
-  animatedHeaderValue: SharedValue<number>;
-}> = ({ onCreatePressed, animatedHeaderValue }) => {
+  onCreatePressed?(): void;
+  animatedHeaderValue?: SharedValue<number>;
+}> = ({ onCreatePressed, animatedHeaderValue = useSharedValue(0) }) => {
   const colors = useColors();
   const { eventsData } = useFakerData();
   const insets = useSafeAreaInsets();
@@ -47,26 +47,34 @@ export const HomseScreenHeader: React.FC<{
   }, [ref, ref.current]);
 
   return (
-    <BlurView style={insetStyles.header}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle} fontSize={24} weight={'black'}>
-          Events
-        </Text>
-        <Pressable onPress={onCreatePressed}>
-          <Icon fill={colors.text} name={'plus-outline'} />
-        </Pressable>
+    <>
+      <View
+        style={{
+          overflow: 'hidden',
+          zIndex: 1,
+        }}>
+        <BlurView blurAmount={10} style={insetStyles.header}>
+          <View style={styles.header}>
+            <Text style={styles.headerTitle} fontSize={24} weight={'black'}>
+              Events
+            </Text>
+            <Pressable onPress={onCreatePressed}>
+              <Icon fill={colors.text} name={'plus-outline'} />
+            </Pressable>
+          </View>
+          <Animated.FlatList
+            contentContainerStyle={styles.listContainer}
+            data={eventsData}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            // @ts-ignore
+            ref={ref}
+            ItemSeparatorComponent={() => <View style={styles.spacer} />}
+            renderItem={({ index }) => <DateSlot id={index} />}
+          />
+        </BlurView>
       </View>
-      <Animated.FlatList
-        contentContainerStyle={styles.listContainer}
-        data={eventsData}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        // @ts-ignore
-        ref={ref}
-        ItemSeparatorComponent={() => <View style={styles.spacer} />}
-        renderItem={({ index }) => <DateSlot id={index} />}
-      />
-    </BlurView>
+    </>
   );
 };
 

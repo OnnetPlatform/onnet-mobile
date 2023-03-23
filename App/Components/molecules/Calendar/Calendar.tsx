@@ -19,7 +19,7 @@ export const Calendar: React.FC<CalendarProps> = ({ width }) => {
 
   return (
     <View>
-      <Text fontSize={24} weight={'bold'} style={{ textAlign: 'center', marginBottom: 8 }}>
+      <Text fontSize={24} weight={'bold'} style={styles(width).currentMonth}>
         {moment(new Date(now.getFullYear(), MONTHS[index])).format('MMMM')}
       </Text>
       <FlatList

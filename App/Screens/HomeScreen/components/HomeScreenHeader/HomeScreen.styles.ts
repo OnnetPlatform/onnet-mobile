@@ -20,6 +20,7 @@ export default StyleSheet.create({
   },
   spacer: {
     width: 16,
+    backgroundColor: 'red',
   },
 });
 
@@ -34,6 +35,7 @@ export const withColors = (colors: ThemeColors) =>
       alignItems: 'center',
       borderWidth: 2,
       borderColor: colors.black,
+      marginRight: 8,
     },
   });
 
@@ -42,6 +44,8 @@ export const withInsets = (insets: EdgeInsets) =>
     header: {
       marginHorizontal: -32,
       paddingTop: insets.top,
-      marginBottom: 22,
+      borderBottomLeftRadius: 16,
+      borderBottomRightRadius: 16,
+      overflow: 'hidden',
     },
   });

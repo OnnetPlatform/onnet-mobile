@@ -8,4 +8,8 @@ export default (width: number) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
+    currentMonth: {
+      textAlign: 'center',
+      marginBottom: 8,
+    },
   });
