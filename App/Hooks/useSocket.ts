@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { UserChat } from '../../types';
+import ChatEvents from '../Services/ChatEvents/ChatEvents';
 
 const socketConfig = {
   transports: ['websocket'],
@@ -19,7 +20,7 @@ export const useSocket = () => {
   useEffect(() => {
     socket.connect();
     socket.on('ready', ({ user }) => setCurrentUser(user));
-
+    socket.on('receive_dm', ChatEvents.notifyMessageListners);
     return () => {
       socket.disconnect();
     };

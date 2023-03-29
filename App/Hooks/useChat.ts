@@ -1,30 +1,15 @@
-import { useEffect } from 'react';
 import { UserChat, UserMessage } from '../../types';
 import { useSocketContext } from '../Context/SocketContext/SocketContext';
+import useChatEvents from './useChatEvents';
 
-export const useChat = () => {
-  const { socket, connectedUsers, setConnectedUsers } = useSocketContext();
+export const useChat = (client?: UserChat) => {
+  const { socket, setConnectedUsers } = useSocketContext();
+  const sendDirectMessage = (message: string, callback?: () => void) =>
+    socket.emit('send-dm', { client, message }, callback);
 
-  const sendDirectMessage = (client: UserChat, message: string) =>
-    socket.emit('send-dm', { client, message });
+  const sendTypingEvent = () => socket.emit('user-typing', { client });
 
-  const sendTypingEvent = (client: UserChat) => socket.emit('user-typing', { client });
+  const sendStoppedTypingEvent = () => socket.emit('user-stopped-typing', { client });
 
-  const sendStoppedTypingEvent = (client: UserChat) =>
-    socket.emit('user-stopped-typing', { client });
-
-  const onDirectMessage = (data: UserMessage) =>
-    setConnectedUsers((users) => {
-      return new Map(
-        users.set(data.user.id, {
-          ...data.user,
-          unreadCount: data.user?.unreadCount + 1,
-        })
-      );
-    });
-
-  useEffect(() => {
-    socket.on('receive_dm', onDirectMessage);
-  }, [connectedUsers]);
   return { sendDirectMessage, sendTypingEvent, sendStoppedTypingEvent };
 };

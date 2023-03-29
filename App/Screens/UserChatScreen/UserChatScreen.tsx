@@ -8,24 +8,29 @@ import { Icon, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { KeyboardAvoidingView } from '../../Components/HOCs';
 import { useSocketContext } from '../../Context/SocketContext/SocketContext';
+import { useChat } from '../../Hooks/useChat';
+import useChatEvents from '../../Hooks/useChatEvents';
+import ChatEvents from '../../Services/ChatEvents/ChatEvents';
 import { useColors } from '../../Theme';
 import styles from './UserChatScreen.styles';
 
 export const UserChatScreen: React.FC = ({ route }: any) => {
+  const { user } = route.params;
+  const { sendDirectMessage } = useChat(user);
+
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const withColors = styles(colors, insets);
-  const { user } = route.params;
+
   const { socket, connectedUsers, currentUser } = useSocketContext();
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<UserMessage[]>([]);
   const users = Array.from(connectedUsers, ([_, value]) => ({ ...value }));
-  useEffect(() => {
-    socket.on('receive_dm', (data: UserMessage) => {
-      if (data.user.id === user.id) setMessages((messages) => [data, ...messages]);
-    });
-  }, []);
+  const onDirectMessage = (data: UserMessage) => {
+    if (data.user.id === user.id) setMessages((messages) => [data, ...messages]);
+  };
+  useChatEvents({ onDirectMessage });
 
   return (
     <SafeAreaView style={withColors.page}>
@@ -68,7 +73,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           onChangeText={setMessage}
           value={message}
           onSubmitEditing={() => {
-            socket.emit('send-dm', { client: users[0], message }, () => {
+            sendDirectMessage(message, () => {
               setMessages((msgs) => [{ user: currentUser, message }, ...msgs]);
               setMessage('');
             });
