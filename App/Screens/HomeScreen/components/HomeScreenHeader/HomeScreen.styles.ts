@@ -27,15 +27,13 @@ export default StyleSheet.create({
 export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
     dateSlot: {
-      width: 48,
-      height: 48,
+      width: 32,
+      height: 32,
       borderRadius: 32,
-      backgroundColor: colors.yellow,
+      backgroundColor: colors.background,
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 2,
-      borderColor: colors.black,
-      marginRight: 8,
+      marginRight: 4,
     },
   });
 

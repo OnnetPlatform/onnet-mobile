@@ -1,10 +1,10 @@
 import { BlurView } from '@react-native-community/blur';
 import React, { useMemo } from 'react';
-import { View, ViewStyle, FlatList } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text } from '../../../../Components/atoms';
-import { SectionsList } from '../../../../Components/atoms/SectionsList/SectionsList';
+import { SectionsList } from '../../../../Components/atoms/SectionsList';
 import { useColors } from '../../../../Theme';
 import EventItem from '../EventItem/EventItem';
 import HomeScreenHeader from '../HomeScreenHeader';
@@ -22,7 +22,7 @@ export const EventsList: React.FC<{
 
   const containerStyle = useMemo<ViewStyle>(
     () => ({
-      paddingBottom: insets.bottom + 300,
+      // paddingBottom: insets.bottom + 300,
     }),
     [insets.bottom]
   );
@@ -35,7 +35,6 @@ export const EventsList: React.FC<{
       />
       <SectionsList
         showsVerticalScrollIndicator={false}
-        stickyHeaderIndices={[0]}
         bounces={true}
         data={eventsData}
         contentContainerStyle={[containerStyle, styles.container]}
@@ -43,7 +42,7 @@ export const EventsList: React.FC<{
         renderItem={({ item }) => <EventItem event={item} />}
         renderSectionHeader={({ section }: any) => {
           return (
-            <BlurView blurAmount={20} style={colorStyles.header}>
+            <BlurView blurType="regular" blurAmount={20} style={colorStyles.header}>
               <Icon name={'calendar-outline'} />
               <Text style={{ marginLeft: 8 }} weight="bold" fontSize={18}>
                 {section.title}

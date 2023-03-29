@@ -53,7 +53,7 @@ export const HomseScreenHeader: React.FC<{
           overflow: 'hidden',
           zIndex: 1,
         }}>
-        <BlurView blurAmount={10} style={insetStyles.header}>
+        <BlurView blurType="regular" blurAmount={10} style={insetStyles.header}>
           <View style={styles.header}>
             <Text style={styles.headerTitle} fontSize={24} weight={'black'}>
               Events
@@ -88,7 +88,7 @@ const DateSlot = React.memo(
 
     return (
       <View style={style.dateSlot}>
-        <Text color={colors.black} weight="bold">
+        <Text fontSize={12} color={colors.text} weight="bold">
           {moment(date).format('DD')}
         </Text>
       </View>

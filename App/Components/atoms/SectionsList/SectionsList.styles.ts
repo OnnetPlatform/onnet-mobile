@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   separator: {
-    height: 22,
+    height: 0,
+    marginVertical: 4,
   },
 });

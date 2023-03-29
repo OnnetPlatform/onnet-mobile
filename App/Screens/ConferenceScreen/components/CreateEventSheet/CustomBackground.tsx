@@ -9,7 +9,7 @@ export const CustomBackground: React.FC<BottomSheetBackgroundProps> = ({ animate
     <BlurView
       style={StyleSheet.absoluteFill}
       blurType={isDark ? 'dark' : 'light'}
-      blurAmount={100}
+      blurAmount={10}
     />
   );
 };

@@ -3,17 +3,17 @@ import { ThemeColors } from '../../../../Theme/Colors';
 
 export default StyleSheet.create({
   container: {
-    paddingHorizontal: 22,
+    paddingHorizontal: 8,
   },
   spacer: {
-    height: 11,
+    height: 4,
   },
 });
 
 export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
     header: {
-      padding: 12,
+      padding: 11,
       marginHorizontal: -22,
       paddingHorizontal: 32,
       zIndex: 10,

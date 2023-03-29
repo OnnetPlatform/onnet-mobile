@@ -13,11 +13,10 @@ const KeyboardFloatingView: (props: Props) => JSX.Element = (props: Props) => {
   useEffect(() => {
     setTimeout(() => {
       setBottomPadding(insets.bottom);
-      setTopPadding(insets.top);
     }, 100);
   }, [insets.bottom, insets.top]);
 
-  const keyboardVerticalOffset = topPadding + bottomPadding + 30 + (StatusBar.currentHeight || 0);
+  const keyboardVerticalOffset = insets.top + (StatusBar.currentHeight || 0);
   const behaviour = Platform.OS == 'ios' ? 'padding' : 'height';
   return (
     <KeyboardAvoidingView

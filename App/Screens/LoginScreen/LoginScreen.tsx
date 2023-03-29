@@ -28,7 +28,10 @@ export const LoginScreen: React.FC<{}> = () => {
             <View style={{ height: 8 }} />
             <Input placeholder="Password" secureTextEntry />
           </View>
-          <Button onPress={() => navigation.navigate('HomeScreen')} style={{ alignSelf: 'center' }}>
+          <Button
+            // @ts-ignore
+            onPress={() => navigation.navigate('MainNavigation')}
+            style={{ alignSelf: 'center' }}>
             <Text>Login</Text>
           </Button>
         </View>

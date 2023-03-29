@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GradientLayout } from '../../Components/HOCs';
-import { CreateEventSheet } from '../ConferenceScreen/components';
+import { CreateEventSheetRef } from '../../Services/CreateEventRef/CreateEventRef';
 import { EventsList } from './components';
 import styles from './HomeScreen.styles';
 
 const HomeScreen: React.FC = () => {
-  const [openSheet, setOpenSheet] = useState<boolean>(false);
   return (
     <>
       <GradientLayout>
         <SafeAreaView edges={['left', 'right']} style={[styles.screen]}>
           <EventsList
             onCreatePressed={() => {
-              setOpenSheet(true);
+              CreateEventSheetRef.current?.snapToIndex(0);
             }}
           />
         </SafeAreaView>
       </GradientLayout>
-      <CreateEventSheet open={openSheet} onClose={() => setOpenSheet(false)} />
     </>
   );
 };

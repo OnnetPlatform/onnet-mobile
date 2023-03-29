@@ -39,9 +39,8 @@ export const SectionsList: React.FC<SectionsListProps> = ({ data, ...props }) =>
       sections={sortedData}
       // @ts-ignore
       getItemLayout={getItemLayout}
-      maxToRenderPerBatch={2}
-      removeClippedSubviews={true}
       SectionSeparatorComponent={() => <View style={styles.separator} />}
     />
   );
 };
+export default SectionsList;

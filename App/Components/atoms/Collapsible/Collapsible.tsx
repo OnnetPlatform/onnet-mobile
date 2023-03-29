@@ -1,8 +1,6 @@
 import React, { forwardRef, useImperativeHandle, ForwardedRef, useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
-  measure,
-  runOnUI,
   SharedValue,
   useAnimatedReaction,
   useAnimatedRef,
@@ -41,11 +39,9 @@ export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
 
     useImperativeHandle(ref, () => ({
       collapse: () => {
-        measureLayout();
         open.value = false;
       },
       expand: () => {
-        measureLayout();
         open.value = true;
       },
     }));
@@ -59,21 +55,10 @@ export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
       position: 'absolute',
       zIndex: -100,
       opacity: 0,
+      display: height.value > 0 ? 'none' : 'flex',
     }));
 
-    const measureLayout = () => {
-      runOnUI(() => {
-        'worklet';
-
-        const measured = measure(contentRef)?.height;
-        if (measured > 0) height.value = measured;
-      })();
-    };
     useEffect(() => {
-      if (expanded)
-        setTimeout(() => {
-          measureLayout();
-        }, 10);
       open.value = expanded;
     }, [expanded, contentRef.current]);
 
@@ -82,14 +67,23 @@ export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
       open.value = false;
     }, []);
 
-    useEffect(() => {}, [animatedValue]);
-
     return (
       <Animated.View style={[animatedStyle, { overflow: 'hidden' }]}>
-        <Animated.View style={animatedAbsolute} ref={contentRef}>
-          {children}
-        </Animated.View>
-        <View>{children}</View>
+        {expanded ? (
+          <Animated.View
+            onLayout={({
+              nativeEvent: {
+                layout: { height: h },
+              },
+            }) => {
+              if (height.value === 0) height.value = h;
+            }}
+            style={animatedAbsolute}
+            ref={contentRef}>
+            {children}
+          </Animated.View>
+        ) : null}
+        {expanded ? <View>{children}</View> : null}
       </Animated.View>
     );
   }

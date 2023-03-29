@@ -10,7 +10,6 @@ export const withInsets = (insets: EdgeInsets, colors: ThemeColors) =>
     },
     bottomSheetBody: {
       padding: 32,
-      paddingBottom: insets.bottom,
     },
     title: {
       marginBottom: 16,

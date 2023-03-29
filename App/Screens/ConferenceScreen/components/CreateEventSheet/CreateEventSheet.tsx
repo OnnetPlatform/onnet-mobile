@@ -4,7 +4,7 @@ import BottomSheet, {
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
-import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text } from '../../../../Components/atoms';
@@ -22,16 +22,15 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
+import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
 
 export const CreateEventSheet: React.FC<{
-  open: boolean;
   onClose(): void;
-}> = ({ open, onClose }) => {
+}> = ({ onClose }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [eventDate, setDate] = useState<Date>(new Date());
   const insets = useSafeAreaInsets();
   const colors = useColors();
-  const bottomSheetRef = useRef<BottomSheet>(null);
   const bottomSheetInputRef = useRef<any>(null);
   const animatedBottomSheetIndex = useSharedValue(1);
   const { width } = useWindowDimensions();
@@ -69,13 +68,8 @@ export const CreateEventSheet: React.FC<{
       }
     }
     animatedBottomSheetIndex.value = -1;
-  }, [expanded, bottomSheetRef.current]);
+  }, [expanded, CreateEventSheetRef.current]);
 
-  useEffect(() => {
-    if (open) {
-      bottomSheetRef.current?.snapToIndex(0);
-    }
-  }, [open, bottomSheetRef]);
   return (
     <BottomSheet
       backgroundComponent={CustomBackground}
@@ -85,6 +79,7 @@ export const CreateEventSheet: React.FC<{
           enableTouchThrough={true}
           disappearsOnIndex={-1}
           appearsOnIndex={0}
+          opacity={0.4}
         />
       )}
       handleHeight={animatedHandleHeight}
@@ -93,11 +88,13 @@ export const CreateEventSheet: React.FC<{
       containerStyle={{ alignItems: 'center' }}
       style={styles.sheet}
       snapPoints={animatedSnapPoints}
-      ref={bottomSheetRef}
+      ref={CreateEventSheetRef}
       animatedIndex={animatedBottomSheetIndex}
       onClose={onClose}
       index={-1}>
-      <BottomSheetScrollView style={styles.bottomSheetBody} onLayout={handleContentLayout}>
+      <BottomSheetScrollView
+        style={[styles.bottomSheetBody, { paddingBottom: 32 }]}
+        onLayout={handleContentLayout}>
         <Text style={styles.title} fontSize={24} weight="bold">
           Create Event
         </Text>

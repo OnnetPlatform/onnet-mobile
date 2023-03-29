@@ -10,11 +10,11 @@ export default StyleSheet.create({
   joinedUsersContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: 16,
   },
   joinedUserWrapper: {
-    width: 64,
-    height: 64,
+    width: 24,
+    height: 24,
     borderRadius: 32,
     overflow: 'hidden',
   },
@@ -29,18 +29,17 @@ export default StyleSheet.create({
 export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
     date: {
-      width: 56,
-      height: 56,
-      backgroundColor: colors.yellow,
+      width: 44,
+      height: 44,
+      backgroundColor: colors.background,
       borderRadius: 28,
       justifyContent: 'center',
       alignItems: 'center',
     },
     joinButton: {
       paddingHorizontal: 22,
-      paddingVertical: 11,
       marginTop: 22,
-      height: 48,
+      height: 36,
       justifyContent: 'center',
       backgroundColor: colors.blur,
       borderRadius: 24,
