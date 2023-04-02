@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   tabbar: {
     paddingVertical: 8,
-    overflow: 'hidden',
     width: '100%',
   },
   container: {

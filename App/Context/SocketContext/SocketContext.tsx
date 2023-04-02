@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { io } from 'socket.io-client';
 import { useConnectedUsers } from '../../Hooks/useConnectedUsers';
 import { useSocket } from '../../Hooks/useSocket';
 import { SocketContextType } from './types';

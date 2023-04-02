@@ -15,13 +15,7 @@ export const Avatar: React.FC<{ avatar: string; isActive: boolean }> = ({ avatar
   return (
     <View>
       <Image source={{ uri: avatar }} style={styles.avatar} />
-      <View
-        style={[
-          styles.indicatorWrapper,
-          {
-            borderColor: colors.background,
-          },
-        ]}>
+      <View style={[styles.indicatorWrapper, { borderColor: colors.background }]}>
         <View style={[styles.indicator, indicator]} />
       </View>
     </View>

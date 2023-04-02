@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import CommsAPI from '@dolbyio/comms-sdk-react-native';
-import { StreamChangedEventType } from '@dolbyio/comms-sdk-react-native/lib/typescript/services/conference/events';
 import {
   ConferenceCreateOptions,
   ConferenceJoinOptions,
@@ -8,7 +7,6 @@ import {
   Participant,
   ConferenceStatus,
 } from '@dolbyio/comms-sdk-react-native/lib/typescript/services/conference/models';
-import moment from 'moment';
 
 const useConference = () => {
   const [conference, setConference] = useState<Conference | null>(null);

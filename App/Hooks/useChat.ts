@@ -1,11 +1,10 @@
-import { UserChat, UserMessage } from '../../types';
+import { UserChat } from '../../types';
 import { useSocketContext } from '../Context/SocketContext/SocketContext';
-import useChatEvents from './useChatEvents';
 
 export const useChat = (client?: UserChat) => {
-  const { socket, setConnectedUsers } = useSocketContext();
-  const sendDirectMessage = (message: string, callback?: () => void) =>
-    socket.emit('send-dm', { client, message }, callback);
+  const { socket } = useSocketContext();
+  const sendDirectMessage = (data: any, callback?: () => void) =>
+    socket.emit('send-dm', { client, ...data }, callback);
 
   const sendTypingEvent = () => socket.emit('user-typing', { client });
 

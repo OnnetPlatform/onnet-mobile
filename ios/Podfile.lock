@@ -306,6 +306,8 @@ PODS:
     - glog
   - react-native-blur (4.3.0):
     - React-Core
+  - react-native-cameraroll (5.3.1):
+    - React-Core
   - react-native-comms-sdk (3.7.0):
     - React-Core
     - VoxeetSDK (~> 3.7.0)
@@ -476,6 +478,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - "react-native-comms-sdk (from `../node_modules/@dolbyio/comms-sdk-react-native`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
@@ -564,6 +567,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-cameraroll:
+    :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-comms-sdk:
     :path: "../node_modules/@dolbyio/comms-sdk-react-native"
   react-native-safe-area-context:
@@ -644,6 +649,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 60769e5a0a6d4b32294a2456077f59d0266f9a8b
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
   react-native-blur: 50c9feabacbc5f49b61337ebc32192c6be7ec3c3
+  react-native-cameraroll: f3050460fe1708378698c16686bfaa5f34099be2
   react-native-comms-sdk: 1774bb60cb7cdee7f585675518355710ea29e0bf
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-skia: 5b2eefdca9869b4b927828efbab941609afe3748

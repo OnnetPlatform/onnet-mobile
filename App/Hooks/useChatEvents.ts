@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { UserMessage } from '../../types';
+import { Message } from '../../types';
 import ChatEvents from '../Services/ChatEvents/ChatEvents';
 
 export type ChatEvents = {
-  onDirectMessage?(data: UserMessage): void;
+  onDirectMessage?(data: Message): void;
   onUserTyping?(): void;
 };
 

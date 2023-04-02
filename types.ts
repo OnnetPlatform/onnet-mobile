@@ -6,7 +6,25 @@ export type UserChat = {
   unreadCount: number;
 };
 
-export type UserMessage = {
+export type UploadedImage = {
+  mimetype: string;
+  filename: string;
+  path: string;
+  size: number;
+  extension: string;
+  fileSize: number;
+  height: number;
+  playableDuration: null | number;
+  width: number;
+};
+
+export type Attachment = {
+  gallery?: UploadedImage[] | undefined;
+  voice?: string;
+};
+
+export type Message = {
   message: string;
   user: UserChat;
+  attachment?: Attachment;
 };

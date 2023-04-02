@@ -11,6 +11,9 @@ export type ThemeColors = {
   text: string;
   background: string;
   blur: string;
+  secondaryBackground: string;
+  secondaryDark: string;
+  secondaryLight: string;
 };
 
 const pink = '#E90064';
@@ -19,6 +22,8 @@ const black = '#000000';
 const white = '#e4dbd3';
 const cyan = '#09CFFA';
 const yellow = '#ffde03';
+const secondaryDark = '#121212';
+const secondaryLight = '#cdc5bd';
 
 export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSchemeName) => ({
   pink,
@@ -30,6 +35,9 @@ export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSc
   text: scheme === 'dark' ? white : '#212427',
   background: scheme === 'dark' ? black : white,
   blur: scheme === 'dark' ? 'rgba(0,0,0,.2)' : 'rgba(255,255,255,.2)',
+  secondaryBackground: scheme === 'dark' ? secondaryDark : secondaryLight,
+  secondaryDark,
+  secondaryLight,
 });
 
 export default () => {

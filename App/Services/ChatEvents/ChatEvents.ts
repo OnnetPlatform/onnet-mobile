@@ -1,7 +1,7 @@
-import { UserMessage } from '../../../types';
+import { Message } from '../../../types';
 
-type onMessageReceivedCallback = { (data: UserMessage): void };
-type onUserTypingCallback = { (data: UserMessage): void };
+type onMessageReceivedCallback = { (data: Message): void };
+type onUserTypingCallback = { (data: Message): void };
 
 export class ChatEvents {
   onMessageReceivedListners: onMessageReceivedCallback[] = [];
@@ -12,10 +12,10 @@ export class ChatEvents {
 
   onUserTyping = (callback: onUserTypingCallback) => this.onUserTypingListners.push(callback);
 
-  notifyMessageListners = (data: UserMessage) =>
+  notifyMessageListners = (data: Message) =>
     this.onMessageReceivedListners.map((callback) => callback(data));
 
-  notifyTypingListners = (data: UserMessage) =>
+  notifyTypingListners = (data: Message) =>
     this.onUserTypingListners.map((callback) => callback(data));
 }
 

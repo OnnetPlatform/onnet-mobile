@@ -6,7 +6,8 @@ import { useColors } from '../../../Theme';
 
 const Icon: React.FC<CustomIconProps> = (props) => {
   const colors = useColors();
-  return <UIcon style={styles.icon} fill={colors.text} {...props} pack={''} />;
+  const { style } = props;
+  return <UIcon fill={colors.text} {...props} style={[styles.icon, style]} pack={''} />;
 };
 
 export default Icon;

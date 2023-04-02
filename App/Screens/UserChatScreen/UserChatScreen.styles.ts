@@ -25,11 +25,29 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     headerAvatar: {
       marginLeft: 16,
     },
+    handleWrapper: {
+      justifyContent: 'center',
+      height: 33,
+    },
+    handleIndicator: {
+      height: 3,
+      width: 40,
+      backgroundColor: colors.text,
+      alignSelf: 'center',
+      position: 'absolute',
+      zIndex: 100,
+      borderRadius: 4,
+      opacity: 0.6,
+    },
+    typingWrapper: {
+      backgroundColor: colors.secondaryBackground,
+      overflow: 'hidden',
+      borderRadius: 16,
+      paddingLeft: 22,
+    },
     typingText: {
-      padding: 8,
       opacity: 0.7,
-      paddingBottom: 0,
-      marginLeft: 40,
+      color: colors.text,
     },
     separator: {
       height: 16,
@@ -38,14 +56,12 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       paddingBottom: insets.top,
     },
     messageContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.secondaryBackground,
       borderColor: colors.blur,
-      width: '100%',
       padding: 8,
       borderRadius: 16,
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
-      borderBottomWidth: 1,
+      justifyContent: 'space-between',
+      overflow: 'hidden',
     },
     messageInput: {
       padding: 16,
@@ -60,5 +76,33 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     },
     flex: {
       flex: 1,
+    },
+    icon: {
+      width: 24,
+      height: 24,
+    },
+    maskedView: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    inputFooter: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: 8,
+    },
+    footerHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    closeIcon: {
+      position: 'absolute',
+      top: 4,
+      zIndex: 100,
+      right: 4,
+      backgroundColor: colors.background,
+      width: 24,
+      height: 24,
+      borderRadius: 12,
     },
   });

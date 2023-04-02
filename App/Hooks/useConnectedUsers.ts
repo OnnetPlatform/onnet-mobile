@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
-import { UserChat, UserMessage } from '../../types';
-import { useChat } from './useChat';
+import { UserChat, Message } from '../../types';
 import useChatEvents from './useChatEvents';
 
 export const useConnectedUsers = (socket: Socket) => {
@@ -14,7 +13,6 @@ export const useConnectedUsers = (socket: Socket) => {
     );
     setConnectedUsers(map);
   };
-
   const onUserDiconnected = ({ user }: { user: UserChat }) => {
     setConnectedUsers((users) => {
       return new Map(
@@ -36,7 +34,7 @@ export const useConnectedUsers = (socket: Socket) => {
       );
     });
   };
-  const onDirectMessage = (data: UserMessage) => {
+  const onDirectMessage = (data: Message) => {
     return setConnectedUsers((users) => {
       const localUser = users.get(data.user.id);
       const unreadCount = localUser ? localUser.unreadCount + 1 : 1;

@@ -76,14 +76,14 @@ export const Collapsible: React.FC<CollapsibleProps> = forwardRef(
                 layout: { height: h },
               },
             }) => {
-              if (height.value === 0) height.value = h;
+              if (h > height.value) height.value = h;
             }}
             style={animatedAbsolute}
             ref={contentRef}>
             {children}
           </Animated.View>
         ) : null}
-        {expanded ? <View>{children}</View> : null}
+        {expanded ? children : null}
       </Animated.View>
     );
   }
