@@ -35,7 +35,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const [attachedImage, setAttachedImage] = useState<UploadedImage | undefined>();
 
   const onDirectMessage = (data: Message) => {
-    console.log(messages[0]?.user.id, data.user.id);
     setMessages((msgs) => [
       { ...data, messages: [{ message: data.message, attachment: data.attachment }] },
       ...msgs,
