@@ -6,6 +6,7 @@ import { IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { CreateEventSheet } from '../../../Screens/ConferenceScreen/components';
 import SocketContext from '../../../Context/SocketContext/SocketContext';
+import QueueContext from '../../../Context/QueueContext/QueueContext';
 
 export const MainNavigator: React.FC = () => {
   return (
@@ -14,8 +15,10 @@ export const MainNavigator: React.FC = () => {
       <NavigationContainer>
         <SafeAreaProvider>
           <SocketContext>
-            <AuthStack />
-            <CreateEventSheet onClose={function (): void {}} />
+            <QueueContext>
+              <AuthStack />
+              <CreateEventSheet onClose={function (): void {}} />
+            </QueueContext>
           </SocketContext>
         </SafeAreaProvider>
       </NavigationContainer>

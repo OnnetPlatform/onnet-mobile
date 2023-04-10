@@ -23,11 +23,11 @@
 		81C1581BCE56442892CDC36F /* Rubik-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F62219060E0D4E4C9DF46BBB /* Rubik-BoldItalic.ttf */; };
 		A73E04735F364E1E91299BFC /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71D53822F68A45DF9800E920 /* Rubik-MediumItalic.ttf */; };
 		A949C0970A324742A08F12AF /* Rubik-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5F1605D4ABD42F393F62C6B /* Rubik-Light.ttf */; };
-		B00636A5B5905AA958B7633E /* libPods-Onnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 507B22235F3D3327AA39CC48 /* libPods-Onnet.a */; };
 		B0D2E1F4120E4FA784D88A54 /* Rubik-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4333B168FA2F4C869BE2AE8E /* Rubik-ExtraBoldItalic.ttf */; };
+		BF2B98BB61271949EC9E9C2D /* libPods-Onnet-OnnetTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2702DCB24B9DBC284F903605 /* libPods-Onnet-OnnetTests.a */; };
 		C61528ABFF2E4E6483E561B6 /* Rubik-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 327CD22ABA164FA6A6463414 /* Rubik-Black.ttf */; };
 		E81A2B531F124270A030BDF9 /* Rubik-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A82B3E6265FC42FF8F45E9B9 /* Rubik-SemiBold.ttf */; };
-		EEC45F8298A3AA55136586F8 /* libPods-Onnet-OnnetTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4153BB6B5868244E516940E /* libPods-Onnet-OnnetTests.a */; };
+		FD6AFBE57B6C4A21D14E9910 /* libPods-Onnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3B5607F4AB8E42C0FA55A3 /* libPods-Onnet.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,25 +51,25 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Onnet/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Onnet/main.m; sourceTree = "<group>"; };
 		1B25F21548654378896E7722 /* Rubik-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-SemiBoldItalic.ttf"; path = "../assets/fonts/Rubik-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		1E53699908FA4188E944416D /* Pods-Onnet-OnnetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.debug.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2702DCB24B9DBC284F903605 /* libPods-Onnet-OnnetTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet-OnnetTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DA17E33DAF4DABB2C0A169 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../assets/fonts/Rubik-Regular.ttf"; sourceTree = "<group>"; };
-		28EECC0C5003751C86C1F90C /* Pods-Onnet-OnnetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.release.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.release.xcconfig"; sourceTree = "<group>"; };
 		327CD22ABA164FA6A6463414 /* Rubik-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Black.ttf"; path = "../assets/fonts/Rubik-Black.ttf"; sourceTree = "<group>"; };
-		39841771A98702CA19F91109 /* Pods-Onnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.release.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.release.xcconfig"; sourceTree = "<group>"; };
+		3EC8BBB4234D11328012E7A2 /* Pods-Onnet-OnnetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.debug.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		4333B168FA2F4C869BE2AE8E /* Rubik-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-ExtraBoldItalic.ttf"; path = "../assets/fonts/Rubik-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		507B22235F3D3327AA39CC48 /* libPods-Onnet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5CEB26E90950A6E0CF433DCA /* Pods-Onnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.release.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.release.xcconfig"; sourceTree = "<group>"; };
 		5FB4483D878B4CDAB6EC9FAC /* Rubik-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Bold.ttf"; path = "../assets/fonts/Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		71D53822F68A45DF9800E920 /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-MediumItalic.ttf"; path = "../assets/fonts/Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
 		7C42741DDD8443858416104A /* Rubik-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Medium.ttf"; path = "../assets/fonts/Rubik-Medium.ttf"; sourceTree = "<group>"; };
 		7F8152D83AA64CFDA4BCCF1A /* Rubik-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Italic.ttf"; path = "../assets/fonts/Rubik-Italic.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Onnet/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		943FBD637FB344B3855A62DF /* Rubik-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-LightItalic.ttf"; path = "../assets/fonts/Rubik-LightItalic.ttf"; sourceTree = "<group>"; };
+		9B3B5607F4AB8E42C0FA55A3 /* libPods-Onnet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A140B3E0B02B41899AB681CD /* Rubik-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BlackItalic.ttf"; path = "../assets/fonts/Rubik-BlackItalic.ttf"; sourceTree = "<group>"; };
 		A82B3E6265FC42FF8F45E9B9 /* Rubik-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-SemiBold.ttf"; path = "../assets/fonts/Rubik-SemiBold.ttf"; sourceTree = "<group>"; };
-		C2658C5FF6022AE5876E70AD /* Pods-Onnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.debug.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.debug.xcconfig"; sourceTree = "<group>"; };
 		D7A8BA8CF27A49F2ADBC4DB2 /* Rubik-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-ExtraBold.ttf"; path = "../assets/fonts/Rubik-ExtraBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F4153BB6B5868244E516940E /* libPods-Onnet-OnnetTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet-OnnetTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0486FBB11B97B8026D30071 /* Pods-Onnet-OnnetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.release.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.release.xcconfig"; sourceTree = "<group>"; };
+		F50F0EEB48E3A662DA32A2B9 /* Pods-Onnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.debug.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.debug.xcconfig"; sourceTree = "<group>"; };
 		F5F1605D4ABD42F393F62C6B /* Rubik-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Light.ttf"; path = "../assets/fonts/Rubik-Light.ttf"; sourceTree = "<group>"; };
 		F62219060E0D4E4C9DF46BBB /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BoldItalic.ttf"; path = "../assets/fonts/Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,7 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEC45F8298A3AA55136586F8 /* libPods-Onnet-OnnetTests.a in Frameworks */,
+				BF2B98BB61271949EC9E9C2D /* libPods-Onnet-OnnetTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B00636A5B5905AA958B7633E /* libPods-Onnet.a in Frameworks */,
+				FD6AFBE57B6C4A21D14E9910 /* libPods-Onnet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,8 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				507B22235F3D3327AA39CC48 /* libPods-Onnet.a */,
-				F4153BB6B5868244E516940E /* libPods-Onnet-OnnetTests.a */,
+				9B3B5607F4AB8E42C0FA55A3 /* libPods-Onnet.a */,
+				2702DCB24B9DBC284F903605 /* libPods-Onnet-OnnetTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -190,10 +190,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C2658C5FF6022AE5876E70AD /* Pods-Onnet.debug.xcconfig */,
-				39841771A98702CA19F91109 /* Pods-Onnet.release.xcconfig */,
-				1E53699908FA4188E944416D /* Pods-Onnet-OnnetTests.debug.xcconfig */,
-				28EECC0C5003751C86C1F90C /* Pods-Onnet-OnnetTests.release.xcconfig */,
+				F50F0EEB48E3A662DA32A2B9 /* Pods-Onnet.debug.xcconfig */,
+				5CEB26E90950A6E0CF433DCA /* Pods-Onnet.release.xcconfig */,
+				3EC8BBB4234D11328012E7A2 /* Pods-Onnet-OnnetTests.debug.xcconfig */,
+				F0486FBB11B97B8026D30071 /* Pods-Onnet-OnnetTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -205,12 +205,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "OnnetTests" */;
 			buildPhases = (
-				096EA66EBE8F1B5DB20F9516 /* [CP] Check Pods Manifest.lock */,
+				4838076E72C46F4611C91E2F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				D7D82CB5A9212E86023BCF7D /* [CP] Embed Pods Frameworks */,
-				CA433273B5F04BA892AA96E0 /* [CP] Copy Pods Resources */,
+				81E6D13C90F57B55ED98EB07 /* [CP] Embed Pods Frameworks */,
+				1A977CC85FCFFB196B41D488 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -226,14 +226,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Onnet" */;
 			buildPhases = (
-				6424E8F75C30761E24E92B3F /* [CP] Check Pods Manifest.lock */,
+				8C3EF5AEA65AE5EA8B761E17 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				682EDE5C6BBD85B5A01B761E /* [CP] Embed Pods Frameworks */,
-				E1C1B455914E3E376332DBD1 /* [CP] Copy Pods Resources */,
+				E2B92D62F93220B17D420FFA /* [CP] Embed Pods Frameworks */,
+				A0708BB6334499960335F2F3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -330,7 +330,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		096EA66EBE8F1B5DB20F9516 /* [CP] Check Pods Manifest.lock */ = {
+		1A977CC85FCFFB196B41D488 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4838076E72C46F4611C91E2F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -352,7 +369,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6424E8F75C30761E24E92B3F /* [CP] Check Pods Manifest.lock */ = {
+		81E6D13C90F57B55ED98EB07 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C3EF5AEA65AE5EA8B761E17 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -374,58 +408,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		682EDE5C6BBD85B5A01B761E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CA433273B5F04BA892AA96E0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D7D82CB5A9212E86023BCF7D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1C1B455914E3E376332DBD1 /* [CP] Copy Pods Resources */ = {
+		A0708BB6334499960335F2F3 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -440,6 +423,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E2B92D62F93220B17D420FFA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -494,7 +494,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1E53699908FA4188E944416D /* Pods-Onnet-OnnetTests.debug.xcconfig */;
+			baseConfigurationReference = 3EC8BBB4234D11328012E7A2 /* Pods-Onnet-OnnetTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -521,7 +521,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 28EECC0C5003751C86C1F90C /* Pods-Onnet-OnnetTests.release.xcconfig */;
+			baseConfigurationReference = F0486FBB11B97B8026D30071 /* Pods-Onnet-OnnetTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -545,7 +545,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C2658C5FF6022AE5876E70AD /* Pods-Onnet.debug.xcconfig */;
+			baseConfigurationReference = F50F0EEB48E3A662DA32A2B9 /* Pods-Onnet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -572,7 +572,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39841771A98702CA19F91109 /* Pods-Onnet.release.xcconfig */;
+			baseConfigurationReference = 5CEB26E90950A6E0CF433DCA /* Pods-Onnet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

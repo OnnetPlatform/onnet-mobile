@@ -19,7 +19,13 @@ export default StyleSheet.create({
     textAlign: 'center',
     maxWidth: '70%',
   },
-  contentBetween: {
-    justifyContent: 'space-between',
+  buttonText: {
+    textAlign: 'center',
+    textTransform: 'uppercase',
+  },
+  bottomSection: {
+    flex: 1,
+    flexGrow: 1,
+    justifyContent: 'flex-end',
   },
 });

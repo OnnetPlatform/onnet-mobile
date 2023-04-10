@@ -14,6 +14,7 @@ export type ThemeColors = {
   secondaryBackground: string;
   secondaryDark: string;
   secondaryLight: string;
+  turquoise: string;
 };
 
 const pink = '#E90064';
@@ -24,6 +25,7 @@ const cyan = '#09CFFA';
 const yellow = '#ffde03';
 const secondaryDark = '#121212';
 const secondaryLight = '#cdc5bd';
+const turquoise = '#30D5C8';
 
 export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSchemeName) => ({
   pink,
@@ -38,6 +40,7 @@ export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSc
   secondaryBackground: scheme === 'dark' ? secondaryDark : secondaryLight,
   secondaryDark,
   secondaryLight,
+  turquoise,
 });
 
 export default () => {

@@ -30,5 +30,5 @@ export const useUploadImage = () => {
   useEffect(() => {
     getUploadedImages();
   }, []);
-  return { uploadImage, uploadedImages };
+  return { uploadImage, uploadedImages, getUploadedImages };
 };

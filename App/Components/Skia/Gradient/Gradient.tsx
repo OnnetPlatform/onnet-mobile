@@ -24,7 +24,7 @@ export default () => {
           ]}
         />
       </Rect>
-      <BackdropBlur blendMode={'overlay'} blur={40} />
+      <BackdropBlur blendMode={'overlay'} blur={50} />
     </Canvas>
   );
 };

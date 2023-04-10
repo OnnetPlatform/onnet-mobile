@@ -46,7 +46,7 @@ export const useConnectedUsers = (socket: Socket) => {
       );
     });
   };
-  useChatEvents({ onDirectMessage });
+  useChatEvents({ onDirectMessage }, []);
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected'));

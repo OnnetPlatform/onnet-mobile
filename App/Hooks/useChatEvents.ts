@@ -4,15 +4,19 @@ import ChatEvents from '../Services/ChatEvents/ChatEvents';
 
 export type ChatEvents = {
   onDirectMessage?(data: Message): void;
-  onUserTyping?(): void;
+  onUserTyping?(data: { id: string }): void;
+  onUserStoppedTyping?(data: { id: string }): void;
 };
 
-const useChatEvents = ({ onDirectMessage, onUserTyping }: ChatEvents) => {
+const useChatEvents = (
+  { onDirectMessage, onUserTyping, onUserStoppedTyping }: ChatEvents,
+  deps: any[]
+) => {
   useMemo(() => {
-    console.log(ChatEvents.onMessageReceived.length);
     if (onDirectMessage) ChatEvents.onMessageReceived(onDirectMessage);
     if (onUserTyping) ChatEvents.onUserTyping(onUserTyping);
-  }, []);
+    if (onUserStoppedTyping) ChatEvents.onUserStoppedTyping(onUserStoppedTyping);
+  }, deps);
 };
 
 export default useChatEvents;

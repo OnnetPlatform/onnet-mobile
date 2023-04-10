@@ -167,7 +167,7 @@ export const DatePicker: React.FC<{
                 </Animated.Text>
               </Animated.View>
             </PanGestureHandler>
-            <Text>{hour > 12 ? 'PM' : 'AM'}</Text>
+            <Text>{hour >= 12 ? 'PM' : 'AM'}</Text>
           </View>
         </AnimatedBlur>
         <Animated.View style={indicatorStyle(colors, layout).indicator} />

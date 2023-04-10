@@ -19,7 +19,6 @@ const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 const AppLogo: React.FC<{}> = () => {
   const colors = useColors();
   const sharedValue = useSharedValue(0);
-  const animationProgress = useSharedValue(0);
 
   const animatedProps = useAnimatedProps(
     () => ({
@@ -33,18 +32,16 @@ const AppLogo: React.FC<{}> = () => {
   );
 
   const startAnimation = () => {
-    animationProgress.value = 0;
-    return (sharedValue.value = withDelay(
-      500,
-      withTiming(0, { duration: 5000, easing: Easing.linear }, (isFinished) => {
+    return (sharedValue.value = withTiming(
+      0,
+      { duration: 5000, easing: Easing.linear },
+      (isFinished) => {
         if (isFinished) {
-          animationProgress.value = 1;
           sharedValue.value = withTiming(
             -200,
             { duration: 5000, easing: Easing.linear },
             (isFinished) => {
               if (isFinished) {
-                animationProgress.value = 2;
                 sharedValue.value = withTiming(0, { duration: 5000, easing: Easing.linear }, () => {
                   runOnJS(startAnimation)();
                 });
@@ -52,11 +49,11 @@ const AppLogo: React.FC<{}> = () => {
             }
           );
         }
-      })
+      }
     ));
   };
   useEffect(() => {
-    withRepeat(startAnimation(), 10, true);
+    withRepeat(startAnimation(), -1, true);
   }, []);
   return (
     <MaskedView

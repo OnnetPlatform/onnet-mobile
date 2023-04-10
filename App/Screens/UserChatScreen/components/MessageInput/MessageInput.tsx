@@ -10,16 +10,24 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUploadImage } from '../../../../Hooks/useUploadImage';
 import { useColors } from '../../../../Theme';
 import styles from '../../UserChatScreen.styles';
-import { View, Pressable, Image, useWindowDimensions, FlatList } from 'react-native';
+import {
+  View,
+  Pressable,
+  Image,
+  useWindowDimensions,
+  FlatList,
+  useColorScheme,
+} from 'react-native';
 import { Icon, Text } from '../../../../Components/atoms';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { TypingIndicator, GalleryModal } from '..';
 import { MessageInputProps } from './types';
-import { Button } from '../../../../Components/molecules';
-import { UploadedImage } from '../../../../../types';
 import { URL } from '../../../../Services/Fetch';
+import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
+import { BlurView } from '@react-native-community/blur';
+import messageStyles from './MessageInput.styles';
 
 export const MessageInput: React.FC<MessageInputProps> = ({
   onSend,
@@ -29,21 +37,21 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   attachedImage,
   onAttachedImage,
 }) => {
+  const { state } = useAnimatedKeyboard();
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const { width } = useWindowDimensions();
   const withColors = styles(colors, insets);
   const sheetInputRef = useRef<BottomSheet>(null);
-  const { uploadImage, uploadedImages } = useUploadImage();
+  const { uploadImage, uploadedImages, getUploadedImages } = useUploadImage();
   const [openGallery, setOpenGallery] = useState<boolean>(false);
   const [stagedImage, setStagedImage] = useState<PhotoIdentifier | undefined>();
   const [openUploadedGallery, setOpenUploadedGallery] = useState<boolean>(false);
-
+  const isDark = useColorScheme() === 'dark';
   const snapPoints = useMemo(
     () => ['CONTENT_HEIGHT'],
     [insets.top, stagedImage, openUploadedGallery, uploadedImages]
   );
-  const { state } = useAnimatedKeyboard();
 
   const { handleContentLayout, animatedSnapPoints, animatedContentHeight, animatedHandleHeight } =
     useBottomSheetDynamicSnapPoints(snapPoints);
@@ -63,6 +71,13 @@ export const MessageInput: React.FC<MessageInputProps> = ({
     }
   }, [stagedImage]);
 
+  useEffect(() => {
+    if (openUploadedGallery) getUploadedImages();
+  }, [openUploadedGallery]);
+  useEffect(() => {
+    setOpenUploadedGallery(false);
+  }, [attachedImage]);
+
   return (
     <>
       <BottomSheet
@@ -70,8 +85,9 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         contentHeight={animatedContentHeight}
         handleHeight={animatedHandleHeight}
         animatedIndex={animatedSheetIndex}
-        handleStyle={{ backgroundColor: colors.background, paddingVertical: 8 }}
-        backgroundStyle={{ backgroundColor: colors.secondaryBackground, borderRadius: 16 }}
+        backgroundComponent={CustomBackground}
+        handleStyle={{ paddingVertical: 8 }}
+        style={{ borderRadius: 16, overflow: 'hidden' }}
         handleComponent={TypingIndicator}
         snapPoints={animatedSnapPoints}>
         <BottomSheetView onLayout={handleContentLayout}>
@@ -82,28 +98,23 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               textAlignVertical={'top'}
               multiline={true}
               placeholder="Message"
-              onTouchStart={() => {
-                setOpenUploadedGallery(false);
-              }}
+              onTouchStart={() => setOpenUploadedGallery(false)}
               placeholderTextColor={colors.text}
               style={withColors.messageInput}
             />
             {attachedImage ? (
-              <View style={{ flexDirection: 'row', alignItems: 'flex-start', width: width / 3 }}>
+              <Animated.View
+                entering={FadeIn.duration(1000)}
+                exiting={FadeOut.duration(100)}
+                style={messageStyles.imageWrapper}>
                 <Pressable
                   hitSlop={12}
                   onPress={() => onAttachedImage(undefined)}
                   style={withColors.closeIcon}>
                   <Icon name={'close-outline'} />
                 </Pressable>
-                <Image
-                  style={{
-                    width: width / 3,
-                    height: width / 3,
-                  }}
-                  source={{ uri: URL + attachedImage.filename }}
-                />
-              </View>
+                <Image style={messageStyles.image} source={{ uri: URL + attachedImage.filename }} />
+              </Animated.View>
             ) : null}
             <View style={withColors.inputFooter}>
               <View style={withColors.footerHeader}>
@@ -138,26 +149,31 @@ export const MessageInput: React.FC<MessageInputProps> = ({
           {openUploadedGallery ? (
             <Animated.View entering={FadeIn} exiting={FadeOut}>
               <FlatList
-                style={{ maxHeight: 300 }}
+                style={{ maxHeight: 400 }}
                 data={uploadedImages}
                 numColumns={3}
+                stickyHeaderIndices={[0]}
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={
+                  <BlurView blurType={isDark ? 'dark' : 'light'} blurAmount={10}>
+                    <Pressable style={messageStyles.header} onPress={() => setOpenGallery(true)}>
+                      <Text weight="semibold">Import from camera roll</Text>
+                      <Icon style={messageStyles.icon} name={'plus-outline'} />
+                    </Pressable>
+                  </BlurView>
+                }
                 renderItem={({ item, index }) => (
                   <Pressable
                     key={index}
                     onPress={() => onAttachedImage(item)}
-                    style={{ width: width / 3, height: width / 3, padding: 1 }}>
+                    style={messageStyles.attachedImageWrapper}>
                     <Image
-                      style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
-                      source={{ uri: 'http://192.168.1.5:3000/' + item.filename }}
+                      style={messageStyles.attachedImage}
+                      source={{ uri: URL + item.filename }}
                     />
                   </Pressable>
                 )}
               />
-              <Button style={{ margin: 22 }} onPress={() => setOpenGallery(true)}>
-                <Text weight="bold" style={{ textTransform: 'uppercase', textAlign: 'center' }}>
-                  Add more
-                </Text>
-              </Button>
             </Animated.View>
           ) : null}
         </BottomSheetView>

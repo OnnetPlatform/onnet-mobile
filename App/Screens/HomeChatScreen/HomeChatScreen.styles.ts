@@ -10,4 +10,9 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       marginTop: -insets.top,
       backgroundColor: colors.background,
     },
+    screen: {
+      flex: 1,
+      flexGrow: 1,
+      backgroundColor: colors.background,
+    },
   });

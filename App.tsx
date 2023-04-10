@@ -1,9 +1,8 @@
-import { useEffect, useMemo } from 'react';
-import { LogBox, View, ViewStyle } from 'react-native';
+import { useEffect } from 'react';
+import { LogBox } from 'react-native';
 import Animated, {
   cancelAnimation,
   Easing,
-  interpolate,
   interpolateColor,
   runOnJS,
   useAnimatedStyle,
@@ -11,11 +10,10 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
 import { MainNavigator } from './App/Navigation';
-import HomeScreen from './App/Screens/HomeScreen';
 import { useColors } from './App/Theme';
 
 export const Warda = () => {

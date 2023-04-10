@@ -16,8 +16,8 @@ export const HomeChatScreen: React.FC = () => {
   const users = Array.from(connectedUsers, ([_, value]) => ({ ...value }));
 
   return (
-    <GradientLayout>
-      <SafeAreaView>
+    <SafeAreaView style={withColors.screen}>
+      <GradientLayout>
         <View style={withColors.header}>
           <Text weight="bold" fontSize={24}>
             Onnet
@@ -30,8 +30,8 @@ export const HomeChatScreen: React.FC = () => {
           style={{ minHeight: '100%' }}
           renderItem={({ item }) => <ChatUser {...item} />}
         />
-      </SafeAreaView>
-    </GradientLayout>
+      </GradientLayout>
+    </SafeAreaView>
   );
 };
 

@@ -1,11 +1,13 @@
 // @ts-nocheck
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Pressable, View } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, Pressable, View } from 'react-native';
 import { UserChat } from '../../../../../types';
 import { Text } from '../../../../Components/atoms';
 import Avatar from '../../../../Components/atoms/Avatar/Avatar';
 import styles from './ChatUser.styles';
+import useChatEvents from '../../../../Hooks/useChatEvents';
+import Animated, { FadeOut, FadeIn } from 'react-native-reanimated';
 
 export const ChatUser: React.FC<UserChat> = ({
   name,
@@ -15,7 +17,23 @@ export const ChatUser: React.FC<UserChat> = ({
   id,
 }) => {
   const navigation = useNavigation();
-
+  const [typing, setTyping] = useState<boolean>(false);
+  useChatEvents(
+    {
+      onUserTyping: (userId) => {
+        if (userId.id === id) {
+          setTyping(true);
+        }
+      },
+      onUserStoppedTyping: (userId) => {
+        console.log(id, userId.id);
+        if (userId.id === id) {
+          setTyping(false);
+        }
+      },
+    },
+    []
+  );
   return (
     <Pressable
       onPress={() => {
@@ -31,7 +49,14 @@ export const ChatUser: React.FC<UserChat> = ({
       }}>
       <View style={[styles.row]}>
         <Avatar {...{ avatar, isActive }} />
-        <Text fontSize={16}>{name}</Text>
+        <View>
+          <Text fontSize={16}>{name}</Text>
+          {typing ? (
+            <Animated.View entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)}>
+              <Text fontSize={12}>typing...</Text>
+            </Animated.View>
+          ) : null}
+        </View>
         {unreadCount > 0 ? (
           <View style={styles.badge}>
             <Text fontSize={10} color="white" weight="bold">

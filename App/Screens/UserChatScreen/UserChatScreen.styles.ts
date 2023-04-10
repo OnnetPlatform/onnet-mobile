@@ -20,7 +20,9 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       flexDirection: 'row',
       alignItems: 'center',
       paddingTop: insets.top,
-      marginTop: -insets.top,
+      position: 'absolute',
+      width: '100%',
+      zIndex: 100,
     },
     headerAvatar: {
       marginLeft: 16,
@@ -40,23 +42,20 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       opacity: 0.6,
     },
     typingWrapper: {
-      backgroundColor: colors.secondaryBackground,
       overflow: 'hidden',
       borderRadius: 16,
       paddingLeft: 22,
     },
     typingText: {
-      opacity: 0.7,
       color: colors.text,
     },
     separator: {
       height: 16,
     },
     contentStyle: {
-      paddingBottom: insets.top,
+      paddingVertical: insets.top,
     },
     messageContainer: {
-      backgroundColor: colors.secondaryBackground,
       borderColor: colors.blur,
       padding: 8,
       borderRadius: 16,

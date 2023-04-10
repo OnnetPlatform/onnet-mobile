@@ -43,14 +43,14 @@ const Input: React.FC<TextInputProps> = (props) => {
             layout: { width },
           },
         }) => setInputMetrics({ width })}
-        style={animatedLGStyle}>
+        style={[animatedLGStyle, props.style]}>
         <TextInput
           placeholder="Phone"
           onFocus={() => setIsFocused(true)}
           placeholderTextColor={colors.text}
           onBlur={() => setIsFocused(false)}
           {...props}
-          style={[{ padding: 16, color: colors.text }, props.style]}
+          style={[{ padding: 16, color: colors.text }]}
         />
         <View style={{ flexDirection: 'row' }}>
           <AnimatedLinearGradient

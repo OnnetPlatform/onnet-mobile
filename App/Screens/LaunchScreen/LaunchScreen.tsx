@@ -6,33 +6,35 @@ import { GradientLayout } from '../../Components/HOCs';
 import { Button } from '../../Components/molecules';
 import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
 import styles from './LaunchScreen.styles';
+import { useColors } from '../../Theme';
 
 const LaunchScreen: React.FC = () => {
   const navigation = useNavigation();
+  const colors = useColors();
   return (
-    <GradientLayout>
-      <>
+    <SafeAreaView style={[styles.screen, { backgroundColor: colors.background }]}>
+      <GradientLayout>
         <SafeAreaView style={styles.screen}>
           <AppLogo />
           <Text fontSize={14} weight={'regular'}>
             SCHEDULE, MEET, CONNECT
           </Text>
         </SafeAreaView>
-        <SafeAreaView style={[styles.screen, styles.contentBetween]}>
-          <View />
-          <Button
-            onPress={() => {
-              // @ts-ignore
-              navigation.navigate('LoginScreen');
-            }}>
-            LOGIN
-          </Button>
-          <Text fontSize={12} weight={'bold'} style={styles.hint}>
-            By registring, you accept terms and conditions
-          </Text>
+        <SafeAreaView style={styles.screen}>
+          <View style={[{ paddingHorizontal: 22, justifyContent: 'center', alignItems: 'center' }]}>
+            <Button
+              onPress={() =>
+                // @ts-ignore
+                navigation.navigate('LoginScreen')
+              }>
+              <Text style={styles.buttonText} weight="bold">
+                Join workspace
+              </Text>
+            </Button>
+          </View>
         </SafeAreaView>
-      </>
-    </GradientLayout>
+      </GradientLayout>
+    </SafeAreaView>
   );
 };
 

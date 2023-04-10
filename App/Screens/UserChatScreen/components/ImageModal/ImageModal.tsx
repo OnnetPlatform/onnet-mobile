@@ -1,4 +1,4 @@
-import { Modal, Pressable, useWindowDimensions, View } from 'react-native';
+import { Image, Modal, Pressable, useWindowDimensions, View } from 'react-native';
 import React, { ReactElement } from 'react';
 import Animated, {
   Easing,
@@ -8,23 +8,23 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { Icon } from '../../../../Components/atoms';
-import {
-  Gesture,
-  GestureDetector,
-  PinchGestureHandler,
-  PinchGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import { PinchGesture } from 'react-native-gesture-handler/lib/typescript/handlers/gestures/pinchGesture';
+import { PinchGestureHandler, PinchGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { UploadedImage } from '../../../../../types';
+import { URL } from '../../../../Services/Fetch';
+import styles from './ImageModal.styles';
 
 export const ImageModal: React.FC<{
   children: ReactElement;
   visible: boolean;
   onRequestClose(): void;
-}> = ({ children, visible, onRequestClose }) => {
+  image: UploadedImage;
+}> = ({ children, visible, onRequestClose, image }) => {
   const scale = useSharedValue(1);
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const { width } = useWindowDimensions();
+  const { width: imageWidth, height: imageHeight } = image;
+
   const handler = useAnimatedGestureHandler<
     PinchGestureHandlerGestureEvent,
     { focalX: number; focalY: number }
@@ -33,7 +33,7 @@ export const ImageModal: React.FC<{
       ctx.focalX = e.focalX;
       ctx.focalY = e.focalY;
     },
-    onActive: (e, ctx) => {
+    onActive: (e) => {
       scale.value = e.scale;
       console.log(e.focalX, e.focalY, e.state);
       translateX.value = e.focalX;
@@ -45,23 +45,6 @@ export const ImageModal: React.FC<{
       translateX.value = withTiming(0, { duration: 1000, easing: Easing.linear });
     },
   });
-  const pinch = Gesture.Pinch()
-    .onBegin((e) => {
-      scale.value = e.scale;
-      translateX.value = e.focalX;
-      translateY.value = e.focalY;
-    })
-    .onUpdate((e) => {
-      scale.value = e.scale;
-      console.log(e.focalX, e.focalY, e.state);
-      translateX.value = e.focalX;
-      translateY.value = e.focalY;
-    })
-    .onEnd(() => {
-      scale.value = withTiming(1, { duration: 1000, easing: Easing.linear });
-      translateY.value = withTiming(0, { easing: Easing.linear });
-      translateX.value = withTiming(0, { easing: Easing.linear });
-    });
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -82,23 +65,20 @@ export const ImageModal: React.FC<{
       {children}
       {visible ? (
         <Modal animationType="fade" transparent onRequestClose={onRequestClose} visible={visible}>
-          <View
-            style={{
-              flex: 1,
-              flexGrow: 1,
-              backgroundColor: 'rgba(0,0,0,.5)',
-              justifyContent: 'center',
-              paddingHorizontal: 22,
-            }}>
-            <Pressable style={{ alignSelf: 'flex-end' }} onPress={onRequestClose}>
+          <View style={styles.shadow}>
+            <Pressable style={styles.closeWrapper} onPress={onRequestClose}>
               <Icon name={'close-outline'} />
             </Pressable>
-            {/* 
-            <GestureDetector gesture={pinch}>
-              <Animated.View style={animatedStyle}>{children}</Animated.View>
-            </GestureDetector> */}
             <PinchGestureHandler onGestureEvent={handler}>
-              <Animated.View style={animatedStyle}>{children}</Animated.View>
+              <Animated.View style={animatedStyle}>
+                <Image
+                  style={{
+                    width,
+                    height: (width * imageHeight) / imageWidth,
+                  }}
+                  source={{ uri: URL + image.filename }}
+                />
+              </Animated.View>
             </PinchGestureHandler>
           </View>
         </Modal>
