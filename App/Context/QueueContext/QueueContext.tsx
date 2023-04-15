@@ -2,11 +2,11 @@ import React, { ReactElement, useContext } from 'react';
 import { MessageQueue, useQueue } from '../../Hooks/useQueue';
 
 export const QueueContext = React.createContext<{
-  queue: MessageQueue[];
+  queue: Map<number, MessageQueue>;
   addToQueue(event: string, data: any, callback?: () => void): void;
   sendQueue(): void;
 }>({
-  queue: [],
+  queue: new Map(),
   addToQueue: () => {
     console.log('addToQueue not initilized');
   },

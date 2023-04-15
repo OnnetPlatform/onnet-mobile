@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import Animated, {
   Easing,
@@ -33,23 +33,14 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const sheetInputHeight = useSharedValue<number>(0);
   const [attachedImage, setAttachedImage] = useState<UploadedImage | undefined>();
 
-  const onDirectMessage = (data: Message) => {
+  const onDirectMessage = useCallback((data: Message) => {
     setMessages((msgs) => [
       { ...data, messages: [{ message: data.message, attachment: data.attachment }] },
       ...msgs,
     ]);
-    // if (messages.length > 0 && messages[0]?.user.id === data.user.id) {
-    //   messages[0].messages.push({ message: data.message, attachment: data.attachment });
-    //   setTimeout(() => {
-    //     setMessages(messages);
-    //   }, 10);
-    // } else {
-    //   setMessages((msgs) => [
-    //     { ...data, messages: [{ message: data.message, attachment: data.attachment }] },
-    //     ...msgs,
-    //   ]);
-    // }
-  };
+  }, []);
+
+  useChatEvents({ onDirectMessage }, []);
 
   const onSend = () =>
     sendDirectMessage(
@@ -67,8 +58,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         setAttachedImage(undefined);
       }
     );
-
-  useChatEvents({ onDirectMessage }, []);
 
   const animatedStyle = useAnimatedStyle(
     () => ({
@@ -126,3 +115,15 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
 };
 
 export default UserChatScreen;
+
+// if (messages.length > 0 && messages[0]?.user.id === data.user.id) {
+//   messages[0].messages.push({ message: data.message, attachment: data.attachment });
+//   setTimeout(() => {
+//     setMessages(messages);
+//   }, 10);
+// } else {
+//   setMessages((msgs) => [
+//     { ...data, messages: [{ message: data.message, attachment: data.attachment }] },
+//     ...msgs,
+//   ]);
+// }

@@ -7,6 +7,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { CreateEventSheet } from '../../../Screens/ConferenceScreen/components';
 import SocketContext from '../../../Context/SocketContext/SocketContext';
 import QueueContext from '../../../Context/QueueContext/QueueContext';
+import { RealmProvider } from '../../../Hooks/useRealmContext';
 
 export const MainNavigator: React.FC = () => {
   return (
@@ -14,12 +15,14 @@ export const MainNavigator: React.FC = () => {
       <IconRegistry icons={EvaIconsPack} />
       <NavigationContainer>
         <SafeAreaProvider>
-          <SocketContext>
-            <QueueContext>
-              <AuthStack />
-              <CreateEventSheet onClose={function (): void {}} />
-            </QueueContext>
-          </SocketContext>
+          <RealmProvider schemaVersion={2}>
+            <SocketContext>
+              <QueueContext>
+                <AuthStack />
+                <CreateEventSheet onClose={function (): void {}} />
+              </QueueContext>
+            </SocketContext>
+          </RealmProvider>
         </SafeAreaProvider>
       </NavigationContainer>
     </>

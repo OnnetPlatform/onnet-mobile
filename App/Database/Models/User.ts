@@ -1,17 +1,20 @@
 import Realm from 'realm';
+import { UserChat } from '../../../types';
 class User extends Realm.Object<User> {
-  id!: Realm.BSON.ObjectId;
   name!: string;
+  avatar!: string;
+  isActive!: boolean;
+  unreadCount!: number;
+  id!: string;
   static schema = {
     name: 'User',
     properties: {
-      id: 'objectId',
       name: 'string',
       avatar: 'string',
       isActive: 'bool',
       unreadCount: 'int',
+      id: 'string',
     },
-    primaryKey: '_id',
   };
 }
 

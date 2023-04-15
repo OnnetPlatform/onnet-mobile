@@ -2,10 +2,25 @@ import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { UserChat, Message } from '../../types';
 import useChatEvents from './useChatEvents';
+import { useRealmUsers } from '../Database/Hooks/useRealmUsers';
 
 export const useConnectedUsers = (socket: Socket) => {
   const [connectedUsers, setConnectedUsers] = useState<Map<string, UserChat>>(new Map());
+  const { getUser, updateUser, createUser, users } = useRealmUsers();
+
   const setConnectedUsersMap = (data: UserChat[]) => {
+    data.map((connectedUser) => {
+      const localUser = getUser(connectedUser);
+      if (localUser) return updateUser(localUser, 'isActive', true);
+      createUser(connectedUser);
+    });
+    users.map((localUser) => {
+      updateUser(
+        localUser,
+        'isActive',
+        data.find((user) => user.id === localUser.id) !== undefined
+      );
+    });
     const map = new Map(
       data.map((user) => {
         return [user.id, user];
@@ -13,7 +28,10 @@ export const useConnectedUsers = (socket: Socket) => {
     );
     setConnectedUsers(map);
   };
+
   const onUserDiconnected = ({ user }: { user: UserChat }) => {
+    const localUser = getUser(user);
+    if (localUser) updateUser(localUser, 'isActive', false);
     setConnectedUsers((users) => {
       return new Map(
         users.set(user.id, {
@@ -25,6 +43,8 @@ export const useConnectedUsers = (socket: Socket) => {
   };
 
   const onUserConnected = ({ user }: { user: UserChat }) => {
+    const localUser = getUser(user);
+    if (localUser) updateUser(localUser, 'isActive', true);
     setConnectedUsers((users) => {
       return new Map(
         users.set(user.id, {
@@ -34,10 +54,13 @@ export const useConnectedUsers = (socket: Socket) => {
       );
     });
   };
+
   const onDirectMessage = (data: Message) => {
+    const localUser = getUser(data.user);
+    const unreadCount = localUser ? localUser.unreadCount + 1 : 1;
+    if (localUser) updateUser(localUser, 'unreadCount', unreadCount);
+
     return setConnectedUsers((users) => {
-      const localUser = users.get(data.user.id);
-      const unreadCount = localUser ? localUser.unreadCount + 1 : 1;
       return new Map(
         users.set(data.user.id, {
           ...data.user,
@@ -46,7 +69,6 @@ export const useConnectedUsers = (socket: Socket) => {
       );
     });
   };
-  useChatEvents({ onDirectMessage }, []);
 
   useEffect(() => {
     socket.on('connect', () => console.log('Connected'));
@@ -55,6 +77,8 @@ export const useConnectedUsers = (socket: Socket) => {
     socket.on('user_connected', onUserConnected);
     socket.on('user_disconnected', onUserDiconnected);
   }, []);
+
+  useChatEvents({ onDirectMessage }, []);
 
   return {
     connectedUsers,

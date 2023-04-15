@@ -4,27 +4,31 @@ export type MessageQueue = {
   data: any;
   event: string;
   callback?(): void;
-  id?: number;
+  id: number;
   sent?: boolean;
 };
 export const useQueue = () => {
   const { socket } = useSocketContext();
-  const [queue, setQueue] = useState<MessageQueue[]>([]);
+  const [queue, setQueue] = useState<Map<number, MessageQueue>>(new Map());
 
   const addToQueue = (event: string, data: any, callback?: () => void) => {
-    setQueue((q) => [...q, { data, event, id: q.length + 1, sent: false, callback }]);
+    setQueue((q) => {
+      return new Map(
+        q.set(q.size + 1, {
+          event,
+          data,
+          callback,
+          id: q.size + 1,
+        })
+      );
+    });
   };
 
   const sendQueue = useCallback(() => {
-    console.log('Queue started');
-    queue.map((item) => {
-      if (!item.sent) {
-        console.log;
-        socket.emit(item.event.toString(), item.data, () => {
-          item.sent = true;
-        });
-        if (item.callback) item.callback();
-      }
+    queue.forEach((item) => {
+      socket.emit(item.event.toString(), item.data);
+      if (item.callback) item.callback();
+      queue.delete(item.id);
     });
   }, [socket, queue]);
 
