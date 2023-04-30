@@ -1,6 +1,6 @@
 import { SharedValue } from 'react-native-reanimated';
-import { UploadedImage } from '../../../../../types';
-
+import { UploadedImage, UserChat } from '../../../../../types';
+import { EmojisListProps } from '../../../../Components/molecules/EmojiList/EmojiList';
 export type MessageInputProps = {
   onSend(): void;
   onChangeText(value: string): void;
@@ -8,4 +8,5 @@ export type MessageInputProps = {
   sheetInputHeight: SharedValue<number>;
   attachedImage: UploadedImage | undefined;
   onAttachedImage(image: UploadedImage | undefined): void;
-};
+  user: UserChat;
+} & EmojisListProps;

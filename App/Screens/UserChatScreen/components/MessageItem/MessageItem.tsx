@@ -8,6 +8,7 @@ import { useColors } from '../../../../Theme';
 import { UserChatMessage } from '../../types';
 import styles from '../../UserChatScreen.styles';
 import ImageModal from '../ImageModal';
+import { Message } from '../../../../../types';
 
 export const MessageItem: React.FC<{ item: UserChatMessage; index: number }> = React.memo(
   ({ item, index }) => {
@@ -16,10 +17,13 @@ export const MessageItem: React.FC<{ item: UserChatMessage; index: number }> = R
     const withColors = styles(colors, insets);
     const { user, messages } = item;
     const [openImage, setOpenImage] = useState<boolean>(false);
+    const isAttchment = (msg: Omit<Message, 'user'>) =>
+      msg.attachment && msg.attachment.gallery && msg.attachment.gallery?.length > 0;
+
     return (
-      <Animated.View entering={FadeIn.duration(500).delay(10 * index)} style={withColors.row}>
+      <Animated.View key={index} entering={FadeIn.duration(500).delay(100)} style={withColors.row}>
         <View>
-          <Avatar avatar={user.avatar} isActive={user.isActive} />
+          <Avatar avatar={user?.avatar} isActive={user.isActive} />
         </View>
         <View style={withColors.flex}>
           <Text fontSize={15} weight={'bold'}>
@@ -34,10 +38,9 @@ export const MessageItem: React.FC<{ item: UserChatMessage; index: number }> = R
                       {msg.message}
                     </Text>
                   ) : null}
-                  {msg.attachment &&
-                  msg.attachment.gallery &&
-                  msg.attachment.gallery?.length > 0 ? (
-                    <View>
+                  {isAttchment(msg) ? (
+                    <View key={index}>
+                      {/* @ts-ignore */}
                       {msg.attachment.gallery.map((image, index) => {
                         return (
                           <ImageModal

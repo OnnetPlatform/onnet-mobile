@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, View } from 'react-native';
+import React from 'react';
+import { Pressable, View } from 'react-native';
 import { UserChat } from '../../../../../types';
 import { Text } from '../../../../Components/atoms';
 import Avatar from '../../../../Components/atoms/Avatar/Avatar';
 import styles from './ChatUser.styles';
-import useChatEvents from '../../../../Hooks/useChatEvents';
 import Animated, { FadeOut, FadeIn } from 'react-native-reanimated';
+import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 
 export const ChatUser: React.FC<UserChat> = ({
   name,
@@ -17,41 +17,19 @@ export const ChatUser: React.FC<UserChat> = ({
   id,
 }) => {
   const navigation = useNavigation();
-  const [typing, setTyping] = useState<boolean>(false);
-  useChatEvents(
-    {
-      onUserTyping: (userId) => {
-        if (userId.id === id) {
-          setTyping(true);
-        }
-      },
-      onUserStoppedTyping: (userId) => {
-        console.log(id, userId.id);
-        if (userId.id === id) {
-          setTyping(false);
-        }
-      },
-    },
-    []
-  );
+  const { getUser, updateUser } = useRealmUsers();
+  const localUser = getUser({ id });
   return (
     <Pressable
       onPress={() => {
-        navigation.navigate('UserChatScreen', {
-          user: {
-            name,
-            avatar,
-            isActive,
-            unreadCount,
-            id,
-          },
-        });
+        updateUser(localUser, 'unreadCount', 0);
+        navigation.navigate('UserChatScreen', { user: localUser });
       }}>
       <View style={[styles.row]}>
         <Avatar {...{ avatar, isActive }} />
         <View>
           <Text fontSize={16}>{name}</Text>
-          {typing ? (
+          {localUser?.status ? (
             <Animated.View entering={FadeIn.duration(500)} exiting={FadeOut.duration(500)}>
               <Text fontSize={12}>typing...</Text>
             </Animated.View>

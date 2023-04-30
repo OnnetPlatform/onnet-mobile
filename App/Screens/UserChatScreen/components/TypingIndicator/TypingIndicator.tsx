@@ -4,36 +4,25 @@ import { useColors } from '../../../../Theme';
 import styles from '../../UserChatScreen.styles';
 import { View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import useChatEvents from '../../../../Hooks/useChatEvents';
 import { useSocketContext } from '../../../../Context/SocketContext/SocketContext';
+import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
+import User from '../../../../Database/Models/User';
 
-export const TypingIndicator: React.FC = React.memo(() => {
+export const TypingIndicator: React.FC<{ opponent: User }> = React.memo(({ opponent }) => {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const withColors = styles(colors, insets);
-  const [typing, setTyping] = useState<boolean>(false);
+  const { getUser } = useRealmUsers();
   const opacity = useSharedValue(0);
-  const { opponent } = useSocketContext();
-  useChatEvents(
-    {
-      onUserTyping: (data) => {
-        console.log(opponent);
-        if (data.id === opponent?.id) setTyping(true);
-      },
-      onUserStoppedTyping: (data) => {
-        if (data.id === opponent?.id) setTyping(false);
-      },
-    },
-    [opponent]
-  );
+  const localUser = getUser(opponent);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
   }));
 
   useEffect(() => {
-    opacity.value = withTiming(typing ? 1 : 0, { duration: 500 });
-  }, [typing]);
+    opacity.value = withTiming(localUser?.status ? 1 : 0, { duration: 500 });
+  }, [localUser, localUser?.status]);
 
   return (
     <View style={withColors.handleWrapper}>

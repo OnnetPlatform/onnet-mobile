@@ -4,7 +4,7 @@ export default StyleSheet.create({
   shadow: {
     flex: 1,
     flexGrow: 1,
-    backgroundColor: 'rgba(0,0,0,.5)',
+    backgroundColor: 'rgba(0,0,0,.9)',
     justifyContent: 'center',
   },
   closeWrapper: {

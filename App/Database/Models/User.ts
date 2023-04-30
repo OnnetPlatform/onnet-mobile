@@ -6,6 +6,7 @@ class User extends Realm.Object<User> {
   isActive!: boolean;
   unreadCount!: number;
   id!: string;
+  status: 'TYPING' | '' = '';
   static schema = {
     name: 'User',
     properties: {
@@ -14,6 +15,7 @@ class User extends Realm.Object<User> {
       isActive: 'bool',
       unreadCount: 'int',
       id: 'string',
+      status: 'string',
     },
   };
 }

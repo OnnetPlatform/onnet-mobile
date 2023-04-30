@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import Animated, {
   Easing,
+  useAnimatedKeyboard,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -19,26 +20,23 @@ import useChatEvents from '../../Hooks/useChatEvents';
 import { useColors } from '../../Theme';
 import { MessageInput, MessageItem } from './components';
 import styles from './UserChatScreen.styles';
+import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
+import { useDerivedValue } from 'react-native-reanimated';
 
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
   const { sendDirectMessage, sendStoppedTypingEvent, sendTypingEvent } = useChat(user);
   const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<UserChatMessage[]>([]);
+  const msgs = useRoomMessages(user);
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
-  const { currentUser, setOpponent } = useSocketContext();
+  const { setOpponent } = useSocketContext();
   const withColors = styles(colors, insets);
   const sheetInputHeight = useSharedValue<number>(0);
   const [attachedImage, setAttachedImage] = useState<UploadedImage | undefined>();
-
-  const onDirectMessage = useCallback((data: Message) => {
-    setMessages((msgs) => [
-      { ...data, messages: [{ message: data.message, attachment: data.attachment }] },
-      ...msgs,
-    ]);
-  }, []);
+  const { height, state } = useAnimatedKeyboard();
+  const onDirectMessage = useCallback((data: Message) => {}, []);
 
   useChatEvents({ onDirectMessage }, []);
 
@@ -49,11 +47,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         attachment: { gallery: attachedImage ? [attachedImage] : [] },
       },
       () => {
-        onDirectMessage({
-          user: currentUser,
-          message,
-          attachment: { gallery: attachedImage ? [attachedImage] : [] },
-        });
         setMessage('');
         setAttachedImage(undefined);
       }
@@ -61,12 +54,17 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
 
   const animatedStyle = useAnimatedStyle(
     () => ({
-      paddingVertical: withTiming(sheetInputHeight.value + 70, {
-        duration: 100,
-        easing: Easing.linear,
-      }),
+      paddingVertical: withTiming(
+        state.value === 1 || state.value === 2
+          ? sheetInputHeight.value + height.value - 70
+          : sheetInputHeight.value,
+        {
+          duration: 50,
+          easing: Easing.linear,
+        }
+      ),
     }),
-    []
+    [state]
   );
 
   useEffect(() => {
@@ -77,7 +75,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   useEffect(() => {
     setOpponent(user);
   }, [user]);
-
   return (
     <>
       <SafeAreaView style={withColors.page}>
@@ -94,11 +91,13 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         </BlurView>
         <Animated.FlatList
           ItemSeparatorComponent={() => <View style={withColors.separator} />}
-          data={messages}
+          data={msgs}
           contentContainerStyle={withColors.contentStyle}
           inverted
           showsVerticalScrollIndicator={false}
           style={animatedStyle}
+          keyExtractor={(_, index) => index.toString()}
+          // @ts-ignore
           renderItem={({ item, index }) => <MessageItem index={index} key={index} item={item} />}
         />
         <MessageInput
@@ -106,9 +105,12 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           onSend={onSend}
           value={message}
           onChangeText={setMessage}
+          user={user}
           onAttachedImage={setAttachedImage}
           attachedImage={attachedImage}
+          onEmojiPressed={(emoji) => setMessage((msg) => msg + emoji.emoji)}
         />
+        {/* <ChatSheet /> */}
       </SafeAreaView>
     </>
   );

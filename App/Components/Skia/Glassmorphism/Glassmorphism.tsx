@@ -1,7 +1,6 @@
 import {
   add,
   Canvas,
-  Circle,
   LinearGradient,
   vec,
   sub,
@@ -11,7 +10,6 @@ import {
   BackdropFilter,
   Blur,
   useComputedValue,
-  Rect,
   Box,
   rrect,
   rect,

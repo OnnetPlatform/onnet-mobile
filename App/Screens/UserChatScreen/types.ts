@@ -1,8 +1,11 @@
 import { Attachment, Message } from '../../../types';
+import User from '../../Database/Models/User';
 
-export type UserChatMessage = Exclude<Message, 'message' | 'attachment'> & {
+export type UserChatMessage = {
+  user: User;
   messages: {
     message: string;
     attachment: Attachment | undefined;
+    date: string;
   }[];
 };

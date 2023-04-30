@@ -8,7 +8,10 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       padding: 16,
       paddingTop: insets.top,
       marginTop: -insets.top,
-      backgroundColor: colors.background,
+      backgroundColor: colors.blur,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
     },
     screen: {
       flex: 1,

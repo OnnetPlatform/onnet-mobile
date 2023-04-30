@@ -4,6 +4,7 @@ export type UserChat = {
   isActive: boolean;
   id: string;
   unreadCount: number;
+  status: 'TYPING' | '';
 };
 
 export type UploadedImage = {
@@ -24,7 +25,6 @@ export type Attachment = {
 };
 
 export type Message = {
-  message: string;
   user: UserChat;
   attachment?: Attachment;
 };

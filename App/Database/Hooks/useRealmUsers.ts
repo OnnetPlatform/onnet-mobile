@@ -7,7 +7,8 @@ export const useRealmUsers = () => {
   const users = useQuery(User);
 
   const deleteUser = (user: User) => realm.write(() => realm.delete(user));
-  const createUser = (dto: UserChat) => realm.write(() => realm.create('User', { ...dto }));
+  const createUser = (dto: UserChat) =>
+    realm.write(() => realm.create('User', { ...dto, status: '' }));
   const updateUser = (user: User, key: keyof UserChat, value: any) =>
     //@ts-ignore
     realm.write(() => (user[key] = value));

@@ -54,6 +54,7 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     },
     contentStyle: {
       paddingVertical: insets.top,
+      paddingBottom: 220,
     },
     messageContainer: {
       borderColor: colors.blur,
@@ -77,8 +78,8 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       flex: 1,
     },
     icon: {
-      width: 24,
-      height: 24,
+      width: 18,
+      height: 18,
     },
     maskedView: {
       justifyContent: 'center',

@@ -15,7 +15,7 @@ export const MainNavigator: React.FC = () => {
       <IconRegistry icons={EvaIconsPack} />
       <NavigationContainer>
         <SafeAreaProvider>
-          <RealmProvider schemaVersion={2}>
+          <RealmProvider schemaVersion={9}>
             <SocketContext>
               <QueueContext>
                 <AuthStack />

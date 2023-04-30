@@ -9,27 +9,37 @@ import useTabs from './Tabs';
 import styles from './TabBar.styles';
 import { NavigationState } from '@react-navigation/native';
 import Animated, { FadeIn, FadeOut, useAnimatedStyle } from 'react-native-reanimated';
+import { HeaderLoader } from '../../../Components/atoms/HeaderLoader/HeaderLoader';
+import { useSocketContext } from '../../../Context/SocketContext/SocketContext';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
     const { state } = props;
     const colors = useColors();
-
+    const { socket } = useSocketContext();
     return (
-      <View
-        style={[
-          styles.tabbar,
-          {
-            backgroundColor: colors.background,
-          },
-        ]}>
-        <SafeAreaView style={styles.container}>
-          {state.routes.map((route, index) => (
-            // @ts-ignore
-            <Tab key={index} {...props} {...{ route, index }} />
-          ))}
-        </SafeAreaView>
-      </View>
+      <>
+        {socket.connected ? null : (
+          <View style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
+            <HeaderLoader />
+          </View>
+        )}
+
+        <View
+          style={[
+            styles.tabbar,
+            {
+              backgroundColor: colors.background,
+            },
+          ]}>
+          <SafeAreaView style={styles.container}>
+            {state.routes.map((route, index) => (
+              // @ts-ignore
+              <Tab key={index} {...props} {...{ route, index }} />
+            ))}
+          </SafeAreaView>
+        </View>
+      </>
     );
   },
   (next, prev) => next.descriptors === prev.descriptors

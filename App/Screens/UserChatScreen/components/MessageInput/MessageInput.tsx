@@ -10,14 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUploadImage } from '../../../../Hooks/useUploadImage';
 import { useColors } from '../../../../Theme';
 import styles from '../../UserChatScreen.styles';
-import {
-  View,
-  Pressable,
-  Image,
-  useWindowDimensions,
-  FlatList,
-  useColorScheme,
-} from 'react-native';
+import { View, Pressable, Image, FlatList, useColorScheme } from 'react-native';
 import { Icon, Text } from '../../../../Components/atoms';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import MaskedView from '@react-native-masked-view/masked-view';
@@ -28,6 +21,9 @@ import { URL } from '../../../../Services/Fetch';
 import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
 import { BlurView } from '@react-native-community/blur';
 import messageStyles from './MessageInput.styles';
+import { EmojiList } from '../../../../Components/molecules/EmojiList/EmojiList';
+import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
+import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
 
 export const MessageInput: React.FC<MessageInputProps> = ({
   onSend,
@@ -36,18 +32,22 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   sheetInputHeight,
   attachedImage,
   onAttachedImage,
+  onEmojiPressed,
+  user,
 }) => {
   const { state } = useAnimatedKeyboard();
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { width } = useWindowDimensions();
   const withColors = styles(colors, insets);
   const sheetInputRef = useRef<BottomSheet>(null);
   const { uploadImage, uploadedImages, getUploadedImages } = useUploadImage();
   const [openGallery, setOpenGallery] = useState<boolean>(false);
   const [stagedImage, setStagedImage] = useState<PhotoIdentifier | undefined>();
   const [openUploadedGallery, setOpenUploadedGallery] = useState<boolean>(false);
+  const [openEmojiList, setOpenEmojiList] = useState<boolean>(false);
   const isDark = useColorScheme() === 'dark';
+  const { getUser } = useRealmUsers();
+  const localUser = getUser(user);
   const snapPoints = useMemo(
     () => ['CONTENT_HEIGHT'],
     [insets.top, stagedImage, openUploadedGallery, uploadedImages]
@@ -72,8 +72,19 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   }, [stagedImage]);
 
   useEffect(() => {
-    if (openUploadedGallery) getUploadedImages();
+    if (openUploadedGallery) {
+      setOpenEmojiList(false);
+      getUploadedImages();
+    }
   }, [openUploadedGallery]);
+
+  useEffect(() => {
+    if (openEmojiList) {
+      setOpenGallery(false);
+      setOpenUploadedGallery(false);
+    }
+  }, [openEmojiList]);
+
   useEffect(() => {
     setOpenUploadedGallery(false);
   }, [attachedImage]);
@@ -88,7 +99,8 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         backgroundComponent={CustomBackground}
         handleStyle={{ paddingVertical: 8 }}
         style={{ borderRadius: 16, overflow: 'hidden' }}
-        handleComponent={TypingIndicator}
+        // @ts-ignore
+        handleComponent={() => <TypingIndicator opponent={localUser || {}} />}
         snapPoints={animatedSnapPoints}>
         <BottomSheetView onLayout={handleContentLayout}>
           <View style={withColors.messageContainer}>
@@ -121,14 +133,51 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                 <Pressable onPress={() => setOpenUploadedGallery(!openUploadedGallery)}>
                   <Icon
                     name={'attach-2-outline'}
-                    style={{ opacity: openUploadedGallery ? 1 : 0.4 }}
+                    style={{
+                      opacity: openUploadedGallery ? 1 : 0.4,
+                      width: 18,
+                      height: 18,
+                      marginRight: 8,
+                    }}
+                  />
+                </Pressable>
+                <Pressable onPress={() => setOpenEmojiList(!openEmojiList)}>
+                  <Icon
+                    name={'smiling-face-outline'}
+                    style={{
+                      opacity: openEmojiList ? 1 : 0.4,
+                      width: 18,
+                      height: 18,
+                      marginRight: 8,
+                    }}
                   />
                 </Pressable>
                 <Pressable>
-                  <Icon name={'code-outline'} style={{ opacity: 0.4 }} />
+                  <Icon
+                    name={'code-outline'}
+                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                  />
                 </Pressable>
                 <Pressable>
-                  <Icon name={'mic-outline'} style={{ opacity: 0.4 }} />
+                  <Icon
+                    name={'at-outline'}
+                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                  />
+                </Pressable>
+                <Pressable>
+                  <Icon
+                    name={'mic-outline'}
+                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                  />
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    CreateEventSheetRef.current?.snapToIndex(0);
+                  }}>
+                  <Icon
+                    name={'calendar-outline'}
+                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                  />
                 </Pressable>
               </View>
               {value || attachedImage ? (
@@ -137,8 +186,10 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                     onPress={() => {
                       onSend();
                       setOpenUploadedGallery(false);
+                      setOpenEmojiList(false);
                     }}>
-                    <MaskedView maskElement={<Icon name={'paper-plane-outline'} />}>
+                    <MaskedView
+                      maskElement={<Icon style={withColors.icon} name={'paper-plane-outline'} />}>
                       <LinearGradient style={withColors.icon} colors={[colors.pink, colors.cyan]} />
                     </MaskedView>
                   </Pressable>
@@ -174,6 +225,11 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                   </Pressable>
                 )}
               />
+            </Animated.View>
+          ) : null}
+          {openEmojiList ? (
+            <Animated.View entering={FadeIn} exiting={FadeOut}>
+              <EmojiList onEmojiPressed={onEmojiPressed} />
             </Animated.View>
           ) : null}
         </BottomSheetView>
