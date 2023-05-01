@@ -1,7 +1,7 @@
 import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Pressable, SafeAreaView, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedKeyboard,
@@ -9,9 +9,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Message, UploadedImage } from '../../../types';
-import { UserChatMessage } from './types';
 import { Icon, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useSocketContext } from '../../Context/SocketContext/SocketContext';
@@ -21,7 +21,6 @@ import { useColors } from '../../Theme';
 import { MessageInput, MessageItem } from './components';
 import styles from './UserChatScreen.styles';
 import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
-import { useDerivedValue } from 'react-native-reanimated';
 
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;

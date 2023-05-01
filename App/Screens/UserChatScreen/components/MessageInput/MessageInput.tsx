@@ -8,7 +8,7 @@ import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { useAnimatedKeyboard, useAnimatedReaction, useDerivedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUploadImage } from '../../../../Hooks/useUploadImage';
-import { useColors } from '../../../../Theme';
+import { BOTTOM_BAR_HEIGHT, useColors } from '../../../../Theme';
 import styles from '../../UserChatScreen.styles';
 import { View, Pressable, Image, FlatList, useColorScheme } from 'react-native';
 import { Icon, Text } from '../../../../Components/atoms';
@@ -95,6 +95,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         ref={sheetInputRef}
         contentHeight={animatedContentHeight}
         handleHeight={animatedHandleHeight}
+        bottomInset={BOTTOM_BAR_HEIGHT}
         animatedIndex={animatedSheetIndex}
         backgroundComponent={CustomBackground}
         handleStyle={{ paddingVertical: 8 }}

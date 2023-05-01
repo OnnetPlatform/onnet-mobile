@@ -8,6 +8,7 @@ import { useColors } from '../../Theme';
 import styles from './HomeChatScreen.styles';
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
+import { Blob } from '../../Components/Skia/Blob/Blob';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();

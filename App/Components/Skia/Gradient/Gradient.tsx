@@ -1,12 +1,11 @@
-import React, { useDebugValue, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Canvas,
   vec,
   Rect,
   SweepGradient,
   BackdropBlur,
-  useTiming,
-  interpolateColors,
+  RadialGradient,
 } from '@shopify/react-native-skia';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useColors } from '../../../Theme';
@@ -54,6 +53,26 @@ export default () => {
     ],
     [blue, pink, yellow, backgroud]
   );
+
+  const radialYellow = useDerivedValue(
+    () => interpolateColor(skValue.value, [0, 1], [colors.pink, colors.cyan]),
+    [skValue]
+  );
+
+  const radialCyan = useDerivedValue(
+    () => interpolateColor(skValue.value, [0, 1], [colors.cyan, colors.pink]),
+    [skValue]
+  );
+  const radialPink = useDerivedValue(
+    () => interpolateColor(skValue.value, [0, 0.5, 1], [colors.pink, colors.yellow, colors.cyan]),
+    [skValue]
+  );
+
+  const radialGradient = useDerivedValue(
+    () => [radialYellow.value, radialCyan.value, radialPink.value, colors.background],
+    [radialCyan, radialPink, radialYellow]
+  );
+
   useEffect(() => {
     skValue.value = withRepeat(withTiming(1, { duration: 10000, easing: Easing.linear }), -1, true);
   }, []);
@@ -62,7 +81,14 @@ export default () => {
       <Rect x={0} y={0} width={width} height={height}>
         <SweepGradient start={start} c={vec(width / 2, height * 0.75)} colors={gradientColors} />
       </Rect>
-      <BackdropBlur blendMode={'overlay'} blur={50} />
+      <Rect x={height / 2} y={0} width={width} height={height}>
+        <RadialGradient
+          colors={radialGradient}
+          c={vec(width / 2, height + width / 4)}
+          r={width / 2}
+        />
+      </Rect>
+      <BackdropBlur blendMode={'overlay'} blur={100} />
     </Canvas>
   );
 };

@@ -10,19 +10,20 @@ export const ChatUsersList: React.FC = () => {
   const { users } = useRealmUsers();
   const sortedUsersAphabet = users.sorted('name');
   const colors = useColors();
-  const activeUsers = sortedUsersAphabet
-    .sorted('isActive', true)
-    .filter((user) => user.unreadCount === 0);
-  const unreadMessages = sortedUsersAphabet
-    .sorted('unreadCount', true)
-    .filter((user) => user.unreadCount > 0);
+
+  const activeUsers = Array.from(
+    sortedUsersAphabet.sorted('isActive', true).filtered('unreadCount = 0')
+  );
+  const unreadMessages = Array.from(
+    sortedUsersAphabet.filtered('unreadCount > 0').sorted('unreadCount', true)
+  );
 
   const sections = [
     {
       title: 'Unread messages',
       data: unreadMessages,
     },
-    { title: 'Users', data: activeUsers.slice(0, 4) },
+    { title: 'Users', data: activeUsers.slice(0, 10) },
   ];
   const getItemLayout = sectionListGetItemLayout({
     getItemHeight: () => 50,
@@ -38,7 +39,7 @@ export const ChatUsersList: React.FC = () => {
       getItemLayout={getItemLayout}
       maxToRenderPerBatch={10}
       showsVerticalScrollIndicator={false}
-      renderItem={({ section, item }) => {
+      renderItem={({ item }) => {
         return (
           <ChatUser
             key={item.name}

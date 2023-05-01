@@ -1,10 +1,11 @@
 import React from 'react';
-import {Gradient} from '../../Skia';
-import {GradientLayoutProps} from './types';
-const GradientLayout: React.FC<GradientLayoutProps> = ({children}) => {
+import { Gradient } from '../../Skia';
+import { GradientLayoutProps } from './types';
+import { Blob } from '../../Skia/Blob/Blob';
+const GradientLayout: React.FC<GradientLayoutProps> = ({ children }) => {
   return (
     <>
-      <Gradient />
+      <Blob />
       {children}
     </>
   );

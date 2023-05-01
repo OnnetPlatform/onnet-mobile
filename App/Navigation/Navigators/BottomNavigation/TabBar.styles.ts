@@ -1,9 +1,13 @@
 import { StyleSheet } from 'react-native';
+import { BOTTOM_BAR_HEIGHT } from '../../../Theme';
 
 export default StyleSheet.create({
   tabbar: {
     paddingVertical: 8,
     width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    height: BOTTOM_BAR_HEIGHT,
   },
   container: {
     flexDirection: 'row',

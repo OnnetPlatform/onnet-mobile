@@ -3,14 +3,12 @@ import { Socket } from 'socket.io-client';
 import { UserChat, Message, UploadedImage } from '../../types';
 import useChatEvents from './useChatEvents';
 import { useRealmUsers } from '../Database/Hooks/useRealmUsers';
-import { useRealm } from './useRealmContext';
 import { useRealmMessages } from '../Database/Hooks/useRealmMessages';
 import User from '../Database/Models/User';
 
 export const useConnectedUsers = (socket: Socket) => {
   const [connectedUsers, setConnectedUsers] = useState<Map<string, UserChat>>(new Map());
   const { getUser, updateUser, createUser, users } = useRealmUsers();
-  const realm = useRealm();
   const { createMessage } = useRealmMessages();
   const setConnectedUsersMap = (data: UserChat[]) => {
     data.map((connectedUser) => {
@@ -110,7 +108,6 @@ export const useConnectedUsers = (socket: Socket) => {
   };
   useEffect(() => {
     socket.on('connect', () => console.log('Connected'));
-    socket.on('disconnect', () => console.log('disconnected'));
     socket.on('connected_users', setConnectedUsersMap);
     socket.on('user_connected', onUserConnected);
     socket.on('user_disconnected', onUserDiconnected);

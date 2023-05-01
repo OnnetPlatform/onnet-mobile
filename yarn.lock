@@ -987,6 +987,11 @@
   resolved "https://registry.npmjs.org/@faker-js/faker/-/faker-7.6.0.tgz"
   integrity sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==
 
+"@georgedoescode/spline@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@georgedoescode/spline/-/spline-1.0.1.tgz#62da66f90604e7a5bbd5d98e48371427f0e5d0ed"
+  integrity sha512-TlNv3mkCxNOrbbKBshZbu54Zf9lLh2b7YZdnynDLYnkagTtWt1ERu5+csWnHsA3uCn6P2OmS8MBLGGDLiKxI+A==
+
 "@gorhom/bottom-sheet@^4.4.5":
   version "4.4.5"
   resolved "https://registry.npmjs.org/@gorhom/bottom-sheet/-/bottom-sheet-4.4.5.tgz"
@@ -8307,6 +8312,11 @@ simple-swizzle@^0.2.2:
   integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
   dependencies:
     is-arrayish "^0.3.1"
+
+simplex-noise@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/simplex-noise/-/simplex-noise-4.0.1.tgz#1573a4eaa46ce488bdf5f1e7ab3a1f798126781f"
+  integrity sha512-zl/+bdSqW7HJOQ0oDbxrNYaF4F5ik0i7M6YOYmEoIJNtg16NpvWaTTM1Y7oV/7T0jFljawLgYPS81Uu2rsfo1A==
 
 sisteransi@^1.0.5:
   version "1.0.5"

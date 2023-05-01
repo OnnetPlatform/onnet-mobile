@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
 import { ThemeColors } from '../../Theme/Colors';
+import { BOTTOM_BAR_HEIGHT } from '../../Theme';
 
 export default (colors: ThemeColors, insets: EdgeInsets) =>
   StyleSheet.create({
@@ -9,6 +10,7 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       flexGrow: 1,
       justifyContent: 'space-between',
       backgroundColor: colors.background,
+      paddingBottom: BOTTOM_BAR_HEIGHT,
     },
     headerBack: {
       width: 48,

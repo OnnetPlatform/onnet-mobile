@@ -1,7 +1,7 @@
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React, { useEffect, useState } from 'react';
-import { Pressable, View, SafeAreaView } from 'react-native';
+import { Pressable, View, SafeAreaView, useColorScheme } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon, Text } from '../../../Components/atoms';
 import { useColors } from '../../../Theme';
@@ -11,34 +11,29 @@ import { NavigationState } from '@react-navigation/native';
 import Animated, { FadeIn, FadeOut, useAnimatedStyle } from 'react-native-reanimated';
 import { HeaderLoader } from '../../../Components/atoms/HeaderLoader/HeaderLoader';
 import { useSocketContext } from '../../../Context/SocketContext/SocketContext';
+import { BlurView } from '@react-native-community/blur';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
     const { state } = props;
-    const colors = useColors();
-    const { socket } = useSocketContext();
+    const isDark = useColorScheme() === 'dark';
+    const { connected } = useSocketContext();
     return (
       <>
-        {socket.connected ? null : (
+        {connected ? null : (
           <View style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
             <HeaderLoader />
           </View>
         )}
 
-        <View
-          style={[
-            styles.tabbar,
-            {
-              backgroundColor: colors.background,
-            },
-          ]}>
+        <BlurView blurAmount={100} blurType={isDark ? 'dark' : 'light'} style={[styles.tabbar]}>
           <SafeAreaView style={styles.container}>
             {state.routes.map((route, index) => (
               // @ts-ignore
               <Tab key={index} {...props} {...{ route, index }} />
             ))}
           </SafeAreaView>
-        </View>
+        </BlurView>
       </>
     );
   },
@@ -89,7 +84,6 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
             <Icon style={{ width: 18, height: 18 }} name={icon + (isFocused ? '' : '-outline')} />
           </>
         )}
-        {/* @ts-ignore */}
         {isFocused ? null : (
           <Animated.View
             entering={FadeIn.duration(500)}

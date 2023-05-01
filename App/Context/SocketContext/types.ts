@@ -9,4 +9,5 @@ export type SocketContextType = {
   opponent: UserChat | undefined;
   setConnectedUsers: Dispatch<SetStateAction<Map<string, UserChat>>>;
   setOpponent: Dispatch<SetStateAction<UserChat | undefined>>;
+  connected: boolean;
 };
