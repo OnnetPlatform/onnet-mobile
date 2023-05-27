@@ -10,24 +10,49 @@ export default StyleSheet.create({
   joinedUsersContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 16,
   },
   joinedUserWrapper: {
-    width: 24,
-    height: 24,
-    borderRadius: 32,
-    overflow: 'hidden',
+    marginBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   joinedUserAvatar: {
-    width: 64,
-    height: 64,
+    width: 32,
+    height: 32,
     borderRadius: 32,
+    marginRight: 8,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  title: {
     flex: 1,
+    marginLeft: 8,
+    padding: 16,
+  },
+  dot: {
+    lineHeight: 8,
+    marginHorizontal: 4,
+  },
+  joinButton: {
+    alignItems: 'flex-end',
+    marginTop: 11,
+  },
+  joinButtonContent: {
+    marginTop: 0,
+    marginVertical: 0,
   },
 });
 
 export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
+    itemWrapper: {
+      marginHorizontal: 16,
+      borderLeftColor: colors.text,
+      borderLeftWidth: 2,
+    },
     date: {
       width: 44,
       height: 44,
@@ -35,6 +60,7 @@ export const withColors = (colors: ThemeColors) =>
       borderRadius: 28,
       justifyContent: 'center',
       alignItems: 'center',
+      marginLeft: 16,
     },
     joinButton: {
       paddingHorizontal: 22,
@@ -45,5 +71,10 @@ export const withColors = (colors: ThemeColors) =>
       borderRadius: 24,
       borderWidth: 1,
       borderColor: colors.cyan,
+    },
+    dash: {
+      width: 16,
+      height: 2,
+      backgroundColor: colors.text,
     },
   });

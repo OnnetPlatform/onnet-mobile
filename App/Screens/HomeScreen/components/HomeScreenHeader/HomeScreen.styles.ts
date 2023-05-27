@@ -1,46 +1,51 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
 import { ThemeColors } from '../../../../Theme/Colors';
-
+const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    padding: 22,
     justifyContent: 'space-between',
-    paddingHorizontal: 54,
-    paddingBottom: 11,
+    marginBottom: 11,
+    padding: 22,
   },
   headerTitle: {
     textTransform: 'uppercase',
   },
   listContainer: {
     paddingBottom: 22,
-    paddingHorizontal: 54,
   },
   spacer: {
     width: 16,
     backgroundColor: 'red',
   },
+  day: {
+    width: width / 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+  },
 });
 
 export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
-    dateSlot: {
-      width: 32,
-      height: 32,
-      borderRadius: 32,
-      backgroundColor: colors.background,
+    slotContainer: {
+      width: width / 7,
+      height: 60,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: 4,
+      marginBottom: 11,
+    },
+    dateSlot: {
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 
 export const withInsets = (insets: EdgeInsets) =>
   StyleSheet.create({
     header: {
-      marginHorizontal: -32,
       paddingTop: insets.top,
       borderBottomLeftRadius: 16,
       borderBottomRightRadius: 16,

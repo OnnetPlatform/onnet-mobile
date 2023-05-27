@@ -16,6 +16,20 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     screen: {
       flex: 1,
       flexGrow: 1,
-      backgroundColor: colors.background,
+      backgroundColor: 'transparent',
+    },
+    logoWrapper: {
+      padding: 8,
+      borderRadius: 8,
+      backgroundColor: colors.secondaryBackground,
+      marginRight: 8,
+    },
+    logo: {
+      width: 18,
+      height: 18,
+    },
+    rowWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
   });

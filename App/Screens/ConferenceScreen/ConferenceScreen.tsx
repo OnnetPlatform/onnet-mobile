@@ -31,42 +31,38 @@ export default () => {
   }, [conference]);
 
   return (
-    <>
-      <GradientLayout>
-        <>
-          <SafeAreaView style={{ flex: 1 }}>
-            <Text
-              weight="bold"
-              style={{ textTransform: 'uppercase', textAlign: 'center', padding: 16 }}>
-              {confereceAlias}
-            </Text>
-            <FlatList
-              data={participants}
-              renderItem={({ item, index }) => {
-                return (
-                  <ConferenceVideo
-                    index={index}
-                    localParticipant={localParticipant}
-                    id={item.id}
-                    participant={item.participant}
-                  />
-                );
-              }}
-            />
-          </SafeAreaView>
-
-          <SafeAreaView>
-            <View style={{ paddingHorizontal: 22 }}>
-              <ConferenceFooter
-                conference={conference}
-                leaveConference={leaveConference}
-                isSDKReady={isSDKReady}
-                status={status}
+    <GradientLayout>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Text
+          weight="bold"
+          style={{ textTransform: 'uppercase', textAlign: 'center', padding: 16 }}>
+          {confereceAlias}
+        </Text>
+        <FlatList
+          data={participants}
+          renderItem={({ item, index }) => {
+            return (
+              <ConferenceVideo
+                index={index}
+                localParticipant={localParticipant}
+                id={item.id}
+                participant={item.participant}
               />
-            </View>
-          </SafeAreaView>
-        </>
-      </GradientLayout>
-    </>
+            );
+          }}
+        />
+      </SafeAreaView>
+
+      <SafeAreaView>
+        <View style={{ paddingHorizontal: 22 }}>
+          <ConferenceFooter
+            conference={conference}
+            leaveConference={leaveConference}
+            isSDKReady={isSDKReady}
+            status={status}
+          />
+        </View>
+      </SafeAreaView>
+    </GradientLayout>
   );
 };

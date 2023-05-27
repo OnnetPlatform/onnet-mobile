@@ -21,7 +21,7 @@ export const Blob: React.FC = () => {
   const clock = useClockValue();
   const hueNoiseOffset = useValue(0);
   const noise = createNoise2D();
-  const noiseStep = 0.005;
+  const noiseStep = 0.0001;
   const colors = useColors();
 
   const colorNoise = useComputedValue(() => {
@@ -44,6 +44,7 @@ export const Blob: React.FC = () => {
             colors.pink,
             colors.cyan,
             colors.blue,
+            colors.yellow,
             colors.background,
             colors.background,
           ]}

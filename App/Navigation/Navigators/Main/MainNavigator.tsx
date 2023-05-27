@@ -8,12 +8,20 @@ import { CreateEventSheet } from '../../../Screens/ConferenceScreen/components';
 import SocketContext from '../../../Context/SocketContext/SocketContext';
 import QueueContext from '../../../Context/QueueContext/QueueContext';
 import { RealmProvider } from '../../../Hooks/useRealmContext';
+import { DefaultTheme } from '@react-navigation/native';
 
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent',
+  },
+};
 export const MainNavigator: React.FC = () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <NavigationContainer>
+      <NavigationContainer theme={navTheme}>
         <SafeAreaProvider>
           <RealmProvider schemaVersion={9}>
             <SocketContext>

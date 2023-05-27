@@ -26,9 +26,10 @@ export const useQueue = () => {
 
   const sendQueue = useCallback(() => {
     queue.forEach((item) => {
-      socket.emit(item.event.toString(), item.data);
+      socket.emit(item.event.toString(), item.data, () => {
+        queue.delete(item.id);
+      });
       if (item.callback) item.callback();
-      queue.delete(item.id);
     });
   }, [socket, queue]);
 

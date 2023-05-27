@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 export const useFakerData = () => {
   const generateEventsData = () => ({
     title: faker.name.jobTitle(),
-    date: faker.date.between(new Date().toString(), new Date().toString()),
+    date: faker.date.between(new Date().toString(), '2023-08-12T12:03:35.058Z'),
     time: Math.round(Math.random() * 24),
     duration: 60,
   });
@@ -18,7 +18,7 @@ export const useFakerData = () => {
   });
 
   const eventsData = useMemo(() => {
-    const length = 10;
+    const length = 100;
     const array = Array.from({ length }, generateEventsData);
     return array;
   }, []);

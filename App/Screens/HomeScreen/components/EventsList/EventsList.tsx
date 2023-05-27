@@ -1,9 +1,8 @@
 import { BlurView } from '@react-native-community/blur';
-import React, { useMemo } from 'react';
-import { View, ViewStyle } from 'react-native';
+import React, { useState } from 'react';
+import { View, useColorScheme } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Icon, Text } from '../../../../Components/atoms';
+import { Text } from '../../../../Components/atoms';
 import { SectionsList } from '../../../../Components/atoms/SectionsList';
 import { useColors } from '../../../../Theme';
 import EventItem from '../EventItem/EventItem';
@@ -14,37 +13,45 @@ import styles, { withColors } from './EventsList.styles';
 export const EventsList: React.FC<{
   onCreatePressed(): void;
 }> = ({ onCreatePressed }) => {
+  const [selectedDate, setSelectedDate] = useState<Date>();
   const { eventsData } = useFakerData();
   const colors = useColors();
   const colorStyles = withColors(colors);
-  const insets = useSafeAreaInsets();
   const animatedHeaderValue = useSharedValue(0);
-
-  const containerStyle = useMemo<ViewStyle>(
-    () => ({
-      // paddingBottom: insets.bottom + 300,
-    }),
-    [insets.bottom]
-  );
+  const isDark = useColorScheme() === 'dark';
 
   return (
     <>
       <HomeScreenHeader
         animatedHeaderValue={animatedHeaderValue}
         onCreatePressed={onCreatePressed}
+        selectedDate={selectedDate}
+        onDateSelected={setSelectedDate}
       />
       <SectionsList
         showsVerticalScrollIndicator={false}
+        scrollToDate={selectedDate}
         bounces={true}
         data={eventsData}
-        contentContainerStyle={[containerStyle, styles.container]}
-        ItemSeparatorComponent={() => <View style={styles.spacer} />}
+        scrollEventThrottle={0.3}
+        onScroll={(e) => {
+          animatedHeaderValue.value = selectedDate ? 0 : e.nativeEvent.contentOffset.y;
+        }}
+        contentContainerStyle={[styles.container]}
         renderItem={({ item }) => <EventItem event={item} />}
         renderSectionHeader={({ section }: any) => {
           return (
-            <BlurView blurType="regular" blurAmount={20} style={colorStyles.header}>
-              <Icon name={'calendar-outline'} />
-              <Text style={{ marginLeft: 8 }} weight="bold" fontSize={18}>
+            <BlurView
+              blurAmount={1}
+              blurType={isDark ? 'thinMaterialDark' : 'light'}
+              style={colorStyles.header}>
+              <View
+                style={{ width: 6, height: 6, backgroundColor: colors.text, borderRadius: 12 }}
+              />
+              <Text
+                style={{ marginLeft: 8, textTransform: 'uppercase' }}
+                weight="semibold"
+                fontSize={12}>
                 {section.title}
               </Text>
             </BlurView>
