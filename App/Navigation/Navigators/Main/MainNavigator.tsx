@@ -9,6 +9,7 @@ import SocketContext from '../../../Context/SocketContext/SocketContext';
 import QueueContext from '../../../Context/QueueContext/QueueContext';
 import { RealmProvider } from '../../../Hooks/useRealmContext';
 import { DefaultTheme } from '@react-navigation/native';
+import { OnnetProvider } from '../../../Provider/OnnetProvider';
 
 const navTheme = {
   ...DefaultTheme,
@@ -17,22 +18,25 @@ const navTheme = {
     background: 'transparent',
   },
 };
+
 export const MainNavigator: React.FC = () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <NavigationContainer theme={navTheme}>
-        <SafeAreaProvider>
-          <RealmProvider schemaVersion={9}>
-            <SocketContext>
-              <QueueContext>
-                <AuthStack />
-                <CreateEventSheet onClose={function (): void {}} />
-              </QueueContext>
-            </SocketContext>
-          </RealmProvider>
-        </SafeAreaProvider>
-      </NavigationContainer>
+      <OnnetProvider>
+        <NavigationContainer theme={navTheme}>
+          <SafeAreaProvider>
+            <RealmProvider schemaVersion={9}>
+              <SocketContext>
+                <QueueContext>
+                  <AuthStack />
+                  <CreateEventSheet onClose={function (): void {}} />
+                </QueueContext>
+              </SocketContext>
+            </RealmProvider>
+          </SafeAreaProvider>
+        </NavigationContainer>
+      </OnnetProvider>
     </>
   );
 };

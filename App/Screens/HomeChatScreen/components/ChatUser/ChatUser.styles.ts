@@ -7,12 +7,13 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   badge: {
-    width: 18,
+    minWidth: 18,
     height: 18,
     backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
     borderRadius: 12,
+    paddingHorizontal: 4,
   },
 });

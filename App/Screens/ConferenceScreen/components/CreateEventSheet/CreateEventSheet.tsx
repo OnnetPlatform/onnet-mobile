@@ -9,7 +9,6 @@ import { Pressable, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text } from '../../../../Components/atoms';
 import { Collapsible } from '../../../../Components/atoms/Collapsible/Collapsible';
-import type { CollapsibleRef } from '../../../../Components/atoms/Collapsible/Collapsible';
 import { useColors } from '../../../../Theme';
 import { CustomBackground } from './CustomBackground';
 import { Calendar } from '../../../../Components/molecules/Calendar/Calendar';
@@ -39,8 +38,6 @@ export const CreateEventSheet: React.FC<{
   const snapPoints = useMemo(() => ['CONTENT_HEIGHT'], [expanded]);
   const { animatedContentHeight, animatedSnapPoints, handleContentLayout, animatedHandleHeight } =
     useBottomSheetDynamicSnapPoints(snapPoints);
-
-  const collapsibleRef = useRef<CollapsibleRef>(null);
 
   const styles = withInsets(insets, colors);
   const animatedIcon = useAnimatedStyle(() => {
@@ -122,7 +119,6 @@ export const CreateEventSheet: React.FC<{
           ]}
           onPressIn={() => {
             setExpanded(!expanded);
-            collapsibleRef.current?.expand();
           }}>
           <Text fontSize={16} weight="bold">
             Date{' '}

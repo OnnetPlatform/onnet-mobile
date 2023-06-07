@@ -14,7 +14,9 @@
     "@eva-design/eva": "^2.1.1",
     "@georgedoescode/spline": "^1.0.1",
     "@gorhom/bottom-sheet": "^4.4.5",
+    "@khayat/onnet": "../Libraries/onnet",
     "@react-native-camera-roll/camera-roll": "^5.3.1",
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/blur": "^4.3.0",
     "@react-native-masked-view/masked-view": "^0.2.8",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -38,6 +40,7 @@
     "react-native-screens": "^3.20.0",
     "react-native-section-list-get-item-layout": "^2.2.3",
     "react-native-svg": "^13.8.0",
+    "react-redux": "^8.0.7",
     "realm": "11.3.1",
     "simplex-noise": "^4.0.1",
     "socket.io-client": "^4.6.1"

@@ -26,4 +26,17 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginTop: 8,
   },
+  badge: {
+    backgroundColor: 'red',
+    position: 'absolute',
+    borderRadius: 12,
+    top: 0,
+    left: 45,
+    zIndex: 100,
+    minWidth: 18,
+    minHeight: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
 });

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, View, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text } from '../../Components/atoms';
@@ -12,6 +12,7 @@ export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const withColors = styles(colors, insets);
+
   return (
     <SafeAreaView style={withColors.screen}>
       <View style={withColors.header}>

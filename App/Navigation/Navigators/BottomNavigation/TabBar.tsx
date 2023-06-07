@@ -73,17 +73,31 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
       [isFocused]
     );
 
+    const badge = () => {
+      if (index === 3)
+        return (
+          <View style={styles.badge}>
+            <Text weight="black" fontSize={10}>
+              {'2'}
+            </Text>
+          </View>
+        );
+      return null;
+    };
+
     return (
       <Pressable onPress={onPress} onLongPress={onLongPress} style={styles.tab} key={index}>
+        {badge()}
         {isFocused ? (
           <MaskedView maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
             <LinearGradient style={styles.icon} colors={[colors.pink, colors.cyan]} />
           </MaskedView>
         ) : (
           <>
-            <Icon style={{ width: 18, height: 18 }} name={icon + (isFocused ? '' : '-outline')} />
+            <Icon style={{ width: 24 }} name={icon + (isFocused ? '' : '-outline')} />
           </>
         )}
+
         {isFocused ? null : (
           <Animated.View
             entering={FadeIn.duration(500)}

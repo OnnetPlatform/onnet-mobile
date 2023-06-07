@@ -17,15 +17,15 @@ export type ThemeColors = {
   turquoise: string;
 };
 
-const pink = '#E90064';
-const blue = '#19294f';
-const black = '#000000';
-const white = '#e4dbd3';
-const cyan = '#09CFFA';
-const yellow = '#ffde03';
-const secondaryDark = '#121212';
-const secondaryLight = '#cdc5bd';
-const turquoise = '#30D5C8';
+export const pink = '#E90064';
+export const blue = '#19294f';
+export const black = '#000000';
+export const white = '#e4dbd3';
+export const cyan = '#09CFFA';
+export const yellow = '#ffde03';
+export const secondaryDark = '#121212';
+export const secondaryLight = '#cdc5bd';
+export const turquoise = '#30D5C8';
 
 export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSchemeName) => ({
   pink,

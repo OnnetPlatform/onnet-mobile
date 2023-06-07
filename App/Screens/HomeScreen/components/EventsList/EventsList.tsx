@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
 import React, { useState } from 'react';
-import { View, useColorScheme } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, View, useColorScheme } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { Text } from '../../../../Components/atoms';
 import { SectionsList } from '../../../../Components/atoms/SectionsList';
@@ -19,7 +19,9 @@ export const EventsList: React.FC<{
   const colorStyles = withColors(colors);
   const animatedHeaderValue = useSharedValue(0);
   const isDark = useColorScheme() === 'dark';
-
+  const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    animatedHeaderValue.value = selectedDate ? 0 : e.nativeEvent.contentOffset.y;
+  };
   return (
     <>
       <HomeScreenHeader
@@ -34,9 +36,7 @@ export const EventsList: React.FC<{
         bounces={true}
         data={eventsData}
         scrollEventThrottle={0.3}
-        onScroll={(e) => {
-          animatedHeaderValue.value = selectedDate ? 0 : e.nativeEvent.contentOffset.y;
-        }}
+        onScroll={onScroll}
         contentContainerStyle={[styles.container]}
         renderItem={({ item }) => <EventItem event={item} />}
         renderSectionHeader={({ section }: any) => {
