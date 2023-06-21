@@ -3,7 +3,6 @@ import { pink } from '../../../Theme/Colors';
 const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   closeIcon: {
-    backgroundColor: pink,
     overflow: 'hidden',
     position: 'absolute',
     height: '100%',
@@ -21,5 +20,12 @@ export default StyleSheet.create({
   },
   top: {
     marginTop: 4,
+  },
+  deleteButton: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    backgroundColor: pink,
+    alignItems: 'center',
   },
 });

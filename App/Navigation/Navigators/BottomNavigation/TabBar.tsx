@@ -1,7 +1,7 @@
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import React, { useEffect, useState } from 'react';
-import { Pressable, View, SafeAreaView, useColorScheme } from 'react-native';
+import React from 'react';
+import { Pressable, View, SafeAreaView, useColorScheme, ViewStyle } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { Icon, Text } from '../../../Components/atoms';
 import { useColors } from '../../../Theme';
@@ -16,8 +16,13 @@ import { BlurView } from '@react-native-community/blur';
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
     const { state } = props;
+    const { index } = state;
+    const colors = useColors();
     const isDark = useColorScheme() === 'dark';
     const { connected } = useSocketContext();
+    const background: ViewStyle = {
+      backgroundColor: index === 4 ? colors.background : 'transparent',
+    };
     return (
       <>
         {connected ? null : (
@@ -26,7 +31,10 @@ const TabBar = React.memo(
           </View>
         )}
 
-        <BlurView blurAmount={100} blurType={isDark ? 'dark' : 'light'} style={[styles.tabbar]}>
+        <BlurView
+          blurAmount={100}
+          blurType={isDark ? 'dark' : 'light'}
+          style={[styles.tabbar, background]}>
           <SafeAreaView style={styles.container}>
             {state.routes.map((route, index) => (
               // @ts-ignore
@@ -77,7 +85,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
       if (index === 3)
         return (
           <View style={styles.badge}>
-            <Text weight="black" fontSize={10}>
+            <Text weight="bold" color="white" fontSize={10}>
               {'2'}
             </Text>
           </View>
@@ -93,9 +101,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
             <LinearGradient style={styles.icon} colors={[colors.pink, colors.cyan]} />
           </MaskedView>
         ) : (
-          <>
-            <Icon style={{ width: 24 }} name={icon + (isFocused ? '' : '-outline')} />
-          </>
+          <Icon style={{ width: 24 }} name={icon + (isFocused ? '' : '-outline')} />
         )}
 
         {isFocused ? null : (

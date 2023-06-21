@@ -18,7 +18,7 @@ export const NotificationScreen: React.FC = () => {
   const renderItem: SectionListRenderItem<
     NotificationType,
     { title: string; data: NotificationType[] }
-  > = ({ item }) => <Notification {...{ notification: item }} />;
+  > = ({ item, index }) => <Notification {...{ notification: item, index }} />;
 
   return (
     <>
@@ -28,6 +28,7 @@ export const NotificationScreen: React.FC = () => {
           Notifications
         </Text>
       </Blur>
+
       <SafeAreaView style={styles.screen}>
         <SectionList
           sections={sections}

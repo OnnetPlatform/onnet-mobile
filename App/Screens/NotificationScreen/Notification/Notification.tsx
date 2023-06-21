@@ -3,9 +3,10 @@ import { Notification as NotificationType } from '../data';
 import { Blur, Icon, Text } from '../../../Components/atoms';
 import moment from 'moment';
 import { NotificationIcon } from './NotificationIcon';
-import { View, useWindowDimensions } from 'react-native';
+import { Pressable, View, useWindowDimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
+  FadeIn,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -16,7 +17,10 @@ import styles from './Notification.styles';
 const TOUCH_SLOP = 5;
 const TIME_TO_ACTIVATE_PAN = 25;
 
-export const Notification: React.FC<{ notification: NotificationType }> = ({ notification }) => {
+export const Notification: React.FC<{ notification: NotificationType; index: number }> = ({
+  notification,
+  index,
+}) => {
   const { width } = useWindowDimensions();
   const x = useSharedValue(0);
   const context = useSharedValue(0);
@@ -60,6 +64,7 @@ export const Notification: React.FC<{ notification: NotificationType }> = ({ not
     transform: [{ translateX: x.value }],
     flexDirection: 'row',
   }));
+
   const animatedButtonStyle = useAnimatedStyle(() => ({
     width: x.value > 0 ? interpolate(x.value, [0, visible_offset], [0, visible_offset]) : 0,
     transform: [{ translateX: x.value > 0 ? -x.value : 0 }],
@@ -73,11 +78,13 @@ export const Notification: React.FC<{ notification: NotificationType }> = ({ not
   }));
 
   return (
-    <Animated.View style={animatedStyle}>
+    <Animated.View style={animatedStyle} entering={FadeIn.delay(100 * index)}>
       <Animated.View style={[animatedButtonStyle, styles.closeIcon]}>
-        <Animated.View style={animatedIcon}>
-          <Icon name={'trash-outline'} />
-        </Animated.View>
+        <Pressable style={styles.deleteButton} onPress={() => {}}>
+          <Animated.View style={animatedIcon}>
+            <Icon name={'trash-outline'} />
+          </Animated.View>
+        </Pressable>
       </Animated.View>
       <GestureDetector userSelect="none" gesture={gesture}>
         <Blur style={styles.notification}>

@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 LogBox.ignoreAllLogs();
 import { MainNavigator } from './App/Navigation';
 import { useColors } from './App/Theme';
+import SplashScreen from './App/Screens/SplashScreen/SplashScreen';
 
 export const Warda = () => {
   const rotate = useSharedValue<number>(0);

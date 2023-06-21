@@ -28,43 +28,43 @@ export type Notification = EventScheduledNotification | MessageReactionNotificat
 
 export const notifications: Notification[] = [
   {
-    title: 'Eugene Sumchenko has scheduled an event',
+    title: 'John Doe has scheduled an event',
     data: { date: new Date(), time: new Date() },
     createdDate: new Date(),
     type: NotificationTypes.EVENT_SCHEDULED,
   },
   {
-    title: 'Eugene Sumchenko has scheduled an event',
+    title: 'John Doe has scheduled an event',
     data: { date: yesterday, time: yesterday },
     createdDate: yesterday,
     type: NotificationTypes.EVENT_SCHEDULED,
   },
   {
-    title: 'Eugene Sumchenko has reacted to your message',
+    title: 'John Doe has reacted to your message',
     data: { message: 'lorem ipsum dolor sit amis', emoji: `❤️` },
     createdDate: yesterday,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
-    title: 'Eugene Sumchenko has reacted to your message',
+    title: 'John Doe has reacted to your message',
     data: { message: 'lorem ipsum dolor sit amis', emoji: `🙏🏻` },
     createdDate: yesterday,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
-    title: 'Eugene Sumchenko has reacted to your message',
+    title: 'John Doe has reacted to your message',
     data: { message: 'lorem ipsum dolor sit amis', emoji: `👍🏻` },
     createdDate: day3before,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
-    title: 'Eugene Sumchenko has reacted to your message',
+    title: 'John Doe has reacted to your message',
     data: { message: 'lorem ipsum dolor sit amis', emoji: `👍🏻` },
     createdDate: weekbefore,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
-    title: 'Eugene Sumchenko has reacted to your message',
+    title: 'John Doe has reacted to your message',
     data: { message: 'lorem ipsum dolor sit amis', emoji: `👍🏻` },
     createdDate: day3before,
     type: NotificationTypes.MESSAGE_REACTION,
@@ -85,7 +85,7 @@ const getHeaderTitle = (date: Moment) => {
     nextDay: '[Tomorrow]',
     lastDay: '[Yesterday]',
     lastWeek: '[Last Week]',
-    sameElse: 'Do MMM, YYYY',
+    sameElse: 'MMMM Do, YYYY',
   });
 };
 
