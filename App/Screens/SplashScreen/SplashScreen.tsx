@@ -27,7 +27,14 @@ export const SplashScreen: React.FC = () => {
         flex: 1,
         flexGrow: 1,
       }}>
-      <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center', zIndex: 100 }}>
+      <View
+        style={{
+          flex: 0.5,
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          zIndex: 100,
+          paddingTop: 22,
+        }}>
         <AppLogo />
       </View>
       <Galaxy />

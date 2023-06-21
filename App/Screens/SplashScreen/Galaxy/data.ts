@@ -5,6 +5,7 @@ export type Planet = {
   colors: string[];
   title: string;
   radius: number;
+  spikes?: boolean;
 };
 export const planets = [
   {
@@ -29,7 +30,7 @@ export const planets = [
     index: 3,
     colors: [blue, turquoise],
     title: 'Earth',
-    radius: 40,
+    radius: 39.59,
   },
   {
     index: 4,
@@ -42,6 +43,7 @@ export const planets = [
     colors: ['brown', 'orange'],
     title: 'Jupiter',
     radius: 434,
+    spikes: true,
   },
   {
     index: 6,
