@@ -36,7 +36,7 @@ export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSc
   yellow,
   text: scheme === 'dark' ? white : '#212427',
   background: scheme === 'dark' ? black : white,
-  blur: scheme === 'dark' ? 'rgba(0,0,0,.2)' : 'rgba(255,255,255,.2)',
+  blur: scheme === 'dark' ? 'rgba(0, 0, 0, 0.3)' : 'rgba(255,255,255,.2)',
   secondaryBackground: scheme === 'dark' ? secondaryDark : secondaryLight,
   secondaryDark,
   secondaryLight,

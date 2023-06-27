@@ -1,43 +1,28 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import {
-  BackdropBlur,
-  Canvas,
-  Drawing,
-  FractalNoise,
-  Group,
-  Rect,
-  Skia,
-  Vertices,
-  vec,
-} from '@shopify/react-native-skia';
-import { useColors } from '../../Theme';
-import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
-import AnimatedCircle from './AnimatedCricle';
-import { Warda } from '../../../App';
-import { Galaxy } from './Galaxy';
+import React, { useEffect } from 'react';
+import { SafeAreaView } from 'react-native';
+
+import LogoLoading from './LogoLoading/LogoLoading';
+import { useNavigation } from '@react-navigation/native';
+import { Timer } from './Timer';
 
 export const SplashScreen: React.FC = () => {
   const size = 256;
   const r = size * 0.33;
+  const navigation = useNavigation();
 
+  useEffect(() => {
+    setTimeout(() => {
+      // @ts-ignore
+      navigation.navigate('MainNavigation');
+    }, 4000);
+  }, []);
   return (
     <SafeAreaView
       style={{
         flex: 1,
         flexGrow: 1,
       }}>
-      <View
-        style={{
-          flex: 0.5,
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          zIndex: 100,
-          paddingTop: 22,
-        }}>
-        <AppLogo />
-      </View>
-      <Galaxy />
+      <Timer />
     </SafeAreaView>
   );
 };

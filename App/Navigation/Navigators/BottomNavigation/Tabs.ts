@@ -12,8 +12,8 @@ export const useTabs = () =>
         icon: 'calendar',
       },
       {
-        label: 'Mentions',
-        icon: 'at',
+        label: 'Feed',
+        icon: 'home',
       },
       {
         label: 'Notifications',

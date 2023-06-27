@@ -23,7 +23,7 @@ export const Galaxy: React.FC = () => {
     () => ({
       transform: [
         {
-          scale: interpolate(skewX.value, [0, 40], [0.7, 0.5]),
+          scale: interpolate(skewX.value, [0, 40], [0.6, 0.5]),
         },
         { skewX: `${skewX.value}deg` },
       ],
@@ -92,12 +92,6 @@ const UFO: React.FC<{ planet: Planet; skewX: SharedValue<number> }> = ({ planet,
     );
   }, [planet.index]);
 
-  const skewXStyle = useAnimatedStyle(
-    () => ({
-      transform: [{ skewX: `-${rotate.value}deg` }],
-    }),
-    []
-  );
   return (
     <>
       {planet.index === 0 ? null : <Orbit radius={r} />}

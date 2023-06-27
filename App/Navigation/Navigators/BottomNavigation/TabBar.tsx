@@ -20,6 +20,7 @@ const TabBar = React.memo(
     const colors = useColors();
     const isDark = useColorScheme() === 'dark';
     const { connected } = useSocketContext();
+
     const background: ViewStyle = {
       backgroundColor: index === 4 ? colors.background : 'transparent',
     };
@@ -51,6 +52,7 @@ const TabBar = React.memo(
 const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationState }>(
   ({ state, index, navigation, route }) => {
     const tabs = useTabs();
+
     const colors = useColors();
     const isFocused = state.index === index;
     const { icon, label: tabLabel } = tabs[index];
