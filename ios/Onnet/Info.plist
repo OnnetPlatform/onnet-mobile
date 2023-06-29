@@ -4,12 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow access to microphone</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow access to camera roll</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Allow access to camera</string>
 	<key>CFBundleDisplayName</key>
 	<string>Onnet</string>
 	<key>CFBundleExecutable</key>
@@ -41,22 +35,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access to camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow access to microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to camera roll</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Rubik-Black.ttf</string>
@@ -74,5 +60,19 @@
 		<string>Rubik-SemiBold.ttf</string>
 		<string>Rubik-SemiBoldItalic.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

@@ -1,9 +1,10 @@
-import { StyleSheet } from 'react-native';
-
+import { Dimensions, StyleSheet } from 'react-native';
+const { height } = Dimensions.get('window');
 export default StyleSheet.create({
   story: {
     overflow: 'hidden',
     borderRadius: 16,
-    paddingTop: 8,
+    padding: 16,
+    marginTop: 16,
   },
 });

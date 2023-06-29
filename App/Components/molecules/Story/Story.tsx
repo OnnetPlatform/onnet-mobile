@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, useWindowDimensions, Image as RNImage } from 'react-native';
+import { View, useWindowDimensions, Image as RNImage, Pressable } from 'react-native';
 import StoryHeader from './StoryHeader/StoryHeader';
 import { Blur, Text } from '../../atoms';
 import { useColors } from '../../../Theme';
@@ -30,7 +30,11 @@ export const Story: React.FC<{ isFocused: SharedValue<boolean>; data: StoryType 
   }, []);
   return (
     <Blur style={{ borderRadius: 16, height: height * 0.6, overflow: 'hidden' }}>
-      <StoryGallery media={data.stories[currentIndex]?.media} currentIndex={currentIndex} />
+      <StoryGallery
+        isFocused={isFocused}
+        media={data.stories[currentIndex]?.media}
+        currentIndex={currentIndex}
+      />
       <View style={{ justifyContent: 'space-between', flex: 1 }}>
         <LinearGradient
           start={{ x: 0, y: 1 }}
@@ -57,6 +61,10 @@ export const Story: React.FC<{ isFocused: SharedValue<boolean>; data: StoryType 
               currentIndex={currentIndex}
               onEnd={increament}
             />
+          </View>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <Pressable onPress={decreament} style={{ flex: 1 }} />
+            <Pressable onPress={increament} style={{ flex: 1 }} />
           </View>
           <View style={{ padding: 16 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>

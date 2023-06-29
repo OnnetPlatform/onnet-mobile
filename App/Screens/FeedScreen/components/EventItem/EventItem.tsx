@@ -4,6 +4,7 @@ import { Story } from '../../../../Components/molecules/Story/Story';
 import { useColors } from '../../../../Theme';
 import Animated, {
   SharedValue,
+  interpolate,
   interpolateColor,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -12,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import styles from './EventItem.styles';
 import type { Story as StoryType } from '../../../../Components/molecules/Story/types';
+import { useWindowDimensions } from 'react-native';
 export const EventItem: React.FC<{
   headerHeight: number;
   scrollYOffset: SharedValue<number>;
@@ -22,7 +24,7 @@ export const EventItem: React.FC<{
   const offset = useSharedValue<number>(0);
   const y = useSharedValue(0);
   const storyHeight = useSharedValue(0);
-
+  const { width } = useWindowDimensions();
   const isFocused = useDerivedValue(() => {
     const lowerBound = y.value - storyHeight.value / 2;
     const upperBound = y.value + storyHeight.value / 2;
@@ -34,10 +36,23 @@ export const EventItem: React.FC<{
       backgroundColor: interpolateColor(
         offset.value,
         [y.value - storyHeight.value / 2, y.value, y.value + 100],
+        ['transparent', colors.secondaryBackground, 'transparent']
+      ),
+    }),
+    [isFocused, width]
+  );
+
+  const animatedBorder = useAnimatedStyle(
+    () => ({
+      borderWidth: 1,
+      borderRadius: 16,
+      borderColor: interpolateColor(
+        offset.value,
+        [y.value - storyHeight.value / 2, y.value, y.value + 100],
         ['transparent', colors.text, 'transparent']
       ),
     }),
-    [isFocused]
+    []
   );
 
   useAnimatedReaction(
@@ -58,7 +73,9 @@ export const EventItem: React.FC<{
 
   return (
     <Animated.View ref={ref} style={[styles.story, animatedStyle]}>
-      <Story data={data} isFocused={isFocused} />
+      <Animated.View>
+        <Story data={data} isFocused={isFocused} />
+      </Animated.View>
     </Animated.View>
   );
 };
