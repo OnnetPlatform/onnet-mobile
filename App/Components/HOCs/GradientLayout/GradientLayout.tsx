@@ -1,5 +1,6 @@
 import React from 'react';
 import { GradientLayoutProps } from './types';
+import { Gradient } from '../../Skia';
 import { Blob } from '../../Skia/Blob/Blob';
 
 const GradientLayout: React.FC<GradientLayoutProps> = ({ children }) => {

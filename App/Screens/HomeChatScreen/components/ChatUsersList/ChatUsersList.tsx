@@ -54,7 +54,7 @@ export const ChatUsersList: React.FC = () => {
       }}
       renderSectionHeader={({ section }) =>
         section.data.length > 0 ? (
-          <Text weight="bold" style={{ padding: 8, backgroundColor: colors.background }}>
+          <Text weight="bold" style={{ padding: 8, backgroundColor: colors.blur }}>
             {section.title}
           </Text>
         ) : null

@@ -22,6 +22,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
+import { GradientCard } from '../../../../Components/Skia/GradientCard/GradientCard';
 
 export const CreateEventSheet: React.FC<{
   onClose(): void;
@@ -34,7 +35,7 @@ export const CreateEventSheet: React.FC<{
   const animatedBottomSheetIndex = useSharedValue(1);
   const { width } = useWindowDimensions();
   const collapsibleValue = useDerivedValue(() => 0);
-  const { state } = useAnimatedKeyboard();
+  const { state, height } = useAnimatedKeyboard();
   const snapPoints = useMemo(() => ['CONTENT_HEIGHT'], [expanded]);
   const { animatedContentHeight, animatedSnapPoints, handleContentLayout, animatedHandleHeight } =
     useBottomSheetDynamicSnapPoints(snapPoints);
@@ -63,79 +64,93 @@ export const CreateEventSheet: React.FC<{
       if (state.value === 1) {
         resetKeyboard();
       }
+    } else {
     }
-    animatedBottomSheetIndex.value = -1;
   }, [expanded, CreateEventSheetRef.current]);
 
-  return (
-    <BottomSheet
-      backgroundComponent={CustomBackground}
-      backdropComponent={(props) => (
-        <BottomSheetBackdrop
-          {...props}
-          enableTouchThrough={true}
-          disappearsOnIndex={-1}
-          appearsOnIndex={0}
-          opacity={0.4}
-        />
-      )}
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
-      handleComponent={handleComponent}
-      containerStyle={{ alignItems: 'center' }}
-      style={styles.sheet}
-      snapPoints={animatedSnapPoints}
-      ref={CreateEventSheetRef}
-      animatedIndex={animatedBottomSheetIndex}
-      onClose={onClose}
-      index={-1}>
-      <BottomSheetScrollView
-        style={[styles.bottomSheetBody, { paddingBottom: 32 }]}
-        onLayout={handleContentLayout}>
-        <Text style={styles.title} fontSize={24} weight="bold">
-          Create Event
-        </Text>
-        <Text style={styles.label} fontSize={16} weight="bold">
-          Title
-        </Text>
-        <BottomSheetTextInput
-          onBlur={() => {
-            setExpanded(true);
-          }}
-          ref={bottomSheetInputRef}
-          style={styles.titleInput}
-        />
-        <Pressable
-          style={[
-            {
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              backgroundColor: colors.blur,
-              padding: 8,
-              borderRadius: 4,
-            },
-            styles.label,
-          ]}
-          onPressIn={() => {
-            setExpanded(!expanded);
-          }}>
-          <Text fontSize={16} weight="bold">
-            Date{' '}
-          </Text>
-          <Text style={[{ textTransform: 'uppercase' }]} fontSize={12} weight="regular">
-            {moment(eventDate).format('(dddd) DD, MMMM, yyyy')}
-          </Text>
-          <Animated.View style={animatedIcon}>
-            <Icon name={'arrow-ios-downward-outline'} pack={''} />
-          </Animated.View>
-        </Pressable>
+  const animatedHandleStyle = useAnimatedStyle(() => {
+    const position =
+      state.value === 2 ? animatedContentHeight.value + height.value : animatedContentHeight.value;
+    return {
+      position: 'absolute',
+      zIndex: 100,
+      marginLeft: 24,
+      bottom: interpolate(animatedBottomSheetIndex.value, [-1, 0, 1], [-100, position, position]),
+    };
+  }, [animatedContentHeight, height, state]);
 
-        <Collapsible animatedValue={collapsibleValue} expanded={expanded}>
-          <Calendar width={width - 64} />
-        </Collapsible>
-      </BottomSheetScrollView>
-    </BottomSheet>
+  return (
+    <>
+      <Text style={[styles.title, animatedHandleStyle]} fontSize={24} weight="bold">
+        Create Event
+      </Text>
+      <BottomSheet
+        backgroundComponent={GradientCard}
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop
+            {...props}
+            enableTouchThrough={true}
+            disappearsOnIndex={-1}
+            appearsOnIndex={0}
+            opacity={0.6}
+          />
+        )}
+        handleHeight={animatedHandleHeight}
+        contentHeight={animatedContentHeight}
+        handleComponent={handleComponent}
+        containerStyle={{ alignItems: 'center' }}
+        style={styles.sheet}
+        snapPoints={animatedSnapPoints}
+        ref={CreateEventSheetRef}
+        animatedIndex={animatedBottomSheetIndex}
+        onClose={onClose}
+        index={-1}>
+        <BottomSheetScrollView
+          style={[styles.bottomSheetBody, { paddingBottom: 32 }]}
+          onLayout={handleContentLayout}>
+          <Text style={styles.label} fontSize={16} weight="bold">
+            Title
+          </Text>
+          <BottomSheetTextInput
+            onFocus={() => setExpanded(false)}
+            onBlur={() => {
+              setExpanded(true);
+            }}
+            ref={bottomSheetInputRef}
+            style={styles.titleInput}
+          />
+          <Pressable
+            style={[
+              {
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: colors.blur,
+                padding: 8,
+                borderRadius: 4,
+              },
+              styles.label,
+            ]}
+            onPressIn={() => {
+              setExpanded(!expanded);
+            }}>
+            <Text fontSize={16} weight="bold">
+              Date{' '}
+            </Text>
+            <Text style={[{ textTransform: 'uppercase' }]} fontSize={12} weight="regular">
+              {moment(eventDate).format('(dddd) DD, MMMM, yyyy')}
+            </Text>
+            <Animated.View style={animatedIcon}>
+              <Icon name={'arrow-ios-downward-outline'} pack={''} />
+            </Animated.View>
+          </Pressable>
+
+          <Collapsible animatedValue={collapsibleValue} expanded={expanded}>
+            <Calendar width={width - 64} />
+          </Collapsible>
+        </BottomSheetScrollView>
+      </BottomSheet>
+    </>
   );
 };
 

@@ -1,57 +1,52 @@
 import {
   BackdropBlur,
+  Blur,
   Canvas,
+  Circle,
+  ColorMatrix,
+  Group,
+  Paint,
   Rect,
-  SweepGradient,
   useClockValue,
   useComputedValue,
   useValue,
-  vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
-import { createNoise2D } from 'simplex-noise';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 // @ts-ignore
-import { map } from './utils';
 import { useColors } from '../../../Theme';
-
-const { width, height } = Dimensions.get('window');
+import { computeNoise } from '../Gradient/utils';
 
 export const Blob: React.FC = () => {
   const clock = useClockValue();
-  const hueNoiseOffset = useValue(0);
-  const noise = createNoise2D();
-  const noiseStep = 0.0001;
   const colors = useColors();
+  const { width, height } = useWindowDimensions();
+  const circle_1 = useValue(0);
+  const circle_2 = useValue(width);
+  const circle_radius_3 = useValue(50);
+  const circle_3 = useValue(height * 0.7);
 
-  const colorNoise = useComputedValue(() => {
-    hueNoiseOffset.current += noiseStep / 2;
-    const hueNoise = noise(hueNoiseOffset.current, hueNoiseOffset.current);
-    const newValue = map(hueNoise, -1, 1, 0, 360);
-    return newValue;
-  }, [clock]);
-
+  const circleNoise1 = useComputedValue(() => computeNoise(circle_1, width, 0.0005), [clock]);
+  const circleNoise2 = useComputedValue(() => computeNoise(circle_2, width, 0.002), [clock]);
+  const circleNoise3 = useComputedValue(() => computeNoise(circle_radius_3, 100, 0.001), [clock]);
+  const circleNoise4 = useComputedValue(() => computeNoise(circle_3, height, 0.001), [clock]);
   return (
-    <Canvas style={StyleSheet.absoluteFill}>
-      <Rect x={0} y={0} width={width} height={height}>
-        <SweepGradient
-          end={colorNoise}
-          start={0}
-          c={vec(width / 2, height * 0.75)}
-          colors={[
-            colors.background,
-            colors.yellow,
-            colors.pink,
-            colors.cyan,
-            colors.blue,
-            colors.yellow,
-            colors.background,
-            colors.background,
-          ]}
-        />
-      </Rect>
-
-      <BackdropBlur blur={300} blendMode={'overlay'} />
+    <Canvas style={StyleSheet.absoluteFillObject}>
+      <Rect width={width} height={height} color={colors.background}></Rect>
+      <Group
+        layer={
+          <Paint>
+            <Blur blur={20} />
+            <ColorMatrix matrix={[1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 18, -7]} />
+          </Paint>
+        }>
+        <Circle color={colors.background} cx={circleNoise1} cy={0} r={width * 0.9} />
+        <Circle color={colors.blue} cx={circleNoise2} cy={height / 2} r={width * 0.4} />
+        <Circle color={colors.cyan} cx={width} cy={height - 100} r={circleNoise3} />
+        <Circle color={colors.blue} cx={circleNoise4} cy={circleNoise4} r={width * 0.2} />
+        <Circle color={colors.yellow} cx={width * 0.48} cy={height * 0.8} r={circleNoise3} />
+      </Group>
+      <BackdropBlur blur={100} blendMode={'overlay'} />
     </Canvas>
   );
 };

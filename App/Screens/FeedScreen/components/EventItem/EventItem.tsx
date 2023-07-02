@@ -4,7 +4,6 @@ import { Story } from '../../../../Components/molecules/Story/Story';
 import { useColors } from '../../../../Theme';
 import Animated, {
   SharedValue,
-  interpolate,
   interpolateColor,
   useAnimatedReaction,
   useAnimatedStyle,
@@ -25,6 +24,7 @@ export const EventItem: React.FC<{
   const y = useSharedValue(0);
   const storyHeight = useSharedValue(0);
   const { width } = useWindowDimensions();
+
   const isFocused = useDerivedValue(() => {
     const lowerBound = y.value - storyHeight.value / 2;
     const upperBound = y.value + storyHeight.value / 2;
@@ -39,20 +39,7 @@ export const EventItem: React.FC<{
         ['transparent', colors.secondaryBackground, 'transparent']
       ),
     }),
-    [isFocused, width]
-  );
-
-  const animatedBorder = useAnimatedStyle(
-    () => ({
-      borderWidth: 1,
-      borderRadius: 16,
-      borderColor: interpolateColor(
-        offset.value,
-        [y.value - storyHeight.value / 2, y.value, y.value + 100],
-        ['transparent', colors.text, 'transparent']
-      ),
-    }),
-    []
+    [isFocused, width, colors.secondaryBackground]
   );
 
   useAnimatedReaction(
@@ -66,9 +53,7 @@ export const EventItem: React.FC<{
     });
   };
   useEffect(() => {
-    if (ref.current) {
-      setTimeout(measure);
-    }
+    if (ref.current) setTimeout(measure);
   }, [ref.current]);
 
   return (
