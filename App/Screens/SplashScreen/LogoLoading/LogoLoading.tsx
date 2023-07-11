@@ -6,6 +6,7 @@ import {
   Mask,
   Rect,
   Text,
+  Turbulence,
   useClockValue,
   useComputedValue,
   useFont,
@@ -23,7 +24,11 @@ export const LogoLoading: React.FC = () => {
   const clock = useClockValue();
   const offset = useValue(0);
   const end = useComputedValue(() => {
-    offset.current = offset.current + 5;
+    if (offset.current > (width - 128) * 15) {
+      offset.current = 0;
+    }
+    offset.current = offset.current + 10;
+
     return vec(offset.current, 0);
   }, [clock]);
 
@@ -31,10 +36,10 @@ export const LogoLoading: React.FC = () => {
     <Canvas style={StyleSheet.absoluteFillObject}>
       <Mask
         mask={
-          <Rect x={64} y={height / 2 - 96} width={width - 128} height={64}>
+          <Rect x={64} y={height / 2 - 52} width={width - 128} height={64}>
             <LinearGradient
-              start={vec(64, 0)}
-              colors={[colors.text, colors.background]}
+              start={vec(0, 0)}
+              colors={['#c0c0c0', '#262728', '#c0c0c0']}
               end={end}
             />
             <BackdropBlur blur={100} />
@@ -44,10 +49,10 @@ export const LogoLoading: React.FC = () => {
           <Text
             strokeWidth={20}
             x={width / 2 - 32 * 3.5}
-            y={height / 2 - 32}
+            y={height / 2}
             font={font}
             text={'ONNET'}
-            color={colors.background}
+            color={'#262728'}
           />
         </Group>
       </Mask>

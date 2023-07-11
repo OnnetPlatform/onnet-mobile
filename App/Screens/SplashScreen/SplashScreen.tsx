@@ -1,20 +1,22 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { GradientCard } from '../../Components/Skia/GradientCard/GradientCard';
-import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
-import { Text } from '../../Components/atoms';
+
+import { Polyrhythms } from '../../Components/Skia/Polyrhythms/Polyrhythms';
 
 export const SplashScreen: React.FC = () => {
   const navigation = useNavigation();
-
+  const isFocused = useIsFocused();
   useEffect(() => {
     setTimeout(() => {
-      // @ts-ignore
-      navigation.navigate('MainNavigation');
+      if (isFocused) {
+        //  @ts-ignore
+        navigation.navigate('MainNavigation');
+      }
     }, 1000);
-  }, []);
+  }, [isFocused]);
   return (
     <SafeAreaView
       style={{
@@ -24,15 +26,8 @@ export const SplashScreen: React.FC = () => {
         alignItems: 'center',
       }}>
       <GradientCard />
-      <Text
-        fontSize={64}
-        color="rgba(255,255,255,.4)"
-        weight="black"
-        style={{
-          letterSpacing: 4,
-        }}>
-        ONNET
-      </Text>
+      {/* <LogoLoading /> */}
+      <Polyrhythms />
     </SafeAreaView>
   );
 };

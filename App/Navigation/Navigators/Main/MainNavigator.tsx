@@ -23,9 +23,9 @@ export const MainNavigator: React.FC = () => {
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
-      <OnnetProvider>
-        <NavigationContainer theme={navTheme}>
-          <SafeAreaProvider>
+      <SafeAreaProvider>
+        <OnnetProvider>
+          <NavigationContainer theme={navTheme}>
             <RealmProvider schemaVersion={9}>
               <SocketContext>
                 <QueueContext>
@@ -34,9 +34,9 @@ export const MainNavigator: React.FC = () => {
                 </QueueContext>
               </SocketContext>
             </RealmProvider>
-          </SafeAreaProvider>
-        </NavigationContainer>
-      </OnnetProvider>
+          </NavigationContainer>
+        </OnnetProvider>
+      </SafeAreaProvider>
     </>
   );
 };

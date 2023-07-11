@@ -6,6 +6,8 @@ import EventItem from './components/EventItem/EventItem';
 import { useSharedValue } from 'react-native-reanimated';
 import data from '../../Components/molecules/Story/types';
 import { useColors } from '../../Theme';
+import { LoadingOnnet } from '../../Components/atoms/LoadingOnnet/LoadingOnnet';
+import { useValue } from '@shopify/react-native-skia';
 
 export const FeedScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -13,6 +15,7 @@ export const FeedScreen: React.FC = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const scrollYOffset = useSharedValue<number>(0);
   const colors = useColors();
+  const pullDownValue = useValue(0);
   return (
     <SafeAreaView
       edges={['left', 'right', 'bottom']}
@@ -29,12 +32,18 @@ export const FeedScreen: React.FC = () => {
         <Text fontSize={32} weight="bold">
           FEED <Text fontSize={10}>BETA</Text>
         </Text>
+        <LoadingOnnet progress={pullDownValue} />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         decelerationRate={'fast'}
         onScroll={(e) => {
           scrollYOffset.value = e.nativeEvent.contentOffset.y;
+          if (e.nativeEvent.contentOffset.y < 0) {
+            pullDownValue.current = Math.min(e.nativeEvent.contentOffset.y / -190, 1);
+          } else {
+            pullDownValue.current = 0;
+          }
         }}
         data={data}
         snapToInterval={Math.round(height * 0.6) + 48}
