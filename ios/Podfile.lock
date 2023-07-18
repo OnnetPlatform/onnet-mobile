@@ -76,6 +76,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.70.6)
+  - JitsiWebRTC (111.0.2)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.07.22.00):
@@ -303,9 +304,6 @@ PODS:
     - React-Core
   - react-native-cameraroll (5.3.1):
     - React-Core
-  - react-native-comms-sdk (3.7.0):
-    - React-Core
-    - VoxeetSDK (~> 3.7.0)
   - react-native-safe-area-context (4.5.0):
     - RCT-Folly
     - RCTRequired
@@ -315,6 +313,9 @@ PODS:
   - react-native-skia (0.1.188):
     - React
     - React-callinvoker
+    - React-Core
+  - react-native-webrtc (111.0.3):
+    - JitsiWebRTC (~> 111.0.0)
     - React-Core
   - React-perflogger (0.70.6)
   - React-RCTActionSheet (0.70.6):
@@ -423,7 +424,6 @@ PODS:
   - RNSVG (13.8.0):
     - React-Core
   - SocketRocket (0.6.0)
-  - VoxeetSDK (3.7.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -478,9 +478,9 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
-  - "react-native-comms-sdk (from `../node_modules/@dolbyio/comms-sdk-react-native`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
+  - react-native-webrtc (from `../node_modules/react-native-webrtc`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -515,10 +515,10 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - JitsiWebRTC
     - libevent
     - OpenSSL-Universal
     - SocketRocket
-    - VoxeetSDK
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -570,12 +570,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/blur"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
-  react-native-comms-sdk:
-    :path: "../node_modules/@dolbyio/comms-sdk-react-native"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-skia:
     :path: "../node_modules/@shopify/react-native-skia"
+  react-native-webrtc:
+    :path: "../node_modules/react-native-webrtc"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -636,6 +636,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
   hermes-engine: 2af7b7a59128f250adfd86f15aa1d5a2ecd39995
+  JitsiWebRTC: 80f62908fcf2a1160e0d14b584323fb6e6be630b
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -655,9 +656,9 @@ SPEC CHECKSUMS:
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
   react-native-blur: 50c9feabacbc5f49b61337ebc32192c6be7ec3c3
   react-native-cameraroll: f3050460fe1708378698c16686bfaa5f34099be2
-  react-native-comms-sdk: 1774bb60cb7cdee7f585675518355710ea29e0bf
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-skia: 8c68c437707fd47b25420ca4c8563fe3cfc52ada
+  react-native-webrtc: 4d1669c2ed29767fe70b0169428b4466589ecf8b
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
   React-RCTActionSheet: 7316773acabb374642b926c19aef1c115df5c466
   React-RCTAnimation: 5341e288375451297057391227f691d9b2326c3d
@@ -678,7 +679,6 @@ SPEC CHECKSUMS:
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
-  VoxeetSDK: 765c62a81cfe5ce3c694bc6c8806c84daee8c1b1
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

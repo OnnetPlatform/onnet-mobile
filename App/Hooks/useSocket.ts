@@ -28,10 +28,6 @@ export const useSocket = () => {
   }, []);
 
   useEffect(() => {
-    socket.on('ready', ({ user }) => {
-      setCurrentUser(user);
-      setConnected(true);
-    });
     socket.on('receive_dm', ChatEvents.notifyMessageListners);
     socket.on('user-typing', ChatEvents.notifyTypingListners);
     socket.on('user-stopped-typing', ChatEvents.notifyStoppedTypingListners);
