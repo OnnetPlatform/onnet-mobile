@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 export const useFakerData = () => {
   const generateEventsData = () => ({
     title: faker.name.jobTitle(),
-    date: faker.date.between(new Date().toString(), '2023-08-12T12:03:35.058Z'),
+    date: faker.date.between(new Date().toString(), new Date().toString()),
     time: Math.round(Math.random() * 24),
     duration: 60,
   });

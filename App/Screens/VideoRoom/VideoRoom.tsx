@@ -1,50 +1,47 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
-import { MediaStream } from 'react-native-webrtc';
-import { WebRTCServer, getLocalStream } from '../../Modules/WebRTC';
-import { Socket } from 'socket.io-client';
-import { LocalStreamView, Participant } from './components';
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+import { Participant } from './components';
+
+import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
+import { useWebrtcContext } from '../../Context/WebrtcContext';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useColors } from '../../Theme';
+import { VideoRoomScreenHeader } from './components/VideoRoomScreenHeader/VideoRoomScreenHeader';
 
 export const VideoRoom: React.FC = () => {
-  const socket = useMemo<Socket>(() => WebRTCServer(), []);
   const [users, setUsers] = useState<string[]>([]);
-
-  const [localStream, setLocalStream] = useState<MediaStream>();
-
+  const { localStream, leave, join, socket } = useWebrtcContext();
+  const colors = useColors();
   useEffect(() => {
-    getLocalStream().then((stream) => {
-      setLocalStream(stream);
-    });
-  }, []);
-
-  useEffect(() => {
+    join();
     socket.on('users', setUsers);
     socket.on('leave', setUsers);
-
     return () => {
       socket.off('users');
       socket.off('leave');
+      leave();
     };
   }, []);
 
+  useEffect(() => {
+    if (!localStream) {
+      setUsers([]);
+    }
+  }, [localStream]);
+
   return (
-    <SafeAreaView style={{ flex: 1, flexGrow: 1 }}>
-      <LocalStreamView localStream={localStream} />
+    <SafeAreaView
+      edges={['bottom', 'left', 'right']}
+      style={{ flex: 1, flexGrow: 1, backgroundColor: colors.background }}>
+      <VideoRoomScreenHeader />
       <FlatList
         numColumns={2}
         data={users}
-        renderItem={({ item, index }) => {
-          return (
-            <Participant
-              size={index % 2 == 0 && index === users.length - 1 ? 'lg' : 'rg'}
-              socket={socket}
-              userId={item}
-              key={item}
-              localStream={localStream}
-            />
-          );
+        renderItem={({ item }) => {
+          return <Participant socket={socket} userId={item} key={item} localStream={localStream} />;
         }}
       />
+      <VideoRoomChatSheet />
     </SafeAreaView>
   );
 };

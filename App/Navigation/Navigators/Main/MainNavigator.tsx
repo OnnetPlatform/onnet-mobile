@@ -10,6 +10,7 @@ import QueueContext from '../../../Context/QueueContext/QueueContext';
 import { RealmProvider } from '../../../Hooks/useRealmContext';
 import { DefaultTheme } from '@react-navigation/native';
 import { OnnetProvider } from '../../../Provider/OnnetProvider';
+import WebrtcProvider from '../../../Context/WebrtcContext';
 
 const navTheme = {
   ...DefaultTheme,
@@ -29,7 +30,9 @@ export const MainNavigator: React.FC = () => {
             <RealmProvider schemaVersion={9}>
               <SocketContext>
                 <QueueContext>
-                  <AuthStack />
+                  <WebrtcProvider>
+                    <AuthStack />
+                  </WebrtcProvider>
                   <CreateEventSheet onClose={function (): void {}} />
                 </QueueContext>
               </SocketContext>

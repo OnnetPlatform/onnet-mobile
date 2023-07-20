@@ -1,23 +1,25 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { View, ViewStyle } from 'react-native';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { View } from 'react-native';
 import { MediaStream, RTCIceCandidate, RTCSessionDescription, RTCView } from 'react-native-webrtc';
-import styles from './Participant.styles';
+import { useThemedStyle } from './Participant.styles';
 import { Button } from '../../../../Components/molecules';
 import { Text } from '../../../../Components/atoms';
 import { createPeerConnection } from '../../../../Modules/WebRTC';
 import { Socket } from 'socket.io-client';
+import { useColors } from '../../../../Theme';
 
 export const Participant: React.FC<{
   localStream: MediaStream | undefined;
   socket: Socket;
   userId: string;
-  size: 'lg' | 'rg';
-}> = ({ localStream, socket, userId, size }) => {
+}> = ({ localStream, socket, userId }) => {
   const [remoteStream, setRemoteStream] = useState<MediaStream>();
   const [type, setType] = useState<string>('JOIN');
   const peerConnection = useRef(createPeerConnection());
   const remoteAnswer = useRef<RTCSessionDescription>();
   const otherUserId = useRef<string>();
+  const colors = useColors();
+  const styles = useThemedStyle(colors);
   async function createOffer() {
     const sessionDescription = await peerConnection.current.createOffer({});
     peerConnection.current.setLocalDescription(sessionDescription);
@@ -88,16 +90,20 @@ export const Participant: React.FC<{
       setRemoteStream(event.streams[0]);
     };
 
+    socket.on('mute', (data: any) => {
+      if (data.userId === userId) console.log(data);
+    });
     return () => {
       socket.off('offer');
       socket.off('answer');
+      socket.off('mute');
+      leave();
     };
   }, [peerConnection, peerConnection.current, userId]);
 
   useEffect(() => {
     if (localStream) {
       localStream.getTracks().map((track) => {
-        track.enabled = true;
         try {
           peerConnection.current.addTrack(track, localStream);
         } catch (error) {
@@ -106,34 +112,50 @@ export const Participant: React.FC<{
       });
     }
   }, [localStream, userId]);
-  const dynamicWidth = () => {
-    const style: ViewStyle = {
-      width: size === 'lg' ? '100%' : '50%',
-    };
-    return style;
-  };
+
+  useEffect(() => {
+    if (remoteStream) {
+      remoteStream.getTracks().map((track) => {
+        track.addEventListener('mute', console.log);
+      });
+    }
+  }, [remoteStream]);
+
+  const leave = useCallback(() => {
+    peerConnection.current.close();
+    setRemoteStream(undefined);
+  }, []);
+
+  useEffect(() => {
+    if (!localStream) {
+      peerConnection.current.close();
+    }
+  }, [localStream, peerConnection.current, peerConnection]);
 
   if (!remoteStream)
     return (
-      <View style={[styles.container, dynamicWidth()]}>
-        <Button onPress={createOffer}>
-          <Text>Call</Text>
-        </Button>
-        {type === 'INCOMING' ? (
-          <Button onPress={createAnswer}>
-            <Text>Answer</Text>
-          </Button>
-        ) : null}
+      <View style={styles.wrapper}>
+        <View style={styles.container}>
+          {type === 'INCOMING' ? (
+            <Button onPress={createAnswer}>
+              <Text>Answer</Text>
+            </Button>
+          ) : (
+            <Button onPress={createOffer}>
+              <Text>Call</Text>
+            </Button>
+          )}
+        </View>
       </View>
     );
+
   return (
-    <RTCView
-      objectFit="cover"
-      mirror
-      streamURL={remoteStream?.toURL()}
-      style={[styles.container, dynamicWidth()]}
-    />
+    <View style={styles.wrapper}>
+      <RTCView objectFit="cover" streamURL={remoteStream?.toURL()} style={styles.container} />
+    </View>
   );
 };
 
-export default Participant;
+export default memo(Participant, (prev, next) => {
+  return prev.userId === next.userId;
+});

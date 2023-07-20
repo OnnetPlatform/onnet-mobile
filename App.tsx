@@ -18,8 +18,7 @@ import { useColors } from './App/Theme';
 import SplashScreen from './App/Screens/SplashScreen/SplashScreen';
 import { WebRTCScreen } from './App/Screens/WebRTCScreen/WebRTCScreen';
 import { VideoRoom } from './App/Screens';
-import { ConfereceProvider } from './SDKs/WebRTC/ConferenceContext/Conference.Context';
-import { ParticipantsProvider } from './SDKs/WebRTC/ParticipantsContext/ParticipantContext';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const Warda = () => {
   const rotate = useSharedValue<number>(0);
@@ -189,11 +188,4 @@ const Earth = () => {
   );
 };
 
-const App = () => {
-  return (
-    <SafeAreaProvider>
-      <VideoRoom />
-    </SafeAreaProvider>
-  );
-};
-export default App;
+export default MainNavigator;

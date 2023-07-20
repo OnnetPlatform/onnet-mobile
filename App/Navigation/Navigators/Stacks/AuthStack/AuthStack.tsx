@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LaunchScreen, LoginScreen } from '../../../../Screens';
+import { LaunchScreen, LoginScreen, VideoRoom } from '../../../../Screens';
 import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
 import SplashScreen from '../../../../Screens/SplashScreen/SplashScreen';
 
@@ -22,6 +22,7 @@ const AuthStack: React.FC = () => {
       />
       <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
       <Stack.Screen name="LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
     </Stack.Navigator>
   );
 };

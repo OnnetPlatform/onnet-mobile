@@ -1,11 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { ThemeColors } from '../../../../Theme/Colors';
 
-export default StyleSheet.create({
-  container: {
-    height: 300,
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 4,
-  },
-});
+export const useThemedStyle = (colors: ThemeColors) =>
+  StyleSheet.create({
+    wrapper: {
+      width: '50%',
+      paddingHorizontal: 2,
+    },
+    container: {
+      height: 300,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 4,
+      width: '100%',
+      borderRadius: 16,
+      borderWidth: 2,
+      borderColor: colors.secondaryBackground,
+    },
+  });
