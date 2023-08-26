@@ -36,7 +36,7 @@ export const LogoLoading: React.FC = () => {
     <Canvas style={StyleSheet.absoluteFillObject}>
       <Mask
         mask={
-          <Rect x={64} y={height / 2 - 52} width={width - 128} height={64}>
+          <Rect x={64} y={height / 4 - 52} width={width - 128} height={64}>
             <LinearGradient
               start={vec(0, 0)}
               colors={['#c0c0c0', '#262728', '#c0c0c0']}
@@ -49,7 +49,7 @@ export const LogoLoading: React.FC = () => {
           <Text
             strokeWidth={20}
             x={width / 2 - 32 * 3.5}
-            y={height / 2}
+            y={height / 4}
             font={font}
             text={'ONNET'}
             color={'#262728'}

@@ -6,8 +6,8 @@ export default StyleSheet.create({
     overflow: 'hidden',
   },
   button: {
-    paddingHorizontal: 32,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: 6,
     overflow: 'hidden',
     margin: 2,

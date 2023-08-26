@@ -7,8 +7,8 @@ import { GradientCard } from '../../Components/Skia/GradientCard/GradientCard';
 import { Polyrhythms } from '../../Components/Skia/Polyrhythms/Polyrhythms';
 
 export const SplashScreen: React.FC = () => {
-  const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const navigation = useNavigation();
   useEffect(() => {
     setTimeout(() => {
       if (isFocused) {
@@ -17,13 +17,12 @@ export const SplashScreen: React.FC = () => {
       }
     }, 1000);
   }, [isFocused]);
+
   return (
     <SafeAreaView
       style={{
         flex: 1,
         flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
       }}>
       <GradientCard />
       {/* <LogoLoading /> */}

@@ -1,62 +1,70 @@
-import { BlurView } from '@react-native-community/blur';
-import React, { useState } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, View, useColorScheme } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import { NativeScrollEvent, NativeSyntheticEvent, View, SectionList } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import { Text } from '../../../../Components/atoms';
-import { SectionsList } from '../../../../Components/atoms/SectionsList';
-import { useColors } from '../../../../Theme';
 import EventItem from '../EventItem/EventItem';
 import HomeScreenHeader from '../HomeScreenHeader';
 import { useFakerData } from './Data';
-import styles, { withColors } from './EventsList.styles';
+import styles from './EventsList.styles';
+import { SectionHeader } from '../SectionHeader/SectionHeader';
+import moment from 'moment';
+import { useScrollToTop } from '@react-navigation/native';
 
 export const EventsList: React.FC<{
   onCreatePressed(): void;
 }> = ({ onCreatePressed }) => {
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const { eventsData } = useFakerData();
-  const colors = useColors();
-  const colorStyles = withColors(colors);
+  const { data, nextPage } = useFakerData();
   const animatedHeaderValue = useSharedValue(0);
-  const isDark = useColorScheme() === 'dark';
+  const ref = useRef<SectionList<any, any>>(null);
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     animatedHeaderValue.value = selectedDate ? 0 : e.nativeEvent.contentOffset.y;
   };
+
+  const renderHeader = useCallback(({ section }: any) => {
+    return <SectionHeader section={section} />;
+  }, []);
+
+  useScrollToTop(ref);
+
   return (
     <>
       <HomeScreenHeader
         animatedHeaderValue={animatedHeaderValue}
         onCreatePressed={onCreatePressed}
         selectedDate={selectedDate}
-        onDateSelected={setSelectedDate}
-      />
-      <SectionsList
-        showsVerticalScrollIndicator={false}
-        scrollToDate={selectedDate}
-        bounces={true}
-        data={eventsData}
-        scrollEventThrottle={0.3}
-        onScroll={onScroll}
-        contentContainerStyle={[styles.container]}
-        renderItem={({ item }) => <EventItem event={item} />}
-        renderSectionHeader={({ section }: any) => {
-          return (
-            <BlurView
-              blurAmount={1}
-              blurType={isDark ? 'thinMaterialDark' : 'light'}
-              style={colorStyles.header}>
-              <View
-                style={{ width: 6, height: 6, backgroundColor: colors.text, borderRadius: 12 }}
-              />
-              <Text
-                style={{ marginLeft: 8, textTransform: 'uppercase' }}
-                weight="semibold"
-                fontSize={12}>
-                {section.title}
-              </Text>
-            </BlurView>
-          );
+        onDateSelected={(scrollToDate) => {
+          setSelectedDate(scrollToDate);
+          if (ref.current) {
+            const index = data.findIndex(
+              (date: any) => date.title === moment(scrollToDate).format('dddd, MMMM Do')
+            );
+            if (index > -1)
+              ref.current.scrollToLocation({ sectionIndex: index, animated: true, itemIndex: 0 });
+          }
         }}
+      />
+      <SectionList
+        showsVerticalScrollIndicator={false}
+        bounces={true}
+        ref={ref}
+        sections={data}
+        scrollEventThrottle={0.5}
+        onScroll={onScroll}
+        onEndReached={(distance) => {
+          setTimeout(() => {
+            nextPage();
+          }, 100);
+        }}
+        onEndReachedThreshold={0.8}
+        contentContainerStyle={[styles.container]}
+        keyExtractor={(item) => item.date}
+        renderItem={({ item }) => <EventItem event={item} />}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={10}
+        windowSize={5}
+        initialNumToRender={20}
+        updateCellsBatchingPeriod={100}
+        renderSectionHeader={renderHeader}
       />
     </>
   );

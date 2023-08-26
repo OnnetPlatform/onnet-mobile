@@ -44,7 +44,7 @@ export const HomseScreenHeader: React.FC<{
   const daysref = useAnimatedRef<any>();
   const textChanged = useSharedValue(0);
   const currentHeight = useDerivedValue(() =>
-    height.value === 0 ? listHeight.value : height.value > 15 ? 0 : listHeight.value
+    height.value === 0 ? listHeight.value : height.value > 15 ? 0 : listHeight.value + 16
   );
   const data = new Array()
     .concat(createCalendar(MONTHS[0], new Date().getFullYear()))
@@ -135,8 +135,9 @@ export const HomseScreenHeader: React.FC<{
         style={{
           overflow: 'hidden',
           zIndex: 1,
+          backgroundColor: colors.background,
         }}>
-        <BlurView blurType="regular" blurAmount={10} style={insetStyles.header}>
+        <View style={insetStyles.header}>
           <View style={styles.header}>
             <View>
               <Text style={styles.headerTitle} fontSize={24} weight={'black'}>
@@ -190,7 +191,7 @@ export const HomseScreenHeader: React.FC<{
               )}
             />
           </Animated.View>
-        </BlurView>
+        </View>
       </View>
     </>
   );

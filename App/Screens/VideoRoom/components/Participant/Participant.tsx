@@ -45,14 +45,14 @@ export const Participant: React.FC<{
 
   useEffect(() => {
     socket.on('offer', (data) => {
-      if (data.callerId !== userId) return;
+      if (data.from !== userId) return;
       remoteAnswer.current = data.rtcMessage;
       otherUserId.current = data.callerId;
       setType('INCOMING');
     });
 
     socket.on('answer', (data) => {
-      if (data.callerId !== userId) return;
+      if (data.from !== userId) return;
       remoteAnswer.current = data.rtcMessage;
       peerConnection.current.setRemoteDescription(new RTCSessionDescription(remoteAnswer.current));
       setType('WEBRTC_ROOM');

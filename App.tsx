@@ -10,15 +10,12 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 LogBox.ignoreAllLogs();
 import { MainNavigator } from './App/Navigation';
 import { useColors } from './App/Theme';
 import SplashScreen from './App/Screens/SplashScreen/SplashScreen';
-import { WebRTCScreen } from './App/Screens/WebRTCScreen/WebRTCScreen';
-import { VideoRoom } from './App/Screens';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const Warda = () => {
   const rotate = useSharedValue<number>(0);

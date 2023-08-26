@@ -19,14 +19,14 @@ const TabBar = React.memo(
     const { index } = state;
     const colors = useColors();
     const isDark = useColorScheme() === 'dark';
-    const { connected } = useSocketContext();
+    const { socket } = useSocketContext();
 
     const background: ViewStyle = {
       backgroundColor: index === 4 ? colors.background : 'transparent',
     };
     return (
       <>
-        {connected ? null : (
+        {socket.connected ? null : (
           <View style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
             <HeaderLoader />
           </View>
