@@ -16,8 +16,7 @@ export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
     sectionHeader: {
       textTransform: 'uppercase',
-      padding: 22,
-      backgroundColor: colors.background,
+      padding: 8,
     },
   });
 export const withInsets = (insets: EdgeInsets) =>

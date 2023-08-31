@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -36,11 +35,8 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const sheetInputHeight = useSharedValue<number>(0);
   const [attachedImage, setAttachedImage] = useState<UploadedImage | undefined>();
   const { height, state } = useAnimatedKeyboard();
-  const onDirectMessage = useCallback((data: Message) => {}, []);
 
-  useChatEvents({ onDirectMessage }, []);
-
-  const onSend = () =>
+  const onSend = useCallback(() => {
     sendDirectMessage(
       {
         message,
@@ -51,6 +47,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         setAttachedImage(undefined);
       }
     );
+  }, [message]);
 
   const animatedStyle = useAnimatedStyle(
     () => ({
@@ -68,8 +65,10 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   );
 
   useEffect(() => {
-    if (message) sendTypingEvent();
-    else sendStoppedTypingEvent();
+    setTimeout(() => {
+      if (message) sendTypingEvent();
+      else sendStoppedTypingEvent();
+    }, 0);
   }, [message]);
 
   useEffect(() => {
@@ -83,6 +82,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
             <Icon name={'arrow-ios-back'} />
           </Pressable>
           <Pressable
+            // @ts-ignore
             onPress={() => navigation.navigate('ProfileScreen')}
             style={[withColors.row, { alignItems: 'center' }]}>
             <View>

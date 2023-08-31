@@ -31,7 +31,7 @@ export const HackerText: React.FC<TextProps> = ({ children, ...props }) => {
     setTimeout(randomizeText, 1000);
   }, [children]);
   return (
-    <Text {...props} style={{ textTransform: 'uppercase' }}>
+    <Text style={{ textTransform: 'uppercase' }} {...props}>
       <Text {...props}>{sorted}</Text>
       <Text {...props} style={{ opacity: 0.3 }}>
         {placeholder.split(sorted)[1]}

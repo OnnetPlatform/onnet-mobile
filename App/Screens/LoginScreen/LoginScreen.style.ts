@@ -14,13 +14,15 @@ export default StyleSheet.create({
   subtitle: {
     textAlign: 'center',
     width: '80%',
+    alignSelf: 'center',
+    marginTop: 16,
   },
   inputsWrapper: {
     alignItems: 'center',
-    paddingHorizontal: 22,
+    width: '80%',
     flex: 1,
     flexGrow: 1,
-    justifyContent: 'center',
+    alignSelf: 'center',
   },
 });
 

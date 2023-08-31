@@ -36,7 +36,8 @@ export const Galaxy: React.FC = () => {
   }, []);
 
   return (
-    <SafeAreaView style={[StyleSheet.absoluteFillObject, styles.center]}>
+    <SafeAreaView style={[StyleSheet.absoluteFillObject, { justifyContent: 'space-evenly' }]}>
+      <View />
       <Animated.View style={[styles.center, styles.scale8, animatedStyle]}>
         {planets.map((item) => (
           <UFO skewX={skewX} planet={item} key={item.index} />
@@ -110,7 +111,7 @@ const Orbit: React.FC<{ radius: number }> = ({ radius }) => {
     height: radius * 2,
     borderRadius: radius,
     borderWidth: 2,
-    borderColor: colors.text,
+    borderColor: colors.black,
     position: 'absolute',
     zIndex: -100,
     opacity: 0.15,

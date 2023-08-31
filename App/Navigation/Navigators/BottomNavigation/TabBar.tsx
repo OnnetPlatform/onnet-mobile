@@ -103,7 +103,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
             <LinearGradient style={styles.icon} colors={[colors.pink, colors.cyan]} />
           </MaskedView>
         ) : (
-          <Icon style={{ width: 24 }} name={icon + (isFocused ? '' : '-outline')} />
+          <Icon style={{ width: 16, height: 16 }} name={icon + (isFocused ? '' : '-outline')} />
         )}
 
         {isFocused ? null : (

@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
 
       <Stack.Screen

@@ -28,5 +28,5 @@ export const PolyrhythmsCircle: React.FC<{ arc: ArcDimentions; rect: ArcRect }> 
     return (arc.radius / 2) * Math.sin(maxAngle - theta.current) + rectY;
   }, [clock]);
 
-  return <Circle cx={x} cy={y} r={10} color={colors.text} />;
+  return <Circle cx={x} cy={y} r={10} color={colors.black} />;
 };

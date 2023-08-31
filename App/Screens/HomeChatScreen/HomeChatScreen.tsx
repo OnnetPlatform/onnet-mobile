@@ -20,7 +20,7 @@ export const HomeChatScreen: React.FC = () => {
           <View style={withColors.logoWrapper}>
             <Image source={Images.logo} style={withColors.logo} />
           </View>
-          <Text weight="bold" fontSize={24}>
+          <Text weight="bold" fontSize={18}>
             Onnet
           </Text>
         </View>

@@ -22,7 +22,7 @@ export const Arc: React.FC<{
 
   return (
     <Group>
-      <Path path={path} style="stroke" color={colors.secondaryBackground} strokeWidth={1}></Path>
+      <Path path={path} style="stroke" color={colors.black} strokeWidth={1}></Path>
       <PolyrhythmsCircle arc={arc} rect={arcRect} />
     </Group>
   );

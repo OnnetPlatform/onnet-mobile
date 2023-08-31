@@ -5,6 +5,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { GradientCard } from '../../Components/Skia/GradientCard/GradientCard';
 
 import { Polyrhythms } from '../../Components/Skia/Polyrhythms/Polyrhythms';
+import { CirclesGraph } from './CirclesGraph/CirclesGraph';
 
 export const SplashScreen: React.FC = () => {
   const isFocused = useIsFocused();
@@ -15,7 +16,7 @@ export const SplashScreen: React.FC = () => {
         //  @ts-ignore
         navigation.navigate('MainNavigation');
       }
-    }, 1000);
+    }, 2000);
   }, [isFocused]);
 
   return (
