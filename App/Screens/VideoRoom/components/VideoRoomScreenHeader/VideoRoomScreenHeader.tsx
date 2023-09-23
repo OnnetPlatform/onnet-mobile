@@ -24,3 +24,5 @@ export const VideoRoomScreenHeader: React.FC = () => {
     </View>
   );
 };
+
+export default VideoRoomScreenHeader;

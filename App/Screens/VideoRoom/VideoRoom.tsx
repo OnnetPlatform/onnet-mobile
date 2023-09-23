@@ -6,7 +6,7 @@ import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomCha
 import { useWebrtcContext } from '../../Context/WebrtcContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useColors } from '../../Theme';
-import { VideoRoomScreenHeader } from './components/VideoRoomScreenHeader/VideoRoomScreenHeader';
+import { VideoRoomScreenHeader } from './components';
 
 export const VideoRoom: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);

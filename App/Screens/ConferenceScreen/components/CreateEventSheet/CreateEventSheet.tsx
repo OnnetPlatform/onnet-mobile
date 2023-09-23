@@ -5,12 +5,11 @@ import BottomSheet, {
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, useWindowDimensions, View } from 'react-native';
+import { Pressable, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text } from '../../../../Components/atoms';
 import { Collapsible } from '../../../../Components/atoms/Collapsible/Collapsible';
 import { useColors } from '../../../../Theme';
-import { CustomBackground } from './CustomBackground';
 import { Calendar } from '../../../../Components/molecules/Calendar/Calendar';
 import { withInsets } from './ConferenceSheet.styles';
 import moment from 'moment';
@@ -18,24 +17,25 @@ import Animated, {
   interpolate,
   useAnimatedKeyboard,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
 import { GradientCard } from '../../../../Components/Skia/GradientCard/GradientCard';
+import { useIsFocused } from '@react-navigation/native';
 
 export const CreateEventSheet: React.FC<{
   onClose(): void;
 }> = ({ onClose }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [eventDate, setDate] = useState<Date>(new Date());
+  const [eventDate] = useState<Date>(new Date());
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const bottomSheetInputRef = useRef<any>(null);
   const animatedBottomSheetIndex = useSharedValue(1);
   const { width } = useWindowDimensions();
-  const collapsibleValue = useDerivedValue(() => 0);
+  const collapsibleValue = useSharedValue(0);
   const { state, height } = useAnimatedKeyboard();
+  const isFocused = useIsFocused();
   const snapPoints = useMemo(() => ['CONTENT_HEIGHT'], [expanded]);
   const { animatedContentHeight, animatedSnapPoints, handleContentLayout, animatedHandleHeight } =
     useBottomSheetDynamicSnapPoints(snapPoints);
@@ -57,35 +57,52 @@ export const CreateEventSheet: React.FC<{
       bottomSheetInputRef.current?.focus();
     }, 10);
   };
-  const handleComponent = () => <View />;
+
+  const handleComponent = () => (
+    <Text
+      style={[styles.title, animatedHandleStyle]}
+      fontSize={24}
+      weight="bold"
+      color={colors.white}>
+      Create Event
+    </Text>
+  );
 
   useEffect(() => {
     if (!expanded) {
       if (state.value === 1) {
         resetKeyboard();
       }
-    } else {
     }
   }, [expanded, CreateEventSheetRef.current]);
 
   const animatedHandleStyle = useAnimatedStyle(() => {
-    const position =
-      state.value === 2 ? animatedContentHeight.value + height.value : animatedContentHeight.value;
     return {
+      flexDirection: 'row',
+      alignItems: 'center',
+      top: interpolate(animatedBottomSheetIndex.value, [-1, 0, 1], [44, -44, -44]),
       position: 'absolute',
-      zIndex: 100,
-      marginLeft: 24,
-      bottom: interpolate(animatedBottomSheetIndex.value, [-1, 0, 1], [-100, position, position]),
+      width: '100%',
+      left: interpolate(animatedBottomSheetIndex.value, [-1, 0, 1], [-100, 22, 22]),
     };
-  }, [animatedContentHeight, height, state]);
+  }, [animatedContentHeight, height, state, animatedBottomSheetIndex]);
 
+  useEffect(() => {
+    if (isFocused) {
+      setTimeout(() => {
+        CreateEventSheetRef.current?.snapToIndex(-1);
+        animatedBottomSheetIndex.value = -1;
+      }, 0);
+    }
+  }, [isFocused]);
   return (
     <>
-      <Text style={[styles.title, animatedHandleStyle]} fontSize={24} weight="bold">
-        Create Event
-      </Text>
       <BottomSheet
-        backgroundComponent={GradientCard}
+        backgroundComponent={() => (
+          <View style={[StyleSheet.absoluteFill, { borderRadius: 32, overflow: 'hidden' }]}>
+            <GradientCard />
+          </View>
+        )}
         backdropComponent={(props) => (
           <BottomSheetBackdrop
             {...props}
@@ -99,7 +116,6 @@ export const CreateEventSheet: React.FC<{
         contentHeight={animatedContentHeight}
         handleComponent={handleComponent}
         containerStyle={{ alignItems: 'center' }}
-        style={styles.sheet}
         snapPoints={animatedSnapPoints}
         ref={CreateEventSheetRef}
         animatedIndex={animatedBottomSheetIndex}
@@ -108,7 +124,7 @@ export const CreateEventSheet: React.FC<{
         <BottomSheetScrollView
           style={[styles.bottomSheetBody, { paddingBottom: 32 }]}
           onLayout={handleContentLayout}>
-          <Text style={styles.label} fontSize={16} weight="bold">
+          <Text style={styles.label} fontSize={16} weight="bold" color={colors.black}>
             Title
           </Text>
           <BottomSheetTextInput
@@ -134,14 +150,18 @@ export const CreateEventSheet: React.FC<{
             onPressIn={() => {
               setExpanded(!expanded);
             }}>
-            <Text fontSize={16} weight="bold">
+            <Text fontSize={16} weight="bold" color={colors.black}>
               Date{' '}
             </Text>
-            <Text style={[{ textTransform: 'uppercase' }]} fontSize={12} weight="regular">
+            <Text
+              style={[{ textTransform: 'uppercase' }]}
+              fontSize={12}
+              weight="regular"
+              color={colors.black}>
               {moment(eventDate).format('(dddd) DD, MMMM, yyyy')}
             </Text>
             <Animated.View style={animatedIcon}>
-              <Icon name={'arrow-ios-downward-outline'} pack={''} />
+              <Icon name={'arrow-ios-downward-outline'} pack={''} fill={colors.black} />
             </Animated.View>
           </Pressable>
 

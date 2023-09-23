@@ -11,12 +11,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Message, UploadedImage } from '../../../types';
+import { UploadedImage } from '../../../types';
 import { Icon, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useSocketContext } from '../../Context/SocketContext/SocketContext';
 import { useChat } from '../../Hooks/useChat';
-import useChatEvents from '../../Hooks/useChatEvents';
 import { useColors } from '../../Theme';
 import { MessageInput, MessageItem } from './components';
 import styles from './UserChatScreen.styles';
@@ -74,6 +73,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   useEffect(() => {
     setOpponent(user);
   }, [user]);
+
   return (
     <>
       <SafeAreaView style={withColors.page}>

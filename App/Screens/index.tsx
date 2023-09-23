@@ -7,3 +7,4 @@ export { default as NotificationScreen } from './NotificationScreen';
 export { default as FeedScreen } from './FeedScreen';
 export { default as VideoRoom } from './VideoRoom';
 export { default as FeaturesScreen } from './FeaturesScreen';
+export { default as SplashScreen } from './SplashScreen';
