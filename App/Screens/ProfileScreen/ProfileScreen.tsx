@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image,
-  LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Pressable,
@@ -32,11 +31,9 @@ export const ProfileScreen: React.FC = () => {
   const styles = dyanmicStyles(insets, colors);
   const scrollValue = useSharedValue(0);
   const scrollRef = useAnimatedRef<ScrollView>();
-  const [contentHeight, setContentHeight] = useState<number>(0);
   const gradientColors = ['transparent', colors.background];
   const navigation = useNavigation();
   const canGoBack = navigation.canGoBack();
-
   useScrollToTop(scrollRef);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -47,12 +44,7 @@ export const ProfileScreen: React.FC = () => {
     nativeEvent: { contentOffset },
   }: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollValue.value = contentOffset.y < 0 ? contentOffset.y / 1000 : 0;
-    if (contentOffset.y > contentHeight)
-      scrollRef.current?.scrollTo({ x: 0, y: contentHeight, animated: false });
   };
-
-  const onLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) =>
-    setContentHeight(layout.height);
 
   const onBackPressed = () => navigation.goBack();
 
@@ -92,7 +84,7 @@ export const ProfileScreen: React.FC = () => {
             </Text>
           </View>
         </LinearGradient>
-        <View onLayout={onLayout} style={styles.info}>
+        <View style={styles.info}>
           <View style={styles.infoRow}>
             <Icon name={'email-outline'} style={{ width: 16, height: 16, marginRight: 11 }} />
             <Text>muhammad.elkhayat@gmail.com</Text>
@@ -116,6 +108,7 @@ export const ProfileScreen: React.FC = () => {
             </View>
           </View>
         </View>
+        <View style={styles.limit} />
       </ScrollView>
     </SafeAreaView>
   );

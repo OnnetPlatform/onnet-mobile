@@ -1,6 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { View, Modal, Pressable, useColorScheme } from 'react-native';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import React, {useEffect, useMemo, useState} from 'react';
+import {View, Modal, Pressable, useColorScheme} from 'react-native';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import Animated, {
   Easing,
   Layout,
@@ -12,18 +15,18 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import { useColors } from '../../../Theme';
-import { Icon, Text } from '../../atoms';
-import styles, { indicatorStyle } from './DatePicker.styles';
+import {useColors} from '@Theme';
+import {Icon, Text} from '../../atoms';
+import styles, {indicatorStyle} from './DatePicker.styles';
 import numeral from 'numeral';
-import { BlurView } from '@react-native-community/blur';
-import { LayoutInsets } from '../Calendar/components/Slot/types';
+import {BlurView} from '@react-native-community/blur';
+import {LayoutInsets} from '../Calendar/components/Slot/types';
 const AnimatedBlur = Animated.createAnimatedComponent(BlurView);
 export const DatePicker: React.FC<{
   visible: boolean;
   layout: LayoutInsets | undefined;
   onRequestClose(): void;
-}> = ({ visible = false, layout, onRequestClose }) => {
+}> = ({visible = false, layout, onRequestClose}) => {
   const colors = useColors();
   const scheme = useColorScheme();
   const isDark = useMemo(() => scheme === 'dark', [scheme]);
@@ -47,7 +50,7 @@ export const DatePicker: React.FC<{
   const animatedBorders = useAnimatedStyle(() => ({
     borderWidth: withDelay(
       0,
-      withTiming(visible ? 2 : 0, { duration: 1000, easing: Easing.linear })
+      withTiming(visible ? 2 : 0, {duration: 1000, easing: Easing.linear}),
     ),
   }));
   const hourGestureHandler = useAnimatedGestureHandler<
@@ -62,15 +65,21 @@ export const DatePicker: React.FC<{
     onActive: (e, context) => {
       animatedHoursValue.value = withTiming(
         40,
-        { duration: 100, easing: Easing.linear },
-        (isFinished) => {
+        {duration: 100, easing: Easing.linear},
+        isFinished => {
           if (isFinished) {
             runOnJS(setHour)(
-              Math.max(Math.min(context.hour + Math.round(-e.translationY / 30), 23), 0)
+              Math.max(
+                Math.min(context.hour + Math.round(-e.translationY / 30), 23),
+                0,
+              ),
             );
-            animatedHoursValue.value = withTiming(48, { duration: 100, easing: Easing.linear });
+            animatedHoursValue.value = withTiming(48, {
+              duration: 100,
+              easing: Easing.linear,
+            });
           }
-        }
+        },
       );
     },
   });
@@ -87,18 +96,30 @@ export const DatePicker: React.FC<{
     onActive: (e, context) => {
       animatedMinutesValue.value = withTiming(
         40,
-        { duration: 100, easing: Easing.linear },
-        (isFinished) => {
+        {duration: 100, easing: Easing.linear},
+        isFinished => {
           if (isFinished) {
             runOnJS(setMinutes)(
-              Math.max(Math.min(context.minutes + Math.round(-e.translationY / 10), 59), 0)
+              Math.max(
+                Math.min(
+                  context.minutes + Math.round(-e.translationY / 10),
+                  59,
+                ),
+                0,
+              ),
             );
-            animatedMinutesValue.value = withTiming(48, { duration: 100, easing: Easing.linear });
+            animatedMinutesValue.value = withTiming(48, {
+              duration: 100,
+              easing: Easing.linear,
+            });
           }
-        }
+        },
       );
       runOnJS(setMinutes)(
-        Math.max(Math.min(context.minutes + Math.round(-e.translationY / 10), 59), 0)
+        Math.max(
+          Math.min(context.minutes + Math.round(-e.translationY / 10), 59),
+          0,
+        ),
       );
     },
   });
@@ -113,7 +134,7 @@ export const DatePicker: React.FC<{
   const animatedBlurProps = useAnimatedProps(() => ({
     blurAmount: withDelay(
       200,
-      withTiming(visible ? 30 : 0, { duration: 2000, easing: Easing.linear })
+      withTiming(visible ? 30 : 0, {duration: 2000, easing: Easing.linear}),
     ),
   }));
 
@@ -124,7 +145,10 @@ export const DatePicker: React.FC<{
     animatedMinutesValue.value = 48;
     if (!layout) translateY.value = 0;
     else {
-      translateY.value = withTiming(layout.pageY - 204, { duration: 50, easing: Easing.linear });
+      translateY.value = withTiming(layout.pageY - 204, {
+        duration: 50,
+        easing: Easing.linear,
+      });
     }
     if (!visible) {
       translateY.value = 0;
@@ -132,7 +156,11 @@ export const DatePicker: React.FC<{
   }, [layout, layout?.pageY, visible]);
 
   return (
-    <Modal onRequestClose={onRequestClose} transparent animationType="fade" visible={visible}>
+    <Modal
+      onRequestClose={onRequestClose}
+      transparent
+      animationType="fade"
+      visible={visible}>
       <Pressable onPress={onRequestClose} style={themedStyles.container} />
 
       <Animated.View style={[animateContainerStyle]}>
@@ -145,7 +173,11 @@ export const DatePicker: React.FC<{
               Event Time
             </Text>
             <Pressable style={themedStyles.checkButton}>
-              <Icon name={'checkmark-outline'} style={themedStyles.checkIcon} fill={colors.cyan} />
+              <Icon
+                name={'checkmark-outline'}
+                style={themedStyles.checkIcon}
+                fill={colors.cyan}
+              />
             </Pressable>
           </View>
           <Text style={themedStyles.subtitle} weight="light">
@@ -155,14 +187,17 @@ export const DatePicker: React.FC<{
             <PanGestureHandler onGestureEvent={hourGestureHandler}>
               <Animated.View layout={Layout} style={themedStyles.section}>
                 <Animated.Text style={[themedStyles.number, animatedText]}>
-                  {numeral(hour > 12 || hour === 0 ? Math.abs(hour - 12) : hour).format('00')}
+                  {numeral(
+                    hour > 12 || hour === 0 ? Math.abs(hour - 12) : hour,
+                  ).format('00')}
                 </Animated.Text>
               </Animated.View>
             </PanGestureHandler>
             <Text fontSize={24}>:</Text>
             <PanGestureHandler onGestureEvent={minutesGestureHandler}>
               <Animated.View layout={Layout} style={themedStyles.section}>
-                <Animated.Text style={[themedStyles.number, animatedMinutesText]}>
+                <Animated.Text
+                  style={[themedStyles.number, animatedMinutesText]}>
                   {numeral(minutes).format('00')}
                 </Animated.Text>
               </Animated.View>

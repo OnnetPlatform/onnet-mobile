@@ -1,4 +1,4 @@
-import { blue, turquoise, yellow } from '../../../Theme/Colors';
+import {blue, turquoise, yellow} from '@Theme/Colors';
 
 export type Planet = {
   index: number;

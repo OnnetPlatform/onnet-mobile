@@ -54,4 +54,11 @@ export default (insets: EdgeInsets, colors: ThemeColors) =>
       alignItems: 'center',
       zIndex: 100,
     },
+    limit: {
+      backgroundColor: colors.background,
+      width: '100%',
+      height: height,
+      position: 'absolute',
+      bottom: -height,
+    },
   });

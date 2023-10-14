@@ -45,6 +45,5 @@ export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSc
 
 export default () => {
   const scheme = useColorScheme();
-  const themecolors = useMemo(() => colors(scheme), [scheme]);
-  return themecolors;
+  return useMemo(() => colors(scheme), [scheme]);
 };

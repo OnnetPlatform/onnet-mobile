@@ -1,25 +1,35 @@
 import MaskedView from '@react-native-masked-view/masked-view';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import {BottomTabBarProps} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { Pressable, View, SafeAreaView, useColorScheme, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  View,
+  SafeAreaView,
+  useColorScheme,
+  ViewStyle,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { Icon, Text } from '../../../Components/atoms';
-import { useColors } from '../../../Theme';
+import {Icon, Text} from '../../../Components/atoms';
+import {useColors} from '@Theme';
 import useTabs from './Tabs';
 import styles from './TabBar.styles';
-import { NavigationState } from '@react-navigation/native';
-import Animated, { FadeIn, FadeOut, useAnimatedStyle } from 'react-native-reanimated';
-import { HeaderLoader } from '../../../Components/atoms/HeaderLoader/HeaderLoader';
-import { useSocketContext } from '../../../Context/SocketContext/SocketContext';
-import { BlurView } from '@react-native-community/blur';
+import {NavigationState} from '@react-navigation/native';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+import {HeaderLoader} from '../../../Components/atoms/HeaderLoader/HeaderLoader';
+import {useSocketContext} from '../../../Context/SocketContext/SocketContext';
+import {BlurView} from '@react-native-community/blur';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
-    const { state } = props;
-    const { index } = state;
+    const {state} = props;
+    const {index} = state;
     const colors = useColors();
     const isDark = useColorScheme() === 'dark';
-    const { socket } = useSocketContext();
+    const {socket} = useSocketContext();
 
     const background: ViewStyle = {
       backgroundColor: index === 4 ? colors.background : 'transparent',
@@ -27,7 +37,7 @@ const TabBar = React.memo(
     return (
       <>
         {socket.connected ? null : (
-          <View style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
+          <View style={{position: 'absolute', alignSelf: 'center', bottom: 80}}>
             <HeaderLoader />
           </View>
         )}
@@ -39,23 +49,25 @@ const TabBar = React.memo(
           <SafeAreaView style={styles.container}>
             {state.routes.map((route, index) => (
               // @ts-ignore
-              <Tab key={index} {...props} {...{ route, index }} />
+              <Tab key={index} {...props} {...{route, index}} />
             ))}
           </SafeAreaView>
         </BlurView>
       </>
     );
   },
-  (next, prev) => next.descriptors === prev.descriptors
+  (next, prev) => next.descriptors === prev.descriptors,
 );
 
-const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationState }>(
-  ({ state, index, navigation, route }) => {
+const Tab = React.memo<
+  BottomTabBarProps & {index: number; route: NavigationState}
+>(
+  ({state, index, navigation, route}) => {
     const tabs = useTabs();
 
     const colors = useColors();
     const isFocused = state.index === index;
-    const { icon, label: tabLabel } = tabs[index];
+    const {icon, label: tabLabel} = tabs[index];
 
     const onPress = () => {
       const event = navigation.emit({
@@ -66,7 +78,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
 
       if (!isFocused && !event.defaultPrevented) {
         //@ts-ignore
-        navigation.navigate({ name: route.name, merge: true });
+        navigation.navigate({name: route.name, merge: true});
       }
     };
 
@@ -80,7 +92,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
       () => ({
         display: isFocused ? 'none' : 'flex',
       }),
-      [isFocused]
+      [isFocused],
     );
 
     const badge = () => {
@@ -96,14 +108,25 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
     };
 
     return (
-      <Pressable onPress={onPress} onLongPress={onLongPress} style={styles.tab} key={index}>
+      <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
+        style={styles.tab}
+        key={index}>
         {badge()}
         {isFocused ? (
-          <MaskedView maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
-            <LinearGradient style={styles.icon} colors={[colors.pink, colors.cyan]} />
+          <MaskedView
+            maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
+            <LinearGradient
+              style={styles.icon}
+              colors={[colors.pink, colors.cyan]}
+            />
           </MaskedView>
         ) : (
-          <Icon style={{ width: 16, height: 16 }} name={icon + (isFocused ? '' : '-outline')} />
+          <Icon
+            style={{width: 16, height: 16}}
+            name={icon + (isFocused ? '' : '-outline')}
+          />
         )}
 
         {isFocused ? null : (
@@ -119,6 +142,6 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
       </Pressable>
     );
   },
-  (next, prev) => next.state.index === prev.state.index
+  (next, prev) => next.state.index === prev.state.index,
 );
 export default TabBar;

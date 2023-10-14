@@ -1,34 +1,44 @@
 import moment from 'moment';
-import React, { useState } from 'react';
-import { View, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import { Text } from '../../atoms';
-import { CalendarSection } from './components';
-import { WEEK, MONTHS } from './helpers';
-import { CalendarProps } from './types';
+import React, {useState} from 'react';
+import {
+  View,
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from 'react-native';
+import {Text} from '../../atoms';
+import {CalendarSection} from './components';
+import {WEEK, MONTHS} from './helpers';
+import {CalendarProps} from './types';
 import styles from './Calendar.styles';
-import { useColors } from '../../../Theme';
+import {useColors} from '@Theme';
 
 export const Calendar: React.FC<CalendarProps> = React.memo(
-  ({ width }) => {
+  ({width}) => {
     const [index, setIndex] = useState<number>(0);
     const now = new Date();
     const colors = useColors();
     const onScroll = ({
       nativeEvent: {
-        contentOffset: { x },
+        contentOffset: {x},
       },
-    }: NativeSyntheticEvent<NativeScrollEvent>) => setIndex(Math.round(x / width));
+    }: NativeSyntheticEvent<NativeScrollEvent>) =>
+      setIndex(Math.round(x / width));
 
     return (
       <View>
-        <Text fontSize={24} weight={'bold'} style={styles(width).currentMonth} color={colors.black}>
+        <Text
+          fontSize={24}
+          weight={'bold'}
+          style={styles(width).currentMonth}
+          color={colors.black}>
           {moment(new Date(now.getFullYear(), MONTHS[index])).format('MMMM')}
         </Text>
         <FlatList
           horizontal
           scrollEnabled={false}
           data={WEEK}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <View style={styles(width).text}>
               <Text weight={'light'}>{item[0]}</Text>
             </View>
@@ -42,7 +52,7 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
           showsHorizontalScrollIndicator={false}
           onScroll={onScroll}
           horizontal
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <CalendarSection
               section={{
                 month: item,
@@ -55,5 +65,5 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
       </View>
     );
   },
-  (p, n) => p.width === n.width
+  (p, n) => p.width === n.width,
 );

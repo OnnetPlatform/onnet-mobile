@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 
 import {
   BackdropBlur,
@@ -18,10 +18,10 @@ import {
   useValue,
   vec,
 } from '@shopify/react-native-skia';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import { blue, cyan, pink, turquoise } from '../../../Theme/Colors';
+import {StyleSheet, useWindowDimensions} from 'react-native';
+import {blue, cyan, pink, turquoise} from '@Theme/Colors';
 import Moon from '../Moon/Moon';
-import { useColors } from '../../../Theme';
+import {useColors} from '@Theme';
 const source = Skia.RuntimeEffect.Make(`
 vec4 main(vec2 pos) {
   // normalized x,y values go from 0 to 1, the canvas is 256x256
@@ -30,7 +30,7 @@ vec4 main(vec2 pos) {
 }`)!;
 
 export const Earth: React.FC = () => {
-  const { width, height } = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const colors = useColors();
   return (
     <Canvas style={[StyleSheet.absoluteFillObject]}>
@@ -41,7 +41,11 @@ export const Earth: React.FC = () => {
         />
       </Rect>
       <BackdropBlur blendMode={'overlay'} blur={100} />
-      <Circle r={100} cx={width / 2} cy={height / 2} color={colors.blue}></Circle>
+      <Circle
+        r={100}
+        cx={width / 2}
+        cy={height / 2}
+        color={colors.blue}></Circle>
       <Moon />
     </Canvas>
   );

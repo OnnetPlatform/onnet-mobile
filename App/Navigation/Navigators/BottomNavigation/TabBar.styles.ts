@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { BOTTOM_BAR_HEIGHT } from '../../../Theme';
+import {StyleSheet} from 'react-native';
+import {BOTTOM_BAR_HEIGHT} from '@Theme';
 
 export default StyleSheet.create({
   tabbar: {

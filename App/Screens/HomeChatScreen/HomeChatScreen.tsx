@@ -1,5 +1,4 @@
-// @ts-nocheck
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SafeAreaView, View, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Text } from '../../Components/atoms';
@@ -7,6 +6,7 @@ import { useColors } from '../../Theme';
 import styles from './HomeChatScreen.styles';
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import Images from '../../Theme/Images';
+import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -26,6 +26,8 @@ export const HomeChatScreen: React.FC = () => {
         </View>
         <Icon name={'person-add-outline'} />
       </View>
+      <HeaderLoader style={{ position: 'relative' }} />
+
       <ChatUsersList />
     </SafeAreaView>
   );

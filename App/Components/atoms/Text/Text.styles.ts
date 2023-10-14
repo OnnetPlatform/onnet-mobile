@@ -1,7 +1,7 @@
-import { useMemo } from 'react';
-import { StyleSheet } from 'react-native';
-import { fonts, useColors } from '../../../Theme';
-import { TextProps } from './types';
+import {useMemo} from 'react';
+import {StyleSheet} from 'react-native';
+import {fonts, useColors} from '@Theme';
+import {TextProps} from './types';
 
 export const useTextStyle = (props: TextProps) => {
   const colors = useColors();
@@ -14,7 +14,7 @@ export const useTextStyle = (props: TextProps) => {
           fontFamily: props.weight ? fonts[props.weight] : fonts.regular,
         },
       }),
-    [colors, props]
+    [colors, props],
   );
   return styles;
 };

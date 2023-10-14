@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, View, ViewStyle } from 'react-native';
-import { Text } from '../../../../atoms';
-import { LayoutInsets, SlotProps } from './types';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {Pressable, View, ViewStyle} from 'react-native';
+import {Text} from '../../../../atoms';
+import {LayoutInsets, SlotProps} from './types';
 import styles from './Slot.styles';
-import { useColors } from '../../../../../Theme';
+import {useColors} from '@Theme';
 import DatePicker from '../../../DatePicker/DatePicker';
 
 export const Slot: React.FC<SlotProps> = React.memo(
-  ({ width, date, month }) => {
+  ({width, date, month}) => {
     const colors = useColors();
     const [layout, setLayout] = useState<LayoutInsets | undefined>();
     const slotRef = useRef<View>(null);
@@ -24,7 +24,7 @@ export const Slot: React.FC<SlotProps> = React.memo(
         borderColor: colors.cyan,
         borderRadius: width / 2,
       }),
-      [isCurrentMonth, isCurrentMonth]
+      [isCurrentMonth, isCurrentMonth],
     );
     const backgroundColor: ViewStyle = {
       backgroundColor: showDatePicker ? colors.cyan : 'transparent',
@@ -32,13 +32,17 @@ export const Slot: React.FC<SlotProps> = React.memo(
     useEffect(() => {
       if (showDatePicker)
         slotRef.current?.measure((x, y, width, height, pageX, pageY) =>
-          setLayout({ x, y, height, pageX, pageY, width })
+          setLayout({x, y, height, pageX, pageY, width}),
         );
     }, [showDatePicker, slotRef.current]);
     return (
       <>
-        <Pressable disabled={!isCurrentMonth} onPress={() => setShowDatePicker(!showDatePicker)}>
-          <View ref={slotRef} style={[styles(width).slot, opacity, border, backgroundColor]}>
+        <Pressable
+          disabled={!isCurrentMonth}
+          onPress={() => setShowDatePicker(!showDatePicker)}>
+          <View
+            ref={slotRef}
+            style={[styles(width).slot, opacity, border, backgroundColor]}>
             <Text color={showDatePicker ? colors.black : ''} weight={'bold'}>
               {date.getDate()}
             </Text>
@@ -52,7 +56,7 @@ export const Slot: React.FC<SlotProps> = React.memo(
       </>
     );
   },
-  (next, prev) => next.date.getDate() === prev.date.getDate()
+  (next, prev) => next.date.getDate() === prev.date.getDate(),
 );
 
 export default Slot;

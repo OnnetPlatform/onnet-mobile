@@ -1,15 +1,17 @@
 import React from 'react';
-import { View, useWindowDimensions } from 'react-native';
-import { useColors } from '../../../Theme';
-const array = Array.from({ length: 10 }, (_, i) => Array.from({ length: 30 }, (__, ind) => ind));
-export const CirclesGraph: React.FC<{ scale?: number }> = ({ scale = 0.5 }) => {
-  const { width } = useWindowDimensions();
+import {View, useWindowDimensions} from 'react-native';
+import {useColors} from '@Theme';
+const array = Array.from({length: 10}, (_, i) =>
+  Array.from({length: 30}, (__, ind) => ind),
+);
+export const CirclesGraph: React.FC<{scale?: number}> = ({scale = 0.5}) => {
+  const {width} = useWindowDimensions();
   const colors = useColors();
   return (
     <View
       style={[
         {
-          transform: [{ scale }],
+          transform: [{scale}],
           justifyContent: 'center',
           alignItems: 'center',
           width: width * scale,
@@ -18,8 +20,8 @@ export const CirclesGraph: React.FC<{ scale?: number }> = ({ scale = 0.5 }) => {
         },
       ]}>
       {array.map((item, index) => (
-        <View key={index} style={{ flexDirection: 'row' }}>
-          {item.map((item) => {
+        <View key={index} style={{flexDirection: 'row'}}>
+          {item.map(item => {
             const random = Math.trunc(Math.random() * 10) % 2 === 0;
             return (
               <View

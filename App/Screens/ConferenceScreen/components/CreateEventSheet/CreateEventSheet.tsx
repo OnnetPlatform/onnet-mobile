@@ -90,7 +90,7 @@ export const CreateEventSheet: React.FC<{
   useEffect(() => {
     if (isFocused) {
       setTimeout(() => {
-        CreateEventSheetRef.current?.snapToIndex(-1);
+        CreateEventSheetRef.current?.close();
         animatedBottomSheetIndex.value = -1;
       }, 0);
     }

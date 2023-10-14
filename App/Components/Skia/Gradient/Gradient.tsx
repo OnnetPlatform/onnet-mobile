@@ -9,19 +9,22 @@ import {
   vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 // @ts-ignore
-import { computeNoise, map } from './utils';
-import { useColors } from '../../../Theme';
+import {computeNoise, map} from './utils';
+import {useColors} from '@Theme';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 export const Gradient: React.FC = () => {
   const clock = useClockValue();
   const hueNoiseOffset = useValue(0);
   const colors = useColors();
 
-  const colorNoise = useComputedValue(() => computeNoise(hueNoiseOffset, 360), [clock]);
+  const colorNoise = useComputedValue(
+    () => computeNoise(hueNoiseOffset, 360),
+    [clock],
+  );
 
   return (
     <Canvas style={StyleSheet.absoluteFill}>

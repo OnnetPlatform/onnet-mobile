@@ -13,12 +13,12 @@ import {
   vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import { useColors } from '../../../Theme';
+import {StyleSheet, useWindowDimensions} from 'react-native';
+import {useColors} from '@Theme';
 
 export const LogoLoading: React.FC = () => {
   const font = useFont(require('./Rubik-Black.ttf'), 64);
-  const { width, height } = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const colors = useColors();
   const clock = useClockValue();
   const offset = useValue(0);
