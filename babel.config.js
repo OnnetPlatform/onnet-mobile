@@ -10,8 +10,10 @@ module.exports = {
         alias: {
           '@Components/*': './App/Components',
           '@HOCs': './App/Components/HOCs',
+          '@Atoms': './App/Components/atoms',
           '@Screens': './App/Screens',
           '@Theme': './App/Theme',
+          '@Metrics': './App/Theme/Metrics',
           '@Skia': './App/Components/Skia',
         },
       },

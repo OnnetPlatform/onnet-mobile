@@ -4,3 +4,5 @@ export { default as Card } from './Card';
 export { default as Avatar } from './Avatar';
 export { default as Blur } from './Blur';
 export { default as HackerText } from './HackerText';
+export { default as Header } from './Header';
+export { default as Separator } from './Separator';
