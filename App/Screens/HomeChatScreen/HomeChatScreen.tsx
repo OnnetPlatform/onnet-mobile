@@ -16,7 +16,7 @@ export const HomeChatScreen: React.FC = () => {
   const navigation = useNavigation();
 
   // @ts-ignore
-  const onSettingsPressed = () => navigation.navigate('SettingsScreen');
+  const onSettingsPressed = () => navigation.navigate('Settings');
 
   return (
     <SafeAreaView style={withColors.screen}>

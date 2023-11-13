@@ -1,0 +1,21 @@
+{
+  "root": true,
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "Request": false,
+    "localStorage": true
+  },
+  "extends": ["@react-native-community"],
+  "plugins": ["simple-import-sort", "@typescript-eslint", "import"],
+  "parser": "@typescript-eslint/parser",
+  "rules": {
+    "simple-import-sort/imports": "warn",
+    "sort-imports": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "import/no-duplicates": "error"
+  }
+}

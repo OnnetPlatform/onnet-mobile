@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "Onnet": ["./src/"],
+      "Onnet/Redux": ["./src/Redux/*"],
+      "Onnet/Graphql": ["./src/Graphql"],
+      "Onnet/Config": ["./src/Config"],
+      "Actions": ["./src/Redux/Actions/index.ts"],
+      "Onnet/Service": ["./src/Service"],
+      "Onnet/Sagas/*": ["./src/Redux/Sagas/*"],
+      "Onnet/Providers": ["./src/Providers"]
+    },
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": ["esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "esnext"
+  }
+}

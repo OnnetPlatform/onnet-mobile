@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
 import Animated, {
   cancelAnimation,
@@ -15,7 +15,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 LogBox.ignoreAllLogs();
 import { MainNavigator } from './App/Navigation';
 import { useColors } from './App/Theme';
-import SplashScreen from './App/Screens/SplashScreen/SplashScreen';
 
 export const Warda = () => {
   const rotate = useSharedValue<number>(0);
@@ -115,7 +114,13 @@ const Earth = () => {
     [rotateX.value]
   );
   return (
-    <SafeAreaView style={{ flex: 1, flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
       <Animated.View
         style={[
           {

@@ -4,9 +4,11 @@ import { FlatList } from 'react-native';
 import { PageView } from '@HOCs';
 import { SettingItem } from './components';
 import { Separator } from '@Atoms';
+import { SettingsScreenProps } from './types';
 
-export const SettingsScreen: React.FC = () => {
-  const settings = useSettings();
+export const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
+  const settings = useSettings(navigation);
+
   return (
     <PageView title="Settings">
       <FlatList

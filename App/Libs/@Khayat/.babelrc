@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "Onnet/Graphql": "./src/Graphql",
+          "Onnet/Config": "./src/Config",
+          "Actions": "./src/Redux/Actions/index.ts",
+          "Onnet/Service": "./src/Service",
+          "Onnet/Sagas/*": "./src/Redux/Sagas/*",
+          "Onnet/Providers": "./src/Providers"
+        }
+      }
+    ]
+  ]
+}

@@ -11,3 +11,4 @@ export { default as SplashScreen } from './SplashScreen';
 export { default as AnimationScreen } from './AnimationScreen';
 export { default as HomeScreen } from './HomeScreen';
 export { default as SettingsScreen } from './SettingsScreen';
+export { default as CustomScreen } from './CustomScreen';

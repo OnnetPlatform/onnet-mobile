@@ -9,17 +9,17 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { UploadedImage } from '../../../types';
 import { Icon, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useSocketContext } from '../../Context/SocketContext/SocketContext';
+import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
 import { useChat } from '../../Hooks/useChat';
 import { useColors } from '../../Theme';
 import { MessageInput, MessageItem } from './components';
 import styles from './UserChatScreen.styles';
-import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
 
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
@@ -65,8 +65,11 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (message) sendTypingEvent();
-      else sendStoppedTypingEvent();
+      if (message) {
+        sendTypingEvent();
+      } else {
+        sendStoppedTypingEvent();
+      }
     }, 0);
   }, [message]);
 

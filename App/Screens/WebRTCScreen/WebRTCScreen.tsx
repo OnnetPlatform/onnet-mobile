@@ -1,16 +1,17 @@
-import {
-  RTCPeerConnection,
-  RTCView,
-  MediaStream,
-  RTCSessionDescription,
-  RTCIceCandidate,
-} from 'react-native-webrtc';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, SafeAreaView, View } from 'react-native';
-import styles from './WebRTCScreen.styles';
-import { WebRTCServer, createPeerConnection, getLocalStream } from '../../Modules/WebRTC';
-import { Button } from '../../Components/molecules';
+import {
+  MediaStream,
+  RTCIceCandidate,
+  RTCPeerConnection,
+  RTCSessionDescription,
+  RTCView,
+} from 'react-native-webrtc';
+
 import { Text } from '../../Components/atoms';
+import { Button } from '../../Components/molecules';
+import { createPeerConnection, getLocalStream, WebRTCServer } from '../../Modules/WebRTC';
+import styles from './WebRTCScreen.styles';
 
 export const WebRTCScreen: React.FC = () => {
   const [localStream, setlocalStream] = useState<MediaStream>();
@@ -77,7 +78,7 @@ export const WebRTCScreen: React.FC = () => {
     });
 
     socket.on('ICEcandidate', (data) => {
-      let message = data.rtcMessage;
+      const message = data.rtcMessage;
       if (peerConnection.current) {
         peerConnection?.current
           .addIceCandidate(
@@ -87,7 +88,7 @@ export const WebRTCScreen: React.FC = () => {
               sdpMLineIndex: message.label,
             })
           )
-          .then((data) => {
+          .then(() => {
             console.log('SUCCESS');
           })
           .catch((err) => {
@@ -107,20 +108,22 @@ export const WebRTCScreen: React.FC = () => {
         console.log(e);
       });
 
-    peerConnection.current.addEventListener('connectionstatechange', (event) => {});
-    peerConnection.current.addEventListener('icecandidate', (event) => {
+    peerConnection.current.addEventListener('connectionstatechange', () => {});
+    peerConnection.current.addEventListener('icecandidate', () => {
       console.log('*** icecandidate');
     });
-    peerConnection.current.ontrack = (event: any) => setRemoteStream(event.streams);
+    peerConnection.current.ontrack = (event: any) => {
+      setRemoteStream(event.streams);
+    };
 
-    peerConnection.current.addEventListener('icecandidateerror', (event) => {});
+    peerConnection.current.addEventListener('icecandidateerror', () => {});
     peerConnection.current.addEventListener('iceconnectionstatechange', (event) => {
       console.log('*** iceconnectionstatechange', event);
     });
-    peerConnection.current.addEventListener('icegatheringstatechange', (event) => {});
-    peerConnection.current.addEventListener('negotiationneeded', (event) => {});
-    peerConnection.current.addEventListener('signalingstatechange', (event) => {});
-    peerConnection.current.addEventListener('addstream', (event) => {
+    peerConnection.current.addEventListener('icegatheringstatechange', () => {});
+    peerConnection.current.addEventListener('negotiationneeded', () => {});
+    peerConnection.current.addEventListener('signalingstatechange', () => {});
+    peerConnection.current.addEventListener('addstream', () => {
       Alert.alert('stream added');
     });
     peerConnection.current.addEventListener('removestream', (event) => {

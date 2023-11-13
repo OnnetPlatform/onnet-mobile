@@ -7,6 +7,10 @@ import { useQueue } from './useQueue';
 const socketConfig = {
   transports: ['websocket'],
   autoConnect: true,
+  query: {
+    token:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTE4MzMxY2I1ZGE3MmVlZmE2MDliNiIsImVtYWlsIjoic3Nzcy5kZXZAZ21haWwuY29tIiwiaWF0IjoxNjk5ODQwODE3LCJleHAiOjE3MDI0MzI4MTd9.ouwAHgYPY8jTqPA2CH_3Dpf-59yQ6BtY5PnTz0rcIU0',
+  },
 };
 const defaulUser: UserChat = {
   name: '',

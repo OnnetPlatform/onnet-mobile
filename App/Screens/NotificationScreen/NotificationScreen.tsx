@@ -1,11 +1,12 @@
 import React from 'react';
 import { SafeAreaView, SectionList } from 'react-native';
-import data, { Notification as NotificationType, formatList } from './data';
-import { Blur, Icon, Text } from '../../Components/atoms';
 import { SectionListRenderItem } from 'react-native';
-import Notification from './Notification/Notification';
-import { useColors } from '../../Theme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Blur, Icon, Text } from '../../Components/atoms';
+import { useColors } from '../../Theme';
+import data, { formatList, Notification as NotificationType } from './data';
+import Notification from './Notification/Notification';
 import styles, { withColors, withInsets } from './NotificationScreen.styles';
 
 export const NotificationScreen: React.FC = () => {

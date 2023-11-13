@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { Participant } from './components';
-
-import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
-import { useWebrtcContext } from '../../Context/WebrtcContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { useWebrtcContext } from '../../Context/WebrtcContext';
 import { useColors } from '../../Theme';
+import { Participant } from './components';
 import { VideoRoomScreenHeader } from './components';
+import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
 
 export const VideoRoom: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);

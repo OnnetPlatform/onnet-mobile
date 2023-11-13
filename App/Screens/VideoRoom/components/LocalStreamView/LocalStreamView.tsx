@@ -1,14 +1,16 @@
 import React from 'react';
-import { MediaStream, RTCView } from 'react-native-webrtc';
 import { View } from 'react-native';
-import styles from './LocalStreamView.styles';
-import { Text } from '../../../../Components/atoms';
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { MediaStream, RTCView } from 'react-native-webrtc';
+
+import { Text } from '../../../../Components/atoms';
+import styles from './LocalStreamView.styles';
+
 export const LocalStreamView: React.FC<{ localStream: MediaStream | undefined }> = ({
   localStream,
 }) => {
@@ -44,7 +46,7 @@ export const LocalStreamView: React.FC<{ localStream: MediaStream | undefined }>
     }),
     [translationX, translationY]
   );
-  if (!localStream)
+  if (!localStream) {
     return (
       <View style={styles.stream}>
         <View style={styles.centerView}>
@@ -52,6 +54,7 @@ export const LocalStreamView: React.FC<{ localStream: MediaStream | undefined }>
         </View>
       </View>
     );
+  }
 
   return (
     <PanGestureHandler onGestureEvent={handler}>
