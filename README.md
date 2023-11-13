@@ -1,6 +1,6 @@
 ## Onnet <> Mobile
 
-(Muhammad El-Khayat)["mailto:muhammadsaleh.dev@gmail.com"]
+[Muhammad Saleh]("mailto://muhammadsaleh.dev@gmail.com")
 
 ### ISSUES
 
