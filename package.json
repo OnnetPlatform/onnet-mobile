@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@apollo/client": "^3.8.7",
     "@eva-design/eva": "^2.1.1",
     "@georgedoescode/spline": "^1.0.1",
     "@gorhom/bottom-sheet": "^4.4.5",
@@ -26,6 +27,7 @@
     "@types/uuid": "^9.0.2",
     "@ui-kitten/components": "^5.1.2",
     "@ui-kitten/eva-icons": "^5.1.2",
+    "graphql": "^16.8.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "numeral": "^2.0.6",

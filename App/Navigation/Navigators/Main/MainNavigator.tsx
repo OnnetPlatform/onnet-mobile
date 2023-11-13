@@ -1,16 +1,16 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { AuthStack } from '../Stacks';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import { CreateEventSheet } from '../../../Screens/ConferenceScreen/components';
-import SocketContext from '../../../Context/SocketContext/SocketContext';
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import QueueContext from '../../../Context/QueueContext/QueueContext';
-import { RealmProvider } from '../../../Hooks/useRealmContext';
-import { DefaultTheme } from '@react-navigation/native';
-import { OnnetProvider } from '../../../Provider/OnnetProvider';
+import SocketContext from '../../../Context/SocketContext/SocketContext';
 import WebrtcProvider from '../../../Context/WebrtcContext';
+import { RealmProvider } from '../../../Hooks/useRealmContext';
+import { OnnetProvider } from '../../../Provider/OnnetProvider';
+import { CreateEventSheet } from '../../../Screens/ConferenceScreen/components';
+import { AuthStack } from '../Stacks';
 
 const navTheme = {
   ...DefaultTheme,
