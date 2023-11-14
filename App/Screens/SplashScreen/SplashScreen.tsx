@@ -12,6 +12,7 @@ export const SplashScreen: React.FC = () => {
   const { access_token } = useSelector(AuthSelector);
   const isFocused = useIsFocused();
   const navigation = useNavigation();
+
   useEffect(() => {
     setTimeout(() => {
       if (isFocused) {

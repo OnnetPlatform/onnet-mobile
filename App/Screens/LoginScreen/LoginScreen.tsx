@@ -1,6 +1,8 @@
+import { AuthCreators } from '@Khayat/Redux';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { Icon, Separator, Text } from '../../Components/atoms';
 import { GradientLayout, KeyboardAvoidingView } from '../../Components/HOCs';
@@ -13,6 +15,11 @@ export const LoginScreen: React.FC<{}> = () => {
   const navigation = useNavigation();
   const colors = useColors();
   const coloredSyles = withColors(colors);
+  const [email, setEmail] = useState<string>('');
+  const dispatch = useDispatch();
+  const onLogin = () => {
+    dispatch(AuthCreators.login({ email, password: '' }));
+  };
   return (
     <GradientLayout>
       <SafeAreaView style={[styles.screen]}>
@@ -35,15 +42,13 @@ export const LoginScreen: React.FC<{}> = () => {
           </Text>
           <View style={styles.w100}>
             <Input
+              onChangeText={setEmail}
               style={styles.mbottom}
               placeholder="Email"
               keyboardType={'email-address'}
             />
           </View>
-          <Button
-            // @ts-ignore
-            onPress={() => navigation.navigate('MainNavigation')}
-            style={styles.cta}>
+          <Button onPress={onLogin} style={styles.cta}>
             <Text>Continue with Email</Text>
           </Button>
           <Separator />

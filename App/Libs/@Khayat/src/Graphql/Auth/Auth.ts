@@ -8,6 +8,17 @@ export const RegisterMutation = gql`
   }
 `;
 
+export const LoginQuery = gql`
+  query Login($input: LoginInput!) {
+    login(loginInput: $input) {
+      access_token
+    }
+  }
+`;
+
 export interface RegisterResponse {
   data: { register: { access_token: string } };
+}
+export interface LoginResponse {
+  data: { login: { access_token: string } };
 }
