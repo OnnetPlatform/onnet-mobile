@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import { Pressable, SafeAreaView, StatusBar, View } from 'react-native';
-import styles, { withInsets } from './LaunchScreen.styles';
-import { useColors } from '../../Theme';
-
-import { Glassmorphism } from '../../Components/Skia';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Icon, Text } from '../../Components/atoms';
-import { Galaxy } from '../SplashScreen/Galaxy';
-import { Button } from '../../Components/molecules';
-import Animated, { FadeIn } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
-import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
+import React, { useState } from 'react';
+import { Pressable, SafeAreaView, StatusBar } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Icon } from '../../Components/atoms';
+import { Glassmorphism } from '../../Components/Skia';
+import { useColors } from '../../Theme';
+import styles, { withInsets } from './LaunchScreen.styles';
 import { SceneContainer } from './SceneContainer/SceneContainer';
 
 const LaunchScreen: React.FC = () => {
@@ -33,7 +29,7 @@ const LaunchScreen: React.FC = () => {
 
       {step === 3 && isEnded ? (
         <Pressable onPress={onLoginPressed} style={insetsStyles.button}>
-          <Icon style={{ width: 24, height: 24 }} name={'checkmark-outline'} />
+          <Icon style={styles.icon} name={'checkmark-outline'} />
         </Pressable>
       ) : (
         <Pressable
@@ -44,7 +40,7 @@ const LaunchScreen: React.FC = () => {
           style={insetsStyles.button}>
           <Icon
             fill={'black'}
-            style={{ width: 24, height: 24 }}
+            style={styles.icon}
             name={'arrow-ios-forward-outline'}
           />
         </Pressable>

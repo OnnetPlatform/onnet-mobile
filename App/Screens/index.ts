@@ -12,3 +12,4 @@ export { default as AnimationScreen } from './AnimationScreen';
 export { default as HomeScreen } from './HomeScreen';
 export { default as SettingsScreen } from './SettingsScreen';
 export { default as CustomScreen } from './CustomScreen';
+export { default as RegisterationScreen } from './RegisterationScreen';

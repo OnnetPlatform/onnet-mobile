@@ -1,5 +1,6 @@
-// @ts-nocheck
 import AsyncStorage from '@react-native-community/async-storage';
+import { ReducersWhiteList } from '../Redux';
+// @ts-ignore
 import { seamlessImmutableReconciler } from 'redux-persist-seamless-immutable';
 
 export default {
@@ -8,7 +9,7 @@ export default {
   rootConfig: {
     key: 'primary',
     storage: AsyncStorage,
-    whitelist: ['AuthReducer'],
+    whitelist: ReducersWhiteList,
     stateReconciler: seamlessImmutableReconciler,
   },
   dataConfig: {

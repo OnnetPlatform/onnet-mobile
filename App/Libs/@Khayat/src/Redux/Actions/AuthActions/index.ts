@@ -7,4 +7,5 @@ export const { Types: AuthTypes, Creators: AuthCreators } = createActions<
 >({
   reset: null,
   setAccessToken: ['access_token'],
+  signUp: ['credentials'],
 });

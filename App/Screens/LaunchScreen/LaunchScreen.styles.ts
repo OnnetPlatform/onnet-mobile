@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
+
 import { ThemeColors } from '../../Theme/Colors';
 
 export default StyleSheet.create({
@@ -36,6 +37,10 @@ export default StyleSheet.create({
     flex: 1,
     flexGrow: 1,
     justifyContent: 'flex-end',
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });
 

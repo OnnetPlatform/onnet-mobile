@@ -11,6 +11,7 @@ module.exports = {
           '@Components/*': './App/Components',
           '@HOCs': './App/Components/HOCs',
           '@Atoms': './App/Components/atoms',
+          '@Molecules': './App/Components/molecules',
           '@Screens': './App/Screens',
           '@Theme': './App/Theme',
           '@Metrics': './App/Theme/Metrics',

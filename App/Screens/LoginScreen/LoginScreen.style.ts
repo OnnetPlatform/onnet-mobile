@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { ThemeColors } from '../../Theme/Colors';
 
 export default StyleSheet.create({
@@ -22,6 +23,19 @@ export default StyleSheet.create({
     width: '80%',
     flex: 1,
     flexGrow: 1,
+    alignSelf: 'center',
+  },
+  mleft: {
+    marginLeft: 8,
+  },
+  mvertical: { marginVertical: 22 },
+  w100: {
+    width: '100%',
+  },
+  mbottom: {
+    marginBottom: 22,
+  },
+  cta: {
     alignSelf: 'center',
   },
 });

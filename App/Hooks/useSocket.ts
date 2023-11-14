@@ -1,5 +1,8 @@
+import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { io, Socket } from 'socket.io-client';
+
 import { UserChat } from '../../types';
 import ChatEvents from '../Services/ChatEvents/ChatEvents';
 import { useQueue } from './useQueue';
@@ -7,10 +10,6 @@ import { useQueue } from './useQueue';
 const socketConfig = {
   transports: ['websocket'],
   autoConnect: true,
-  query: {
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTE4MzMxY2I1ZGE3MmVlZmE2MDliNiIsImVtYWlsIjoic3Nzcy5kZXZAZ21haWwuY29tIiwiaWF0IjoxNjk5ODQwODE3LCJleHAiOjE3MDI0MzI4MTd9.ouwAHgYPY8jTqPA2CH_3Dpf-59yQ6BtY5PnTz0rcIU0',
-  },
 };
 const defaulUser: UserChat = {
   name: '',
@@ -22,23 +21,36 @@ const defaulUser: UserChat = {
 };
 
 export const useSocket = () => {
-  const socket = useMemo<Socket>(() => io('http://192.168.1.5:80', socketConfig), []);
-  const [currentUser, setCurrentUser] = useState<UserChat>(defaulUser);
+  const { access_token } = useSelector(AuthSelector);
+
+  const [currentUser] = useState<UserChat>(defaulUser);
   const { sendQueue } = useQueue();
   const [opponent, setOpponent] = useState<UserChat | undefined>();
   const [connected, setConnected] = useState<boolean>(false);
+  const socket = useMemo<Socket>(
+    () =>
+      io('http://192.168.1.5:80', {
+        ...socketConfig,
+        query: {
+          token: access_token,
+        },
+      }),
+    [access_token]
+  );
   useEffect(() => {
-    socket.connect();
-  }, []);
+    if (access_token) {
+      socket?.connect();
+    }
+  }, [socket, access_token]);
 
   useEffect(() => {
-    socket.on('receive_dm', ChatEvents.notifyMessageListners);
-    socket.on('user-typing', ChatEvents.notifyTypingListners);
-    socket.on('user-stopped-typing', ChatEvents.notifyStoppedTypingListners);
-    socket.on('disconnect', () => setConnected(false));
+    socket?.on('receive_dm', ChatEvents.notifyMessageListners);
+    socket?.on('user-typing', ChatEvents.notifyTypingListners);
+    socket?.on('user-stopped-typing', ChatEvents.notifyStoppedTypingListners);
+    socket?.on('disconnect', () => setConnected(false));
 
     return () => {
-      socket.disconnect();
+      socket?.disconnect();
     };
   }, [socket]);
 

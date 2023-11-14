@@ -14,6 +14,7 @@
     "paths": {
       "@Components/*": ["./App/Components/*"],
       "@Atoms": ["./App/Components/atoms/index.ts"],
+      "@Molecules": ["./App/Components/molecules/index.ts"],
       "@HOCs": ["./App/Components/HOCs/index.ts"],
       "@Theme": ["./App/Theme/index.ts"],
       "@Metrics": ["./App/Theme/Metrics.ts"],
@@ -22,5 +23,10 @@
       "@Khayat/*": ["./App/Libs/@Khayat/src/*"]
     }
   },
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
 }

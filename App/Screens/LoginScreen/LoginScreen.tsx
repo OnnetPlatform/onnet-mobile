@@ -1,12 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { SafeAreaView, View } from 'react-native';
-import { Icon, Text } from '../../Components/atoms';
+import { Pressable, SafeAreaView, View } from 'react-native';
+
+import { Icon, Separator, Text } from '../../Components/atoms';
 import { GradientLayout, KeyboardAvoidingView } from '../../Components/HOCs';
 import { Button, Input } from '../../Components/molecules';
 import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
-import styles, { withColors } from './LoginScreen.style';
 import { useColors } from '../../Theme';
+import styles, { withColors } from './LoginScreen.style';
 
 export const LoginScreen: React.FC<{}> = () => {
   const navigation = useNavigation();
@@ -18,22 +19,23 @@ export const LoginScreen: React.FC<{}> = () => {
         <View style={styles.titleWrapper}>
           <AppLogo />
           <Text style={styles.subtitle} weight="light">
-            Continue with the Google account or email address you use to sign in.
+            Continue with the Google account or email address you use to sign
+            in.
           </Text>
         </View>
         <KeyboardAvoidingView style={styles.inputsWrapper}>
           <View style={coloredSyles.googleButton}>
             <Icon name={'google-outline'} />
-            <Text weight={'semibold'} fontSize={18} style={{ marginLeft: 8 }}>
+            <Text weight={'semibold'} fontSize={18} style={styles.mleft}>
               Continue with Google
             </Text>
           </View>
-          <Text weight="bold" style={{ marginVertical: 22 }}>
+          <Text weight="bold" style={styles.mvertical}>
             OR
           </Text>
-          <View style={{ width: '100%' }}>
+          <View style={styles.w100}>
             <Input
-              style={{ marginBottom: 22 }}
+              style={styles.mbottom}
               placeholder="Email"
               keyboardType={'email-address'}
             />
@@ -41,9 +43,15 @@ export const LoginScreen: React.FC<{}> = () => {
           <Button
             // @ts-ignore
             onPress={() => navigation.navigate('MainNavigation')}
-            style={{ alignSelf: 'center' }}>
+            style={styles.cta}>
             <Text>Continue with Email</Text>
           </Button>
+          <Separator />
+          <Pressable
+            // @ts-ignore
+            onPress={() => navigation.navigate('RegisterationScreen')}>
+            <Text weight="semibold">Register</Text>
+          </Pressable>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </GradientLayout>
