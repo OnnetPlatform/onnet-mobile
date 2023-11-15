@@ -1,6 +1,7 @@
+import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { BlurView } from '@react-native-community/blur';
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import Animated, {
   Easing,
@@ -9,21 +10,23 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 
 import { UploadedImage } from '../../../types';
 import { Icon, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useSocketContext } from '../../Context/SocketContext/SocketContext';
 import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
-import { useChat } from '../../Hooks/useChat';
 import { useColors } from '../../Theme';
 import { MessageInput, MessageItem } from './components';
 import styles from './UserChatScreen.styles';
 
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
-  const { sendDirectMessage, sendStoppedTypingEvent, sendTypingEvent } = useChat(user);
   const [message, setMessage] = useState<string>('');
   const msgs = useRoomMessages(user);
   const colors = useColors();
@@ -32,20 +35,16 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const { setOpponent } = useSocketContext();
   const withColors = styles(colors, insets);
   const sheetInputHeight = useSharedValue<number>(0);
-  const [attachedImage, setAttachedImage] = useState<UploadedImage | undefined>();
+  const [attachedImage, setAttachedImage] = useState<
+    UploadedImage | undefined
+  >();
   const { height, state } = useAnimatedKeyboard();
-
+  const dispatch = useDispatch();
+  let typingSent = useRef<boolean>(false);
   const onSend = useCallback(() => {
-    sendDirectMessage(
-      {
-        message,
-        attachment: { gallery: attachedImage ? [attachedImage] : [] },
-      },
-      () => {
-        setMessage('');
-        setAttachedImage(undefined);
-      }
-    );
+    dispatch(MessagingCreators.sendMessage({ message, client: user }));
+    setMessage('');
+    setAttachedImage(undefined);
   }, [message]);
 
   const animatedStyle = useAnimatedStyle(
@@ -63,15 +62,25 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     [state]
   );
 
+  const sendTypingEvent = () => {
+    typingSent.current = true;
+    dispatch(MessagingCreators.typing(user));
+  };
+  const sendTypingStoppedEvent = () => {
+    typingSent.current = false;
+    dispatch(MessagingCreators.typingStopped(user));
+  };
+
   useEffect(() => {
-    setTimeout(() => {
-      if (message) {
-        sendTypingEvent();
-      } else {
-        sendStoppedTypingEvent();
-      }
-    }, 0);
-  }, [message]);
+    if (!typingSent.current && message) {
+      sendTypingEvent();
+    }
+    const typingStoppedTimeout = setTimeout(sendTypingStoppedEvent, 4000);
+
+    return () => {
+      clearTimeout(typingStoppedTimeout);
+    };
+  }, [message, typingSent.current]);
 
   useEffect(() => {
     setOpponent(user);
@@ -81,7 +90,9 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     <>
       <SafeAreaView style={withColors.page}>
         <BlurView blurType="regular" style={withColors.header}>
-          <Pressable style={withColors.headerBack} onPress={() => navigation.goBack()}>
+          <Pressable
+            style={withColors.headerBack}
+            onPress={() => navigation.goBack()}>
             <Icon name={'arrow-ios-back'} />
           </Pressable>
           <Pressable
@@ -104,8 +115,10 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           showsVerticalScrollIndicator={false}
           style={animatedStyle}
           keyExtractor={(_, index) => index.toString()}
-          // @ts-ignore
-          renderItem={({ item, index }) => <MessageItem index={index} key={index} item={item} />}
+          renderItem={({ item, index }) => (
+            // @ts-ignore
+            <MessageItem index={index} key={item._id} item={item} />
+          )}
         />
         <MessageInput
           sheetInputHeight={sheetInputHeight}

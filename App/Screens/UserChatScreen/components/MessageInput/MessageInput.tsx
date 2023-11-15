@@ -4,26 +4,32 @@ import BottomSheet, {
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import React, { useRef, useState, useMemo, useEffect } from 'react';
-import { useAnimatedKeyboard, useAnimatedReaction, useDerivedValue } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useUploadImage } from '../../../../Hooks/useUploadImage';
-import { BOTTOM_BAR_HEIGHT, useColors } from '../../../../Theme';
-import styles from '../../UserChatScreen.styles';
-import { View, Pressable, Image, FlatList, useColorScheme } from 'react-native';
-import { Icon, Text } from '../../../../Components/atoms';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
-import MaskedView from '@react-native-masked-view/masked-view';
-import LinearGradient from 'react-native-linear-gradient';
-import { TypingIndicator, GalleryModal } from '..';
-import { MessageInputProps } from './types';
-import { URL } from '../../../../Services/Fetch';
-import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
 import { BlurView } from '@react-native-community/blur';
-import messageStyles from './MessageInput.styles';
+import MaskedView from '@react-native-masked-view/masked-view';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { FlatList, Image, Pressable, useColorScheme, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedKeyboard,
+  useAnimatedReaction,
+  useDerivedValue,
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Icon, Text } from '../../../../Components/atoms';
 import { EmojiList } from '../../../../Components/molecules/EmojiList/EmojiList';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
+import { useUploadImage } from '../../../../Hooks/useUploadImage';
 import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
+import { URL } from '../../../../Services/Fetch';
+import { BOTTOM_BAR_HEIGHT, useColors } from '../../../../Theme';
+import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
+import styles from '../../UserChatScreen.styles';
+import { GalleryModal, TypingIndicator } from '..';
+import messageStyles from './MessageInput.styles';
+import { MessageInputProps } from './types';
 
 export const MessageInput: React.FC<MessageInputProps> = ({
   onSend,
@@ -43,7 +49,8 @@ export const MessageInput: React.FC<MessageInputProps> = ({
   const { uploadImage, uploadedImages, getUploadedImages } = useUploadImage();
   const [openGallery, setOpenGallery] = useState<boolean>(false);
   const [stagedImage, setStagedImage] = useState<PhotoIdentifier | undefined>();
-  const [openUploadedGallery, setOpenUploadedGallery] = useState<boolean>(false);
+  const [openUploadedGallery, setOpenUploadedGallery] =
+    useState<boolean>(false);
   const [openEmojiList, setOpenEmojiList] = useState<boolean>(false);
   const isDark = useColorScheme() === 'dark';
   const { getUser } = useRealmUsers();
@@ -53,12 +60,17 @@ export const MessageInput: React.FC<MessageInputProps> = ({
     [insets.top, stagedImage, openUploadedGallery, uploadedImages]
   );
 
-  const { handleContentLayout, animatedSnapPoints, animatedContentHeight, animatedHandleHeight } =
-    useBottomSheetDynamicSnapPoints(snapPoints);
+  const {
+    handleContentLayout,
+    animatedSnapPoints,
+    animatedContentHeight,
+    animatedHandleHeight,
+  } = useBottomSheetDynamicSnapPoints(snapPoints);
 
   useAnimatedReaction(
     () => animatedContentHeight.value,
-    (height) => (sheetInputHeight.value === 0 ? (sheetInputHeight.value = height) : null)
+    (height) =>
+      sheetInputHeight.value === 0 ? (sheetInputHeight.value = height) : null
   );
 
   const animatedSheetIndex = useDerivedValue(() => {
@@ -126,12 +138,16 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                   style={withColors.closeIcon}>
                   <Icon name={'close-outline'} />
                 </Pressable>
-                <Image style={messageStyles.image} source={{ uri: URL + attachedImage.filename }} />
+                <Image
+                  style={messageStyles.image}
+                  source={{ uri: URL + attachedImage.filename }}
+                />
               </Animated.View>
             ) : null}
             <View style={withColors.inputFooter}>
               <View style={withColors.footerHeader}>
-                <Pressable onPress={() => setOpenUploadedGallery(!openUploadedGallery)}>
+                <Pressable
+                  onPress={() => setOpenUploadedGallery(!openUploadedGallery)}>
                   <Icon
                     name={'attach-2-outline'}
                     style={{
@@ -156,19 +172,34 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                 <Pressable>
                   <Icon
                     name={'code-outline'}
-                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                    style={{
+                      opacity: 0.4,
+                      width: 18,
+                      height: 18,
+                      marginRight: 8,
+                    }}
                   />
                 </Pressable>
                 <Pressable>
                   <Icon
                     name={'at-outline'}
-                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                    style={{
+                      opacity: 0.4,
+                      width: 18,
+                      height: 18,
+                      marginRight: 8,
+                    }}
                   />
                 </Pressable>
                 <Pressable>
                   <Icon
                     name={'mic-outline'}
-                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                    style={{
+                      opacity: 0.4,
+                      width: 18,
+                      height: 18,
+                      marginRight: 8,
+                    }}
                   />
                 </Pressable>
                 <Pressable
@@ -177,7 +208,12 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                   }}>
                   <Icon
                     name={'calendar-outline'}
-                    style={{ opacity: 0.4, width: 18, height: 18, marginRight: 8 }}
+                    style={{
+                      opacity: 0.4,
+                      width: 18,
+                      height: 18,
+                      marginRight: 8,
+                    }}
                   />
                 </Pressable>
               </View>
@@ -190,8 +226,16 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                       setOpenEmojiList(false);
                     }}>
                     <MaskedView
-                      maskElement={<Icon style={withColors.icon} name={'paper-plane-outline'} />}>
-                      <LinearGradient style={withColors.icon} colors={[colors.pink, colors.cyan]} />
+                      maskElement={
+                        <Icon
+                          style={withColors.icon}
+                          name={'paper-plane-outline'}
+                        />
+                      }>
+                      <LinearGradient
+                        style={withColors.icon}
+                        colors={[colors.pink, colors.cyan]}
+                      />
                     </MaskedView>
                   </Pressable>
                 </Animated.View>
@@ -207,8 +251,12 @@ export const MessageInput: React.FC<MessageInputProps> = ({
                 stickyHeaderIndices={[0]}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
-                  <BlurView blurType={isDark ? 'dark' : 'light'} blurAmount={10}>
-                    <Pressable style={messageStyles.header} onPress={() => setOpenGallery(true)}>
+                  <BlurView
+                    blurType={isDark ? 'dark' : 'light'}
+                    blurAmount={10}>
+                    <Pressable
+                      style={messageStyles.header}
+                      onPress={() => setOpenGallery(true)}>
                       <Text weight="semibold">Import from camera roll</Text>
                       <Icon style={messageStyles.icon} name={'plus-outline'} />
                     </Pressable>

@@ -1,17 +1,18 @@
-import React from 'react';
+import { GradientLayout } from '@HOCs';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import {
   FeedScreen,
+  HomeScreen,
   NotificationScreen,
   ProfileScreen,
-  HomeScreen,
 } from '@Screens';
+import React from 'react';
+
+import { ChatStack } from '../Stacks/ChatStack/ChatStack';
 import TabBar from './TabBar';
-import {ChatStack} from '../Stacks/ChatStack/ChatStack';
-import {GradientLayout} from '@HOCs';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,8 +28,8 @@ export const HomeBottomNavigation = () => {
   return (
     <GradientLayout>
       <Tab.Navigator
-        tabBar={props => <TabBar {...props} />}
-        sceneContainerStyle={{backgroundColor: 'transparent'}}
+        tabBar={(props) => <TabBar {...props} />}
+        sceneContainerStyle={{ backgroundColor: 'transparent' }}
         screenOptions={screenOptions}>
         <Tab.Screen name="HomeChat" component={ChatStack} />
         <Tab.Screen name="HomeScreen" component={HomeScreen} />

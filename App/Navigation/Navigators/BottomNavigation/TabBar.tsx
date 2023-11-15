@@ -1,29 +1,36 @@
+import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import React from 'react';
-import { Pressable, View, SafeAreaView, ViewStyle } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { Icon, Text } from '../../../Components/atoms';
-import { useColors } from '@Theme';
-import useTabs from './Tabs';
-import styles from './TabBar.styles';
 import { NavigationState } from '@react-navigation/native';
-import Animated, { FadeIn, FadeOut, useAnimatedStyle } from 'react-native-reanimated';
+import { useColors } from '@Theme';
+import React from 'react';
+import { Pressable, SafeAreaView, View, ViewStyle } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+
+import { Icon, Text } from '../../../Components/atoms';
 import { HeaderLoader } from '../../../Components/atoms/HeaderLoader/HeaderLoader';
-import { useSocketContext } from '../../../Context/SocketContext/SocketContext';
+import styles from './TabBar.styles';
+import useTabs from './Tabs';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
     const { state } = props;
     const colors = useColors();
-    const { socket } = useSocketContext();
+    const { isConnected } = useSelector(MessagingSelector);
     const background: ViewStyle = {
       backgroundColor: colors.background,
     };
     return (
       <>
-        {socket.connected ? null : (
-          <View style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
+        {isConnected ? null : (
+          <View
+            style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
             <HeaderLoader />
           </View>
         )}
@@ -42,7 +49,9 @@ const TabBar = React.memo(
   (next, prev) => next.descriptors === prev.descriptors
 );
 
-const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationState }>(
+const Tab = React.memo<
+  BottomTabBarProps & { index: number; route: NavigationState }
+>(
   ({ state, index, navigation, route }) => {
     const tabs = useTabs();
 
@@ -77,7 +86,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
     );
 
     const badge = () => {
-      if (index === 3)
+      if (index === 3) {
         return (
           <View style={styles.badge}>
             <Text weight="bold" color="white" fontSize={10}>
@@ -85,18 +94,30 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
             </Text>
           </View>
         );
+      }
       return null;
     };
 
     return (
-      <Pressable onPress={onPress} onLongPress={onLongPress} style={styles.tab} key={index}>
+      <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
+        style={styles.tab}
+        key={index}>
         {badge()}
         {isFocused ? (
-          <MaskedView maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
-            <LinearGradient style={styles.icon} colors={[colors.pink, colors.cyan]} />
+          <MaskedView
+            maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
+            <LinearGradient
+              style={styles.icon}
+              colors={[colors.pink, colors.cyan]}
+            />
           </MaskedView>
         ) : (
-          <Icon style={{ width: 16, height: 16 }} name={icon + (isFocused ? '' : '-outline')} />
+          <Icon
+            style={{ width: 16, height: 16 }}
+            name={icon + (isFocused ? '' : '-outline')}
+          />
         )}
 
         {isFocused ? null : (

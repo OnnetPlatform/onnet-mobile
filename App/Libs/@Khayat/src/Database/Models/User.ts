@@ -17,6 +17,7 @@ class User extends Realm.Object<User> {
       unreadCount: 'int',
       id: 'string',
       status: 'string',
+      user_id: 'string',
     },
   };
 }

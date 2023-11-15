@@ -15,13 +15,15 @@ export const SplashScreen: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (isFocused) {
-        if (access_token) {
-          navigation.navigate('MainNavigation');
-        } else {
-          navigation.navigate('LoginScreen');
+      try {
+        if (isFocused) {
+          if (access_token) {
+            navigation.navigate('MainNavigation');
+          } else {
+            navigation.navigate('LoginScreen');
+          }
         }
-      }
+      } catch (error) {}
     }, 2000);
   }, [isFocused, access_token]);
 

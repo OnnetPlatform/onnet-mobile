@@ -31,7 +31,7 @@ export const RegisterationScreen: React.FC = () => {
     setCredentials((cred) => ({ ...cred, password: text }));
 
   const onSubmit = () => {
-    dispatch(AuthCreators.signUp(credentials));
+    dispatch(AuthCreators.register(credentials));
   };
   return (
     <GradientLayout>

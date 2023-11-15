@@ -1,8 +1,8 @@
-import { UserChat } from '../../../types';
-import { useQuery, useRealm } from '../../Hooks/useRealmContext';
-import { UserChatMessage } from '../../Screens/UserChatScreen/types';
+import { useQuery, useRealm } from '@Khayat/Database/Hooks/useRealmContext';
+import Message from '@Khayat/Database/Models/Message';
+import { UserChat, UserChatMessage } from '@Khayat/Database/Models/types';
+
 import { URL } from '../../Services/Fetch';
-import MessageModel from '../Models/Message';
 import { useRealmUsers } from './useRealmUsers';
 
 export const useRealmMessages = () => {
@@ -12,7 +12,10 @@ export const useRealmMessages = () => {
     realm.write(() => {
       const createdMessages = data.messages.map((message) => {
         const gallery = message.attachment?.gallery?.map((image) =>
-          realm.create('UploadedImage', { ...image, path: URL + image.filename })
+          realm.create('UploadedImage', {
+            ...image,
+            path: URL + image.filename,
+          })
         );
         const attachment = realm.create('Attachment', { gallery, voice: '' });
         const textMessage = realm.create('TextMessage', {
@@ -30,9 +33,12 @@ export const useRealmMessages = () => {
 };
 
 export const useRoomMessages = (user: UserChat) => {
-  const messages = useQuery(MessageModel);
+  const messages = useQuery(Message);
+
   try {
-    const data = Array.from(messages.filtered(`user.id = "${user.id}"`)).reverse();
+    const data = Array.from(
+      messages.filtered(`user.id = "${user.id}"`)
+    ).reverse();
     return data;
   } catch (error) {
     console.log(error);

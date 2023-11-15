@@ -1,16 +1,10 @@
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { io, Socket } from 'socket.io-client';
 
 import { UserChat } from '../../types';
-import ChatEvents from '../Services/ChatEvents/ChatEvents';
 import { useQueue } from './useQueue';
 
-const socketConfig = {
-  transports: ['websocket'],
-  autoConnect: true,
-};
 const defaulUser: UserChat = {
   name: '',
   avatar: '',
@@ -18,6 +12,7 @@ const defaulUser: UserChat = {
   id: '',
   unreadCount: 0,
   status: '',
+  user_id: '',
 };
 
 export const useSocket = () => {
@@ -26,39 +21,13 @@ export const useSocket = () => {
   const [currentUser] = useState<UserChat>(defaulUser);
   const { sendQueue } = useQueue();
   const [opponent, setOpponent] = useState<UserChat | undefined>();
-  const [connected, setConnected] = useState<boolean>(false);
-  const socket = useMemo<Socket>(
-    () =>
-      io('http://192.168.1.5:80', {
-        ...socketConfig,
-        query: {
-          token: access_token,
-        },
-      }),
-    [access_token]
-  );
-  useEffect(() => {
-    if (access_token) {
-      socket?.connect();
-    }
-  }, [socket, access_token]);
+  const [connected] = useState<boolean>(false);
 
   useEffect(() => {
-    socket?.on('receive_dm', ChatEvents.notifyMessageListners);
-    socket?.on('user-typing', ChatEvents.notifyTypingListners);
-    socket?.on('user-stopped-typing', ChatEvents.notifyStoppedTypingListners);
-    socket?.on('disconnect', () => setConnected(false));
-
-    return () => {
-      socket?.disconnect();
-    };
-  }, [socket]);
-
-  useEffect(() => {
-    if (currentUser && sendQueue) {
+    if (currentUser && sendQueue && access_token) {
       sendQueue();
     }
-  }, [currentUser, sendQueue]);
+  }, [currentUser, sendQueue, access_token]);
 
-  return { socket, currentUser, setOpponent, opponent, connected };
+  return { socket: {}, currentUser, setOpponent, opponent, connected };
 };

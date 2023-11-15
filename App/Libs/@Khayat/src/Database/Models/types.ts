@@ -1,3 +1,5 @@
+import User from './User';
+
 export type UserChat = {
   name: string;
   avatar: string;
@@ -29,3 +31,16 @@ export type Message = {
   user: UserChat;
   attachment?: Attachment;
 };
+
+export type UserChatMessage = {
+  user: User;
+  messages: {
+    message: string;
+    attachment: Attachment | undefined;
+    date: string;
+  }[];
+};
+
+export enum ModelEnums {
+  USER = 'User',
+}

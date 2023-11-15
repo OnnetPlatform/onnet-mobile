@@ -1,10 +1,11 @@
-import React from 'react';
-import { SectionList } from 'react-native';
-import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
-import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
-import ChatUser from '../ChatUser/ChatUser';
 import { Text } from '@Atoms';
 import { useColors } from '@Theme';
+import React from 'react';
+import { SectionList } from 'react-native';
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
+
+import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
+import ChatUser from '../ChatUser/ChatUser';
 import EmptyState from './components/EmptyState';
 
 export const ChatUsersList: React.FC = () => {
@@ -39,7 +40,7 @@ export const ChatUsersList: React.FC = () => {
   return (
     <SectionList
       sections={sections}
-      keyExtractor={(item) => item.name}
+      keyExtractor={(item) => item.id}
       // @ts-ignore
       getItemLayout={getItemLayout}
       maxToRenderPerBatch={10}
@@ -56,12 +57,15 @@ export const ChatUsersList: React.FC = () => {
             id={item.id}
             unreadCount={item.unreadCount}
             status={item.status}
+            user_id={item.user_id}
           />
         );
       }}
       renderSectionHeader={({ section }) =>
         section.data.length > 0 ? (
-          <Text weight="bold" style={{ padding: 8, backgroundColor: colors.blur }}>
+          <Text
+            weight="bold"
+            style={{ padding: 8, backgroundColor: colors.blur }}>
             {section.title}
           </Text>
         ) : null

@@ -1,4 +1,6 @@
+import { Collapsible } from '@Atoms';
 import { AuthCreators } from '@Khayat/Redux';
+import { LoginCredentials } from '@Khayat/Redux/Reducers/AuthReducer/types';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
@@ -15,10 +17,13 @@ export const LoginScreen: React.FC<{}> = () => {
   const navigation = useNavigation();
   const colors = useColors();
   const coloredSyles = withColors(colors);
-  const [email, setEmail] = useState<string>('');
+  const [credentials, setCredentials] = useState<LoginCredentials>({
+    email: '',
+    password: '',
+  });
   const dispatch = useDispatch();
   const onLogin = () => {
-    dispatch(AuthCreators.login({ email, password: '' }));
+    dispatch(AuthCreators.login(credentials));
   };
   return (
     <GradientLayout>
@@ -42,11 +47,23 @@ export const LoginScreen: React.FC<{}> = () => {
           </Text>
           <View style={styles.w100}>
             <Input
-              onChangeText={setEmail}
+              onChangeText={(text) =>
+                setCredentials((cred) => ({ ...cred, email: text }))
+              }
               style={styles.mbottom}
               placeholder="Email"
               keyboardType={'email-address'}
             />
+            <Collapsible expanded={!!credentials.email}>
+              <Input
+                onChangeText={(text) =>
+                  setCredentials((cred) => ({ ...cred, password: text }))
+                }
+                style={styles.mbottom}
+                placeholder="Password"
+                keyboardType={'email-address'}
+              />
+            </Collapsible>
           </View>
           <Button onPress={onLogin} style={styles.cta}>
             <Text>Continue with Email</Text>

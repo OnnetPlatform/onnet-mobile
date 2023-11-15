@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { useSocketContext } from '../Context/SocketContext/SocketContext';
+
 export type MessageQueue = {
   data: any;
   event: string;
@@ -30,14 +32,18 @@ export const useQueue = () => {
   const sendQueue = useCallback(() => {
     queue.forEach((item) => {
       socket.emit(item.event.toString(), item.data, () => {
-        if (item.callback) item.callback();
+        if (item.callback) {
+          item.callback();
+        }
         queue.delete(item.id);
       });
     });
   }, [socket, queue]);
 
   useEffect(() => {
-    if (socket && socket.connected) sendQueue();
+    if (socket && socket.connected) {
+      sendQueue();
+    }
   }, [queue, socket]);
 
   return { queue, addToQueue, sendQueue };

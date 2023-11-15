@@ -1,10 +1,7 @@
 import React from 'react';
 import Animated, {
-  CurvedTransition,
-  Easing,
   FadeIn,
   FadeOut,
-  Layout,
   SharedValue,
 } from 'react-native-reanimated';
 
@@ -14,12 +11,19 @@ type CollapsibleProps = {
   animatedValue?: SharedValue<number>;
 };
 
-export const Collapsible: React.FC<CollapsibleProps> = ({ children, expanded = false }) => {
-  if (expanded)
+export const Collapsible: React.FC<CollapsibleProps> = ({
+  children,
+  expanded = false,
+}) => {
+  if (expanded) {
     return (
-      <Animated.View entering={FadeIn.duration(800)} exiting={FadeOut.duration(500)}>
+      <Animated.View
+        entering={FadeIn.duration(800)}
+        exiting={FadeOut.duration(500)}>
         {children}
       </Animated.View>
     );
+  }
   return null;
 };
+export default Collapsible;

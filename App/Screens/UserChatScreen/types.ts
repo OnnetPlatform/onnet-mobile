@@ -1,4 +1,4 @@
-import { Attachment, Message } from '../../../types';
+import { Attachment } from '../../../types';
 import User from '../../Database/Models/User';
 
 export type UserChatMessage = {

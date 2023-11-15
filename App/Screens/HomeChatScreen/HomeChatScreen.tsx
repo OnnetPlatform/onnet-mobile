@@ -1,13 +1,14 @@
-import React from 'react';
-import { SafeAreaView, View, Image, Pressable } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Icon, Text } from '../../Components/atoms';
-import { useColors } from '../../Theme';
-import styles from './HomeChatScreen.styles';
-import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
-import Images from '../../Theme/Images';
-import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Image, Pressable, SafeAreaView, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { Icon, Text } from '../../Components/atoms';
+import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
+import { useColors } from '../../Theme';
+import Images from '../../Theme/Images';
+import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
+import styles from './HomeChatScreen.styles';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();

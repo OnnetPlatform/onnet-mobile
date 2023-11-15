@@ -1,3 +1,4 @@
+import { DatabaseProvider } from '@Khayat/Providers/DatabaseProvider';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
@@ -7,7 +8,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import QueueContext from '../../../Context/QueueContext/QueueContext';
 import SocketContext from '../../../Context/SocketContext/SocketContext';
 import WebrtcProvider from '../../../Context/WebrtcContext';
-import { RealmProvider } from '../../../Hooks/useRealmContext';
 import { OnnetProvider } from '../../../Provider/OnnetProvider';
 import { CreateEventSheet } from '../../../Screens/ConferenceScreen/components';
 import { AuthStack } from '../Stacks';
@@ -27,7 +27,7 @@ export const MainNavigator: React.FC = () => {
       <SafeAreaProvider>
         <OnnetProvider>
           <NavigationContainer theme={navTheme}>
-            <RealmProvider schemaVersion={9}>
+            <DatabaseProvider>
               <SocketContext>
                 <QueueContext>
                   <WebrtcProvider>
@@ -36,7 +36,7 @@ export const MainNavigator: React.FC = () => {
                   <CreateEventSheet onClose={function (): void {}} />
                 </QueueContext>
               </SocketContext>
-            </RealmProvider>
+            </DatabaseProvider>
           </NavigationContainer>
         </OnnetProvider>
       </SafeAreaProvider>

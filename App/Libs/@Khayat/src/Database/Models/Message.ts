@@ -1,7 +1,5 @@
 import Realm from 'realm';
-
-import { Attachment, UserChat } from '../../../types';
-import { UserChatMessage } from '../../Screens/UserChatScreen/types';
+import { Attachment, UserChat, UserChatMessage } from './types';
 
 export class TextMessage extends Realm.Object {
   message!: string;

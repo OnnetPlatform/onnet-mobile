@@ -1,12 +1,19 @@
-import React, { useMemo } from 'react';
-import { SettingItem as SettingItemType, SettingsScreenNavigationProps } from './types';
 import { Separator, Text } from '@Atoms';
+import { AuthCreators } from '@Khayat/Redux';
+import React, { useMemo } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { SettingItem } from './components';
+import { useDispatch } from 'react-redux';
 
-export const useSettings: (navigation: SettingsScreenNavigationProps) => SettingItemType[] = (
-  navigation
-) => {
+import { SettingItem } from './components';
+import {
+  SettingItem as SettingItemType,
+  SettingsScreenNavigationProps,
+} from './types';
+
+export const useSettings: (
+  navigation: SettingsScreenNavigationProps
+) => SettingItemType[] = (navigation) => {
+  const dispatch = useDispatch();
   const settings = useMemo(
     () => [
       {
@@ -57,8 +64,15 @@ export const useSettings: (navigation: SettingsScreenNavigationProps) => Setting
       { title: 'App Icon', icon: 'settings-outline', onPress: () => {} },
       {
         title: 'Privacy & Visibility',
-        icon: 'settings-outline',
+        icon: 'file-outline',
         onPress: () => {},
+      },
+      {
+        title: 'Logout',
+        icon: 'log-out-outline',
+        onPress: () => {
+          dispatch(AuthCreators.reset());
+        },
       },
     ],
     []
