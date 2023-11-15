@@ -22,7 +22,12 @@ import {
   onUserDisconnected,
   onDisconnect,
 } from './events';
-import { sendMessage, sendTyping, sendTypingStopped } from './actions';
+import {
+  disconnect,
+  sendMessage,
+  sendTyping,
+  sendTypingStopped,
+} from './actions';
 
 const socketConfig = {
   transports: ['websocket'],
@@ -65,6 +70,7 @@ export function* connectToServer(): any {
     yield fork(sendMessage, socket);
     yield fork(sendTyping, socket);
     yield fork(sendTypingStopped, socket);
+    yield fork(disconnect, socket);
   } catch (error) {
     console.log(error);
   }

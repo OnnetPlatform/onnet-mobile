@@ -1,7 +1,11 @@
 import { Socket } from 'socket.io-client';
-import { MessagingTypes } from '../../Actions/MessagingActions';
-import { TakeEffect, take } from 'redux-saga/effects';
+import {
+  MessagingCreators,
+  MessagingTypes,
+} from '../../Actions/MessagingActions';
+import { TakeEffect, put, take } from 'redux-saga/effects';
 import { MessagingEvents } from './types';
+import { AuthTypes } from '../../Actions/AuthActions';
 
 export function* sendMessage(socket: Socket): Generator<TakeEffect, any, any> {
   while (true) {
@@ -21,5 +25,12 @@ export function* sendTypingStopped(
   while (true) {
     const { user } = yield take(MessagingTypes.TYPING_STOPPED);
     socket.emit(MessagingEvents.STOPPED_TYPING, user);
+  }
+}
+export function* disconnect(socket: Socket) {
+  while (true) {
+    yield take(AuthTypes.RESET);
+    socket.disconnect();
+    yield put(MessagingCreators.setConnected(false));
   }
 }
