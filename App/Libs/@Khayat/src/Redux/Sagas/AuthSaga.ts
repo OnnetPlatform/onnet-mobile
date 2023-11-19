@@ -15,7 +15,7 @@ export function* register({ credentials }: { credentials: Credentials }) {
       mutation: RegisterMutation,
       variables: { input: credentials },
     });
-    yield put(AuthCreators.setAccessToken(result.data.register.access_token));
+    yield put(AuthCreators.setAuthData(result.data.register));
   } catch (error) {
     console.log(error);
   }
@@ -28,7 +28,8 @@ export function* login({ credentials }: { credentials: LoginCredentials }) {
       query: LoginQuery,
       variables: { input: credentials },
     });
-    yield put(AuthCreators.setAccessToken(result.data.login.access_token));
+    console.log(result.data.login);
+    yield put(AuthCreators.setAuthData(result.data.login));
   } catch (error) {
     console.log(error);
   }

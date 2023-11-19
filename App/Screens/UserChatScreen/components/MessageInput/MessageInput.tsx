@@ -1,4 +1,5 @@
 import BottomSheet, {
+  BottomSheetBackdrop,
   BottomSheetTextInput,
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
@@ -7,7 +8,14 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { BlurView } from '@react-native-community/blur';
 import MaskedView from '@react-native-masked-view/masked-view';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { FlatList, Image, Pressable, useColorScheme, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Keyboard,
+  Pressable,
+  useColorScheme,
+  View,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   FadeIn,
@@ -101,6 +109,12 @@ export const MessageInput: React.FC<MessageInputProps> = ({
     setOpenUploadedGallery(false);
   }, [attachedImage]);
 
+  useEffect(() => {
+    Keyboard.addListener('keyboardWillHide', () => {
+      sheetInputRef.current?.snapToIndex(0);
+    });
+  }, [sheetInputRef, sheetInputRef.current]);
+
   return (
     <>
       <BottomSheet
@@ -110,6 +124,16 @@ export const MessageInput: React.FC<MessageInputProps> = ({
         bottomInset={BOTTOM_BAR_HEIGHT}
         animatedIndex={animatedSheetIndex}
         backgroundComponent={CustomBackground}
+        backdropComponent={(props) => (
+          <BottomSheetBackdrop
+            {...props}
+            opacity={1}
+            onPress={() => {
+              sheetInputRef.current?.snapToIndex(-1);
+              Keyboard.dismiss();
+            }}
+          />
+        )}
         handleStyle={{ paddingVertical: 8 }}
         style={{ borderRadius: 16, overflow: 'hidden' }}
         // @ts-ignore

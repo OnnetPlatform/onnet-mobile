@@ -1,9 +1,11 @@
 import 'react-native-get-random-values';
-import { useCallback, useMemo, useRef, useState } from 'react';
+
 import { faker } from '@faker-js/faker';
-import { v4 as uuidv4 } from 'uuid';
-import _, { sortedIndex } from 'lodash';
+import _ from 'lodash';
 import moment from 'moment';
+import { useCallback, useMemo, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 let startDate = new Date();
 let endDate = new Date().setDate(new Date().getDate() + 7);
 
@@ -43,7 +45,10 @@ export const useFakerData = () => {
     return array;
   }, [length]);
 
-  const chatUsers = useMemo(() => Array.from({ length: 100 }, generateChatUsers), []);
+  const chatUsers = useMemo(
+    () => Array.from({ length: 100 }, generateChatUsers),
+    []
+  );
 
   const nextPage = useCallback(() => {
     startDate = new Date(endDate);

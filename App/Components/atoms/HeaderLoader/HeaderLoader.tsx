@@ -1,4 +1,6 @@
+import { useColors } from '@Theme';
 import React, { useEffect } from 'react';
+import { useWindowDimensions, ViewStyle } from 'react-native';
 import Animated, {
   interpolateColor,
   useAnimatedStyle,
@@ -6,8 +8,6 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { useColors } from '@Theme';
-import { ViewStyle, useWindowDimensions } from 'react-native';
 
 export const HeaderLoader: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   const colors = useColors();
@@ -29,10 +29,17 @@ export const HeaderLoader: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   );
 
   useEffect(() => {
-    if (!width) return;
+    if (!width) {
+      return;
+    }
     animatedWidth.value = 0;
-    animatedWidth.value = withRepeat(withTiming(width, { duration: 700 }), -1, false);
+    animatedWidth.value = withRepeat(
+      withTiming(width, { duration: 700 }),
+      -1,
+      false
+    );
   }, [width]);
 
   return <Animated.View style={[animatedstyle, style]} />;
 };
+export default HeaderLoader;

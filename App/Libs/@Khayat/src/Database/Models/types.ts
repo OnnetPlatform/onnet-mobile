@@ -34,13 +34,15 @@ export type Message = {
 
 export type UserChatMessage = {
   user: User;
-  messages: {
+  from: User;
+  to: User;
+  message: {
     message: string;
-    attachment: Attachment | undefined;
     date: string;
   }[];
 };
 
 export enum ModelEnums {
   USER = 'User',
+  MESSAGE = 'Message',
 }

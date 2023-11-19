@@ -24,10 +24,12 @@ export const white = '#e4dbd3';
 export const cyan = '#09CFFA';
 export const yellow = '#ffde03';
 export const secondaryDark = '#121212';
-export const secondaryLight = '#cdc5bd';
+export const secondaryLight = '#E5E5E5';
 export const turquoise = '#30D5C8';
 
-export const colors: (scheme: ColorSchemeName) => ThemeColors = (scheme: ColorSchemeName) => ({
+export const colors: (scheme: ColorSchemeName) => ThemeColors = (
+  scheme: ColorSchemeName
+) => ({
   pink,
   blue,
   black,

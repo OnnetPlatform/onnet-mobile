@@ -7,4 +7,5 @@ export const { Types: MessagingTypes, Creators: MessagingCreators } =
     sendMessage: ['message'],
     typing: ['user'],
     typingStopped: ['user'],
+    setChatUpdating: ['isChatUpdating'],
   });

@@ -16,4 +16,7 @@ export default StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 4,
   },
+  indicator: {
+    opacity: 0.7,
+  },
 });

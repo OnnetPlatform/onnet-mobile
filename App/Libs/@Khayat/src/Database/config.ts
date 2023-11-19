@@ -4,7 +4,7 @@ import UploadedImage from './Models/UploadedImage';
 import User from './Models/User';
 import Realm from 'realm';
 
-export const SCHEMA_VERSION = 13;
+export const SCHEMA_VERSION = 17;
 
 const realmConfig: Realm.Configuration = {
   schema: [User, Message, TextMessage, Attachment, UploadedImage],

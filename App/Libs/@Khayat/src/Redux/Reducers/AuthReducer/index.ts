@@ -5,11 +5,15 @@ import { AuthTypes } from '../../Actions';
 
 const initialState = Immutable<AuthData>(AuthInitialState);
 
-const setAccessToken = (state: AuthState, { access_token }: AuthData) =>
-  state.merge({ access_token });
+const setAccessToken = (state: AuthState, data: AuthData) =>
+  state.merge({ ...data });
+
+const setAuthData = (state: AuthState, { data }: { data: AuthData }) =>
+  state.merge({ ...data });
 
 const handlers = {
   [AuthTypes.SET_ACCESS_TOKEN]: setAccessToken,
+  [AuthTypes.SET_AUTH_DATA as unknown as string]: setAuthData,
 };
 
 const AuthReducer = createReducer(initialState, handlers);

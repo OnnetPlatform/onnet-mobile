@@ -5,15 +5,16 @@ import Realm from 'realm';
 
 export const realm = new Realm(realmConfig);
 
-export function createUser(user: UserChat): Realm.Object<User> {
+export function createUser(user: UserChat): User {
   return realm.write(() => {
     return realm.create(ModelEnums.USER, { ...user, status: '' });
   });
 }
-export function findUser(user_id: string): Realm.Object<User> {
-  return realm
+export function findUser(user_id: string): User {
+  const user = realm
     .objects<User>(ModelEnums.USER)
     .filtered(`user_id = "${user_id}"`)[0];
+  return user;
 }
 export function updateUser(
   user: Realm.Object<User>,

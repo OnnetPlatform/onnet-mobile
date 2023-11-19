@@ -1,5 +1,11 @@
-import { ActionPattern, TakeEffect, put, take } from 'redux-saga/effects';
-import { UserChat } from '../../../Database/Models/types';
+import {
+  ActionPattern,
+  TakeEffect,
+  delay,
+  put,
+  take,
+} from 'redux-saga/effects';
+import { UserChat, UserChatMessage } from '../../../Database/Models/types';
 import {
   createUser,
   findUser,
@@ -7,6 +13,7 @@ import {
   updateUser,
 } from '../../../Database/Queries/User';
 import { MessagingCreators } from '../../Actions/MessagingActions';
+import { createMessage } from '../../../Database/Queries/Message';
 
 export function* onConnect(channel: ActionPattern): Generator {
   while (true) {
@@ -22,10 +29,15 @@ export function* onDisconnect(channel: ActionPattern): Generator {
   }
 }
 
-export function* onMessage(channel: ActionPattern): Generator {
+export function* onMessage(
+  channel: ActionPattern
+): Generator<any, any, UserChatMessage> {
   while (true) {
     const data = yield take(channel);
-    console.log('onMessage', data);
+    yield put(MessagingCreators.setChatUpdating(true));
+    createMessage(data);
+    yield delay(500);
+    yield put(MessagingCreators.setChatUpdating(false));
   }
 }
 
@@ -35,6 +47,7 @@ export function* onNewUserConnected(
   while (true) {
     const { user } = yield take(channel);
     updateUserStatus(user, 'isActive', true);
+    updateUserStatus(user, 'avatar', user.avatar);
   }
 }
 
@@ -54,6 +67,7 @@ export function* onConnectedUsers(
     const users = yield take(channel);
     users.map((user) => {
       updateUserStatus(user, 'isActive', true);
+      updateUserStatus(user, 'avatar', user.avatar);
     });
   }
 }

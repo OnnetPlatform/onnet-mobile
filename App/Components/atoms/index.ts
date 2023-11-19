@@ -7,3 +7,5 @@ export { default as HackerText } from './HackerText';
 export { default as Header } from './Header';
 export { default as Separator } from './Separator';
 export { default as Collapsible } from './Collapsible';
+export { default as HeaderLoader } from './HeaderLoader';
+export { default as SectionsList } from './SectionsList';

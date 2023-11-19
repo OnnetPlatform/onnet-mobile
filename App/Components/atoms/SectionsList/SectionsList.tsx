@@ -1,26 +1,29 @@
+import moment from 'moment';
 import React, { useEffect, useRef } from 'react';
 import { SectionList } from 'react-native';
-import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
-import moment from 'moment';
+
 import { SectionsListProps } from './types';
 
-export const SectionsList: React.FC<SectionsListProps> = ({ data, scrollToDate, ...props }) => {
+export const SectionsList: React.FC<SectionsListProps> = ({
+  data,
+  scrollToDate,
+  ...props
+}) => {
   const ref = useRef<SectionList<any, any>>(null);
-
-  const getItemLayout = sectionListGetItemLayout({
-    getItemHeight: () => 50,
-    getSeparatorHeight: () => 0,
-    getSectionHeaderHeight: () => 30,
-    getSectionFooterHeight: () => 0,
-  });
 
   useEffect(() => {
     if (scrollToDate && ref.current) {
       const index = data.findIndex(
-        (date: any) => date.title === moment(scrollToDate).format('dddd, MMMM Do')
+        (date: any) =>
+          date.title === moment(scrollToDate).format('dddd, MMMM Do')
       );
-      if (index > -1)
-        ref.current.scrollToLocation({ sectionIndex: index, animated: true, itemIndex: 0 });
+      if (index > -1) {
+        ref.current.scrollToLocation({
+          sectionIndex: index,
+          animated: true,
+          itemIndex: 0,
+        });
+      }
     }
   }, [scrollToDate]);
 

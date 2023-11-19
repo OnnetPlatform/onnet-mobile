@@ -1,13 +1,18 @@
+import { useScrollToTop } from '@react-navigation/native';
+import moment from 'moment';
 import React, { useCallback, useRef, useState } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, View, SectionList } from 'react-native';
+import {
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  SectionList,
+} from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
+
 import EventItem from '../EventItem/EventItem';
 import HomeScreenHeader from '../HomeScreenHeader';
+import { SectionHeader } from '../SectionHeader/SectionHeader';
 import { useFakerData } from './Data';
 import styles from './EventsList.styles';
-import { SectionHeader } from '../SectionHeader/SectionHeader';
-import moment from 'moment';
-import { useScrollToTop } from '@react-navigation/native';
 
 export const EventsList: React.FC<{
   onCreatePressed(): void;
@@ -17,7 +22,9 @@ export const EventsList: React.FC<{
   const animatedHeaderValue = useSharedValue(0);
   const ref = useRef<SectionList<any, any>>(null);
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-    animatedHeaderValue.value = selectedDate ? 0 : e.nativeEvent.contentOffset.y;
+    animatedHeaderValue.value = selectedDate
+      ? 0
+      : e.nativeEvent.contentOffset.y;
   };
 
   const renderHeader = useCallback(({ section }: any) => {
@@ -36,10 +43,16 @@ export const EventsList: React.FC<{
           setSelectedDate(scrollToDate);
           if (ref.current) {
             const index = data.findIndex(
-              (date: any) => date.title === moment(scrollToDate).format('dddd, MMMM Do')
+              (date: any) =>
+                date.title === moment(scrollToDate).format('dddd, MMMM Do')
             );
-            if (index > -1)
-              ref.current.scrollToLocation({ sectionIndex: index, animated: true, itemIndex: 0 });
+            if (index > -1) {
+              ref.current.scrollToLocation({
+                sectionIndex: index,
+                animated: true,
+                itemIndex: 0,
+              });
+            }
           }
         }}
       />
@@ -50,7 +63,7 @@ export const EventsList: React.FC<{
         sections={data}
         scrollEventThrottle={0.5}
         onScroll={onScroll}
-        onEndReached={(distance) => {
+        onEndReached={() => {
           setTimeout(() => {
             nextPage();
           }, 100);

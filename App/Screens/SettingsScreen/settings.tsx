@@ -1,4 +1,5 @@
 import { Separator, Text } from '@Atoms';
+import { realm } from '@Khayat/Database/Queries/User';
 import { AuthCreators } from '@Khayat/Redux';
 import React, { useMemo } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
@@ -72,6 +73,9 @@ export const useSettings: (
         icon: 'log-out-outline',
         onPress: () => {
           dispatch(AuthCreators.reset());
+          realm.write(() => {
+            realm.deleteAll();
+          });
         },
       },
     ],

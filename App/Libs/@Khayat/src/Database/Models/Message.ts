@@ -18,12 +18,16 @@ export class TextMessage extends Realm.Object {
 class Message extends Realm.Object<UserChatMessage> {
   user!: UserChat;
   _id!: string;
-  messages: TextMessage[] = [];
+  message: string = '';
+  from!: UserChat;
+  to!: UserChat;
   static schema = {
     name: 'Message',
     properties: {
-      messages: { type: 'list', objectType: 'TextMessage' },
+      message: 'string',
       user: 'User',
+      from: 'User',
+      to: 'User',
     },
   };
 }

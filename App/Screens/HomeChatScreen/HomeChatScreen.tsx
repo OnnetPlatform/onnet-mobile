@@ -1,7 +1,9 @@
+import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, Pressable, SafeAreaView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 
 import { Icon, Text } from '../../Components/atoms';
 import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
@@ -15,6 +17,7 @@ export const HomeChatScreen: React.FC = () => {
   const colors = useColors();
   const withColors = styles(colors, insets);
   const navigation = useNavigation();
+  const { isChatUpdating } = useSelector(MessagingSelector);
 
   // @ts-ignore
   const onSettingsPressed = () => navigation.navigate('Settings');
@@ -37,7 +40,7 @@ export const HomeChatScreen: React.FC = () => {
           </Pressable>
         </View>
       </View>
-      <HeaderLoader style={{ position: 'relative' }} />
+      {isChatUpdating && <HeaderLoader style={{ position: 'relative' }} />}
       <ChatUsersList />
     </SafeAreaView>
   );

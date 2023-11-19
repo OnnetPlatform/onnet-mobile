@@ -10,6 +10,6 @@ export default function* () {
     takeEvery(AppTypes.START_UP, connectToServer),
     takeLatest(AuthTypes.REGISTER, register),
     takeLatest(AuthTypes.LOGIN, login),
-    takeLatest(AuthTypes.SET_ACCESS_TOKEN, connectToServer),
+    takeLatest(AuthTypes.SET_AUTH_DATA, connectToServer),
   ]);
 }

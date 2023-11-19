@@ -1,7 +1,5 @@
 import { ImmutableObject } from 'seamless-immutable';
 
-export const AuthInitialState = { access_token: '' };
-
 export type Credentials = {
   email: string;
   password: string;
@@ -15,6 +13,13 @@ export type LoginCredentials = {
 };
 export type AuthData = {
   access_token: string;
+  id: string;
+  email: string;
 };
 
 export type AuthState = ImmutableObject<AuthData>;
+export const AuthInitialState: AuthData = {
+  access_token: '',
+  id: '',
+  email: '',
+};

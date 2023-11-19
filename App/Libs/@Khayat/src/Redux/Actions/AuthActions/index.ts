@@ -6,7 +6,8 @@ export const { Types: AuthTypes, Creators: AuthCreators } = createActions<
   AuthActionCreatorTypes
 >({
   reset: null,
-  setAccessToken: ['access_token'],
+  setAccessToken: ['auth_data'],
   register: ['credentials'],
   login: ['credentials'],
+  setAuthData: ['data'],
 });

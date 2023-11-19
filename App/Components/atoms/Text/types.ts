@@ -1,5 +1,6 @@
-import { TextStyle, TextProps as NTP } from 'react-native';
+import { TextProps as NTP, TextStyle } from 'react-native';
 import { AnimateProps } from 'react-native-reanimated';
+
 export type TextProps = {
   children?: any;
   fontSize?: number;

@@ -42,7 +42,7 @@ export function createConnectedUsersChannel(socket: Socket) {
 export function createDirectMessageChannel(socket: Socket) {
   return eventChannel((emit) => {
     const handler = (data: any) => emit(data);
-    socket.on(MessagingEvents.MESSAGE, handler);
+    socket.on(MessagingEvents.RECEIVE_MESSAGE, handler);
     return () => socket.disconnect();
   });
 }
