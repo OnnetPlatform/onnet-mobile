@@ -4,7 +4,7 @@ class User extends Realm.Object<User> {
   name!: string;
   avatar!: string;
   isActive!: boolean;
-  unreadCount!: number;
+  unreadCount: number = 0;
   id!: string;
   status: 'TYPING' | '' = '';
   user_id!: string;

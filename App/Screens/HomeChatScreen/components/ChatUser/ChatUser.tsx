@@ -21,21 +21,20 @@ export const ChatUser: React.FC<UserChat> = ({
   user_id,
 }) => {
   const navigation = useNavigation();
-  const { getUser, updateUser } = useRealmUsers();
+  const { getUser } = useRealmUsers();
   const localUser = getUser({ user_id });
   const colors = useColors();
   const { id } = useSelector(AuthSelector);
   return (
     <Pressable
       onPress={() => {
-        updateUser(localUser, 'unreadCount', 0);
         navigation.navigate('UserChatScreen', { user: localUser });
       }}>
       <View style={[styles.row]}>
         <Avatar {...{ avatar, isActive }} />
         <View>
           <Text fontSize={16}>
-            {name}
+            {name.trim()}
             {id === user_id ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
                 {'  '}

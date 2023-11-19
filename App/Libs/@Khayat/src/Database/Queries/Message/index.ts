@@ -10,15 +10,17 @@ export function createMessage(data: UserChatMessage): Realm.Object<Message> {
   const { user, message, to } = data;
   let localUser = findUser(user.user_id);
   let toLocalUser = findUser(to.user_id);
-  console.log(data);
+
   if (!localUser) {
     localUser = createUser(user);
   }
+
   if (!toLocalUser) {
     toLocalUser = createUser(to);
   }
 
   return realm.write(() => {
+    localUser.unreadCount++;
     return realm.create(ModelEnums.MESSAGE, {
       message,
       user: localUser,

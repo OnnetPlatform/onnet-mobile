@@ -1,10 +1,18 @@
 import { useQuery } from '@Khayat/Database/Hooks/useRealmContext';
 import Message from '@Khayat/Database/Models/Message';
 import { UserChat } from '@Khayat/Database/Models/types';
+import User from '@Khayat/Database/Models/User';
+import { realm } from '@Khayat/Database/Queries/User';
 import { FormattedMessages } from 'App/Screens/UserChatScreen/components/MessageItem/utils';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
+  const localUser = useQuery(
+    User,
+    (collection) => collection.filtered(`user_id == "${user.user_id}"`),
+    []
+  );
+
   const data = useQuery(
     Message,
     (collection) =>
@@ -13,6 +21,11 @@ export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
       ),
     [user]
   );
+
+  useEffect(() => {
+    realm.write(() => localUser.map((item) => (item.unreadCount = 0)));
+  }, [realm]);
+
   // @ts-ignore
   return useMemo(() => naiveSorting(Array.from(data)), [data, user]);
 };
