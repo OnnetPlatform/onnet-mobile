@@ -70,15 +70,16 @@ export const HomseScreenHeader: React.FC<{
 
   useAnimatedReaction(
     () => animatedHeaderValue && animatedHeaderValue.value,
-    (h) => (height.value = h ? h : 0)
+    (h) => (height.value = h ? h : 0),
+    [animatedHeaderValue]
   );
 
   const measureLayout = () =>
     runOnUI(() => {
       'worklet';
       const measured = measure(viewRef)?.height;
-      if (measured > 0 || listHeight.value < measured) {
-        listHeight.value = measured;
+      if (listHeight.value < measured) {
+        listHeight.value = withTiming(measured);
       }
     })();
 
@@ -86,7 +87,7 @@ export const HomseScreenHeader: React.FC<{
     if (viewRef.current) {
       measureLayout();
     }
-  }, [viewRef, viewRef.current]);
+  }, [viewRef, viewRef.current, selectedDate]);
 
   const onLayout = () =>
     setTimeout(() => {

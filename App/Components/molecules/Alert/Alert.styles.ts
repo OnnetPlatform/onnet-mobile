@@ -13,9 +13,13 @@ export default (colors: ThemeColors) =>
     body: {
       backgroundColor: colors.background,
       padding: 16,
+      borderRadius: 8,
+      overflow: 'hidden',
+    },
+    linearGradient: {
+      padding: 2,
       borderRadius: 9,
+      overflow: 'hidden',
       width: '80%',
-      borderWidth: 0.5,
-      borderColor: colors.text,
     },
   });

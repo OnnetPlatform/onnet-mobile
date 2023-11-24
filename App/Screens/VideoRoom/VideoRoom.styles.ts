@@ -1,3 +1,4 @@
+import { ThemeColors } from 'App/Theme/Colors';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -21,3 +22,21 @@ export default StyleSheet.create({
     backgroundColor: 'red',
   },
 });
+
+export function alertStyle(colors: ThemeColors) {
+  return StyleSheet.create({
+    textCenter: {
+      textAlign: 'center',
+    },
+    buttonsWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+    },
+    button: {
+      paddingVertical: 16,
+      paddingHorizontal: 22,
+      backgroundColor: colors.text,
+      borderRadius: 8,
+    },
+  });
+}
