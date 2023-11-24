@@ -4,7 +4,7 @@ import BottomSheet, {
   BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
 import { useColors } from '@Theme';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -14,6 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Icon, Text } from '../../../../Components/atoms';
+import { useWebrtcContext } from '../../../../Context/WebrtcContext';
 import VideoControlsHeader from '../VideoControlsHeader/VideoControlsHeader';
 import withColors from './VideoRoomChatSheet.styles';
 
@@ -22,7 +23,7 @@ export const VideoRoomChatSheet: React.FC = () => {
   const ref = useRef<BottomSheet>(null);
   const colors = useColors();
   const styles = withColors(colors);
-
+  const { connected } = useWebrtcContext();
   const animatedStyle = useAnimatedStyle(
     () => ({
       opacity: opacity.value,
@@ -35,6 +36,31 @@ export const VideoRoomChatSheet: React.FC = () => {
     opacity.value = 1;
     opacity.value = withRepeat(withTiming(0, { duration: 1000 }), 10, true);
   }, [ref]);
+
+  useEffect(() => {
+    if (!connected) {
+      setTimeout(() => {
+        ref.current?.close();
+      }, 10);
+    }
+  }, [connected, ref, ref.current]);
+
+  const HandleComponent = useCallback(
+    () => (
+      <>
+        <Animated.View style={[styles.sheetHint, animatedStyle]}>
+          <Text fontSize={12} style={styles.textCenter}>
+            Press or slide to open chat
+          </Text>
+        </Animated.View>
+        <Animated.View style={[animatedStyle, styles.arrow]}>
+          <Icon name={'arrow-ios-downward-outline'} />
+        </Animated.View>
+        <VideoControlsHeader />
+      </>
+    ),
+    [connected]
+  );
   return (
     <BottomSheet
       snapPoints={['30%', '80%']}
@@ -50,35 +76,25 @@ export const VideoRoomChatSheet: React.FC = () => {
           opacity={0.1}
         />
       )}
-      handleComponent={() => {
-        return (
-          <>
-            <Animated.View style={[styles.sheetHint, animatedStyle]}>
-              <Text fontSize={12} style={styles.textCenter}>
-                Press or slide to open chat
-              </Text>
-            </Animated.View>
-            <Animated.View style={[animatedStyle, styles.arrow]}>
-              <Icon name={'arrow-ios-downward-outline'} />
-            </Animated.View>
-            <VideoControlsHeader />
-          </>
-        );
-      }}>
-      <BottomSheetFlatList
-        ListEmptyComponent={() => (
-          <View>
-            <Text>Messages will appear here</Text>
-          </View>
-        )}
-        data={[]}
-        renderItem={() => <View />}
-      />
-      <BottomSheetTextInput
-        placeholder="Message"
-        onBlur={() => ref.current?.snapToIndex(1)}
-        style={styles.input}
-      />
+      handleComponent={HandleComponent}>
+      {connected ? (
+        <>
+          <BottomSheetFlatList
+            ListEmptyComponent={() => (
+              <View>
+                <Text>Messages will appear here</Text>
+              </View>
+            )}
+            data={[]}
+            renderItem={() => <View />}
+          />
+          <BottomSheetTextInput
+            placeholder="Message"
+            onBlur={() => ref.current?.snapToIndex(1)}
+            style={styles.input}
+          />
+        </>
+      ) : null}
     </BottomSheet>
   );
 };

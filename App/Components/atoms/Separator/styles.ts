@@ -1,6 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { SeparatorTypes } from './types';
 import { factors } from '@Metrics';
+import { StyleSheet } from 'react-native';
+
+import { SeparatorTypes } from './types';
 
 export default ({ size = 'sm', ...props }: SeparatorTypes) =>
   StyleSheet.create({

@@ -33,6 +33,12 @@ export function alertStyle(colors: ThemeColors) {
       alignItems: 'center',
       flex: 1,
     },
+    itemsCenter: {
+      alignItems: 'center',
+    },
+    separator: {
+      marginLeft: 4,
+    },
     buttonsWrapper: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
@@ -50,12 +56,11 @@ export function alertStyle(colors: ThemeColors) {
       borderRadius: 24,
       borderColor: colors.background,
       borderWidth: 1,
-      left: -16 * index,
+      marginLeft: index > 0 ? -16 : 0,
     }),
     // @ts-ignore
-    avatarContainer: (length) => ({
+    avatarContainer: {
       alignSelf: 'center',
-      width: 32 * length + 16,
-    }),
+    },
   });
 }

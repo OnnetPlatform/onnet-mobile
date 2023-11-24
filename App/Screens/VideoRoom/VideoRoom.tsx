@@ -28,6 +28,78 @@ export const VideoRoom: React.FC = () => {
     join();
   };
 
+  const showJoinModal = () => {
+    configureAlert({
+      customView: () => (
+        <>
+          <Text style={alertStyles.textCenter} weight="bold" fontSize={18}>
+            Meeting name
+          </Text>
+          <Separator />
+          <Text style={alertStyles.textCenter}>
+            Choose your audio and video settings
+          </Text>
+          {users.length > 0 ? (
+            <>
+              <Separator size="md" />
+              <FlatList
+                data={users.slice(0, 5)}
+                showsHorizontalScrollIndicator={false}
+                style={alertStyles.avatarContainer}
+                horizontal
+                contentContainerStyle={alertStyles.itemsCenter}
+                ListFooterComponent={
+                  users.length > 5 ? (
+                    <Text style={alertStyles.separator} weight={'bold'}>
+                      +{users.length - 5}
+                    </Text>
+                  ) : null
+                }
+                renderItem={({ item, index }) => (
+                  <Image
+                    key={item}
+                    source={{ uri }}
+                    // @ts-ignore
+                    style={alertStyles.avatar(index)}
+                  />
+                )}
+              />
+            </>
+          ) : null}
+
+          <Separator size="md" />
+          <Separator size="md" />
+          <View style={alertStyles.buttonsWrapper}>
+            <Pressable style={alertStyles.center}>
+              <Icon name={'mic-off-outline'} />
+              <Text style={alertStyles.textCenter}>Audio</Text>
+            </Pressable>
+            <Pressable style={alertStyles.center}>
+              <Icon name={'video-off-outline'} />
+              <Text style={alertStyles.textCenter}>Video</Text>
+            </Pressable>
+            <Pressable style={alertStyles.center}>
+              <Icon name={'settings-outline'} />
+              <Text style={alertStyles.textCenter}>Settings</Text>
+            </Pressable>
+          </View>
+          <Separator size="md" />
+          <Separator size="md" />
+          <Pressable onPress={onAlertJoinPressed} style={alertStyles.button}>
+            <Text
+              color={colors.background}
+              style={alertStyles.textCenter}
+              fontSize={16}
+              weight="bold">
+              Join
+            </Text>
+          </Pressable>
+        </>
+      ),
+      visible: true,
+    });
+  };
+
   useEffect(() => {
     connect();
     socket.on('users', setUsers);
@@ -47,72 +119,16 @@ export const VideoRoom: React.FC = () => {
   }, [localStream]);
 
   useEffect(() => {
-    if (!joined) {
-      configureAlert({
-        customView: () => (
-          <>
-            <Text style={alertStyles.textCenter} weight="bold" fontSize={18}>
-              Meeting name
-            </Text>
-            <Separator />
-            <Text style={alertStyles.textCenter}>
-              Choose your audio and video settings
-            </Text>
-            {users.length > 0 ? (
-              <>
-                <Separator size="md" />
-                <FlatList
-                  data={users}
-                  scrollEnabled={false}
-                  showsHorizontalScrollIndicator={false}
-                  // @ts-ignore
-                  style={alertStyles.avatarContainer(users.length)}
-                  horizontal
-                  renderItem={({ item, index }) => (
-                    <View>
-                      <Image
-                        key={item}
-                        source={{ uri }}
-                        // @ts-ignore
-                        style={alertStyles.avatar(index)}
-                      />
-                    </View>
-                  )}
-                />
-              </>
-            ) : null}
-
-            <Separator size="md" />
-            <View style={alertStyles.buttonsWrapper}>
-              <Pressable style={alertStyles.center}>
-                <Icon name={'mic-off-outline'} />
-                <Text style={alertStyles.textCenter}>Audio</Text>
-              </Pressable>
-              <Pressable style={alertStyles.center}>
-                <Icon name={'video-off-outline'} />
-                <Text style={alertStyles.textCenter}>Video</Text>
-              </Pressable>
-              <Pressable style={alertStyles.center}>
-                <Icon name={'settings-outline'} />
-                <Text style={alertStyles.textCenter}>Settings</Text>
-              </Pressable>
-            </View>
-            <Separator size="md" />
-            <Pressable onPress={onAlertJoinPressed} style={alertStyles.button}>
-              <Text
-                color={colors.background}
-                style={alertStyles.textCenter}
-                fontSize={16}
-                weight="bold">
-                Join
-              </Text>
-            </Pressable>
-          </>
-        ),
-        visible: true,
-      });
+    if (!connected) {
+      setJoined(false);
     }
-  }, [users, joined]);
+  }, [connected]);
+
+  useEffect(() => {
+    if (!joined && connected) {
+      showJoinModal();
+    }
+  }, [users, joined, connected]);
 
   return (
     <PageView loading={!connected} title="Meeting name">

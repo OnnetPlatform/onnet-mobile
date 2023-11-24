@@ -14,7 +14,7 @@ import { useMediaControl } from './useMediaControl';
 import { useThemedStyle } from './VideoControlsHeader.styles';
 
 export const VideoControlsHeader: React.FC = () => {
-  const { leave, join, connected } = useWebrtcContext();
+  const { leave, connect, connected } = useWebrtcContext();
   const styles = useThemedStyle();
   const colors = useColors();
   const [top, setTop] = useState<number>(0);
@@ -27,7 +27,7 @@ export const VideoControlsHeader: React.FC = () => {
     mediaStatus,
     switchCamera,
   } = useMediaControl();
-
+  console.log('render');
   const animatedWidth = useSharedValue<number>(0);
   const { width } = useWindowDimensions();
   const animatedStyle = useAnimatedStyle(() => ({
@@ -37,6 +37,7 @@ export const VideoControlsHeader: React.FC = () => {
     borderWidth: 1,
     borderColor: colors.secondaryBackground,
   }));
+
   useEffect(() => {
     animatedWidth.value = withTiming(!connected ? 72 : width - 44, {
       duration: 200,
@@ -48,7 +49,7 @@ export const VideoControlsHeader: React.FC = () => {
   return (
     <View
       onLayout={({ nativeEvent: { layout } }) =>
-        setTop(-layout.height - bottom)
+        top === 0 ? setTop(-layout.height - bottom) : null
       }
       style={[styles.footerWrapper, { top }]}>
       <Animated.View style={[animatedStyle, styles.fab]}>
@@ -64,7 +65,7 @@ export const VideoControlsHeader: React.FC = () => {
               />
             </Pressable>
           ) : (
-            <Pressable onPress={join} style={styles.iconWrapper}>
+            <Pressable onPress={connect} style={styles.iconWrapper}>
               <Icon style={styles.icon} name={'wifi-outline'} />
             </Pressable>
           )}
@@ -110,6 +111,4 @@ export const VideoControlsHeader: React.FC = () => {
   );
 };
 
-export default React.memo(VideoControlsHeader, function () {
-  return true;
-});
+export default React.memo(VideoControlsHeader);
