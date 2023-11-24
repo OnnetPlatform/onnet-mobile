@@ -5,6 +5,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { AlertProvider } from '../../../Context/AlertContext/AlertProvider';
 import QueueContext from '../../../Context/QueueContext/QueueContext';
 import SocketContext from '../../../Context/SocketContext/SocketContext';
 import WebrtcProvider from '../../../Context/WebrtcContext';
@@ -26,18 +27,20 @@ export const MainNavigator: React.FC = () => {
       <IconRegistry icons={EvaIconsPack} />
       <SafeAreaProvider>
         <OnnetProvider>
-          <NavigationContainer theme={navTheme}>
-            <DatabaseProvider>
-              <SocketContext>
-                <QueueContext>
-                  <WebrtcProvider>
-                    <AuthStack />
-                  </WebrtcProvider>
-                  <CreateEventSheet onClose={function (): void {}} />
-                </QueueContext>
-              </SocketContext>
-            </DatabaseProvider>
-          </NavigationContainer>
+          <AlertProvider>
+            <NavigationContainer theme={navTheme}>
+              <DatabaseProvider>
+                <SocketContext>
+                  <QueueContext>
+                    <WebrtcProvider>
+                      <AuthStack />
+                    </WebrtcProvider>
+                    <CreateEventSheet onClose={function (): void {}} />
+                  </QueueContext>
+                </SocketContext>
+              </DatabaseProvider>
+            </NavigationContainer>
+          </AlertProvider>
         </OnnetProvider>
       </SafeAreaProvider>
     </>

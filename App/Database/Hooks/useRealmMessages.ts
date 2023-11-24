@@ -1,18 +1,17 @@
-import { useQuery } from '@Khayat/Database/Hooks/useRealmContext';
+import { useQuery, useRealm } from '@Khayat/Database/Hooks/useRealmContext';
 import Message from '@Khayat/Database/Models/Message';
 import { UserChat } from '@Khayat/Database/Models/types';
 import User from '@Khayat/Database/Models/User';
-import { realm } from '@Khayat/Database/Queries/User';
 import { FormattedMessages } from 'App/Screens/UserChatScreen/components/MessageItem/utils';
 import { useEffect, useMemo } from 'react';
 
 export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
-  const localUser = useQuery(
+  const localUsers = useQuery(
     User,
     (collection) => collection.filtered(`user_id == "${user.user_id}"`),
     []
   );
-
+  const realm = useRealm();
   const data = useQuery(
     Message,
     (collection) =>
@@ -23,7 +22,17 @@ export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
   );
 
   useEffect(() => {
-    realm.write(() => localUser.map((item) => (item.unreadCount = 0)));
+    if (realm.isClosed) {
+      try {
+        realm.write(() => {
+          localUsers.map((item) => {
+            item.unreadCount = 0;
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }, [realm]);
 
   // @ts-ignore

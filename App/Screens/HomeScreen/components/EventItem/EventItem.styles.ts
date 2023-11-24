@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { ThemeColors } from '../../../../Theme/Colors';
 
 export default StyleSheet.create({
@@ -41,6 +42,18 @@ export default StyleSheet.create({
     marginTop: 0,
     marginVertical: 0,
   },
+  circleIndicator: {
+    height: 8,
+    width: 8,
+    backgroundColor: 'white',
+    position: 'absolute',
+    left: 9,
+    borderRadius: 8,
+    zIndex: 100,
+  },
+  mt8: {
+    marginTop: 8,
+  },
 });
 
 export const withColors = (colors: ThemeColors) =>
@@ -68,4 +81,33 @@ export const withColors = (colors: ThemeColors) =>
       height: 2,
       backgroundColor: colors.text,
     },
+    pastBackground: {
+      width: '100%',
+      height: 200,
+      position: 'absolute',
+      tintColor: colors.text,
+      opacity: 0.2,
+    },
+    borderLeft: {
+      borderLeftWidth: 2,
+      borderLeftColor: colors.text,
+    },
+    avatar: {
+      marginRight: 0,
+      borderWidth: 2,
+      borderColor: colors.background,
+    },
+    joinedUsersContainer: {
+      paddingHorizontal: 38,
+      backgroundColor: colors.background,
+      paddingVertical: 16,
+      borderLeftColor: colors.cyan,
+      borderLeftWidth: 2,
+    },
   });
+
+export const pastBackground = (isPast: boolean, colors: ThemeColors) => {
+  return {
+    backgroundColor: isPast ? 'transparent' : colors.secondaryBackground,
+  };
+};

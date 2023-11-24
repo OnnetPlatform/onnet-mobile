@@ -1,9 +1,9 @@
-import { useColors } from '@Theme';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { useCallback } from 'react';
+import { useColors } from '@Theme';
+import React, { useCallback } from 'react';
 import { Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import Icon from '../Icon';
 import Text from '../Text';
 import { withColors } from './styles';

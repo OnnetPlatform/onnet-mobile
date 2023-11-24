@@ -1,4 +1,5 @@
 import { StyleSheet, useWindowDimensions } from 'react-native';
+
 import { useColors } from '../../../../Theme';
 
 export const useThemedStyle = () => {
@@ -16,7 +17,7 @@ export const useThemedStyle = () => {
     fab: {
       borderRadius: 90,
       overflow: 'hidden',
-      height: 68,
+      height: 74,
       alignItems: 'center',
       flexDirection: 'row',
     },
@@ -33,14 +34,15 @@ export const useThemedStyle = () => {
       height: 24,
     },
     iconWrapper: {
-      backgroundColor: colors.blur,
       padding: 8,
       borderRadius: 80,
     },
     endCallIcon: {
-      padding: 16,
+      padding: 12,
       borderRadius: 80,
       backgroundColor: colors.pink,
+      borderWidth: 1,
+      borderColor: colors.pink,
     },
   });
 

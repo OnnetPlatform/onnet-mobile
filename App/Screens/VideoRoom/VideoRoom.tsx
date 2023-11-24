@@ -1,24 +1,33 @@
+import { PageView } from '@HOCs';
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+import useAlert from '../../Context/AlertContext/AlertContext';
 import { useWebrtcContext } from '../../Context/WebrtcContext';
-import { useColors } from '../../Theme';
 import { Participant } from './components';
-import { VideoRoomScreenHeader } from './components';
 import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
 
 export const VideoRoom: React.FC = () => {
   const [users, setUsers] = useState<string[]>([]);
   const { localStream, leave, join, socket } = useWebrtcContext();
-  const colors = useColors();
+  const { configureAlert } = useAlert();
   useEffect(() => {
-    join();
+    configureAlert({
+      visible: true,
+      title: 'Meeting',
+      subtitle:
+        'Are you sure you want to join Unified Coponents: Team 1 meeting',
+      onPress: () => {
+        join();
+        configureAlert({ visible: false });
+      },
+    });
     socket.on('users', setUsers);
     socket.on('leave', setUsers);
     return () => {
       socket.off('users');
       socket.off('leave');
+      socket.disconnect();
       leave();
     };
   }, []);
@@ -30,19 +39,25 @@ export const VideoRoom: React.FC = () => {
   }, [localStream]);
 
   return (
-    <SafeAreaView
-      edges={['bottom', 'left', 'right']}
-      style={{ flex: 1, flexGrow: 1, backgroundColor: colors.background }}>
-      <VideoRoomScreenHeader />
-      <FlatList
-        numColumns={2}
-        data={users}
-        renderItem={({ item }) => {
-          return <Participant socket={socket} userId={item} key={item} localStream={localStream} />;
-        }}
-      />
-      <VideoRoomChatSheet />
-    </SafeAreaView>
+    <PageView loading={users.length === 0} title="Conference">
+      <>
+        <FlatList
+          numColumns={2}
+          data={users}
+          renderItem={({ item }) => {
+            return (
+              <Participant
+                socket={socket}
+                userId={item}
+                key={item}
+                localStream={localStream}
+              />
+            );
+          }}
+        />
+        <VideoRoomChatSheet />
+      </>
+    </PageView>
   );
 };
 export default VideoRoom;

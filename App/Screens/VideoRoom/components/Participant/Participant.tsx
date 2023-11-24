@@ -1,12 +1,17 @@
+import { Text } from '@Atoms';
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
-import { MediaStream, RTCIceCandidate, RTCSessionDescription, RTCView } from 'react-native-webrtc';
-import { useThemedStyle } from './Participant.styles';
-import { Button } from '../../../../Components/molecules';
-import { Text } from '../../../../Components/atoms';
-import { createPeerConnection } from '../../../../Modules/WebRTC';
+import {
+  MediaStream,
+  RTCIceCandidate,
+  RTCSessionDescription,
+  RTCView,
+} from 'react-native-webrtc';
 import { Socket } from 'socket.io-client';
+
+import { createPeerConnection } from '../../../../Modules/WebRTC';
 import { useColors } from '../../../../Theme';
+import { useThemedStyle } from './Participant.styles';
 
 export const Participant: React.FC<{
   localStream: MediaStream | undefined;
@@ -20,6 +25,7 @@ export const Participant: React.FC<{
   const otherUserId = useRef<string>();
   const colors = useColors();
   const styles = useThemedStyle(colors);
+
   async function createOffer() {
     const sessionDescription = await peerConnection.current.createOffer({});
     peerConnection.current.setLocalDescription(sessionDescription);
@@ -27,7 +33,9 @@ export const Participant: React.FC<{
   }
 
   async function createAnswer() {
-    peerConnection.current.setRemoteDescription(new RTCSessionDescription(remoteAnswer.current));
+    peerConnection.current.setRemoteDescription(
+      new RTCSessionDescription(remoteAnswer.current)
+    );
     const sd = await peerConnection.current.createAnswer();
     peerConnection.current.setLocalDescription(sd);
     socket.emit('answer', {
@@ -45,21 +53,29 @@ export const Participant: React.FC<{
 
   useEffect(() => {
     socket.on('offer', (data) => {
-      if (data.from !== userId) return;
+      if (data.from !== userId) {
+        return;
+      }
       remoteAnswer.current = data.rtcMessage;
       otherUserId.current = data.callerId;
       setType('INCOMING');
     });
 
     socket.on('answer', (data) => {
-      if (data.from !== userId) return;
+      if (data.from !== userId) {
+        return;
+      }
       remoteAnswer.current = data.rtcMessage;
-      peerConnection.current.setRemoteDescription(new RTCSessionDescription(remoteAnswer.current));
+      peerConnection.current.setRemoteDescription(
+        new RTCSessionDescription(remoteAnswer.current)
+      );
       setType('WEBRTC_ROOM');
     });
 
     socket.on('candidateConnected', (data) => {
-      if (data.sender !== userId) return;
+      if (data.sender !== userId) {
+        return;
+      }
       let message = data.rtcMessage;
       if (peerConnection.current) {
         const candidate = new RTCIceCandidate({
@@ -70,7 +86,7 @@ export const Participant: React.FC<{
         peerConnection?.current
           .addIceCandidate(candidate)
           .then(() => {})
-          .catch((e) => {});
+          .catch(() => {});
       }
     });
     peerConnection.current.onicecandidate = (event: any) => {
@@ -91,7 +107,9 @@ export const Participant: React.FC<{
     };
 
     socket.on('mute', (data: any) => {
-      if (data.userId === userId) console.log(data);
+      if (data.userId === userId) {
+        console.log(data);
+      }
     });
     return () => {
       socket.off('offer');
@@ -124,7 +142,8 @@ export const Participant: React.FC<{
   const leave = useCallback(() => {
     peerConnection.current.close();
     setRemoteStream(undefined);
-  }, []);
+    localStream?.release();
+  }, [peerConnection.current, localStream]);
 
   useEffect(() => {
     if (!localStream) {
@@ -132,26 +151,33 @@ export const Participant: React.FC<{
     }
   }, [localStream, peerConnection.current, peerConnection]);
 
-  if (!remoteStream)
+  useEffect(() => {
+    if (type === 'INCOMING') {
+      createAnswer();
+    }
+  }, [type]);
+
+  useEffect(() => {
+    createOffer();
+  }, []);
+
+  if (!remoteStream) {
     return (
       <View style={styles.wrapper}>
         <View style={styles.container}>
-          {type === 'INCOMING' ? (
-            <Button onPress={createAnswer}>
-              <Text>Answer</Text>
-            </Button>
-          ) : (
-            <Button onPress={createOffer}>
-              <Text>Call</Text>
-            </Button>
-          )}
+          <Text>{userId}</Text>
         </View>
       </View>
     );
+  }
 
   return (
     <View style={styles.wrapper}>
-      <RTCView objectFit="cover" streamURL={remoteStream?.toURL()} style={styles.container} />
+      <RTCView
+        objectFit="cover"
+        streamURL={remoteStream?.toURL()}
+        style={styles.container}
+      />
     </View>
   );
 };

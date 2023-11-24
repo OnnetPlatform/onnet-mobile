@@ -1,10 +1,19 @@
 import 'react-native-get-random-values';
-import React, { ReactElement, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { WebrtcContextType } from './types';
-import { MediaStream, MediaStreamTrack } from 'react-native-webrtc';
-import { WebRTCServer, getLocalStream } from '../../Modules/WebRTC';
+
+import React, {
+  ReactElement,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import RNCallKeep from 'react-native-callkeep';
+import { MediaStream, MediaStreamTrack } from 'react-native-webrtc';
 import { v4 as uuidv4 } from 'uuid';
+
+import { getLocalStream, WebRTCServer } from '../../Modules/WebRTC';
+import { WebrtcContextType } from './types';
 
 const WebrtcContext = React.createContext<WebrtcContextType>(undefined);
 
@@ -58,7 +67,9 @@ const WebrtcProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
 };
 export const useWebrtcContext = () => {
   const context = useContext(WebrtcContext);
-  if (!context) throw new Error('should be used inside WebrtcProvider');
+  if (!context) {
+    throw new Error('should be used inside WebrtcProvider');
+  }
   return context;
 };
 

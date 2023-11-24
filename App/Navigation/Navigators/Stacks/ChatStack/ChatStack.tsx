@@ -1,6 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+  CustomScreen,
+  HomeChatScreen,
+  ProfileScreen,
+  UserChatScreen,
+} from '@Screens';
 import React from 'react';
-import { HomeChatScreen, UserChatScreen, ProfileScreen, CustomScreen } from '@Screens';
+
 import SettingsNavigator from '../SettingsNavigator';
 import { ChatStackParamList } from './types';
 

@@ -20,15 +20,18 @@ const AuthStack: React.FC = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       {access_token ? (
-        <Stack.Screen
-          options={{
-            contentStyle: {
-              backgroundColor: 'transparent',
-            },
-          }}
-          name="MainNavigation"
-          component={HomeBottomNavigation}
-        />
+        <>
+          <Stack.Screen
+            options={{
+              contentStyle: {
+                backgroundColor: 'transparent',
+              },
+            }}
+            name="MainNavigation"
+            component={HomeBottomNavigation}
+          />
+          <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
+        </>
       ) : (
         <>
           <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
@@ -37,7 +40,6 @@ const AuthStack: React.FC = () => {
             name="RegisterationScreen"
             component={RegisterationScreen}
           />
-          <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
         </>
       )}
     </Stack.Navigator>

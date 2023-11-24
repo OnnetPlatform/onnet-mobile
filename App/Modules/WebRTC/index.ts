@@ -1,5 +1,10 @@
-import { MediaStream, RTCPeerConnection, mediaDevices } from 'react-native-webrtc';
+import {
+  mediaDevices,
+  MediaStream,
+  RTCPeerConnection,
+} from 'react-native-webrtc';
 import SocketIOClient from 'socket.io-client';
+
 import { ICE_SERVERS, MEDIA_CONSTRAINTS, WEBRTC_SIGNALING_URL } from './config';
 
 export const WebRTCServer = () =>
@@ -8,7 +13,8 @@ export const WebRTCServer = () =>
     autoConnect: true,
   });
 
-export const createPeerConnection = () => new RTCPeerConnection({ iceServers: ICE_SERVERS });
+export const createPeerConnection = () =>
+  new RTCPeerConnection({ iceServers: ICE_SERVERS });
 
 export const getLocalStream = () =>
   new Promise<MediaStream>((resolve, reject) => {

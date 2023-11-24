@@ -12,4 +12,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     margin: 2,
   },
+  textButton: {
+    textAlign: 'center',
+  },
 });

@@ -1,6 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -11,9 +14,9 @@ import { MediaStream, RTCView } from 'react-native-webrtc';
 import { Text } from '../../../../Components/atoms';
 import styles from './LocalStreamView.styles';
 
-export const LocalStreamView: React.FC<{ localStream: MediaStream | undefined }> = ({
-  localStream,
-}) => {
+export const LocalStreamView: React.FC<{
+  localStream: MediaStream | undefined;
+}> = ({ localStream }) => {
   const translationX = useSharedValue<number>(0);
   const translationY = useSharedValue<number>(0);
   const handler = useAnimatedGestureHandler<
@@ -59,7 +62,11 @@ export const LocalStreamView: React.FC<{ localStream: MediaStream | undefined }>
   return (
     <PanGestureHandler onGestureEvent={handler}>
       <Animated.View style={[animatedStyle, styles.container]}>
-        <RTCView objectFit="cover" streamURL={localStream.toURL()} style={styles.stream} />
+        <RTCView
+          objectFit="cover"
+          streamURL={localStream.toURL()}
+          style={styles.stream}
+        />
       </Animated.View>
     </PanGestureHandler>
   );

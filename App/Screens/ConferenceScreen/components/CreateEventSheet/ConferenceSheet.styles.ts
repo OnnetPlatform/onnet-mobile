@@ -1,9 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { EdgeInsets } from 'react-native-safe-area-context';
+
 import { ThemeColors } from '../../../../Theme/Colors';
 
-export const withInsets = (insets: EdgeInsets, colors: ThemeColors) =>
+export const withInsets = (colors: ThemeColors) =>
   StyleSheet.create({
+    background: { borderRadius: 32, overflow: 'hidden' },
+
     sheet: {
       borderRadius: 32,
       overflow: 'hidden',
@@ -24,5 +26,13 @@ export const withInsets = (insets: EdgeInsets, colors: ThemeColors) =>
       borderRadius: 4,
       backgroundColor: colors.blur,
       marginBottom: 16,
+    },
+    calendarIcon: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: colors.blur,
+      padding: 8,
+      borderRadius: 4,
     },
   });
