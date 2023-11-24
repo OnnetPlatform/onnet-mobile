@@ -28,6 +28,11 @@ export function alertStyle(colors: ThemeColors) {
     textCenter: {
       textAlign: 'center',
     },
+    center: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    },
     buttonsWrapper: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
@@ -38,5 +43,19 @@ export function alertStyle(colors: ThemeColors) {
       backgroundColor: colors.text,
       borderRadius: 8,
     },
+    // @ts-ignore
+    avatar: (index) => ({
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      borderColor: colors.background,
+      borderWidth: 1,
+      left: -16 * index,
+    }),
+    // @ts-ignore
+    avatarContainer: (length) => ({
+      alignSelf: 'center',
+      width: 32 * length + 16,
+    }),
   });
 }

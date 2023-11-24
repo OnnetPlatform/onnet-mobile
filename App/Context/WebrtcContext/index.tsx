@@ -25,6 +25,10 @@ const WebrtcProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
   const disableTrack = (track: MediaStreamTrack) => {
     track.enabled = false;
   };
+
+  const connect = () => {
+    socket.connect();
+  };
   const join = useCallback(() => {
     getLocalStream()
       .then((stream) => {
@@ -32,7 +36,6 @@ const WebrtcProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
         stream.getAudioTracks().map(disableTrack);
         setLocalStream(stream);
       })
-      .then(() => socket.connect())
       .then(() => socket.emit('join'));
   }, []);
 
@@ -47,9 +50,11 @@ const WebrtcProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
   }, [localStream]);
 
   useEffect(() => {
-    socket.disconnect();
     socket.on('connected', () => setConnected(true));
-  }, []);
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
 
   return (
     <WebrtcContext.Provider
@@ -60,6 +65,7 @@ const WebrtcProvider: React.FC<{ children: ReactElement }> = ({ children }) => {
         leave,
         connected,
         callid,
+        connect,
       }}>
       {children}
     </WebrtcContext.Provider>

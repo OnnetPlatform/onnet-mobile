@@ -8,6 +8,7 @@ export type WebrtcContextType =
       socket: Socket;
       join: () => void;
       leave: () => void;
+      connect: () => void;
       connected: boolean;
       callid: string;
     };
