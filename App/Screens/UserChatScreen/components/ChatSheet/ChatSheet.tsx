@@ -1,3 +1,4 @@
+import { Icon } from '@Atoms';
 import BottomSheet, {
   BottomSheetFooter,
   BottomSheetScrollView,
@@ -5,13 +6,12 @@ import BottomSheet, {
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
 import MaskedView from '@react-native-masked-view/masked-view';
+import { useColors } from '@Theme';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { Icon } from '../../../../Components/atoms';
-import { useColors } from '../../../../Theme';
 import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
 import styles from './ChatSheet.styles';
 

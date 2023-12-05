@@ -1,8 +1,14 @@
-import moment from 'moment';
-
 const currentMonth = new Date().getMonth();
 
-export const WEEK = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+export const WEEK = [
+  'Saturday',
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+];
 
 export const MONTHS = [currentMonth, currentMonth + 1, currentMonth + 2];
 
@@ -31,11 +37,4 @@ export function createCalendar(month: number, year: number) {
   }
 
   return table;
-}
-
-function getDay(date: Date) {
-  // get day number from 0 (monday) to 6 (sunday)
-  let day = date.getDay();
-  if (day == 0) day = 7; // make Sunday (0) the last day
-  return day - 1;
 }

@@ -1,4 +1,6 @@
 import { Icon, Text } from '@Atoms';
+import { createCalendar, MONTHS, WEEK } from '@Molecules/Calendar/helpers';
+import { useColors } from '@Theme';
 import moment from 'moment';
 import React, { useEffect } from 'react';
 import { Dimensions, Pressable, View, ViewStyle } from 'react-native';
@@ -19,12 +21,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import {
-  createCalendar,
-  MONTHS,
-  WEEK,
-} from '../../../../Components/molecules/Calendar/helpers';
-import { useColors } from '../../../../Theme';
 import styles, {
   selectedDateStyle,
   withColors,
@@ -188,6 +184,7 @@ export const HomseScreenHeader: React.FC<{
             renderItem={({ item, index }) => (
               <Animated.View
                 entering={FadeIn.delay(100 * index)}
+                key={item}
                 style={[styles.day, selectedDayStyle(index)]}>
                 <Text>{item[0]}</Text>
               </Animated.View>
@@ -206,6 +203,7 @@ export const HomseScreenHeader: React.FC<{
             ref={ref}
             renderItem={({ index, item }) => (
               <DateSlot
+                key={index}
                 id={index}
                 date={item}
                 onPress={onDateSelected}

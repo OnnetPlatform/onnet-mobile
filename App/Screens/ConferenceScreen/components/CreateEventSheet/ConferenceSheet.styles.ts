@@ -1,6 +1,5 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
-
-import { ThemeColors } from '../../../../Theme/Colors';
 
 export const withInsets = (colors: ThemeColors) =>
   StyleSheet.create({

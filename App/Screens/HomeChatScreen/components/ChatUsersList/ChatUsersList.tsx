@@ -19,7 +19,20 @@ export const ChatUsersList: React.FC = () => {
   const unreadMessages = Array.from(
     sortedUsersAphabet.filtered('unreadCount > 0').sorted('unreadCount', true)
   );
-
+  const renderItem = ({ item }: any) => {
+    return (
+      <ChatUser
+        key={item.name}
+        name={item.name}
+        avatar={item.avatar}
+        isActive={item.isActive}
+        id={item.id}
+        unreadCount={item.unreadCount}
+        status={item.status}
+        user_id={item.user_id}
+      />
+    );
+  };
   const sections =
     users.length > 0
       ? [
@@ -37,6 +50,7 @@ export const ChatUsersList: React.FC = () => {
     getSectionHeaderHeight: () => 30,
     getSectionFooterHeight: () => 0,
   });
+
   return (
     <SectionList
       sections={sections}
@@ -47,20 +61,7 @@ export const ChatUsersList: React.FC = () => {
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={EmptyState}
       scrollEnabled={users.length > 0}
-      renderItem={({ item }) => {
-        return (
-          <ChatUser
-            key={item.name}
-            name={item.name}
-            avatar={item.avatar}
-            isActive={item.isActive}
-            id={item.id}
-            unreadCount={item.unreadCount}
-            status={item.status}
-            user_id={item.user_id}
-          />
-        );
-      }}
+      renderItem={renderItem}
       renderSectionHeader={({ section }) =>
         section.data.length > 0 ? (
           <Text

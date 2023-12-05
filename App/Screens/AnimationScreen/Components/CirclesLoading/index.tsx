@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { Text } from '@Atoms';
 import {
   Canvas,
   Circle,
   useClockValue,
   useComputedValue,
-  useValue,
 } from '@shopify/react-native-skia';
+import React, { useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
-import { Text } from '../../../../Components/atoms';
+
 const { width, height } = Dimensions.get('screen');
 
 const RADIUS = 6;
 
 export const CirclesLoading: React.FC = () => {
-  const [circles, setCircles] = useState<number[]>([1]);
+  const [circles] = useState<number[]>([1]);
 
   return (
     <>
@@ -27,7 +27,7 @@ export const CirclesLoading: React.FC = () => {
   );
 };
 
-const AnimatedCircle: React.FC<{ index: number }> = ({ index }) => {
+const AnimatedCircle: React.FC<{ index: number }> = ({}) => {
   const clock = useClockValue();
   const thetaValue = useComputedValue(() => clock.current * 0.005, [clock]);
   const commLocation = useComputedValue(() => clock.current / 500, [clock]);

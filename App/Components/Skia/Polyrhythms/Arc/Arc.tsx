@@ -1,11 +1,11 @@
-import { Group, Path, Skia, useValue } from '@shopify/react-native-skia';
+import { Group, Path, Skia } from '@shopify/react-native-skia';
+import { useColors } from '@Theme';
 import React from 'react';
-import { PolyrhythmsCircle } from '../Circle/PolyrhythmsCircle';
 import { useWindowDimensions } from 'react-native';
-import { ArcDimentions, ArcRect } from '../types';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useColors } from '../../../../Theme';
-const r = 100;
+
+import { PolyrhythmsCircle } from '../Circle/PolyrhythmsCircle';
+import { ArcDimentions } from '../types';
+
 export const Arc: React.FC<{
   arc: ArcDimentions;
 }> = ({ arc }) => {
@@ -22,7 +22,7 @@ export const Arc: React.FC<{
 
   return (
     <Group>
-      <Path path={path} style="stroke" color={colors.black} strokeWidth={1}></Path>
+      <Path path={path} style="stroke" color={colors.black} strokeWidth={1} />
       <PolyrhythmsCircle arc={arc} rect={arcRect} />
     </Group>
   );

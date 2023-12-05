@@ -1,4 +1,6 @@
 // @ts-nocheck
+import { Text } from '@Atoms';
+import Avatar from '@Atoms/Avatar/Avatar';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
@@ -8,8 +10,6 @@ import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 
 import { UserChat } from '../../../../../types';
-import { Text } from '../../../../Components/atoms';
-import Avatar from '../../../../Components/atoms/Avatar/Avatar';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
 

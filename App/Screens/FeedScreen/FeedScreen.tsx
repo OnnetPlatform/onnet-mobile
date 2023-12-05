@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { FlatList, View, useWindowDimensions } from 'react-native';
-import { Blur, Icon, Text } from '../../Components/atoms';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import EventItem from './components/EventItem/EventItem';
-import { useSharedValue } from 'react-native-reanimated';
-import data from '../../Components/molecules/Story/types';
-import { useColors } from '../../Theme';
-import { LoadingOnnet } from '../../Components/atoms/LoadingOnnet/LoadingOnnet';
 import { useValue } from '@shopify/react-native-skia';
+import { useColors } from '@Theme';
+import React, { useState } from 'react';
+import { FlatList, useWindowDimensions, View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+
+import { Blur, Icon, Text } from '../../Components/atoms';
+import { LoadingOnnet } from '../../Components/atoms/LoadingOnnet/LoadingOnnet';
+import data from '../../Components/molecules/Story/types';
+import EventItem from './components/EventItem/EventItem';
 
 export const FeedScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -21,7 +25,9 @@ export const FeedScreen: React.FC = () => {
       edges={['left', 'right', 'bottom']}
       style={{ flex: 1, flexGrow: 1, backgroundColor: colors.background }}>
       <View
-        onLayout={({ nativeEvent: { layout } }) => setHeaderHeight(layout.height)}
+        onLayout={({ nativeEvent: { layout } }) =>
+          setHeaderHeight(layout.height)
+        }
         style={{
           paddingTop: insets.top + 8,
           padding: 22,
@@ -40,7 +46,10 @@ export const FeedScreen: React.FC = () => {
         onScroll={(e) => {
           scrollYOffset.value = e.nativeEvent.contentOffset.y;
           if (e.nativeEvent.contentOffset.y < 0) {
-            pullDownValue.current = Math.min(e.nativeEvent.contentOffset.y / -190, 1);
+            pullDownValue.current = Math.min(
+              e.nativeEvent.contentOffset.y / -190,
+              1
+            );
           } else {
             pullDownValue.current = 0;
           }

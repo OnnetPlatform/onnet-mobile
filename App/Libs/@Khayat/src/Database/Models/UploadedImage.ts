@@ -1,3 +1,5 @@
+import Realm from 'realm';
+
 export default class UploadedImage extends Realm.Object {
   mimetype!: 'string';
   filename!: string;

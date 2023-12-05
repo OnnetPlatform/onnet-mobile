@@ -1,24 +1,34 @@
+import { Event } from '@Khayat/Graphql/Events/types';
+import { EventSelector } from '@Khayat/Redux/Selectors/EventSelector';
 import { useScrollToTop } from '@react-navigation/native';
-import moment from 'moment';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   SectionList,
+  SectionListRenderItem,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
+import { useSelector } from 'react-redux';
 
 import EventItem from '../EventItem/EventItem';
 import HomeScreenHeader from '../HomeScreenHeader';
 import { SectionHeader } from '../SectionHeader/SectionHeader';
-import { useFakerData } from './Data';
 import styles from './EventsList.styles';
+
+const getItemLayout: any = sectionListGetItemLayout({
+  getItemHeight: () => 50,
+  getSeparatorHeight: () => 0,
+  getSectionHeaderHeight: () => 30,
+  getSectionFooterHeight: () => 0,
+});
 
 export const EventsList: React.FC<{
   onCreatePressed(): void;
 }> = ({ onCreatePressed }) => {
   const [selectedDate, setSelectedDate] = useState<Date>();
-  const { data, nextPage } = useFakerData();
+  const { events } = useSelector(EventSelector);
   const animatedHeaderValue = useSharedValue(0);
   const ref = useRef<SectionList<any, any>>(null);
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -28,10 +38,50 @@ export const EventsList: React.FC<{
   };
 
   const renderHeader = useCallback(({ section }: any) => {
-    return <SectionHeader section={section} />;
+    return <SectionHeader key={section.title} section={section} />;
   }, []);
 
+  const onDateSelected = useCallback(
+    (scrollToDate: Date) => {
+      setSelectedDate(scrollToDate);
+      if (ref.current) {
+        const today = new Date();
+        const index = events.findIndex((item) => item.day === today.getDate());
+
+        if (index > -1) {
+          setTimeout(() => {
+            ref.current?.scrollToLocation({
+              sectionIndex: index,
+              animated: true,
+              itemIndex: 0,
+            });
+          }, 100);
+        }
+      }
+    },
+    [ref, events]
+  );
+
   useScrollToTop(ref);
+
+  const renderItem: SectionListRenderItem<Event, any> = useCallback(
+    ({ item }) => <EventItem key={item.id} event={item} />,
+    []
+  );
+
+  useEffect(() => {
+    if (ref.current && events.length > 0) {
+      const today = new Date();
+      const index = events.findIndex((item) => item.day === today.getDate());
+      setTimeout(() => {
+        ref.current?.scrollToLocation({
+          sectionIndex: index,
+          animated: true,
+          itemIndex: 0,
+        });
+      }, 100);
+    }
+  }, [events, ref]);
 
   return (
     <>
@@ -39,45 +89,26 @@ export const EventsList: React.FC<{
         animatedHeaderValue={animatedHeaderValue}
         onCreatePressed={onCreatePressed}
         selectedDate={selectedDate}
-        onDateSelected={(scrollToDate) => {
-          setSelectedDate(scrollToDate);
-          if (ref.current) {
-            const index = data.findIndex(
-              (date: any) =>
-                date.title === moment(scrollToDate).format('dddd, MMMM Do')
-            );
-            if (index > -1) {
-              ref.current.scrollToLocation({
-                sectionIndex: index,
-                animated: true,
-                itemIndex: 0,
-              });
-            }
-          }
-        }}
+        onDateSelected={onDateSelected}
       />
       <SectionList
         showsVerticalScrollIndicator={false}
         bounces={true}
         ref={ref}
-        sections={data}
+        sections={events}
         scrollEventThrottle={0.5}
         onScroll={onScroll}
-        onEndReached={() => {
-          setTimeout(() => {
-            nextPage();
-          }, 100);
-        }}
         onEndReachedThreshold={0.8}
         contentContainerStyle={[styles.container]}
         keyExtractor={(item) => item.date}
-        renderItem={({ item }) => <EventItem event={item} />}
         removeClippedSubviews={true}
         maxToRenderPerBatch={10}
         windowSize={5}
         initialNumToRender={20}
         updateCellsBatchingPeriod={100}
         renderSectionHeader={renderHeader}
+        renderItem={renderItem}
+        getItemLayout={getItemLayout}
       />
     </>
   );

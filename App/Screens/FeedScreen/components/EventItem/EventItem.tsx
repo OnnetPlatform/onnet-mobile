@@ -1,18 +1,19 @@
+import { Story } from '@Molecules/Story/Story';
+import type { Story as StoryType } from '@Molecules/Story/types';
+import { useColors } from '@Theme';
 import React, { useEffect, useRef } from 'react';
-
-import { Story } from '../../../../Components/molecules/Story/Story';
-import { useColors } from '../../../../Theme';
+import { useWindowDimensions } from 'react-native';
 import Animated, {
-  SharedValue,
   interpolateColor,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
+
 import styles from './EventItem.styles';
-import type { Story as StoryType } from '../../../../Components/molecules/Story/types';
-import { useWindowDimensions } from 'react-native';
+
 export const EventItem: React.FC<{
   headerHeight: number;
   scrollYOffset: SharedValue<number>;
@@ -53,7 +54,9 @@ export const EventItem: React.FC<{
     });
   };
   useEffect(() => {
-    if (ref.current) setTimeout(measure);
+    if (ref.current) {
+      setTimeout(measure);
+    }
   }, [ref.current]);
 
   return (

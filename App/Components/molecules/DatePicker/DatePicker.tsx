@@ -1,5 +1,9 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {View, Modal, Pressable, useColorScheme} from 'react-native';
+import { Icon, Text } from '@Atoms';
+import { BlurView } from '@react-native-community/blur';
+import { useColors } from '@Theme';
+import numeral from 'numeral';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Modal, Pressable, useColorScheme, View } from 'react-native';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -15,18 +19,16 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated';
-import {useColors} from '@Theme';
-import {Icon, Text} from '../../atoms';
-import styles, {indicatorStyle} from './DatePicker.styles';
-import numeral from 'numeral';
-import {BlurView} from '@react-native-community/blur';
-import {LayoutInsets} from '../Calendar/components/Slot/types';
+
+import { LayoutInsets } from '../Calendar/components/Slot/types';
+import styles, { indicatorStyle } from './DatePicker.styles';
+
 const AnimatedBlur = Animated.createAnimatedComponent(BlurView);
 export const DatePicker: React.FC<{
   visible: boolean;
   layout: LayoutInsets | undefined;
   onRequestClose(): void;
-}> = ({visible = false, layout, onRequestClose}) => {
+}> = ({ visible = false, layout, onRequestClose }) => {
   const colors = useColors();
   const scheme = useColorScheme();
   const isDark = useMemo(() => scheme === 'dark', [scheme]);
@@ -50,7 +52,7 @@ export const DatePicker: React.FC<{
   const animatedBorders = useAnimatedStyle(() => ({
     borderWidth: withDelay(
       0,
-      withTiming(visible ? 2 : 0, {duration: 1000, easing: Easing.linear}),
+      withTiming(visible ? 2 : 0, { duration: 1000, easing: Easing.linear })
     ),
   }));
   const hourGestureHandler = useAnimatedGestureHandler<
@@ -65,21 +67,21 @@ export const DatePicker: React.FC<{
     onActive: (e, context) => {
       animatedHoursValue.value = withTiming(
         40,
-        {duration: 100, easing: Easing.linear},
-        isFinished => {
+        { duration: 100, easing: Easing.linear },
+        (isFinished) => {
           if (isFinished) {
             runOnJS(setHour)(
               Math.max(
                 Math.min(context.hour + Math.round(-e.translationY / 30), 23),
-                0,
-              ),
+                0
+              )
             );
             animatedHoursValue.value = withTiming(48, {
               duration: 100,
               easing: Easing.linear,
             });
           }
-        },
+        }
       );
     },
   });
@@ -96,30 +98,30 @@ export const DatePicker: React.FC<{
     onActive: (e, context) => {
       animatedMinutesValue.value = withTiming(
         40,
-        {duration: 100, easing: Easing.linear},
-        isFinished => {
+        { duration: 100, easing: Easing.linear },
+        (isFinished) => {
           if (isFinished) {
             runOnJS(setMinutes)(
               Math.max(
                 Math.min(
                   context.minutes + Math.round(-e.translationY / 10),
-                  59,
+                  59
                 ),
-                0,
-              ),
+                0
+              )
             );
             animatedMinutesValue.value = withTiming(48, {
               duration: 100,
               easing: Easing.linear,
             });
           }
-        },
+        }
       );
       runOnJS(setMinutes)(
         Math.max(
           Math.min(context.minutes + Math.round(-e.translationY / 10), 59),
-          0,
-        ),
+          0
+        )
       );
     },
   });
@@ -134,7 +136,7 @@ export const DatePicker: React.FC<{
   const animatedBlurProps = useAnimatedProps(() => ({
     blurAmount: withDelay(
       200,
-      withTiming(visible ? 30 : 0, {duration: 2000, easing: Easing.linear}),
+      withTiming(visible ? 30 : 0, { duration: 2000, easing: Easing.linear })
     ),
   }));
 
@@ -143,8 +145,9 @@ export const DatePicker: React.FC<{
     setMinutes(30);
     animatedHoursValue.value = 48;
     animatedMinutesValue.value = 48;
-    if (!layout) translateY.value = 0;
-    else {
+    if (!layout) {
+      translateY.value = 0;
+    } else {
       translateY.value = withTiming(layout.pageY - 204, {
         duration: 50,
         easing: Easing.linear,
@@ -176,7 +179,7 @@ export const DatePicker: React.FC<{
               <Icon
                 name={'checkmark-outline'}
                 style={themedStyles.checkIcon}
-                fill={colors.cyan}
+                fill={colors.text}
               />
             </Pressable>
           </View>
@@ -188,7 +191,7 @@ export const DatePicker: React.FC<{
               <Animated.View layout={Layout} style={themedStyles.section}>
                 <Animated.Text style={[themedStyles.number, animatedText]}>
                   {numeral(
-                    hour > 12 || hour === 0 ? Math.abs(hour - 12) : hour,
+                    hour > 12 || hour === 0 ? Math.abs(hour - 12) : hour
                   ).format('00')}
                 </Animated.Text>
               </Animated.View>

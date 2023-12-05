@@ -2,6 +2,7 @@ import { HeaderLoader } from '@Atoms';
 import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import { useNavigation } from '@react-navigation/native';
+import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, SectionList, View } from 'react-native';
 import Animated, {
@@ -23,7 +24,6 @@ import { Icon, Separator, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
 import { useKeyboard } from '../../Hooks/useKeyboard';
-import { useColors } from '../../Theme';
 import { MessageInput, MessageItem } from './components';
 import { FormattedMessages } from './components/MessageItem/utils';
 import styles, { contentStyle } from './UserChatScreen.styles';

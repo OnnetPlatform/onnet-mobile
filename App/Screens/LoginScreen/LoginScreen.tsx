@@ -2,6 +2,7 @@ import { Collapsible } from '@Atoms';
 import { AuthCreators } from '@Khayat/Redux';
 import { LoginCredentials } from '@Khayat/Redux/Reducers/AuthReducer/types';
 import { useNavigation } from '@react-navigation/native';
+import { useColors } from '@Theme';
 import React, { useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -10,7 +11,6 @@ import { Icon, Separator, Text } from '../../Components/atoms';
 import { GradientLayout, KeyboardAvoidingView } from '../../Components/HOCs';
 import { Button, Input } from '../../Components/molecules';
 import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
-import { useColors } from '../../Theme';
 import styles, { withColors } from './LoginScreen.style';
 
 export const LoginScreen: React.FC<{}> = () => {

@@ -11,6 +11,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
+import CreateEventNavigation from '../../CreateEventNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,15 @@ const AuthStack: React.FC = () => {
             component={HomeBottomNavigation}
           />
           <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
+          <Stack.Group
+            screenOptions={{
+              presentation: 'modal',
+            }}>
+            <Stack.Screen
+              name={'EventInfo'}
+              component={CreateEventNavigation}
+            />
+          </Stack.Group>
         </>
       ) : (
         <>

@@ -1,10 +1,14 @@
+import { Icon, Text } from '@Atoms';
+import { Collapsible } from '@Atoms/Collapsible/Collapsible';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetTextInput,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
+import { Calendar } from '@Molecules/Calendar/Calendar';
+import { useColors } from '@Theme';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Keyboard,
   Pressable,
@@ -19,13 +23,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon, Text } from '../../../../Components/atoms';
-import { Collapsible } from '../../../../Components/atoms/Collapsible/Collapsible';
-import { Calendar } from '../../../../Components/molecules/Calendar/Calendar';
 import { GradientCard } from '../../../../Components/Skia/GradientCard/GradientCard';
 import { useKeyboard } from '../../../../Hooks/useKeyboard';
 import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
-import { useColors } from '../../../../Theme';
 import { withInsets } from './ConferenceSheet.styles';
 
 export const CreateEventSheet: React.FC<{
@@ -52,16 +52,42 @@ export const CreateEventSheet: React.FC<{
     };
   });
 
-  const handleComponent = () => (
-    <Text
-      style={[styles.title, animatedHandleStyle]}
-      fontSize={24}
-      weight="bold"
-      color={colors.white}>
-      Create Event
-    </Text>
+  const handleComponent = useCallback(
+    () => (
+      <Text
+        style={[styles.title, animatedHandleStyle]}
+        fontSize={24}
+        weight="bold"
+        color={colors.white}>
+        Create Event
+      </Text>
+    ),
+    []
   );
 
+  const renderBackDrop = useCallback(
+    (props: any) => {
+      return (
+        <BottomSheetBackdrop
+          {...props}
+          disappearsOnIndex={-1}
+          pressBehavior={0}
+          appearsOnIndex={0}
+          opacity={0.6}
+          onPress={() => {
+            if (isOpen) {
+              Keyboard.dismiss();
+            } else if (expanded) {
+              setExpanded(false);
+            } else {
+              CreateEventSheetRef.current?.close();
+            }
+          }}
+        />
+      );
+    },
+    [expanded]
+  );
   const animatedHandleStyle = useAnimatedStyle(() => {
     return {
       flexDirection: 'row',
@@ -95,24 +121,7 @@ export const CreateEventSheet: React.FC<{
           <GradientCard />
         </View>
       )}
-      backdropComponent={(props) => (
-        <BottomSheetBackdrop
-          {...props}
-          disappearsOnIndex={-1}
-          pressBehavior={0}
-          appearsOnIndex={0}
-          opacity={0.6}
-          onPress={() => {
-            if (isOpen) {
-              Keyboard.dismiss();
-            } else if (expanded) {
-              setExpanded(false);
-            } else {
-              CreateEventSheetRef.current?.close();
-            }
-          }}
-        />
-      )}
+      backdropComponent={renderBackDrop}
       handleComponent={handleComponent}
       enableDynamicSizing={true}
       ref={CreateEventSheetRef}
@@ -133,6 +142,22 @@ export const CreateEventSheet: React.FC<{
           onFocus={() => setExpanded(false)}
           onBlur={() => setExpanded(true)}
           style={styles.titleInput}
+          onEndEditing={(e) => {
+            console.log(e.nativeEvent.text);
+          }}
+        />
+        <Text
+          style={styles.label}
+          fontSize={16}
+          weight="bold"
+          color={colors.black}>
+          Description
+        </Text>
+        <BottomSheetTextInput
+          onFocus={() => setExpanded(false)}
+          onBlur={() => setExpanded(true)}
+          style={styles.titleInput}
+          multiline
           onEndEditing={(e) => {
             console.log(e.nativeEvent.text);
           }}

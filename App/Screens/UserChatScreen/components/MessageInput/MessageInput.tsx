@@ -1,12 +1,15 @@
+import { Icon, Text } from '@Atoms';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetTextInput,
   BottomSheetView,
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
+import { EmojiList } from '@Molecules/EmojiList/EmojiList';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { BlurView } from '@react-native-community/blur';
 import MaskedView from '@react-native-masked-view/masked-view';
+import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   FlatList,
@@ -26,13 +29,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Icon, Text } from '../../../../Components/atoms';
-import { EmojiList } from '../../../../Components/molecules/EmojiList/EmojiList';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import { useUploadImage } from '../../../../Hooks/useUploadImage';
 import { CreateEventSheetRef } from '../../../../Services/CreateEventRef/CreateEventRef';
 import { URL } from '../../../../Services/Fetch';
-import { BOTTOM_BAR_HEIGHT, useColors } from '../../../../Theme';
 import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
 import styles from '../../UserChatScreen.styles';
 import { GalleryModal, TypingIndicator } from '..';

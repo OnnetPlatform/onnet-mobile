@@ -1,9 +1,9 @@
 import { Avatar, Text } from '@Atoms';
+import { useColors } from '@Theme';
 import React from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useColors } from '../../../../Theme';
 import styles from '../../UserChatScreen.styles';
 import { FormattedMessages } from './utils';
 

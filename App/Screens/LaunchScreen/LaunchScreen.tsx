@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
+import { useColors } from '@Theme';
 import React, { useState } from 'react';
 import { Pressable, SafeAreaView, StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Icon } from '../../Components/atoms';
 import { Glassmorphism } from '../../Components/Skia';
-import { useColors } from '../../Theme';
 import styles, { withInsets } from './LaunchScreen.styles';
 import { SceneContainer } from './SceneContainer/SceneContainer';
 

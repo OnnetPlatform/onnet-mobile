@@ -1,7 +1,8 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import {fonts} from '@Theme';
-import {ThemeColors} from '@Theme/Colors';
-const {width} = Dimensions.get('window');
+import { fonts } from '@Theme';
+import { ThemeColors } from 'App/Theme/Colors';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { width } = Dimensions.get('window');
 export default (colors: ThemeColors) =>
   StyleSheet.create({
     container: {
@@ -19,7 +20,7 @@ export default (colors: ThemeColors) =>
       alignSelf: 'center',
       overflow: 'hidden',
       height: '100%',
-      borderColor: colors.cyan,
+      borderColor: colors.text,
     },
     number: {
       textAlign: 'center',
@@ -47,7 +48,7 @@ export default (colors: ThemeColors) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 2,
-      borderColor: colors.cyan,
+      borderColor: colors.text,
     },
     checkIcon: {
       width: 18,
@@ -70,7 +71,7 @@ export const indicatorStyle = (colors: ThemeColors, layout: any) =>
     indicator: {
       height: 24,
       width: 2,
-      backgroundColor: colors.cyan,
+      backgroundColor: colors.text,
       position: 'absolute',
       bottom: -24,
       transform: [

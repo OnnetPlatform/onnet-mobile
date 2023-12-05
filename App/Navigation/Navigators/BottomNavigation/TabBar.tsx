@@ -1,3 +1,4 @@
+import { HeaderLoader, Icon, Text } from '@Atoms';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -13,8 +14,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 
-import { Icon, Text } from '../../../Components/atoms';
-import { HeaderLoader } from '../../../Components/atoms/HeaderLoader/HeaderLoader';
 import styles from './TabBar.styles';
 import useTabs from './Tabs';
 

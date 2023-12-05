@@ -20,11 +20,11 @@ export type ThemeColors = {
 export const pink = '#E90064';
 export const blue = '#19294f';
 export const black = '#000000';
-export const white = '#e4dbd3';
+export const white = '#e5e5e5';
 export const cyan = '#09CFFA';
 export const yellow = '#ffde03';
 export const secondaryDark = '#121212';
-export const secondaryLight = '#E5E5E5';
+export const secondaryLight = '#fbfcf8';
 export const turquoise = '#30D5C8';
 
 export const colors: (scheme: ColorSchemeName) => ThemeColors = (

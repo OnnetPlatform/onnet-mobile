@@ -1,5 +1,7 @@
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import { useNavigation } from '@react-navigation/native';
+import { useColors } from '@Theme';
+import Images from '@Theme/Images';
 import React from 'react';
 import { Image, Pressable, SafeAreaView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -7,8 +9,6 @@ import { useSelector } from 'react-redux';
 
 import { Icon, Text } from '../../Components/atoms';
 import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
-import { useColors } from '../../Theme';
-import Images from '../../Theme/Images';
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
 

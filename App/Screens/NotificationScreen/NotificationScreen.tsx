@@ -1,10 +1,9 @@
+import { useColors } from '@Theme';
 import React from 'react';
-import { SafeAreaView, SectionList } from 'react-native';
-import { SectionListRenderItem } from 'react-native';
+import { SafeAreaView, SectionList, SectionListRenderItem } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Blur, Icon, Text } from '../../Components/atoms';
-import { useColors } from '../../Theme';
 import data, { formatList, Notification as NotificationType } from './data';
 import Notification from './Notification/Notification';
 import styles, { withColors, withInsets } from './NotificationScreen.styles';
