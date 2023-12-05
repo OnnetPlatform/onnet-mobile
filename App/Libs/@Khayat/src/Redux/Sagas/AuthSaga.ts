@@ -8,6 +8,7 @@ import {
 } from '../../Graphql/Auth/Auth';
 import { put } from 'redux-saga/effects';
 import { AuthCreators } from '..';
+import { setAppLink } from './AppSaga';
 
 export function* register({ credentials }: { credentials: Credentials }) {
   try {
@@ -15,7 +16,9 @@ export function* register({ credentials }: { credentials: Credentials }) {
       mutation: RegisterMutation,
       variables: { input: credentials },
     });
+
     yield put(AuthCreators.setAuthData(result.data.register));
+    setAppLink(result.data.register.access_token);
   } catch (error) {
     console.log(error);
   }
@@ -28,8 +31,8 @@ export function* login({ credentials }: { credentials: LoginCredentials }) {
       query: LoginQuery,
       variables: { input: credentials },
     });
-    console.log(result.data.login);
     yield put(AuthCreators.setAuthData(result.data.login));
+    setAppLink(result.data.login.access_token);
   } catch (error) {
     console.log(error);
   }
