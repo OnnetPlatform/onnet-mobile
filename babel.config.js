@@ -8,10 +8,10 @@ module.exports = {
         cwd: 'babelrc',
         extensions: ['.ts', '.tsx', '.js', '.ios.js', '.android.js'],
         alias: {
-          '@Components/*': './App/Components',
           '@HOCs': './App/Components/HOCs',
           '@Atoms': './App/Components/atoms',
           '@Molecules': './App/Components/molecules',
+          '@Utils': './App/Utils',
           '@Screens': './App/Screens',
           '@Theme': './App/Theme',
           '@Metrics': './App/Theme/Metrics',

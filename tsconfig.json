@@ -10,17 +10,31 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "baseUrl": ".",
+    "baseUrl": "./App/",
     "paths": {
-      "@Components/*": ["./App/Components/*"],
-      "@Atoms": ["./App/Components/atoms/index.ts"],
-      "@Molecules": ["./App/Components/molecules/index.ts"],
-      "@HOCs": ["./App/Components/HOCs/index.ts"],
-      "@Theme": ["./App/Theme/index.ts"],
-      "@Metrics": ["./App/Theme/Metrics.ts"],
-      "@Screens": ["./App/Screens/index.ts"],
-      "@Skia/*": ["./App/Components/Skia/*"],
-      "@Khayat/*": ["./App/Libs/@Khayat/src/*"]
+      "@Atoms": ["./Components/atoms/"],
+      "@Atoms/*": ["./Components/atoms/*"],
+
+      "@Molecules/*": ["./Components/molecules/*"],
+      "@Molecules": ["./Components/molecules/"],
+
+      "@HOCs": ["./App/Components/HOCs/"],
+      "@HOCs/*": ["./App/Components/HOCs/*"],
+
+      "@Theme": ["./Theme/"],
+      "@Theme/*": ["./Theme/*"],
+
+      "@Metrics": ["./Theme/Metrics.ts"],
+
+      "@Screens/*": ["./Screens/*"],
+      "@Screens": ["./Screens/"],
+
+      "@Skia": ["./Components/Skia/"],
+      "@Skia/*": ["./Components/Skia/*"],
+
+      "@Khayat/*": ["./Libs/@Khayat/src/*"],
+
+      "@Utils/*": ["./Utils/*"]
     }
   },
   "exclude": [

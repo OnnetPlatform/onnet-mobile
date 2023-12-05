@@ -12,9 +12,10 @@ import Animated, {
 } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-LogBox.ignoreAllLogs();
 import { MainNavigator } from './App/Navigation';
-import { useColors } from './App/Theme';
+import { WebRTCScreen } from './App/Screens/WebRTCScreen/WebRTCScreen';
+
+LogBox.ignoreAllLogs();
 
 export const Warda = () => {
   const rotate = useSharedValue<number>(0);
@@ -25,7 +26,11 @@ export const Warda = () => {
   return (
     <Animated.View
       style={[
-        { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+        {
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
         animatedStyle,
       ]}>
       {Array.from({ length: 72 }, (_, i) => i).map((_, index) => {
@@ -41,7 +46,10 @@ const AnimatedBlade = ({ index }: any) => {
   const sharedValue = useSharedValue(offset);
   const start = () => {
     sharedValue.value = withRepeat(
-      withTiming(360 + offset, { duration: offset * 10, easing: Easing.linear }),
+      withTiming(360 + offset, {
+        duration: offset * 10,
+        easing: Easing.linear,
+      }),
       -1
     );
   };
@@ -49,7 +57,9 @@ const AnimatedBlade = ({ index }: any) => {
   useEffect(() => {
     sharedValue.value = offset / 2;
     sharedValue.value = withTiming(offset, { duration: 100 }, (finished) => {
-      if (finished) runOnJS(start)();
+      if (finished) {
+        runOnJS(start)();
+      }
     });
     start();
 
