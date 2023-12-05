@@ -1,4 +1,4 @@
-import { ThemeColors } from 'App/Theme/Colors';
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
 

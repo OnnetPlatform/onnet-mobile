@@ -27,13 +27,14 @@ const AnimatedBlur = Animated.createAnimatedComponent(BlurView);
 export const DatePicker: React.FC<{
   visible: boolean;
   layout: LayoutInsets | undefined;
+  onTimeChange: (props: { hour: number; minutes: number }) => void;
   onRequestClose(): void;
-}> = ({ visible = false, layout, onRequestClose }) => {
+}> = ({ visible = false, layout, onRequestClose, onTimeChange }) => {
   const colors = useColors();
   const scheme = useColorScheme();
   const isDark = useMemo(() => scheme === 'dark', [scheme]);
   const [hour, setHour] = useState<number>(0);
-  const [minutes, setMinutes] = useState<number>(30);
+  const [minutes, setMinutes] = useState<number>(0);
   const animatedHoursValue = useSharedValue(48);
   const animatedMinutesValue = useSharedValue(48);
   const themedStyles = styles(colors);
@@ -142,7 +143,7 @@ export const DatePicker: React.FC<{
 
   useEffect(() => {
     setHour(12);
-    setMinutes(30);
+    setMinutes(0);
     animatedHoursValue.value = 48;
     animatedMinutesValue.value = 48;
     if (!layout) {
@@ -175,7 +176,9 @@ export const DatePicker: React.FC<{
             <Text fontSize={24} weight="bold">
               Event Time
             </Text>
-            <Pressable style={themedStyles.checkButton}>
+            <Pressable
+              style={themedStyles.checkButton}
+              onPress={() => onTimeChange({ hour, minutes })}>
               <Icon
                 name={'checkmark-outline'}
                 style={themedStyles.checkIcon}

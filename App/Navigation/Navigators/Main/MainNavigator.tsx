@@ -1,3 +1,4 @@
+import { EventProivder } from '@Context/EventContext/EventProvider';
 import { DatabaseProvider } from '@Khayat/Providers/DatabaseProvider';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { IconRegistry } from '@ui-kitten/components';
@@ -23,13 +24,15 @@ export const MainNavigator: React.FC = () => {
       <IconRegistry icons={EvaIconsPack} />
       <SafeAreaProvider>
         <OnnetProvider>
-          <AlertProvider>
-            <NavigationContainer theme={navTheme}>
-              <DatabaseProvider>
-                <AuthStack />
-              </DatabaseProvider>
-            </NavigationContainer>
-          </AlertProvider>
+          <NavigationContainer theme={navTheme}>
+            <DatabaseProvider>
+              <AlertProvider>
+                <EventProivder>
+                  <AuthStack />
+                </EventProivder>
+              </AlertProvider>
+            </DatabaseProvider>
+          </NavigationContainer>
         </OnnetProvider>
       </SafeAreaProvider>
     </>

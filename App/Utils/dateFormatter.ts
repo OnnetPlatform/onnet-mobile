@@ -5,7 +5,7 @@ export const humanizeDate = (date: Date) => {
     sameDay: '[Today]',
     nextDay: '[Tomorrow]',
     lastDay: '[Yesterday]',
-    lastWeek: '[Last Week]',
+    lastWeek: '[Last Week] ',
     sameElse: 'DD, MMM, YYYY',
   });
 };

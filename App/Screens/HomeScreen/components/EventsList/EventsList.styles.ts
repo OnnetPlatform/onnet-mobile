@@ -1,14 +1,15 @@
-import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {},
+  container: {
+    paddingBottom: 120,
+  },
   spacer: {
     height: 4,
   },
 });
 
-export const withColors = (colors: ThemeColors) =>
+export const withColors = () =>
   StyleSheet.create({
     header: {
       marginHorizontal: -22,

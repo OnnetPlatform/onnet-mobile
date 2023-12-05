@@ -6,8 +6,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import moment, { Moment } from 'moment';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, Pressable, View } from 'react-native';
-import { useSharedValue, withTiming } from 'react-native-reanimated';
+import { Image, Pressable, View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 
 import styles, { pastBackground, withColors } from './EventItem.styles';
 
@@ -19,15 +24,26 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
   const colors = useColors();
   const style = withColors(colors);
   const collapsibleValue = useSharedValue(0);
-  const isStarted =
-    new Date(event.date).getMonth() === new Date().getMonth() &&
-    new Date(event.date).getDate() === new Date().getDate() &&
-    new Date(event.date).getHours() === new Date().getHours();
+  const opacity = useSharedValue(1);
+  const scale = useSharedValue(1);
+  const endDate = new Date(event.date);
+  endDate.setMinutes(endDate.getMinutes() + event.duration);
 
+  const isPast = isItBeforeToday(moment(endDate));
+  const isStarted =
+    !isPast && moment(endDate).diff(moment(0, 'minutes')) < event.duration;
+
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      backgroundColor: isStarted ? colors.pink : colors.background,
+      opacity: opacity.value,
+      transform: [{ scale: scale.value }],
+    }),
+    [isStarted]
+  );
   function isItBeforeToday(MomentDate: Moment) {
     return MomentDate.diff(moment(0, 'minutes')) < 0;
   }
-  const isPast = isItBeforeToday(moment(new Date(event.date)));
 
   const blur = useSharedValue<number>(0);
 
@@ -35,44 +51,36 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
     blur.value = withTiming(expanded ? 100 : 0, { duration: 1000 });
   }, [expanded]);
 
+  useEffect(() => {
+    opacity.value = 1;
+    scale.value = 1;
+    if (isStarted) {
+      opacity.value = withRepeat(withTiming(0, { duration: 500 }), -1);
+      scale.value = withRepeat(withTiming(0, { duration: 500 }), -1);
+    }
+  }, [isStarted, event]);
+
   return (
     <View style={[style.itemWrapper, pastBackground(isPast, colors)]}>
-      <View style={styles.circleIndicator} />
+      <Animated.View style={[styles.circleIndicator, animatedStyle]} />
       {isPast ? (
         <Image source={pastBackgroundImage} style={style.pastBackground} />
       ) : null}
       <Pressable
-        disabled={isPast}
         style={[styles.itemWrapper, style.borderLeft]}
         onPress={() => setExpanded(!expanded)}>
-        <Text fontSize={12} style={styles.time} weight={'semibold'}>
-          {moment(event.date).format('hh:mm A')}
-          {' - '}
-          {moment(event.date).format('hh:mm A')}
-        </Text>
-        <Text fontSize={16} weight="bold">
-          {event.title}
-        </Text>
         <View style={styles.row}>
-          <FlatList
-            data={[]}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            style={styles.mt8}
-            renderItem={({ item, index }) => {
-              return (
-                <View
-                  key={item.id}
-                  style={[styles.joinedUserWrapper, { left: -8 * index }]}>
-                  <Image
-                    source={{ uri: item.avatar }}
-                    style={[styles.joinedUserAvatar, style.avatar]}
-                  />
-                </View>
-              );
-            }}
-          />
-          {!isStarted ? (
+          <View>
+            <Text fontSize={12} style={styles.time} weight={'semibold'}>
+              {moment(event.date).format('hh:mm A')}
+              {' - '}
+              {moment(endDate).format('hh:mm A')}
+            </Text>
+            <Text fontSize={16} weight="bold">
+              {event.title}
+            </Text>
+          </View>
+          {isStarted ? (
             // @ts-ignore
             <Button onPress={() => navigation.navigate('ConferenceScreen')}>
               <Text weight="bold">Join</Text>
@@ -86,23 +94,7 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
           <Text weight="bold">Duration: {event.duration} mins</Text>
           <Separator />
           <Text>{event.description}</Text>
-          <View style={styles.joinedUsersContainer}>
-            <FlatList
-              data={[]}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => {
-                return (
-                  <View key={item.id} style={[styles.joinedUserWrapper]}>
-                    <Image
-                      source={{ uri: item.avatar }}
-                      style={styles.joinedUserAvatar}
-                    />
-                    <Text>{item.name}</Text>
-                  </View>
-                );
-              }}
-            />
-          </View>
+          <View style={styles.joinedUsersContainer} />
         </View>
       </Collapsible>
     </View>

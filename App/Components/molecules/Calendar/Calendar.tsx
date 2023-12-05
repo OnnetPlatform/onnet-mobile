@@ -1,6 +1,6 @@
 import { useColors } from '@Theme';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   FlatList,
   NativeScrollEvent,
@@ -26,6 +26,28 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
     }: NativeSyntheticEvent<NativeScrollEvent>) =>
       setIndex(Math.round(x / width));
 
+    const renderWeekDays = useCallback(
+      ({ item }: any) => (
+        <View style={styles(width).text}>
+          <Text weight={'light'}>{item[0]}</Text>
+        </View>
+      ),
+      []
+    );
+
+    const renderMonths = useCallback(
+      ({ item }: any) => (
+        <CalendarSection
+          section={{
+            month: item,
+            year: now.getFullYear(),
+            width,
+          }}
+        />
+      ),
+      []
+    );
+
     return (
       <View>
         <Text
@@ -38,11 +60,7 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
           horizontal
           scrollEnabled={false}
           data={WEEK}
-          renderItem={({ item }) => (
-            <View style={styles(width).text}>
-              <Text weight={'light'}>{item[0]}</Text>
-            </View>
-          )}
+          renderItem={renderWeekDays}
         />
         <FlatList
           snapToInterval={width}
@@ -52,15 +70,7 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
           showsHorizontalScrollIndicator={false}
           onScroll={onScroll}
           horizontal
-          renderItem={({ item }) => (
-            <CalendarSection
-              section={{
-                month: item,
-                year: now.getFullYear(),
-                width,
-              }}
-            />
-          )}
+          renderItem={renderMonths}
         />
       </View>
     );

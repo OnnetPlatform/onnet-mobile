@@ -17,3 +17,14 @@ export const GetCalendarQuery = gql`
     }
   }
 `;
+
+export const CreateEventMutation = gql`
+  mutation CreateEventMutation($input: CreateEventInput!) {
+    createEvent(createEventInput: $input) {
+      title
+      description
+      date
+      id
+    }
+  }
+`;

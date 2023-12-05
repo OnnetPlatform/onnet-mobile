@@ -17,6 +17,7 @@ module.exports = {
           '@Metrics': './App/Theme/Metrics',
           '@Skia': './App/Components/Skia',
           '@Khayat': './App/Libs/@Khayat/src',
+          '@Context': './App/Context/',
         },
       },
     ],

@@ -37,9 +37,12 @@ export const EventsList: React.FC<{
       : e.nativeEvent.contentOffset.y;
   };
 
-  const renderHeader = useCallback(({ section }: any) => {
-    return <SectionHeader key={section.title} section={section} />;
-  }, []);
+  const renderHeader = useCallback(
+    ({ section }: any) => {
+      return <SectionHeader key={section.title} section={section} />;
+    },
+    [events]
+  );
 
   const onDateSelected = useCallback(
     (scrollToDate: Date) => {
@@ -66,7 +69,7 @@ export const EventsList: React.FC<{
 
   const renderItem: SectionListRenderItem<Event, any> = useCallback(
     ({ item }) => <EventItem key={item.id} event={item} />,
-    []
+    [events]
   );
 
   useEffect(() => {
@@ -100,7 +103,7 @@ export const EventsList: React.FC<{
         onScroll={onScroll}
         onEndReachedThreshold={0.8}
         contentContainerStyle={[styles.container]}
-        keyExtractor={(item) => item.date}
+        keyExtractor={(item) => item.id}
         removeClippedSubviews={true}
         maxToRenderPerBatch={10}
         windowSize={5}

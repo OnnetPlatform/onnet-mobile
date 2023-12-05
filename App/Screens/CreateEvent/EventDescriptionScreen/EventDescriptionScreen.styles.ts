@@ -1,18 +1,16 @@
 import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
 
-const withColors = (theme: ThemeColors) =>
+export default (colors: ThemeColors) =>
   StyleSheet.create({
     screen: {
       flex: 1,
       flexGrow: 1,
-      backgroundColor: theme.background,
+      backgroundColor: colors.background,
     },
-    content: {
+    textarea: {
       padding: 16,
-      flex: 1,
-      flexGrow: 1,
+      minHeight: '100%',
+      color: colors.text,
     },
   });
-
-export default withColors;

@@ -6,4 +6,5 @@ export const { Types: EventActions, Creators: EventCreators } = createActions<
 >({
   getEvents: null,
   setEvents: ['events'],
+  createEvent: ['data'],
 });

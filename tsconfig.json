@@ -34,7 +34,8 @@
 
       "@Khayat/*": ["./Libs/@Khayat/src/*"],
 
-      "@Utils/*": ["./Utils/*"]
+      "@Utils/*": ["./Utils/*"],
+      "@Context/*": ["./Context/*"]
     }
   },
   "exclude": [
