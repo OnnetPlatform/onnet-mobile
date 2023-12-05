@@ -1,6 +1,5 @@
+import { useColors } from '@Theme';
 import { StyleSheet, useWindowDimensions } from 'react-native';
-
-import { useColors } from '../../../../Theme';
 
 export const useThemedStyle = () => {
   const colors = useColors();

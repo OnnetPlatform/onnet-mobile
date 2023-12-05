@@ -1,5 +1,5 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
-import { ThemeColors } from '../../../../Theme/Colors';
 import { EdgeInsets } from 'react-native-safe-area-context';
 
 export const useThemeStyle = (colors: ThemeColors, insets: EdgeInsets) =>

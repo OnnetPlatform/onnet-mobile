@@ -1,3 +1,4 @@
+import { Text } from '@Atoms';
 import React from 'react';
 import { View } from 'react-native';
 import {
@@ -11,7 +12,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import { MediaStream, RTCView } from 'react-native-webrtc';
 
-import { Text } from '../../../../Components/atoms';
 import styles from './LocalStreamView.styles';
 
 export const LocalStreamView: React.FC<{

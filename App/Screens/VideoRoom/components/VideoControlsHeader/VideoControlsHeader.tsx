@@ -1,3 +1,7 @@
+import { Icon } from '@Atoms';
+import { ConferenceCreators } from '@Khayat/Redux';
+import { ConferenceSelector } from '@Khayat/Redux/Selectors/ConferenceSelector';
+import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
 import Animated, {
@@ -6,19 +10,18 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Icon } from '../../../../Components/atoms';
-import { useWebrtcContext } from '../../../../Context/WebrtcContext';
-import { useColors } from '../../../../Theme';
 import { useMediaControl } from './useMediaControl';
 import { useThemedStyle } from './VideoControlsHeader.styles';
 
 export const VideoControlsHeader: React.FC = () => {
-  const { leave, connect, connected } = useWebrtcContext();
+  const { connected } = useSelector(ConferenceSelector);
   const styles = useThemedStyle();
   const colors = useColors();
   const [top, setTop] = useState<number>(0);
   const { bottom } = useSafeAreaInsets();
+  const dispatch = useDispatch();
   const {
     mute,
     unmute,
@@ -27,9 +30,12 @@ export const VideoControlsHeader: React.FC = () => {
     mediaStatus,
     switchCamera,
   } = useMediaControl();
-  console.log('render');
+
   const animatedWidth = useSharedValue<number>(0);
   const { width } = useWindowDimensions();
+  const connect = () => dispatch(ConferenceCreators.connect());
+  const diconnect = () => dispatch(ConferenceCreators.disconnect());
+
   const animatedStyle = useAnimatedStyle(() => ({
     backgroundColor: colors.background,
     borderRadius: 80,
@@ -43,6 +49,10 @@ export const VideoControlsHeader: React.FC = () => {
       duration: 200,
     });
   }, [connected]);
+
+  useEffect(() => {
+    console.log(mediaStatus);
+  }, [mediaStatus]);
 
   const switchSpeaker = useCallback(() => {}, []);
 
@@ -79,7 +89,7 @@ export const VideoControlsHeader: React.FC = () => {
               fill={colors.text}
             />
           </Pressable>
-          <Pressable onPress={leave} style={styles.endCallIcon}>
+          <Pressable onPress={diconnect} style={styles.endCallIcon}>
             <Icon
               style={styles.icon}
               name={'phone-outline'}

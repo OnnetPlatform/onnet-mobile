@@ -1,31 +1,34 @@
 import { Icon, Separator, Text } from '@Atoms';
 import { PageView } from '@HOCs';
+import { ConferenceCreators } from '@Khayat/Redux/Actions/Conference';
+import { ConferenceSelector } from '@Khayat/Redux/Selectors/ConferenceSelector';
 import { useColors } from '@Theme';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FlatList, Image, Pressable, View } from 'react-native';
+import { MediaStream } from 'react-native-webrtc';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useAlert from '../../Context/AlertContext/AlertContext';
-import { useWebrtcContext } from '../../Context/WebrtcContext';
 import { Participant } from './components';
+import { useMediaControl } from './components/VideoControlsHeader/useMediaControl';
 import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
 import { alertStyle } from './VideoRoom.styles';
 
 const uri =
   'https://images.unsplash.com/photo-1700605149722-50c0d7fe003d?q=80&w=2815&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
-export const VideoRoom: React.FC = () => {
-  const [users, setUsers] = useState<string[]>([]);
-  const [joined, setJoined] = useState<boolean>(false);
-  const { localStream, leave, join, socket, connect, connected } =
-    useWebrtcContext();
 
+export const VideoRoom: React.FC = () => {
+  const { users, remoteStreams, joined, connected } =
+    useSelector(ConferenceSelector);
+  const dispatch = useDispatch();
   const { configureAlert } = useAlert();
   const colors = useColors();
   const alertStyles = alertStyle(colors);
-
+  const { mute, mediaStatus, unmute, enableCamera, disableCamera } =
+    useMediaControl();
   const onAlertJoinPressed = () => {
     configureAlert({ visible: false });
-    setJoined(true);
-    join();
+    dispatch(ConferenceCreators.join());
   };
 
   const showJoinModal = () => {
@@ -70,12 +73,20 @@ export const VideoRoom: React.FC = () => {
           <Separator size="md" />
           <Separator size="md" />
           <View style={alertStyles.buttonsWrapper}>
-            <Pressable style={alertStyles.center}>
-              <Icon name={'mic-off-outline'} />
+            <Pressable
+              style={alertStyles.center}
+              onPress={mediaStatus.audio ? mute : unmute}>
+              <Icon
+                name={mediaStatus.audio ? 'mic-outline' : 'mic-off-outline'}
+              />
               <Text style={alertStyles.textCenter}>Audio</Text>
             </Pressable>
-            <Pressable style={alertStyles.center}>
-              <Icon name={'video-off-outline'} />
+            <Pressable
+              style={alertStyles.center}
+              onPress={mediaStatus.video ? disableCamera : enableCamera}>
+              <Icon
+                name={mediaStatus.video ? 'video-outline' : 'video-off-outline'}
+              />
               <Text style={alertStyles.textCenter}>Video</Text>
             </Pressable>
             <Pressable style={alertStyles.center}>
@@ -101,54 +112,32 @@ export const VideoRoom: React.FC = () => {
   };
 
   useEffect(() => {
-    connect();
-    socket.on('users', setUsers);
-    socket.on('leave', setUsers);
-    return () => {
-      socket.off('users');
-      socket.off('leave');
-      socket.disconnect();
-      leave();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!localStream) {
-      setUsers([]);
-    }
-  }, [localStream]);
-
-  useEffect(() => {
-    if (!connected) {
-      setJoined(false);
-    }
-  }, [connected]);
-
-  useEffect(() => {
-    if (!joined && connected) {
+    if (connected && !joined) {
       showJoinModal();
     }
-  }, [users, joined, connected]);
+  }, [connected, joined, users, mediaStatus]);
+
+  const renderRemoteStreams = useCallback(
+    ({ item }: { item: { id: string; stream: MediaStream } }) => {
+      return <Participant stream={item.stream} />;
+    },
+    [remoteStreams]
+  );
+
+  useEffect(() => {
+    if (!joined) {
+      dispatch(ConferenceCreators.connect());
+    }
+  }, [joined]);
 
   return (
-    <PageView loading={!connected} title="Meeting name">
+    <PageView title="Meeting name">
       <>
-        {joined ? (
-          <FlatList
-            numColumns={2}
-            data={users}
-            renderItem={({ item }) => {
-              return (
-                <Participant
-                  socket={socket}
-                  userId={item}
-                  key={item}
-                  localStream={localStream}
-                />
-              );
-            }}
-          />
-        ) : null}
+        <FlatList
+          numColumns={2}
+          data={remoteStreams}
+          renderItem={renderRemoteStreams}
+        />
         <VideoRoomChatSheet />
       </>
     </PageView>

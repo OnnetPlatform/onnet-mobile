@@ -1,8 +1,10 @@
+import { Icon, Text } from '@Atoms';
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetFlatList,
   BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
+import { ConferenceSelector } from '@Khayat/Redux/Selectors/ConferenceSelector';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View } from 'react-native';
@@ -12,9 +14,8 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
 
-import { Icon, Text } from '../../../../Components/atoms';
-import { useWebrtcContext } from '../../../../Context/WebrtcContext';
 import VideoControlsHeader from '../VideoControlsHeader/VideoControlsHeader';
 import withColors from './VideoRoomChatSheet.styles';
 
@@ -23,7 +24,7 @@ export const VideoRoomChatSheet: React.FC = () => {
   const ref = useRef<BottomSheet>(null);
   const colors = useColors();
   const styles = withColors(colors);
-  const { connected } = useWebrtcContext();
+  const { connected } = useSelector(ConferenceSelector);
   const animatedStyle = useAnimatedStyle(
     () => ({
       opacity: opacity.value,
@@ -32,7 +33,6 @@ export const VideoRoomChatSheet: React.FC = () => {
   );
 
   useEffect(() => {
-    ref.current?.snapToIndex(0);
     opacity.value = 1;
     opacity.value = withRepeat(withTiming(0, { duration: 1000 }), 10, true);
   }, [ref]);
@@ -61,11 +61,12 @@ export const VideoRoomChatSheet: React.FC = () => {
     ),
     [connected]
   );
+
   return (
     <BottomSheet
       snapPoints={['30%', '80%']}
-      index={-1}
       ref={ref}
+      index={-1}
       backgroundStyle={{ backgroundColor: colors.background }}
       enablePanDownToClose={true}
       backdropComponent={(props) => (
