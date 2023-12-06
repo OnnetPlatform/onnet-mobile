@@ -31,8 +31,8 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
 
   const isPast = isItBeforeToday(moment(endDate));
   const isStarted =
-    !isPast && moment(endDate).diff(moment(0, 'minutes')) < event.duration;
-
+    moment(endDate).diff(moment(), 'minutes') >= 0 &&
+    moment(endDate).diff(moment(), 'minutes') <= event.duration;
   const animatedStyle = useAnimatedStyle(
     () => ({
       backgroundColor: isStarted ? colors.pink : colors.background,

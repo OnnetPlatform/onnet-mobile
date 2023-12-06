@@ -48,8 +48,9 @@ export const EventsList: React.FC<{
     (scrollToDate: Date) => {
       setSelectedDate(scrollToDate);
       if (ref.current) {
-        const today = new Date();
-        const index = events.findIndex((item) => item.day === today.getDate());
+        const index = events.findIndex(
+          (item) => item.day === scrollToDate.getDate()
+        );
 
         if (index > -1) {
           setTimeout(() => {
@@ -84,7 +85,7 @@ export const EventsList: React.FC<{
         });
       }, 100);
     }
-  }, [events, ref]);
+  }, [ref]);
 
   return (
     <>
