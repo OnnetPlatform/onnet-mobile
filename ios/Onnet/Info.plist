@@ -38,7 +38,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Allow access to camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Allow access to Location</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow access to microphone</string>
 	<key>NSPhotoLibraryUsageDescription</key>

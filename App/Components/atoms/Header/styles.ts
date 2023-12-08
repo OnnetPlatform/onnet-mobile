@@ -15,7 +15,7 @@ export const withColors = (colors: ThemeColors, insets: EdgeInsets) =>
       alignItems: 'center',
     },
     element: {
-      flex: 1,
+      flex: 0.5,
     },
     title: {
       flex: 1,

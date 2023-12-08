@@ -1,3 +1,5 @@
+import { Icon, Separator, Text } from '@Atoms';
+import { HeaderLoader } from '@Atoms/HeaderLoader/HeaderLoader';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
@@ -7,8 +9,6 @@ import { Image, Pressable, SafeAreaView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 
-import { Icon, Text } from '../../Components/atoms';
-import { HeaderLoader } from '../../Components/atoms/HeaderLoader/HeaderLoader';
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
 
@@ -34,7 +34,16 @@ export const HomeChatScreen: React.FC = () => {
           </Text>
         </View>
         <View style={withColors.rowWrapper}>
-          <Icon style={{ marginRight: 10 }} name={'person-add-outline'} />
+          <Pressable
+            onPress={() => {
+              //@ts-ignore
+              navigation.navigate('Announcement');
+            }}>
+            <Icon name={'radio-outline'} />
+          </Pressable>
+          <Separator horizontal />
+          <Icon name={'person-add-outline'} />
+          <Separator horizontal />
           <Pressable onPress={onSettingsPressed}>
             <Icon name={'settings-outline'} />
           </Pressable>

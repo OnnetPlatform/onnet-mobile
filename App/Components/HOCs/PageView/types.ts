@@ -4,4 +4,5 @@ export type PageViewProps = {
   title: string;
   children: ReactElement;
   loading?: boolean;
+  isGradientEnabled?: boolean;
 };

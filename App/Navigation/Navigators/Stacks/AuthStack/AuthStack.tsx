@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import { useSelector } from 'react-redux';
 
+import { AnnouncementNavigation } from '../../AnnouncementNavigation/AnnouncementNavigation';
 import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
 import CreateEventNavigation from '../../CreateEventNavigation';
 
@@ -41,6 +42,10 @@ const AuthStack: React.FC = () => {
               component={CreateEventNavigation}
             />
           </Stack.Group>
+          <Stack.Screen
+            component={AnnouncementNavigation}
+            name="Announcement"
+          />
         </>
       ) : (
         <>

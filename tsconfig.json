@@ -18,8 +18,8 @@
       "@Molecules/*": ["./Components/molecules/*"],
       "@Molecules": ["./Components/molecules/"],
 
-      "@HOCs": ["./App/Components/HOCs/"],
-      "@HOCs/*": ["./App/Components/HOCs/*"],
+      "@HOCs": ["./Components/HOCs/"],
+      "@HOCs/*": ["./Components/HOCs/*"],
 
       "@Theme": ["./Theme/"],
       "@Theme/*": ["./Theme/*"],
