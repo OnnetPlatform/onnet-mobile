@@ -5,6 +5,7 @@ export type UserChat = {
   id: string;
   unreadCount: number;
   status: 'TYPING' | '';
+  user_id: string;
 };
 
 export type UploadedImage = {

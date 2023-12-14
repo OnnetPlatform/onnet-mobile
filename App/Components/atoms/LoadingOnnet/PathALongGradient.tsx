@@ -1,9 +1,15 @@
 import React from 'react';
-import type { SkiaValue, SkPath, Vector, Line, SkPaint } from '@shopify/react-native-skia';
-import { Group, rect, Skia, Path } from '@shopify/react-native-skia';
+import type {
+  SkiaValue,
+  SkPath,
+  Vector,
+  Line,
+  SkPaint,
+} from '@shopify/react-native-skia';
+import {Group, rect, Skia, Path} from '@shopify/react-native-skia';
 
-import { fitRect } from './geometry';
-import { useColors } from '../../../Theme';
+import {fitRect} from './geometry';
+import {useColors} from '@Theme';
 
 const strokeWidth = 3;
 const pad = 0;
@@ -15,7 +21,7 @@ export const prepare = (svg: string) => {
   const src = path.computeTightBounds();
   const m3 = fitRect(src, dst);
   path.transform(m3);
-  return { path, totalLength: 1, lines: [] };
+  return {path, totalLength: 1, lines: []};
 };
 
 export interface Line {
@@ -32,7 +38,7 @@ interface GradientAlongPathProps {
   progress: SkiaValue<number>;
 }
 
-export const GradientAlongPath = ({ progress, path }: GradientAlongPathProps) => {
+export const GradientAlongPath = ({progress, path}: GradientAlongPathProps) => {
   const colors = useColors();
   return (
     <Group>

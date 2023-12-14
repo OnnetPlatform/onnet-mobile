@@ -1,18 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
 import Animated, {
-  SharedValue,
-  cancelAnimation,
   runOnJS,
-  runOnUI,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { useColors } from '../../../../Theme';
-import { cyan } from '../../../../Theme/Colors';
 
 export const StoryIndicator: React.FC<{
   currentIndex: number;
@@ -20,7 +15,6 @@ export const StoryIndicator: React.FC<{
   isFocused: SharedValue<boolean>;
   onEnd: () => void;
 }> = ({ index, currentIndex, onEnd, isFocused }) => {
-  const colors = useColors();
   const progress = useSharedValue(0);
   const [width, setWidth] = useState(0);
   const canRunAnimation = useSharedValue(false);
@@ -37,7 +31,9 @@ export const StoryIndicator: React.FC<{
       progress.value = width;
     } else if (index === currentIndex) {
       progress.value = withTiming(width, { duration: 10000 }, (isFinised) => {
-        if (isFinised) runOnJS(onEnd)();
+        if (isFinised) {
+          runOnJS(onEnd)();
+        }
       });
     } else {
       progress.value = 0;

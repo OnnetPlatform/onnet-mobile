@@ -1,3 +1,9 @@
+// @ts-nocheck
+
+/**
+ * NOTE: Dolbyio is not installed  and not used within this project
+ */
+
 import { useEffect, useMemo, useState } from 'react';
 import CommsAPI from '@dolbyio/comms-sdk-react-native';
 import {
@@ -61,7 +67,7 @@ const useConference = () => {
 
   const onStreamChange = () => {
     try {
-      CommsAPI.conference.onStreamsChange(({ participant: updatedParticipant, stream }, type) => {
+      CommsAPI.conference.onStreamsChange(({ participant: updatedParticipant, stream }) => {
         console.log('onStreamChanged', stream.type);
         setParticipants((parts) => {
           const p = parts.get(updatedParticipant.id);

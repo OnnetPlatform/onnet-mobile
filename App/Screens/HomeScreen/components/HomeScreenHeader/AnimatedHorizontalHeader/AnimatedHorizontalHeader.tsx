@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 import Animated, {
-  SharedValue,
   measure,
   runOnUI,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
-import { Text } from '../../../../../Components/atoms';
 
-const AnimatedHorizontalHeader: React.FC<{ scrollValue: SharedValue<number> }> = (props) => {
+import { Text } from '../@Atoms';
+
+const AnimatedHorizontalHeader: React.FC<{
+  scrollValue: SharedValue<number>;
+}> = (props) => {
   const position = useSharedValue<number>(0);
   const ref = useAnimatedRef<Animated.View>();
   const width = useSharedValue<number>(0);

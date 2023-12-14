@@ -1,5 +1,5 @@
 import Realm from 'realm';
-import { UserChat } from '../../../types';
+
 class User extends Realm.Object<User> {
   name!: string;
   avatar!: string;
@@ -7,6 +7,7 @@ class User extends Realm.Object<User> {
   unreadCount!: number;
   id!: string;
   status: 'TYPING' | '' = '';
+  user_id!: string;
   static schema = {
     name: 'User',
     properties: {

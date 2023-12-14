@@ -1,29 +1,29 @@
+import { Icon } from '@Atoms';
 import BottomSheet, {
   BottomSheetFooter,
   BottomSheetScrollView,
   BottomSheetTextInput,
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
-import React from 'react';
-import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
-import { useColors } from '../../../../Theme';
-import styles from './ChatSheet.styles';
-import { Icon } from '../../../../Components/atoms';
-import { Pressable, View } from 'react-native';
-import Animated, { FadeOut, FadeIn } from 'react-native-reanimated';
 import MaskedView from '@react-native-masked-view/masked-view';
+import { useColors } from '@Theme';
+import React from 'react';
+import { Pressable, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+
+import { CustomBackground } from '../../../ConferenceScreen/components/CreateEventSheet/CustomBackground';
+import styles from './ChatSheet.styles';
 
 export const ChatSheet: React.FC = () => {
   const snapPoints = ['CONTENT_HEIGHT'];
   const colors = useColors();
   const withColors = styles(colors);
-  const { animatedContentHeight, animatedHandleHeight, animatedSnapPoints, handleContentLayout } =
+  const { animatedSnapPoints, handleContentLayout } =
     useBottomSheetDynamicSnapPoints(snapPoints);
   return (
     <BottomSheet
-      handleHeight={animatedHandleHeight}
-      contentHeight={animatedContentHeight}
+      enableDynamicSizing={true}
       footerComponent={(props) => (
         <BottomSheetFooter {...props}>
           <View
@@ -47,7 +47,10 @@ export const ChatSheet: React.FC = () => {
             <Animated.View exiting={FadeOut} entering={FadeIn}>
               <Pressable onPress={() => {}}>
                 <MaskedView maskElement={<Icon name={'paper-plane-outline'} />}>
-                  <LinearGradient style={withColors.sendIcon} colors={[colors.pink, colors.cyan]} />
+                  <LinearGradient
+                    style={withColors.sendIcon}
+                    colors={[colors.pink, colors.cyan]}
+                  />
                 </MaskedView>
               </Pressable>
             </Animated.View>
@@ -57,7 +60,9 @@ export const ChatSheet: React.FC = () => {
       style={{ borderRadius: 16, overflow: 'hidden' }}
       backgroundComponent={CustomBackground}
       snapPoints={animatedSnapPoints}>
-      <BottomSheetScrollView style={withColors.scrollView} onLayout={handleContentLayout}>
+      <BottomSheetScrollView
+        style={withColors.scrollView}
+        onLayout={handleContentLayout}>
         <View style={withColors.messageContainer}>
           <BottomSheetTextInput
             multiline={true}
@@ -75,8 +80,8 @@ export const ChatSheet: React.FC = () => {
 };
 
 /**
- * 
- * 
+ *
+ *
  *      <Collapsible expanded={true}>
           <View style={withColors.featureWrapper}>
             <Text>Attach Media</Text>

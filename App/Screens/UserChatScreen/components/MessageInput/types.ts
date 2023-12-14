@@ -1,6 +1,8 @@
+import { EmojisListProps } from '@Molecules/EmojiList/EmojiList';
 import { SharedValue } from 'react-native-reanimated';
+
 import { UploadedImage, UserChat } from '../../../../../types';
-import { EmojisListProps } from '../../../../Components/molecules/EmojiList/EmojiList';
+
 export type MessageInputProps = {
   onSend(): void;
   onChangeText(value: string): void;

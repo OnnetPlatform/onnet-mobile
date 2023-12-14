@@ -1,55 +1,56 @@
+import { HeaderLoader, Icon, Text } from '@Atoms';
+import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import React from 'react';
-import { Pressable, View, SafeAreaView, useColorScheme, ViewStyle } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import { Icon, Text } from '../../../Components/atoms';
-import { useColors } from '../../../Theme';
-import useTabs from './Tabs';
-import styles from './TabBar.styles';
 import { NavigationState } from '@react-navigation/native';
-import Animated, { FadeIn, FadeOut, useAnimatedStyle } from 'react-native-reanimated';
-import { HeaderLoader } from '../../../Components/atoms/HeaderLoader/HeaderLoader';
-import { useSocketContext } from '../../../Context/SocketContext/SocketContext';
-import { BlurView } from '@react-native-community/blur';
+import { useColors } from '@Theme';
+import React from 'react';
+import { Pressable, SafeAreaView, View, ViewStyle } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
+import { useSelector } from 'react-redux';
+
+import styles from './TabBar.styles';
+import useTabs from './Tabs';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
     const { state } = props;
-    const { index } = state;
     const colors = useColors();
-    const isDark = useColorScheme() === 'dark';
-    const { connected } = useSocketContext();
-
+    const { isConnected } = useSelector(MessagingSelector);
     const background: ViewStyle = {
-      backgroundColor: index === 4 ? colors.background : 'transparent',
+      backgroundColor: colors.background,
     };
     return (
       <>
-        {connected ? null : (
-          <View style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
+        {isConnected ? null : (
+          <View
+            style={{ position: 'absolute', alignSelf: 'center', bottom: 80 }}>
             <HeaderLoader />
           </View>
         )}
 
-        <BlurView
-          blurAmount={100}
-          blurType={isDark ? 'dark' : 'light'}
-          style={[styles.tabbar, background]}>
+        <View style={[styles.tabbar, background]}>
           <SafeAreaView style={styles.container}>
             {state.routes.map((route, index) => (
               // @ts-ignore
               <Tab key={index} {...props} {...{ route, index }} />
             ))}
           </SafeAreaView>
-        </BlurView>
+        </View>
       </>
     );
   },
   (next, prev) => next.descriptors === prev.descriptors
 );
 
-const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationState }>(
+const Tab = React.memo<
+  BottomTabBarProps & { index: number; route: NavigationState }
+>(
   ({ state, index, navigation, route }) => {
     const tabs = useTabs();
 
@@ -84,7 +85,7 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
     );
 
     const badge = () => {
-      if (index === 3)
+      if (index === 3) {
         return (
           <View style={styles.badge}>
             <Text weight="bold" color="white" fontSize={10}>
@@ -92,18 +93,30 @@ const Tab = React.memo<BottomTabBarProps & { index: number; route: NavigationSta
             </Text>
           </View>
         );
+      }
       return null;
     };
 
     return (
-      <Pressable onPress={onPress} onLongPress={onLongPress} style={styles.tab} key={index}>
+      <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
+        style={styles.tab}
+        key={index}>
         {badge()}
         {isFocused ? (
-          <MaskedView maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
-            <LinearGradient style={styles.icon} colors={[colors.pink, colors.cyan]} />
+          <MaskedView
+            maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
+            <LinearGradient
+              style={styles.icon}
+              colors={[colors.pink, colors.cyan]}
+            />
           </MaskedView>
         ) : (
-          <Icon style={{ width: 24 }} name={icon + (isFocused ? '' : '-outline')} />
+          <Icon
+            style={{ width: 16, height: 16 }}
+            name={icon + (isFocused ? '' : '-outline')}
+          />
         )}
 
         {isFocused ? null : (

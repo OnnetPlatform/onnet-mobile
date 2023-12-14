@@ -1,7 +1,8 @@
+import { BOTTOM_BAR_HEIGHT } from '@Theme';
+import { ThemeColors } from '@Theme/Colors';
 import { Dimensions, StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
-import { ThemeColors } from '../../Theme/Colors';
-import { BOTTOM_BAR_HEIGHT } from '../../Theme';
+
 const { height } = Dimensions.get('screen');
 export default (insets: EdgeInsets, colors: ThemeColors) =>
   StyleSheet.create({
@@ -53,5 +54,12 @@ export default (insets: EdgeInsets, colors: ThemeColors) =>
       justifyContent: 'center',
       alignItems: 'center',
       zIndex: 100,
+    },
+    limit: {
+      backgroundColor: colors.background,
+      width: '100%',
+      height: height,
+      position: 'absolute',
+      bottom: -height,
     },
   });

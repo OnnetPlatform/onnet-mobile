@@ -1,5 +1,5 @@
-import { ViewStyle } from 'react-native';
-import { ThemeColors } from '../../../Theme/Colors';
+import {ViewStyle} from 'react-native';
+import {ThemeColors} from '@Theme/Colors';
 
 export type CardProps = {
   style?: ViewStyle;

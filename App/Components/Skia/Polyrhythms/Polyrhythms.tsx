@@ -1,9 +1,10 @@
 import { Canvas, Path, Skia } from '@shopify/react-native-skia';
+import { useColors } from '@Theme';
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
+
 import { Arc } from './Arc/Arc';
 import { arcs } from './utils';
-import { useColors } from '../../../Theme';
 
 export const Polyrhythms: React.FC = () => {
   const { width, height } = useWindowDimensions();

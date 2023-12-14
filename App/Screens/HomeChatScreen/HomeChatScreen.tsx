@@ -1,17 +1,26 @@
-// @ts-nocheck
-import React, { useEffect } from 'react';
-import { SafeAreaView, View, Image } from 'react-native';
+import { Icon, Separator, Text } from '@Atoms';
+import { HeaderLoader } from '@Atoms/HeaderLoader/HeaderLoader';
+import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
+import { useNavigation } from '@react-navigation/native';
+import { useColors } from '@Theme';
+import Images from '@Theme/Images';
+import React from 'react';
+import { Image, Pressable, SafeAreaView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Icon, Text } from '../../Components/atoms';
-import { useColors } from '../../Theme';
-import styles from './HomeChatScreen.styles';
+import { useSelector } from 'react-redux';
+
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
-import Images from '../../Theme/Images';
+import styles from './HomeChatScreen.styles';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const withColors = styles(colors, insets);
+  const navigation = useNavigation();
+  const { isChatUpdating } = useSelector(MessagingSelector);
+
+  // @ts-ignore
+  const onSettingsPressed = () => navigation.navigate('Settings');
 
   return (
     <SafeAreaView style={withColors.screen}>
@@ -20,12 +29,27 @@ export const HomeChatScreen: React.FC = () => {
           <View style={withColors.logoWrapper}>
             <Image source={Images.logo} style={withColors.logo} />
           </View>
-          <Text weight="bold" fontSize={24}>
+          <Text weight="bold" fontSize={18}>
             Onnet
           </Text>
         </View>
-        <Icon name={'person-add-outline'} />
+        <View style={withColors.rowWrapper}>
+          <Pressable
+            onPress={() => {
+              //@ts-ignore
+              navigation.navigate('Announcement');
+            }}>
+            <Icon name={'radio-outline'} />
+          </Pressable>
+          <Separator horizontal />
+          <Icon name={'person-add-outline'} />
+          <Separator horizontal />
+          <Pressable onPress={onSettingsPressed}>
+            <Icon name={'settings-outline'} />
+          </Pressable>
+        </View>
       </View>
+      {isChatUpdating && <HeaderLoader style={{ position: 'relative' }} />}
       <ChatUsersList />
     </SafeAreaView>
   );

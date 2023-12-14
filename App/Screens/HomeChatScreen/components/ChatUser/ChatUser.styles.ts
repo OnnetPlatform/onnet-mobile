@@ -12,8 +12,11 @@ export default StyleSheet.create({
     backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 8,
     borderRadius: 12,
     paddingHorizontal: 4,
+    marginLeft: 4,
+  },
+  indicator: {
+    opacity: 0.7,
   },
 });

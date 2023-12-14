@@ -1,11 +1,12 @@
 import React, { ReactElement } from 'react';
-import { KeyboardAvoidingView, Platform, StatusBar, ViewStyle } from 'react-native';
+import { KeyboardAvoidingView, Platform, ViewStyle } from 'react-native';
+
 type Props = {
   style?: ViewStyle;
-  children: ReactElement[];
+  children: ReactElement | ReactElement[];
 };
 const KeyboardFloatingView: (props: Props) => ReactElement = (props: Props) => {
-  const behaviour = Platform.OS == 'ios' ? 'height' : 'padding';
+  const behaviour = Platform.OS === 'ios' ? 'height' : 'padding';
   return (
     <KeyboardAvoidingView behavior={behaviour} style={props.style}>
       {props.children}

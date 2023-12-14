@@ -1,6 +1,7 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { ThemeColors } from '@Theme/Colors';
+import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
-import { ThemeColors } from '../../../../Theme/Colors';
+
 const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   header: {
@@ -26,9 +27,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     height: 30,
   },
+  headerSubtitle: {
+    textTransform: 'uppercase',
+    overflow: 'hidden',
+  },
 });
 
-export const withColors = (colors: ThemeColors) =>
+export const withColors = () =>
   StyleSheet.create({
     slotContainer: {
       width: width / 7,
@@ -52,3 +57,22 @@ export const withInsets = (insets: EdgeInsets) =>
       overflow: 'hidden',
     },
   });
+
+export const selectedDateStyle = (
+  date: Date,
+  selectedDate: Date,
+  colors: ThemeColors
+) => {
+  if (!selectedDate) {
+    return {};
+  }
+  const style: ViewStyle = {
+    borderColor:
+      date.getDate() === selectedDate.getDate() ? colors.text : 'transparent',
+    borderBottomRightRadius: 16,
+    borderBottomLeftRadius: 16,
+    borderWidth: 2,
+    borderTopWidth: 0,
+  };
+  return style;
+};

@@ -1,6 +1,6 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
-import { ThemeColors } from '../../Theme/Colors';
 
 export default (colors: ThemeColors, insets: EdgeInsets) =>
   StyleSheet.create({
@@ -8,7 +8,7 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       padding: 16,
       paddingTop: insets.top,
       marginTop: -insets.top,
-      backgroundColor: colors.blur,
+      backgroundColor: colors.background,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',

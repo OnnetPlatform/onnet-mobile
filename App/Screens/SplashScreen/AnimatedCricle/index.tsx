@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import {
   Circle,
   Group,
@@ -7,9 +6,11 @@ import {
   useComputedValue,
   useValue,
 } from '@shopify/react-native-skia';
-import { useColors } from '../../../Theme';
+import { useColors } from '@Theme';
+import React, { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { interpolate } from 'react-native-reanimated';
+
 const data = Array.from({ length: 6 }, (_, i) => i);
 
 export const AnimatedCircle: React.FC = ({}) => {

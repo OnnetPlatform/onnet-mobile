@@ -1,16 +1,13 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
 import { EdgeInsets } from 'react-native-safe-area-context';
-import { ThemeColors } from '../../Theme/Colors';
-import { BOTTOM_BAR_HEIGHT } from '../../Theme';
 
 export default (colors: ThemeColors, insets: EdgeInsets) =>
   StyleSheet.create({
     page: {
       flex: 1,
       flexGrow: 1,
-      justifyContent: 'space-between',
       backgroundColor: colors.background,
-      paddingBottom: BOTTOM_BAR_HEIGHT,
     },
     headerBack: {
       width: 48,
@@ -18,13 +15,11 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       alignItems: 'center',
     },
     header: {
-      paddingVertical: 16,
+      paddingVertical: 8,
       flexDirection: 'row',
       alignItems: 'center',
+      backgroundColor: colors.background,
       paddingTop: insets.top,
-      position: 'absolute',
-      width: '100%',
-      zIndex: 100,
     },
     headerAvatar: {
       marginLeft: 16,
@@ -55,9 +50,9 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       height: 16,
     },
     contentStyle: {
-      paddingVertical: insets.top,
-      paddingBottom: 220,
+      paddingBottom: 200,
     },
+
     messageContainer: {
       borderColor: colors.blur,
       padding: 8,
@@ -72,10 +67,11 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     row: {
       flexDirection: 'row',
       paddingHorizontal: 8,
+      alignItems: 'center',
+      paddingVertical: 4,
+      backgroundColor: colors.background,
     },
-    messageWrapper: {
-      marginTop: 4,
-    },
+
     flex: {
       flex: 1,
     },
@@ -107,4 +103,11 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
       height: 24,
       borderRadius: 12,
     },
+    name: {},
   });
+
+export function contentStyle(isOpen: boolean) {
+  return {
+    paddingBottom: isOpen ? 100 : 200,
+  };
+}

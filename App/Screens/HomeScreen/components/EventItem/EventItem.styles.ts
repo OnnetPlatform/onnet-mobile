@@ -1,11 +1,13 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
-import { ThemeColors } from '../../../../Theme/Colors';
 
 export default StyleSheet.create({
   time: {
     marginBottom: 8,
     opacity: 0.8,
-    marginTop: 16,
+  },
+  itemWrapper: {
+    padding: 16,
   },
   joinedUsersContainer: {
     flexDirection: 'row',
@@ -26,11 +28,7 @@ export default StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  title: {
-    flex: 1,
-    marginLeft: 8,
-    padding: 16,
+    justifyContent: 'space-between',
   },
   dot: {
     lineHeight: 8,
@@ -38,29 +36,34 @@ export default StyleSheet.create({
   },
   joinButton: {
     alignItems: 'flex-end',
-    marginTop: 11,
   },
   joinButtonContent: {
     marginTop: 0,
     marginVertical: 0,
+  },
+  circleIndicator: {
+    height: 8,
+    width: 8,
+    backgroundColor: 'white',
+    position: 'absolute',
+    left: 9,
+    borderRadius: 8,
+    zIndex: 100,
+  },
+  mt8: {
+    marginTop: 8,
   },
 });
 
 export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
     itemWrapper: {
-      marginHorizontal: 16,
-      borderLeftColor: colors.text,
-      borderLeftWidth: 2,
-    },
-    date: {
-      width: 44,
-      height: 44,
-      backgroundColor: colors.background,
-      borderRadius: 28,
+      // backgroundColor: colors.secondaryBackground,
+      overflow: 'hidden',
+      paddingHorizontal: 12,
       justifyContent: 'center',
-      alignItems: 'center',
-      marginLeft: 16,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.background,
     },
     joinButton: {
       paddingHorizontal: 22,
@@ -77,4 +80,33 @@ export const withColors = (colors: ThemeColors) =>
       height: 2,
       backgroundColor: colors.text,
     },
+    pastBackground: {
+      width: '100%',
+      height: 200,
+      position: 'absolute',
+      tintColor: colors.text,
+      opacity: 0.2,
+    },
+    borderLeft: {
+      borderLeftWidth: 2,
+      borderLeftColor: colors.text,
+    },
+    avatar: {
+      marginRight: 0,
+      borderWidth: 2,
+      borderColor: colors.background,
+    },
+    joinedUsersContainer: {
+      paddingHorizontal: 38,
+      backgroundColor: colors.background,
+      paddingVertical: 16,
+      borderLeftColor: colors.cyan,
+      borderLeftWidth: 2,
+    },
   });
+
+export const pastBackground = (isPast: boolean, colors: ThemeColors) => {
+  return {
+    backgroundColor: isPast ? 'transparent' : colors.secondaryBackground,
+  };
+};

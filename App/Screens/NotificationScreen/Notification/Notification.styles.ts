@@ -1,5 +1,6 @@
+import { pink } from '@Theme/Colors';
 import { Dimensions, StyleSheet } from 'react-native';
-import { pink } from '../../../Theme/Colors';
+
 const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   closeIcon: {
@@ -24,8 +25,16 @@ export default StyleSheet.create({
   deleteButton: {
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: pink,
     alignItems: 'center',
+    flexDirection: 'row',
+  },
+  button: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '50%',
+    minWidth: width / 5,
+    height: '100%',
   },
 });

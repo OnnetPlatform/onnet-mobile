@@ -6,7 +6,6 @@ import {
   Mask,
   Rect,
   Text,
-  Turbulence,
   useClockValue,
   useComputedValue,
   useFont,
@@ -14,12 +13,12 @@ import {
   vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import { useColors } from '../../../Theme';
+import {StyleSheet, useWindowDimensions} from 'react-native';
+import {useColors} from '@Theme';
 
 export const LogoLoading: React.FC = () => {
-  const font = useFont(require('../Rubik-Black.ttf'), 64);
-  const { width, height } = useWindowDimensions();
+  const font = useFont(require('./Rubik-Black.ttf'), 64);
+  const {width, height} = useWindowDimensions();
   const colors = useColors();
   const clock = useClockValue();
   const offset = useValue(0);
@@ -36,7 +35,7 @@ export const LogoLoading: React.FC = () => {
     <Canvas style={StyleSheet.absoluteFillObject}>
       <Mask
         mask={
-          <Rect x={64} y={height / 2 - 52} width={width - 128} height={64}>
+          <Rect x={64} y={height / 2 - 24} width={width - 128} height={64}>
             <LinearGradient
               start={vec(0, 0)}
               colors={['#c0c0c0', '#262728', '#c0c0c0']}
@@ -47,9 +46,8 @@ export const LogoLoading: React.FC = () => {
         }>
         <Group blendMode={'difference'}>
           <Text
-            strokeWidth={20}
             x={width / 2 - 32 * 3.5}
-            y={height / 2}
+            y={height / 2 + 24}
             font={font}
             text={'ONNET'}
             color={'#262728'}

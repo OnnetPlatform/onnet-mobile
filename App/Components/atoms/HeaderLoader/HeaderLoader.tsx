@@ -1,44 +1,45 @@
+import { useColors } from '@Theme';
 import React, { useEffect } from 'react';
-import LinearGradient from 'react-native-linear-gradient';
+import { useWindowDimensions, ViewStyle } from 'react-native';
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withRepeat,
-  withSpring,
+  withTiming,
 } from 'react-native-reanimated';
-import { useColors } from '../../../Theme';
-import { useWindowDimensions } from 'react-native';
 
-const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
-
-export const HeaderLoader: React.FC = () => {
+export const HeaderLoader: React.FC<{ style?: ViewStyle }> = ({ style }) => {
   const colors = useColors();
   const { width } = useWindowDimensions();
-  const animatedWidth = useSharedValue(width / 2);
-  const style = useAnimatedStyle(() => ({
-    width: animatedWidth.value,
-    height: 1,
-    alignSelf: 'center',
-    borderRadius: 1,
-  }));
+  const animatedWidth = useSharedValue(0);
+  const animatedstyle = useAnimatedStyle(
+    () => ({
+      width: animatedWidth.value,
+      height: 0.5,
+      alignSelf: 'center',
+      borderRadius: 1,
+      backgroundColor: interpolateColor(
+        animatedWidth.value,
+        [0, width / 3, (width * 2) / 3, width],
+        [colors.background, colors.text, colors.text, colors.background]
+      ),
+    }),
+    [animatedWidth]
+  );
 
   useEffect(() => {
+    if (!width) {
+      return;
+    }
     animatedWidth.value = 0;
     animatedWidth.value = withRepeat(
-      withDelay(
-        100,
-        withSpring(width, { damping: 1000 }, (isFinished) => {})
-      ),
+      withTiming(width, { duration: 700 }),
       -1,
       false
     );
   }, [width]);
-  return (
-    <AnimatedGradient
-      style={style}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      colors={[colors.cyan, colors.pink, colors.turquoise, colors.yellow]}></AnimatedGradient>
-  );
+
+  return <Animated.View style={[animatedstyle, style]} />;
 };
+export default HeaderLoader;

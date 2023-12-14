@@ -1,4 +1,5 @@
 import Realm from 'realm';
+
 import { Attachment, UserChat } from '../../../types';
 import { UserChatMessage } from '../../Screens/UserChatScreen/types';
 

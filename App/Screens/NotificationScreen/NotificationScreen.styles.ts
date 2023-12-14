@@ -1,5 +1,5 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
-import { ThemeColors } from '../../Theme/Colors';
 import { EdgeInsets } from 'react-native-safe-area-context';
 
 export default StyleSheet.create({
@@ -16,8 +16,7 @@ export const withColors = (colors: ThemeColors) =>
   StyleSheet.create({
     sectionHeader: {
       textTransform: 'uppercase',
-      padding: 22,
-      backgroundColor: colors.background,
+      padding: 8,
     },
   });
 export const withInsets = (insets: EdgeInsets) =>

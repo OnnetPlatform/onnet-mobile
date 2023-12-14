@@ -1,5 +1,5 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
-import { ThemeColors } from '../../Theme/Colors';
 
 export default StyleSheet.create({
   screen: {
@@ -14,13 +14,28 @@ export default StyleSheet.create({
   subtitle: {
     textAlign: 'center',
     width: '80%',
+    alignSelf: 'center',
+    marginTop: 16,
   },
   inputsWrapper: {
     alignItems: 'center',
-    paddingHorizontal: 22,
+    width: '80%',
     flex: 1,
     flexGrow: 1,
-    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  mleft: {
+    marginLeft: 8,
+  },
+  mvertical: { marginVertical: 22 },
+  w100: {
+    width: '100%',
+  },
+  mbottom: {
+    marginBottom: 22,
+  },
+  cta: {
+    alignSelf: 'center',
   },
 });
 

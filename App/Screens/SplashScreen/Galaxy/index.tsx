@@ -1,5 +1,11 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, ViewStyle, useWindowDimensions } from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  ViewStyle,
+  useWindowDimensions,
+} from 'react-native';
 import Animated, {
   Easing,
   SharedValue,
@@ -10,9 +16,9 @@ import Animated, {
   withRepeat,
   withTiming,
 } from 'react-native-reanimated';
-import { useColors } from '../../../Theme';
+import {useColors} from '@Theme';
 import LinearGradient from 'react-native-linear-gradient';
-import { Planet, planets } from './data';
+import {Planet, planets} from './data';
 import styles from './Galaxy.styles';
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
@@ -25,20 +31,26 @@ export const Galaxy: React.FC = () => {
         {
           scale: interpolate(skewX.value, [0, 40], [0.6, 0.5]),
         },
-        { skewX: `${skewX.value}deg` },
+        {skewX: `${skewX.value}deg`},
       ],
     }),
-    []
+    [],
   );
 
   useEffect(() => {
-    skewX.value = withRepeat(withTiming(20, { duration: 20000, easing: Easing.linear }), -1, true);
+    skewX.value = withRepeat(
+      withTiming(20, {duration: 20000, easing: Easing.linear}),
+      -1,
+      true,
+    );
   }, []);
 
   return (
-    <SafeAreaView style={[StyleSheet.absoluteFillObject, styles.center]}>
+    <SafeAreaView
+      style={[StyleSheet.absoluteFillObject, {justifyContent: 'space-evenly'}]}>
+      <View />
       <Animated.View style={[styles.center, styles.scale8, animatedStyle]}>
-        {planets.map((item) => (
+        {planets.map(item => (
           <UFO skewX={skewX} planet={item} key={item.index} />
         ))}
       </Animated.View>
@@ -46,21 +58,28 @@ export const Galaxy: React.FC = () => {
   );
 };
 
-const UFO: React.FC<{ planet: Planet; skewX: SharedValue<number> }> = ({ planet, skewX }) => {
+const UFO: React.FC<{planet: Planet; skewX: SharedValue<number>}> = ({
+  planet,
+  skewX,
+}) => {
   const clock = useSharedValue(0);
-  const { width } = useWindowDimensions();
+  const {width} = useWindowDimensions();
   const r = (planet.index * width) / planets.length;
   const rotate = useSharedValue(0);
   const colors = useColors();
   useAnimatedReaction(
     () => skewX.value,
-    (value) => (rotate.value = value)
+    value => (rotate.value = value),
   );
   const animatedStyle = useAnimatedStyle(() => {
     const zIndex =
       planet.index === 0
         ? 10
-        : interpolate(Math.sin(clock.value) * r, [0, 360], [planet.index * 10, -planet.index * 10]);
+        : interpolate(
+            Math.sin(clock.value) * r,
+            [0, 360],
+            [planet.index * 10, -planet.index * 10],
+          );
 
     return {
       width: Math.min(planet.radius, 100),
@@ -76,9 +95,9 @@ const UFO: React.FC<{ planet: Planet; skewX: SharedValue<number> }> = ({ planet,
         {
           translateY: Math.cos(clock.value) * r,
         },
-        { skewX: `-${rotate.value}deg` },
-        { scale: interpolate(Math.sin(clock.value) * r, [0, 360], [1, 0.5]) },
-        { rotateZ: Math.sin(clock.value) * r + 'deg' },
+        {skewX: `-${rotate.value}deg`},
+        {scale: interpolate(Math.sin(clock.value) * r, [0, 360], [1, 0.5])},
+        {rotateZ: Math.sin(clock.value) * r + 'deg'},
       ],
     };
   }, []);
@@ -86,9 +105,12 @@ const UFO: React.FC<{ planet: Planet; skewX: SharedValue<number> }> = ({ planet,
   useEffect(() => {
     clock.value = 0;
     clock.value = withRepeat(
-      withTiming(2 * Math.PI, { duration: 100 * planet.radius, easing: Easing.linear }),
+      withTiming(2 * Math.PI, {
+        duration: 100 * planet.radius,
+        easing: Easing.linear,
+      }),
       -1,
-      false
+      false,
     );
   }, [planet.index]);
 
@@ -96,21 +118,21 @@ const UFO: React.FC<{ planet: Planet; skewX: SharedValue<number> }> = ({ planet,
     <>
       {planet.index === 0 ? null : <Orbit radius={r} />}
       <AnimatedLinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
+        start={{x: 0, y: 0}}
+        end={{x: 0, y: 1}}
         colors={planet.colors}
         style={animatedStyle}></AnimatedLinearGradient>
     </>
   );
 };
-const Orbit: React.FC<{ radius: number }> = ({ radius }) => {
+const Orbit: React.FC<{radius: number}> = ({radius}) => {
   const colors = useColors();
   const style: ViewStyle = {
     width: radius * 2,
     height: radius * 2,
     borderRadius: radius,
     borderWidth: 2,
-    borderColor: colors.text,
+    borderColor: colors.black,
     position: 'absolute',
     zIndex: -100,
     opacity: 0.15,

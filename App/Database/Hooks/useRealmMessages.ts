@@ -1,41 +1,67 @@
-import { UserChat } from '../../../types';
-import { useQuery, useRealm } from '../../Hooks/useRealmContext';
-import { UserChatMessage } from '../../Screens/UserChatScreen/types';
-import { URL } from '../../Services/Fetch';
-import MessageModel from '../Models/Message';
-import { useRealmUsers } from './useRealmUsers';
+import { useQuery, useRealm } from '@Khayat/Database/Hooks/useRealmContext';
+import Message from '@Khayat/Database/Models/Message';
+import { UserChat } from '@Khayat/Database/Models/types';
+import User from '@Khayat/Database/Models/User';
+import { FormattedMessages } from 'App/Screens/UserChatScreen/components/MessageItem/utils';
+import { useEffect, useMemo } from 'react';
 
-export const useRealmMessages = () => {
+export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
+  const localUsers = useQuery(
+    User,
+    (collection) => collection.filtered(`user_id == "${user.user_id}"`),
+    []
+  );
   const realm = useRealm();
-  const { getUser } = useRealmUsers();
-  const createMessage = (data: UserChatMessage) =>
-    realm.write(() => {
-      const createdMessages = data.messages.map((message) => {
-        const gallery = message.attachment?.gallery?.map((image) =>
-          realm.create('UploadedImage', { ...image, path: URL + image.filename })
-        );
-        const attachment = realm.create('Attachment', { gallery, voice: '' });
-        const textMessage = realm.create('TextMessage', {
-          attachment,
-          date: new Date().toString(),
-          message: message.message,
-        });
-        return textMessage;
-      });
-      const localuser = getUser(data.user);
-      realm.create('Message', { messages: createdMessages, user: localuser });
-    });
+  const data = useQuery(
+    Message,
+    (collection) =>
+      collection.filtered(
+        `to.user_id == "${user.user_id}" OR from.user_id == "${user.user_id}"`
+      ),
+    [user]
+  );
 
-  return { createMessage };
+  useEffect(() => {
+    if (realm.isClosed) {
+      try {
+        realm.write(() => {
+          localUsers.map((item) => {
+            item.unreadCount = 0;
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [realm]);
+
+  // @ts-ignore
+  return useMemo(() => naiveSorting(Array.from(data)), [data, user]);
 };
 
-export const useRoomMessages = (user: UserChat) => {
-  const messages = useQuery(MessageModel);
-  try {
-    const data = Array.from(messages.filtered(`user.id = "${user.id}"`)).reverse();
+const naiveSorting = (data: Message[]) => {
+  if (data.length === 0) {
     return data;
-  } catch (error) {
-    console.log(error);
-    return [];
   }
+  const groupedArray = [];
+  let currentGroup = {
+    user: data[0].user,
+    data: [data[0].message],
+    title: data[0].user.name,
+  };
+
+  for (let index = 1; index < data.length; index++) {
+    if (data[index].user.user_id === data[index - 1].user.user_id) {
+      currentGroup.data.push(data[index].message);
+    } else {
+      groupedArray.push(currentGroup);
+      currentGroup = {
+        user: data[index].user,
+        data: [data[index].message],
+        title: data[index].user.name,
+      };
+    }
+  }
+  groupedArray.push(currentGroup);
+  return groupedArray;
 };

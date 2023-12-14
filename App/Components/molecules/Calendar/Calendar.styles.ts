@@ -9,7 +9,7 @@ export default (width: number) =>
       alignItems: 'center',
     },
     currentMonth: {
-      textAlign: 'center',
       marginBottom: 8,
+      textAlign: 'center',
     },
   });

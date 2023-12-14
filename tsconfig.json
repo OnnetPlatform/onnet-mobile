@@ -1,10 +1,47 @@
-// prettier-ignore
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",     /* Recommended React Native TSConfig base */
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["es2017"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "esnext",
+    "baseUrl": "./App/",
+    "paths": {
+      "@Atoms": ["./Components/atoms/"],
+      "@Atoms/*": ["./Components/atoms/*"],
 
-    /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+      "@Molecules/*": ["./Components/molecules/*"],
+      "@Molecules": ["./Components/molecules/"],
+
+      "@HOCs": ["./Components/HOCs/"],
+      "@HOCs/*": ["./Components/HOCs/*"],
+
+      "@Theme": ["./Theme/"],
+      "@Theme/*": ["./Theme/*"],
+
+      "@Metrics": ["./Theme/Metrics.ts"],
+
+      "@Screens/*": ["./Screens/*"],
+      "@Screens": ["./Screens/"],
+
+      "@Skia": ["./Components/Skia/"],
+      "@Skia/*": ["./Components/Skia/*"],
+
+      "@Khayat/*": ["./Libs/@Khayat/src/*"],
+
+      "@Utils/*": ["./Utils/*"],
+      "@Context/*": ["./Context/*"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
 }

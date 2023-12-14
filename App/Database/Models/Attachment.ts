@@ -1,3 +1,5 @@
+import Realm from 'realm';
+
 import UploadedImage from './UploadedImage';
 
 class Attachment extends Realm.Object {

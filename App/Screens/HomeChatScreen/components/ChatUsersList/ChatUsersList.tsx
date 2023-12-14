@@ -1,10 +1,12 @@
+import { Text } from '@Atoms';
+import { useColors } from '@Theme';
 import React from 'react';
 import { SectionList } from 'react-native';
-import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
+
+import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import ChatUser from '../ChatUser/ChatUser';
-import { Text } from '../../../../Components/atoms';
-import { useColors } from '../../../../Theme';
+import EmptyState from './components/EmptyState';
 
 export const ChatUsersList: React.FC = () => {
   const { users } = useRealmUsers();
@@ -17,44 +19,54 @@ export const ChatUsersList: React.FC = () => {
   const unreadMessages = Array.from(
     sortedUsersAphabet.filtered('unreadCount > 0').sorted('unreadCount', true)
   );
+  const renderItem = ({ item }: any) => {
+    return (
+      <ChatUser
+        key={item.name}
+        name={item.name}
+        avatar={item.avatar}
+        isActive={item.isActive}
+        id={item.id}
+        unreadCount={item.unreadCount}
+        status={item.status}
+        user_id={item.user_id}
+      />
+    );
+  };
+  const sections =
+    users.length > 0
+      ? [
+          {
+            title: 'Unread messages',
+            data: unreadMessages,
+          },
+          { title: 'Users', data: activeUsers.slice(0, 10) },
+        ]
+      : [];
 
-  const sections = [
-    {
-      title: 'Unread messages',
-      data: unreadMessages,
-    },
-    { title: 'Users', data: activeUsers.slice(0, 10) },
-  ];
   const getItemLayout = sectionListGetItemLayout({
     getItemHeight: () => 50,
     getSeparatorHeight: () => 16,
     getSectionHeaderHeight: () => 30,
     getSectionFooterHeight: () => 0,
   });
+
   return (
     <SectionList
       sections={sections}
-      keyExtractor={(item) => item.name}
+      keyExtractor={(item) => item.id}
       // @ts-ignore
       getItemLayout={getItemLayout}
       maxToRenderPerBatch={10}
       showsVerticalScrollIndicator={false}
-      renderItem={({ item }) => {
-        return (
-          <ChatUser
-            key={item.name}
-            name={item.name}
-            avatar={item.avatar}
-            isActive={item.isActive}
-            id={item.id}
-            unreadCount={item.unreadCount}
-            status={item.status}
-          />
-        );
-      }}
+      ListEmptyComponent={EmptyState}
+      scrollEnabled={users.length > 0}
+      renderItem={renderItem}
       renderSectionHeader={({ section }) =>
         section.data.length > 0 ? (
-          <Text weight="bold" style={{ padding: 8, backgroundColor: colors.blur }}>
+          <Text
+            weight="bold"
+            style={{ padding: 8, backgroundColor: colors.blur }}>
             {section.title}
           </Text>
         ) : null

@@ -11,8 +11,8 @@ import {
   vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
-import { useColors } from '../../../Theme';
+import {useWindowDimensions} from 'react-native';
+import {useColors} from '@Theme';
 
 const source = Skia.RuntimeEffect.Make(`
 uniform float4 colors[4];
@@ -73,28 +73,31 @@ vec4 main(vec2 xy) {
 `)!;
 
 export const Bones: React.FC = () => {
-  const { width, height } = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const theme_colors = useColors();
-  const colors = [theme_colors.blue, theme_colors.cyan, theme_colors.blue, theme_colors.cyan].map(
-    (c) => Skia.Color(c)
-  );
+  const colors = [
+    theme_colors.blue,
+    theme_colors.cyan,
+    theme_colors.blue,
+    theme_colors.cyan,
+  ].map(c => Skia.Color(c));
 
   const clock = useClockValue();
   const center = vec(width / 2, height / 2);
   const pointer = useValue(vec(height / 2, width / 2));
   const onTouch = useTouchHandler({
-    onActive: (e) => {
+    onActive: e => {
       pointer.current = e;
     },
   });
 
   const uniforms = useComputedValue(
-    () => ({ colors, center, pointer: pointer.current, clock: clock.current }),
-    [pointer, clock]
+    () => ({colors, center, pointer: pointer.current, clock: clock.current}),
+    [pointer, clock],
   );
 
   return (
-    <Canvas style={{ width, height }} onTouch={onTouch}>
+    <Canvas style={{width, height}} onTouch={onTouch}>
       <Fill>
         <Shader source={source} uniforms={uniforms} />
       </Fill>

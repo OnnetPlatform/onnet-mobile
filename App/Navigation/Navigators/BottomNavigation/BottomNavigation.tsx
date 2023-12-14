@@ -1,13 +1,18 @@
-import React from 'react';
+import { GradientLayout } from '@HOCs';
 import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../../../Screens/HomeScreen';
-import { FeedScreen, NotificationScreen, ProfileScreen } from '../../../Screens';
-import TabBar from './TabBar';
+import {
+  FeedScreen,
+  HomeScreen,
+  NotificationScreen,
+  ProfileScreen,
+} from '@Screens';
+import React from 'react';
+
 import { ChatStack } from '../Stacks/ChatStack/ChatStack';
-import { GradientLayout } from '../../../Components/HOCs';
+import TabBar from './TabBar';
 
 const Tab = createBottomTabNavigator();
 

@@ -1,4 +1,6 @@
+import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
+import { EdgeInsets } from 'react-native-safe-area-context';
 
 export default StyleSheet.create({
   screen: {
@@ -6,6 +8,13 @@ export default StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  section: {
+    flex: 1,
+    flexGrow: 1,
+    alignItems: 'flex-start',
+    width: '100%',
+    padding: 22,
   },
   title: {
     color: 'rgba(255,255,255,.8)',
@@ -28,4 +37,23 @@ export default StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'flex-end',
   },
+  icon: {
+    width: 24,
+    height: 24,
+  },
 });
+
+export const withInsets = (insets: EdgeInsets, colors: ThemeColors) =>
+  StyleSheet.create({
+    button: {
+      width: 48,
+      height: 48,
+      backgroundColor: colors.yellow,
+      position: 'absolute',
+      bottom: insets.bottom + 24,
+      right: insets.bottom,
+      borderRadius: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });

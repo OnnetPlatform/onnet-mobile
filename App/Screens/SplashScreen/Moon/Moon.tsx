@@ -1,14 +1,19 @@
-import { Circle, useClockValue, useComputedValue, useValue } from '@shopify/react-native-skia';
+import {
+  Circle,
+  useClockValue,
+  useComputedValue,
+  useValue,
+} from '@shopify/react-native-skia';
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
-import { interpolateColor } from 'react-native-reanimated';
-import { blue, cyan, pink } from '../../../Theme/Colors';
+import {useWindowDimensions} from 'react-native';
+import {interpolateColor} from 'react-native-reanimated';
+import {blue, cyan, pink} from '@Theme/Colors';
 
 export const Moon: React.FC<{}> = () => {
   const r = 120;
   const clock = useClockValue();
   const theta = useValue(0);
-  const { width, height } = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const color = useValue(blue);
   const x = useComputedValue(() => {
     theta.current = theta.current + Math.PI / 100;

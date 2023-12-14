@@ -1,135 +1,178 @@
-// @ts-nocheck
-import { BlurView } from '@react-native-community/blur';
+import { HeaderLoader } from '@Atoms';
+import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
+import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
+import { useColors } from '@Theme';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Pressable, SectionList, View } from 'react-native';
 import Animated, {
-  Easing,
   useAnimatedKeyboard,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
-  withTiming,
+  withSpring,
 } from 'react-native-reanimated';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Message, UploadedImage } from '../../../types';
-import { Icon, Text } from '../../Components/atoms';
-import Avatar from '../../Components/atoms/Avatar/Avatar';
-import { useSocketContext } from '../../Context/SocketContext/SocketContext';
-import { useChat } from '../../Hooks/useChat';
-import useChatEvents from '../../Hooks/useChatEvents';
-import { useColors } from '../../Theme';
-import { MessageInput, MessageItem } from './components';
-import styles from './UserChatScreen.styles';
-import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { UploadedImage } from '../../../types';
+import { Icon, Separator, Text } from '../../Components/atoms';
+import Avatar from '../../Components/atoms/Avatar/Avatar';
+import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
+import { useKeyboard } from '../../Hooks/useKeyboard';
+import { MessageInput, MessageItem } from './components';
+import { FormattedMessages } from './components/MessageItem/utils';
+import styles, { contentStyle } from './UserChatScreen.styles';
+
+const getItemLayout = sectionListGetItemLayout({
+  getItemHeight: () => 50,
+  getSeparatorHeight: () => 0,
+  getSectionHeaderHeight: () => 30,
+  getSectionFooterHeight: () => 0,
+});
+
+const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
-  const { sendDirectMessage, sendStoppedTypingEvent, sendTypingEvent } = useChat(user);
   const [message, setMessage] = useState<string>('');
-  const msgs = useRoomMessages(user);
+  const msgs: FormattedMessages[] = useRoomMessages(user);
   const colors = useColors();
-  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
-  const { setOpponent } = useSocketContext();
+  const insets = useSafeAreaInsets();
   const withColors = styles(colors, insets);
-  const sheetInputHeight = useSharedValue<number>(0);
-  const [attachedImage, setAttachedImage] = useState<UploadedImage | undefined>();
   const { height, state } = useAnimatedKeyboard();
-  const onDirectMessage = useCallback((data: Message) => {}, []);
-
-  useChatEvents({ onDirectMessage }, []);
-
-  const onSend = () =>
-    sendDirectMessage(
-      {
+  const ref = useRef<SectionList>();
+  const sheetInputHeight = useSharedValue<number>(0);
+  const [attachedImage, setAttachedImage] = useState<
+    UploadedImage | undefined
+  >();
+  const dispatch = useDispatch();
+  let typingSent = useRef<boolean>(false);
+  const { isConnected } = useSelector(MessagingSelector);
+  const { isOpen } = useKeyboard();
+  const onSend = useCallback(() => {
+    dispatch(
+      MessagingCreators.sendMessage({
         message,
-        attachment: { gallery: attachedImage ? [attachedImage] : [] },
-      },
-      () => {
-        setMessage('');
-        setAttachedImage(undefined);
-      }
+        client: { user_id: user.user_id },
+      })
     );
-
-  const animatedStyle = useAnimatedStyle(
-    () => ({
-      paddingVertical: withTiming(
-        state.value === 1 || state.value === 2
-          ? sheetInputHeight.value + height.value - 70
-          : sheetInputHeight.value,
-        {
-          duration: 50,
-          easing: Easing.linear,
-        }
-      ),
-    }),
-    [state]
-  );
-
-  useEffect(() => {
-    if (message) sendTypingEvent();
-    else sendStoppedTypingEvent();
+    setMessage('');
+    setAttachedImage(undefined);
   }, [message]);
 
+  const sendTypingEvent = () => {
+    typingSent.current = true;
+    dispatch(MessagingCreators.typing(user));
+  };
+
+  const sendTypingStoppedEvent = () => {
+    typingSent.current = false;
+    dispatch(MessagingCreators.typingStopped(user));
+  };
+
   useEffect(() => {
-    setOpponent(user);
-  }, [user]);
+    if (!typingSent.current && message) {
+      sendTypingEvent();
+    }
+    const typingStoppedTimeout = setTimeout(sendTypingStoppedEvent, 500);
+
+    return () => {
+      clearTimeout(typingStoppedTimeout);
+    };
+  }, [message, typingSent.current]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (ref.current && msgs.length > 0) {
+        ref.current.scrollToLocation({
+          sectionIndex: msgs.length - 1,
+          itemIndex: msgs[msgs.length - 1].data.length - 1,
+        });
+      }
+    }, msgs.length);
+  }, [msgs, ref, ref.current]);
+
+  const animatedHeight = useDerivedValue(
+    () => height.value,
+    [state.value, sheetInputHeight.value, height.value]
+  );
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateY: [1, 2].includes(state.value)
+            ? withSpring(-animatedHeight.value)
+            : 0,
+        },
+      ],
+      zIndex: -1,
+    };
+  }, [height.value, state.value]);
+
   return (
-    <>
-      <SafeAreaView style={withColors.page}>
-        <BlurView blurType="regular" style={withColors.header}>
-          <Pressable style={withColors.headerBack} onPress={() => navigation.goBack()}>
-            <Icon name={'arrow-ios-back'} />
-          </Pressable>
-          <Pressable
-            onPress={() => navigation.navigate('ProfileScreen')}
-            style={[withColors.row, { alignItems: 'center' }]}>
-            <View>
-              <Avatar avatar={user.avatar} isActive={user.isActive} />
-            </View>
-            <Text weight="bold" fontSize={16}>
-              {user.name}
-            </Text>
-          </Pressable>
-        </BlurView>
-        <Animated.FlatList
-          ItemSeparatorComponent={() => <View style={withColors.separator} />}
-          data={msgs}
-          contentContainerStyle={withColors.contentStyle}
-          inverted
-          showsVerticalScrollIndicator={false}
-          style={animatedStyle}
-          keyExtractor={(_, index) => index.toString()}
+    <SafeAreaView style={withColors.page} edges={['bottom', 'left', 'right']}>
+      <View style={withColors.header}>
+        <Pressable
+          style={withColors.headerBack}
+          onPress={() => navigation.goBack()}>
+          <Icon name={'arrow-ios-back'} />
+        </Pressable>
+        <Pressable
           // @ts-ignore
-          renderItem={({ item, index }) => <MessageItem index={index} key={index} item={item} />}
-        />
-        <MessageInput
-          sheetInputHeight={sheetInputHeight}
-          onSend={onSend}
-          value={message}
-          onChangeText={setMessage}
-          user={user}
-          onAttachedImage={setAttachedImage}
-          attachedImage={attachedImage}
-          onEmojiPressed={(emoji) => setMessage((msg) => msg + emoji.emoji)}
-        />
-        {/* <ChatSheet /> */}
-      </SafeAreaView>
-    </>
+          onPress={() => navigation.navigate('ProfileScreen')}
+          style={[withColors.row, { alignItems: 'center' }]}>
+          <View>
+            <Avatar avatar={user.avatar} isActive={user.isActive} />
+          </View>
+          <Text weight="bold" fontSize={16}>
+            {user.name}
+          </Text>
+        </Pressable>
+      </View>
+      {isConnected ? null : <HeaderLoader />}
+      <AnimatedSectionList
+        // @ts-ignore
+        ref={ref}
+        ItemSeparatorComponent={Separator}
+        // @ts-ignore
+        sections={msgs}
+        // @ts-ignore
+        getItemLayout={getItemLayout}
+        contentContainerStyle={contentStyle(isOpen)}
+        showsVerticalScrollIndicator={false}
+        stickySectionHeadersEnabled={true}
+        style={animatedStyle}
+        SectionSeparatorComponent={Separator}
+        renderSectionHeader={(item) => {
+          // @ts-ignore
+          return <MessageItem index={Math.random()} item={item.section} />;
+        }}
+        renderItem={({ item, index }) => {
+          return (
+            <Text key={index} style={{ marginLeft: 48, paddingRight: 22 }}>
+              {item as any}
+            </Text>
+          );
+        }}
+      />
+      <MessageInput
+        sheetInputHeight={sheetInputHeight}
+        onSend={onSend}
+        value={message}
+        onChangeText={setMessage}
+        user={user}
+        onAttachedImage={setAttachedImage}
+        attachedImage={attachedImage}
+        onEmojiPressed={(emoji) => setMessage((msg) => msg + emoji.emoji)}
+      />
+    </SafeAreaView>
   );
 };
 
 export default UserChatScreen;
-
-// if (messages.length > 0 && messages[0]?.user.id === data.user.id) {
-//   messages[0].messages.push({ message: data.message, attachment: data.attachment });
-//   setTimeout(() => {
-//     setMessages(messages);
-//   }, 10);
-// } else {
-//   setMessages((msgs) => [
-//     { ...data, messages: [{ message: data.message, attachment: data.attachment }] },
-//     ...msgs,
-//   ]);
-// }

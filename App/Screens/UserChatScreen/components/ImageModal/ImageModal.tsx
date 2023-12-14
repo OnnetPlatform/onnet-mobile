@@ -1,13 +1,20 @@
-import { Image, Modal, Pressable, useWindowDimensions, View } from 'react-native';
+import { Icon } from '@Atoms';
 import React, { ReactElement } from 'react';
+import {
+  Image,
+  Modal,
+  Pressable,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { Icon } from '../../../../Components/atoms';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+
 import { UploadedImage } from '../../../../../types';
 import { URL } from '../../../../Services/Fetch';
 import styles from './ImageModal.styles';
@@ -39,8 +46,14 @@ export const ImageModal: React.FC<{
       }),
     Gesture.Tap().onStart(() => {
       scale.value = withTiming(1, { duration: 100, easing: Easing.linear });
-      translateY.value = withTiming(0, { duration: 100, easing: Easing.linear });
-      translateX.value = withTiming(0, { duration: 100, easing: Easing.linear });
+      translateY.value = withTiming(0, {
+        duration: 100,
+        easing: Easing.linear,
+      });
+      translateX.value = withTiming(0, {
+        duration: 100,
+        easing: Easing.linear,
+      });
     })
   );
 
@@ -56,7 +69,11 @@ export const ImageModal: React.FC<{
     <>
       {children}
       {visible ? (
-        <Modal animationType="fade" transparent onRequestClose={onRequestClose} visible={visible}>
+        <Modal
+          animationType="fade"
+          transparent
+          onRequestClose={onRequestClose}
+          visible={visible}>
           <View style={styles.shadow}>
             <Pressable style={styles.closeWrapper} onPress={onRequestClose}>
               <Icon name={'close-outline'} />
