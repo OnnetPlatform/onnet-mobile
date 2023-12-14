@@ -1,4 +1,3 @@
-import Icon from '@Atoms/Icon';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
 import GorhomBottomSheet, {
@@ -12,6 +11,7 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { BottomSheetBody, BottomSheetIcon } from './components';
 import withColors from './styles';
 import { BottomSheetProps } from './types';
 
@@ -30,16 +30,7 @@ export const BottomSheet = React.forwardRef<
   const renderBottomsheetContent = useCallback(
     () => (
       <>
-        {props.icon && (
-          <>
-            <Icon
-              style={styles.mainIcon}
-              fill={colors.turquoise}
-              name={props.icon || 'info-outline'}
-            />
-            <Separator size={'md'} />
-          </>
-        )}
+        <BottomSheetIcon {...props} />
         {props.title && (
           <Text fontSize={22} weight="bold">
             {props.title}
@@ -51,24 +42,20 @@ export const BottomSheet = React.forwardRef<
             <Separator size={'md'} />
           </>
         ) : null}
-
-        {props.description && (
-          <>
-            <Text style={styles.description}>{props.description}</Text>
-            <Separator size={'md'} />
-          </>
-        )}
-
+        <BottomSheetBody {...props} />
         {props.cta ? <SolidButton {...props.cta} /> : null}
       </>
     ),
     [props]
   );
+
+  const handleComponent = useCallback(() => <View />, []);
+
   return (
     <GorhomBottomSheet
       ref={ref}
       index={-1}
-      handleComponent={() => <View />}
+      handleComponent={handleComponent}
       snapPoints={[1]}
       backdropComponent={BackdropView}
       enableDynamicSizing

@@ -37,7 +37,7 @@ export const HomeChatScreen: React.FC = () => {
           <Pressable
             onPress={() => {
               //@ts-ignore
-              navigation.navigate('Announcement');
+              navigation.navigate('CreateAnnouncement');
             }}>
             <Icon name={'radio-outline'} />
           </Pressable>

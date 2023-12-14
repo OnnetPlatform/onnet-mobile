@@ -10,7 +10,10 @@ export const SolidButton: React.FC<SolidButtonProps> = (props) => {
   const colors = useColors();
   const style = buttonStyle(props, colors);
   return (
-    <Pressable style={[style.button, props.style]}>
+    <Pressable
+      style={[style.button, props.style]}
+      onPress={props.onPress}
+      disabled={props.disabled}>
       {props.children || (
         <Text
           weight="bold"

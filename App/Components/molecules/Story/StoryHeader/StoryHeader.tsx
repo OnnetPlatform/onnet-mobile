@@ -1,8 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+
 import { StoryIndicator } from '../StoryIndicator/StoryIndicator';
 import { StoryHeaderProps } from './types';
-import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 export const StoryHeader: React.FC<StoryHeaderProps> = ({
   currentIndex,
@@ -24,8 +28,8 @@ export const StoryHeader: React.FC<StoryHeaderProps> = ({
   return (
     <Animated.View style={animatedStyle}>
       <View style={{ flexDirection: 'row', flex: 1 }}>
-        {data.map((item) => (
-          <>
+        {data.map((item, index) => (
+          <React.Fragment key={index}>
             <StorySeparator index={item} key={item} />
             <StoryIndicator
               key={item + 10}
@@ -34,7 +38,7 @@ export const StoryHeader: React.FC<StoryHeaderProps> = ({
               onEnd={onEnd}
               isFocused={isFocused}
             />
-          </>
+          </React.Fragment>
         ))}
       </View>
     </Animated.View>

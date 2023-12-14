@@ -19,7 +19,7 @@ type Props = {
   textStyle?: TextStyle;
   onRightImagePressed?(): void;
 };
-export default (props: Props) => {
+export const RadioButton: React.FC<Props> = (props) => {
   const { active, onPress, title } = props;
   const value = useSharedValue<number>(0);
   const colors = useColors();
@@ -70,6 +70,7 @@ export default (props: Props) => {
   );
 };
 
+export default RadioButton;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',

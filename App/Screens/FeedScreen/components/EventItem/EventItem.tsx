@@ -1,8 +1,9 @@
 import { Story } from '@Molecules/Story/Story';
 import type { Story as StoryType } from '@Molecules/Story/types';
+import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useEffect, useRef } from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Pressable, useWindowDimensions } from 'react-native';
 import Animated, {
   interpolateColor,
   SharedValue,
@@ -25,6 +26,7 @@ export const EventItem: React.FC<{
   const y = useSharedValue(0);
   const storyHeight = useSharedValue(0);
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();
 
   const isFocused = useDerivedValue(() => {
     const lowerBound = y.value - storyHeight.value / 2;
@@ -61,9 +63,14 @@ export const EventItem: React.FC<{
 
   return (
     <Animated.View ref={ref} style={[styles.story, animatedStyle]}>
-      <Animated.View>
-        <Story data={data} isFocused={isFocused} />
-      </Animated.View>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('LiveAnnouncement');
+        }}>
+        <Animated.View>
+          <Story data={data} isFocused={isFocused} />
+        </Animated.View>
+      </Pressable>
     </Animated.View>
   );
 };

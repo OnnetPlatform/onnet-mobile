@@ -2,10 +2,11 @@ import Icon from '@Atoms/Icon';
 import RadioButton from '@Atoms/RadioButton';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
+import { useBottomSheet } from '@Context/BottomSheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { PageView } from '@HOCs';
-import BottomSheet from '@Molecules/BottomSheet';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
+import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
@@ -17,11 +18,8 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
-  Camera,
-  CameraDevice,
-  useCameraDevice,
   useCameraPermission,
-  useFrameProcessor,
+  useMicrophonePermission,
 } from 'react-native-vision-camera';
 
 import withColors from './CreateAnnouncement.styles';
@@ -32,43 +30,52 @@ export const CreateAnnouncement: React.FC = () => {
   const insets = useSafeAreaInsets();
   const [record, setRecord] = useState<boolean>(false);
   const ref = useRef<BottomSheetMethods>(null);
-  const device = useCameraDevice('back');
-  const { hasPermission, requestPermission } = useCameraPermission();
-  const [cameraDevice, setCamera] = useState<CameraDevice>();
-
-  const frameProcessor = useFrameProcessor((frame) => {
-    'worklet';
-    if (frame.pixelFormat === 'rgb') {
-      const data = frame.toArrayBuffer();
-      console.log(`Pixel at 0,0: RGB(${data[0]}, ${data[1]}, ${data[2]})`);
-    }
-  }, []);
-
+  const { requestPermission } = useCameraPermission();
+  const { requestPermission: requestMicPermission } = useMicrophonePermission();
+  const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+  const navigation = useNavigation();
   const onRadioPressed = useCallback(() => {
+    showBottomSheet({
+      icon: 'mic-outline',
+      title: 'Welcome to bulletin',
+      subtitle: 'Where live audio conversations',
+      body: 'Lorem ipsum dolor sit asmet, consectetur adipiscing elit. Vivamus neclacus malesuada, porta neque vitae, luctus erat. Phasellus rhoncus,urna in congue facilisis, lectus est tristique arcu, eu varius nislipsum at massa. Aenean dictum non nibh vel tristique. Aliquam inaugue ut ante efficitur aliquam. In consectetur egestas neque aultricies. Nunc vehicula tellus quis ante molestie, quis mollislibero cursus. Duis feugiat, nulla eget posuere euismod, ante leoporttitor nunc, ut varius arcu lorem eu magna. Etiam iaculismolestie magna, vitae porttitor arcu egestas id. Vivamus sit ameteros sit amet purus vehicula sollicitudin sed in odio.',
+      cta: {
+        title: 'Got it',
+        color: colors.turquoise,
+        textColor: colors.black,
+      },
+    });
     setRecord((value) => !value);
   }, [ref]);
 
   useEffect(() => {
-    if (!hasPermission) {
-      requestPermission().then((result) => {
-        if (result) {
-          setCamera(device);
-        }
-      });
+    if (record) {
+      requestPermission().then(requestMicPermission);
     }
-  }, [hasPermission, device]);
+  }, [record]);
+
+  const onInfoPressed = useCallback(() => {
+    showBottomSheet({
+      icon: 'radio-outline',
+      title: 'Welcome to bulletin',
+      subtitle: 'Where live audio conversations',
+      body: 'Lorem ipsum dolor sit asmet, consectetur adipiscing elit. Vivamus neclacus malesuada, porta neque vitae, luctus erat. Phasellus rhoncus,urna in congue facilisis, lectus est tristique arcu, eu varius nislipsum at massa. Aenean dictum non nibh vel tristique. Aliquam inaugue ut ante efficitur aliquam. In consectetur egestas neque aultricies. Nunc vehicula tellus quis ante molestie, quis mollislibero cursus. Duis feugiat, nulla eget posuere euismod, ante leoporttitor nunc, ut varius arcu lorem eu magna. Etiam iaculismolestie magna, vitae porttitor arcu egestas id. Vivamus sit ameteros sit amet purus vehicula sollicitudin sed in odio.',
+      cta: {
+        title: 'Got it',
+        color: colors.turquoise,
+        textColor: colors.black,
+        onPress: () => {
+          hideBottomSheet();
+        },
+      },
+    });
+  }, []);
 
   return (
     <>
       <PageView title={'Bulletin'} isGradientEnabled>
         <>
-          {cameraDevice ? (
-            <Camera
-              frameProcessor={frameProcessor}
-              device={cameraDevice}
-              isActive={true}
-            />
-          ) : null}
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.screen}
@@ -91,6 +98,8 @@ export const CreateAnnouncement: React.FC = () => {
                   color={colors.turquoise}
                   title={'Start now'}
                   style={styles.flex}
+                  // @ts-ignore
+                  onPress={() => navigation.navigate('MediaRecorder')}
                 />
                 <Separator horizontal />
 
@@ -102,10 +111,7 @@ export const CreateAnnouncement: React.FC = () => {
               <View style={styles.info}>
                 <Icon name={'alert-circle-outline'} style={styles.infoIcon} />
                 <Separator horizontal />
-                <Pressable
-                  onPress={() => {
-                    ref.current?.expand();
-                  }}>
+                <Pressable onPress={onInfoPressed}>
                   <Text fontSize={14}>Know more about Bulletins</Text>
                 </Pressable>
               </View>
@@ -115,20 +121,6 @@ export const CreateAnnouncement: React.FC = () => {
           </KeyboardAvoidingView>
         </>
       </PageView>
-      <BottomSheet
-        icon={'radio-outline'}
-        title={'Welcome to bulletin'}
-        subtitle="Where live audio conversations"
-        description={
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus nec lacus malesuada, porta neque vitae, luctus erat. Phasellus rhoncus, urna in congue facilisis, lectus est tristique arcu, eu varius nisl ipsum at massa. Aenean dictum non nibh vel tristique. Aliquam in augue ut ante efficitur aliquam. In consectetur egestas neque a ultricies. Nunc vehicula tellus quis ante molestie, quis mollis libero cursus. Duis feugiat, nulla eget posuere euismod, ante leo porttitor nunc, ut varius arcu lorem eu magna. Etiam iaculis molestie magna, vitae porttitor arcu egestas id. Vivamus sit amet eros sit amet purus vehicula sollicitudin sed in odio.'
-        }
-        cta={{
-          title: 'Got it',
-          color: colors.turquoise,
-          textColor: colors.black,
-        }}
-        ref={ref}
-      />
     </>
   );
 };

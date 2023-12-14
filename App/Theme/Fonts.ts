@@ -1,9 +1,9 @@
 const fonts = {
-  light: 'Rubik-Light',
-  regular: 'Rubik-Regular',
-  bold: 'Rubik-Bold',
-  semibold: 'Rubik-SemiBold',
-  black: 'Rubik-Black',
+  light: 'Inter-Light',
+  regular: 'Inter-Regular',
+  bold: 'Inter-Bold',
+  semibold: 'Inter-SemiBold',
+  black: 'Inter-Black',
 };
 
 export default fonts;

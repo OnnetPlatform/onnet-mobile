@@ -1,8 +1,7 @@
-## Onnet <> Mobile
+## ISSUES
 
-[Muhammad Saleh]("mailto://muhammadsaleh.dev@gmail.com")
+- react-native-config
 
-### ISSUES
+## Command PhaseScriptExecution failed with a nonzero exit code
 
-- Migrate ro redux
-- Use Apollo client
+`sudo chmod -R 777 node_modules/*;` gives access to node-modules

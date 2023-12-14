@@ -7,4 +7,5 @@ export type TextProps = {
   weight?: 'black' | 'bold' | 'regular' | 'semibold' | 'light';
   color?: string;
   style?: TextStyle;
+  textAlign?: TextStyle['textAlign'];
 } & AnimateProps<NTP>;

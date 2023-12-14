@@ -2,38 +2,28 @@ import {
   Canvas,
   Fill,
   Group,
+  Line,
   Skia,
+  Text,
+  useClockValue,
+  useComputedValue,
   useFont,
   vec,
-  TextPath,
-  Text,
-  useComputedValue,
-  Line,
-  useSpring,
-  DiscretePathEffect,
-  useClockValue,
 } from '@shopify/react-native-skia';
-import React, { useEffect, useState } from 'react';
-import Animated, {
+import React, { useEffect } from 'react';
+import {
   Easing,
-  SensorType,
-  useAnimatedSensor,
-  useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated';
+
 const NUMBER_OF_HOURS = 12;
 const WIDTH = 256;
-const HEIGHT = 256;
 const SECOND_HANDLE_SIZE = 0.09;
 
 const R = WIDTH / 2;
-function degreesToRadians(degrees: number) {
-  var pi = Math.PI;
-  return degrees * (pi / 180);
-}
+
 export const Watch: React.FC = () => {
   const seconds = useSharedValue<number>(0);
   const clock = useClockValue();
@@ -49,11 +39,20 @@ export const Watch: React.FC = () => {
 
   useEffect(() => {
     seconds.value = new Date().getSeconds();
-    seconds.value = withRepeat(withTiming(60, { duration: 60000, easing: Easing.linear }), -1);
+    seconds.value = withRepeat(
+      withTiming(60, { duration: 60000, easing: Easing.linear }),
+      -1
+    );
   }, []);
 
   return (
-    <Canvas style={{ height: R * 2, width: R * 2, borderRadius: R, overflow: 'hidden' }}>
+    <Canvas
+      style={{
+        height: R * 2,
+        width: R * 2,
+        borderRadius: R,
+        overflow: 'hidden',
+      }}>
       <Fill color="white" />
       <Group origin={{ x: R, y: R }} transform={secondsRotation}>
         <Line

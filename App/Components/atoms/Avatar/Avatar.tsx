@@ -1,9 +1,10 @@
-import React, {useMemo} from 'react';
-import {View, Image} from 'react-native';
-import {useColors} from '@Theme';
+import { useColors } from '@Theme';
+import React, { useMemo } from 'react';
+import { Image, View } from 'react-native';
+
 import styles from './Avatar.styles';
 
-export const Avatar: React.FC<{avatar: string; isActive: boolean}> = ({
+export const Avatar: React.FC<{ avatar: string; isActive: boolean }> = ({
   avatar,
   isActive,
 }) => {
@@ -13,12 +14,13 @@ export const Avatar: React.FC<{avatar: string; isActive: boolean}> = ({
       borderColor: isActive ? 'green' : colors.text,
       backgroundColor: isActive ? 'green' : colors.background,
     }),
-    [isActive],
+    [isActive]
   );
   return (
     <View>
-      <Image source={{uri: avatar}} style={styles.avatar} />
-      <View style={[styles.indicatorWrapper, {borderColor: colors.background}]}>
+      <Image source={{ uri: avatar }} style={styles.avatar} />
+      <View
+        style={[styles.indicatorWrapper, { borderColor: colors.background }]}>
         <View style={[styles.indicator, indicator]} />
       </View>
     </View>

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Attachment from './Models/Attachment';
 import Message, { TextMessage } from './Models/Message';
 import UploadedImage from './Models/UploadedImage';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import User from 'src/Database/Models/User';
 import realmConfig from '../../../Database/config';
 import { ModelEnums, UserChat } from '../../../Database/Models/types';

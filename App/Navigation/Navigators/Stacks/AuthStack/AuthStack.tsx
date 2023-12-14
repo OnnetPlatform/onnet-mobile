@@ -7,10 +7,11 @@ import {
   SplashScreen,
   VideoRoom,
 } from '@Screens';
+import { CreateAnnouncement, LiveAnnouncement } from '@Screens/Announcement';
+import MediaRecording from '@Screens/Announcement/MediaRecording';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { AnnouncementNavigation } from '../../AnnouncementNavigation/AnnouncementNavigation';
 import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
 import CreateEventNavigation from '../../CreateEventNavigation';
 
@@ -33,6 +34,7 @@ const AuthStack: React.FC = () => {
             component={HomeBottomNavigation}
           />
           <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
+          <Stack.Screen name="MediaRecorder" component={MediaRecording} />
           <Stack.Group
             screenOptions={{
               presentation: 'modal',
@@ -42,9 +44,20 @@ const AuthStack: React.FC = () => {
               component={CreateEventNavigation}
             />
           </Stack.Group>
+
           <Stack.Screen
-            component={AnnouncementNavigation}
-            name="Announcement"
+            options={{
+              headerShown: false,
+            }}
+            name="CreateAnnouncement"
+            component={CreateAnnouncement}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="LiveAnnouncement"
+            component={LiveAnnouncement}
           />
         </>
       ) : (

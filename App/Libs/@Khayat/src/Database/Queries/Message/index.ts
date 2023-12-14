@@ -1,3 +1,4 @@
+// @ts-nocheck
 import realmConfig from '../../config';
 import { ModelEnums, UserChatMessage } from '../../Models/types';
 import Realm from 'realm';

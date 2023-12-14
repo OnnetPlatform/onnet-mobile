@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { HackerText, Icon } from '../../../Components/atoms';
 import { faker } from '@faker-js/faker';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
+
+import { HackerText, Icon } from '../../../Components/atoms';
+
 export const EventAnimation: React.FC = () => {
   const { width } = useWindowDimensions();
   const animatedWidth = useSharedValue(0);
@@ -63,7 +65,7 @@ export const EventAnimation: React.FC = () => {
           <View style={styles.icon}>
             <Icon fill={'white'} name={'flag-outline'} />
           </View>
-          <View style={styles.separator}></View>
+          <View style={styles.separator} />
         </View>
         <HackerText weight="bold" color={'black'} style={styles.hackerText}>
           {title}
@@ -71,12 +73,12 @@ export const EventAnimation: React.FC = () => {
       </View>
       <View style={styles.card}>
         <View style={styles.avatar} />
-        <Animated.View style={[styles.title, titleStyle]}></Animated.View>
-        <Animated.View style={[styles.line, subtitleStyle]}></Animated.View>
+        <Animated.View style={[styles.title, titleStyle]} />
+        <Animated.View style={[styles.line, subtitleStyle]} />
         <View style={{ height: 11 }} />
-        <Animated.View style={[styles.line, widthStyle]}></Animated.View>
-        <Animated.View style={[styles.line, widthStyle]}></Animated.View>
-        <Animated.View style={[styles.line, widthStyle]}></Animated.View>
+        <Animated.View style={[styles.line, widthStyle]} />
+        <Animated.View style={[styles.line, widthStyle]} />
+        <Animated.View style={[styles.line, widthStyle]} />
       </View>
     </View>
   );

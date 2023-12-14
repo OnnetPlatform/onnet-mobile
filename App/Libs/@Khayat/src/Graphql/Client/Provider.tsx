@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ApolloProvider } from '@apollo/client';
 import React, { ReactElement } from 'react';
 import client from '.';

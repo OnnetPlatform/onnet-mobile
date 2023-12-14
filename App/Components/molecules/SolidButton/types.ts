@@ -10,4 +10,6 @@ export type SolidButtonProps = {
   textColor?: string;
   children?: ReactElement;
   style?: ViewStyle;
+  onPress?(): void;
+  disabled?: boolean;
 };

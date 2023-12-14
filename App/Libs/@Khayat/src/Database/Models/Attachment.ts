@@ -1,6 +1,5 @@
 import UploadedImage from './UploadedImage';
 import Realm from 'realm';
-// eslint-disable-next-line no-undef
 class Attachment extends Realm.Object {
   gallery?: UploadedImage[] | undefined;
   voice?: string;

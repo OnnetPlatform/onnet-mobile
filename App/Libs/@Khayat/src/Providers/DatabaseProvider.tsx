@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react';
+// @ts-nocheck
+import React, { PropsWithChildren } from 'react';
 import { RealmProvider } from '../Database/Hooks/useRealmContext';
 import { SCHEMA_VERSION } from '../Database/config';
 
-export const DatabaseProvider: React.FC<{ children: ReactElement }> = ({
+export const DatabaseProvider: React.FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
   return (

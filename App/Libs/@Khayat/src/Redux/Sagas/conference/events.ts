@@ -82,7 +82,7 @@ export function* onJoinedUsers(
     for (let index = 0; index < users.length; index++) {
       const id = users[index];
       if (!peerConnections[id] && localStream) {
-        peerConnections[id] = new RTCPeerConnection(null);
+        peerConnections[id] = new RTCPeerConnection();
 
         localStream?.getAudioTracks().map((track: MediaStreamTrack) => {
           track.enabled = false;

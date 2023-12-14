@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
+  presets: ['module:@react-native/babel-preset'],
   plugins: [
     ['react-native-worklets-core/plugin'],
     [
@@ -18,10 +18,15 @@ module.exports = {
           '@Skia': './App/Components/Skia',
           '@Khayat': './App/Libs/@Khayat/src',
           '@Context': './App/Context/',
+          '@Hooks': './App/Hooks/',
         },
       },
     ],
-    'jest-hoist',
-    'react-native-reanimated/plugin',
+    [
+      'react-native-reanimated/plugin',
+      {
+        globals: '__bulletinProcessor',
+      },
+    ],
   ],
 };

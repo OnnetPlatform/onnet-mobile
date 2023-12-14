@@ -1,4 +1,5 @@
 {
+  "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
@@ -35,7 +36,10 @@
       "@Khayat/*": ["./Libs/@Khayat/src/*"],
 
       "@Utils/*": ["./Utils/*"],
-      "@Context/*": ["./Context/*"]
+      "@Context/*": ["./Context/*"],
+
+      "@Hooks": ["./Hooks/"],
+      "@Hooks/*": ["./Hooks/*"]
     }
   },
   "exclude": [

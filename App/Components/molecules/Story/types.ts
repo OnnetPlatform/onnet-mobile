@@ -19,15 +19,18 @@ export type Story = {
 const genetaratedData: () => Story[] = () => {
   return Array.from({ length: 15 }, (_, i) => ({
     index: i,
-    stories: Array.from({ length: i + 1 }, (__, j) => ({
-      title: faker.address.cityName(),
+    stories: Array.from({ length: i + 1 }, (__) => ({
+      title: faker.location.city(),
       content: faker.lorem.paragraph(),
       media: {
         type: 'image',
-        url: faker.image.city(),
+        url: faker.image.url(),
       },
     })),
-    author: { first_name: faker.name.firstName(), avatar: faker.image.avatar() },
+    author: {
+      first_name: faker.person.firstName(),
+      avatar: faker.image.avatar(),
+    },
   }));
 };
 

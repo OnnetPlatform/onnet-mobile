@@ -1,3 +1,5 @@
+// @ts-nocheck
+import { BottomSheetProvider } from '@Context/BottomSheet';
 import { EventProivder } from '@Context/EventContext/EventProvider';
 import { DatabaseProvider } from '@Khayat/Providers/DatabaseProvider';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
@@ -27,15 +29,17 @@ export const MainNavigator: React.FC = () => {
       <SafeAreaProvider>
         <OnnetProvider>
           <GestureHandlerRootView style={styles.mainContainer}>
-            <NavigationContainer theme={navTheme}>
-              <DatabaseProvider>
-                <AlertProvider>
-                  <EventProivder>
-                    <AuthStack />
-                  </EventProivder>
-                </AlertProvider>
-              </DatabaseProvider>
-            </NavigationContainer>
+            <BottomSheetProvider>
+              <NavigationContainer theme={navTheme}>
+                <DatabaseProvider>
+                  <AlertProvider>
+                    <EventProivder>
+                      <AuthStack />
+                    </EventProivder>
+                  </AlertProvider>
+                </DatabaseProvider>
+              </NavigationContainer>
+            </BottomSheetProvider>
           </GestureHandlerRootView>
         </OnnetProvider>
       </SafeAreaProvider>
