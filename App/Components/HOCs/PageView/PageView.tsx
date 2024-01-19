@@ -1,6 +1,6 @@
 import { Header, HeaderLoader } from '@Atoms';
 import { useColors } from '@Theme';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -13,6 +13,8 @@ export const PageView: React.FC<PageViewProps> = ({
   children,
   loading,
   isGradientEnabled,
+  edges = ['bottom', 'left', 'right'],
+  hide,
 }) => {
   const colors = useColors();
   const styles = withColors(colors);
@@ -20,16 +22,18 @@ export const PageView: React.FC<PageViewProps> = ({
     () => ({
       backgroundColor: isGradientEnabled ? 'transparent' : colors.background,
     }),
-    []
+    [isGradientEnabled]
   );
-  const Page = () => (
-    <SafeAreaView
-      style={[styles.screen, background]}
-      edges={['bottom', 'left', 'right']}>
-      <Header title={title} />
-      {loading ? <HeaderLoader /> : null}
-      <View style={styles.content}>{children}</View>
-    </SafeAreaView>
+
+  const Page = useCallback(
+    () => (
+      <SafeAreaView style={[styles.screen, background]} edges={edges}>
+        <Header hide={hide} title={title} />
+        {loading ? <HeaderLoader /> : null}
+        <View style={styles.content}>{children}</View>
+      </SafeAreaView>
+    ),
+    [loading, edges, hide]
   );
 
   if (isGradientEnabled) {
