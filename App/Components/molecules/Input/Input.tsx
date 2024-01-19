@@ -2,13 +2,14 @@
 import { useColors } from '@Theme';
 import React, { useEffect, useState } from 'react';
 import { TextInput, TextInputProps, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
-// const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
 /** @deprecated */
 const Input: React.FC<TextInputProps> = (props) => {
@@ -19,14 +20,14 @@ const Input: React.FC<TextInputProps> = (props) => {
     width: 0,
   });
 
-  // const animatedStyle = useAnimatedStyle(
-  //   () => ({
-  //     height: 3,
-  //     alignSelf: 'flex-start',
-  //     width: sharedValue.value,
-  //   }),
-  //   [sharedValue.value]
-  // );
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      height: 3,
+      alignSelf: 'flex-start',
+      width: sharedValue.value,
+    }),
+    [sharedValue.value]
+  );
 
   const reversedAnimatedStyle = useAnimatedStyle(() => ({
     height: 3,
@@ -63,12 +64,12 @@ const Input: React.FC<TextInputProps> = (props) => {
           style={[{ padding: 16, color: colors.text }]}
         />
         <View style={{ flexDirection: 'row' }}>
-          {/* <AnimatedLinearGradient
+          <AnimatedLinearGradient
             colors={[colors.cyan, colors.pink]}
             start={{ x: 0, y: 0.5 }}
             end={{ x: 1, y: 1 }}
             style={animatedStyle}
-          /> */}
+          />
           <Animated.View style={reversedAnimatedStyle} />
         </View>
       </Animated.View>
