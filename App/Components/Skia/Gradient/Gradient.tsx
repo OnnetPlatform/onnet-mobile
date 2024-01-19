@@ -8,13 +8,14 @@ import {
   useValue,
   vec,
 } from '@shopify/react-native-skia';
+import { useColors } from '@Theme';
 import React from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
-// @ts-ignore
-import {computeNoise, map} from './utils';
-import {useColors} from '@Theme';
+import { Dimensions, StyleSheet } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+// @ts-ignore
+import { computeNoise } from './utils';
+
+const { width, height } = Dimensions.get('window');
 
 export const Gradient: React.FC = () => {
   const clock = useClockValue();
@@ -23,7 +24,7 @@ export const Gradient: React.FC = () => {
 
   const colorNoise = useComputedValue(
     () => computeNoise(hueNoiseOffset, 360),
-    [clock],
+    [clock]
   );
 
   return (
