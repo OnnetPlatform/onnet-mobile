@@ -1,9 +1,6 @@
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
-import GorhomBottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetView,
-} from '@gorhom/bottom-sheet';
+import GorhomBottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { useColors } from '@Theme/index';
@@ -12,6 +9,7 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetBody, BottomSheetIcon } from './components';
+import BluredBackdrop from './components/Backdrop';
 import withColors from './styles';
 import { BottomSheetProps } from './types';
 
@@ -23,7 +21,7 @@ export const BottomSheet = React.forwardRef<
   const insets = useSafeAreaInsets();
   const styles = withColors(colors, insets);
   const BackdropView = useCallback(
-    (args: any) => <BottomSheetBackdrop {...args} />,
+    (args: any) => <BluredBackdrop {...args} />,
     []
   );
 
@@ -38,7 +36,9 @@ export const BottomSheet = React.forwardRef<
         )}
         {props.subtitle ? (
           <>
-            <Text weight="light">{props.subtitle}</Text>
+            <Text textAlign="center" weight="light">
+              {props.subtitle}
+            </Text>
             <Separator size={'md'} />
           </>
         ) : null}
