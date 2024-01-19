@@ -1,32 +1,51 @@
-import { useValue } from '@shopify/react-native-skia';
+import { Separator, Text } from '@Atoms';
+import { LoadingOnnet } from '@Atoms/LoadingOnnet/LoadingOnnet';
+import { useBottomSheet } from '@Context/BottomSheet';
+import { useNavigation } from '@react-navigation/native';
+import { runSpring, useValue } from '@shopify/react-native-skia';
 import { useColors } from '@Theme';
-import React, { useCallback, useState } from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Pressable,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
-import { Text } from '../../Components/atoms';
-import { LoadingOnnet } from '../../Components/atoms/LoadingOnnet/LoadingOnnet';
-import data from '../../Components/molecules/Story/types';
-import EventItem from './components/EventItem/EventItem';
+import { FeedItem } from './components/FeedItem/FeedItem';
 import screenStyles from './FeedScreen.styles';
+import { useFeedData } from './utils';
 
 export const FeedScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
+  const { data, getData } = useFeedData();
   const { height } = useWindowDimensions();
   const [headerHeight, setHeaderHeight] = useState(0);
   const scrollYOffset = useSharedValue<number>(0);
   const colors = useColors();
   const pullDownValue = useValue(0);
   const styles = screenStyles(colors, insets);
-
-  const onScroll = useCallback((e: any) => {
+  const { showBottomSheet } = useBottomSheet();
+  const navigation = useNavigation();
+  const onScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollYOffset.value = e.nativeEvent.contentOffset.y;
     if (e.nativeEvent.contentOffset.y < 0) {
       pullDownValue.current = Math.min(e.nativeEvent.contentOffset.y / -190, 1);
+    } else if (e.nativeEvent.contentOffset.y === 0) {
+      if (pullDownValue.current > 0) {
+        runSpring(pullDownValue, { to: 1 }, { damping: 10 });
+        setTimeout(() => {
+          runSpring(pullDownValue, { to: 0 }, { damping: 100 });
+        }, 500);
+        getData();
+      }
     } else {
       pullDownValue.current = 0;
     }
@@ -36,19 +55,29 @@ export const FeedScreen: React.FC = () => {
     setHeaderHeight(layout.height);
   }, []);
 
+  const onItemPressed = useCallback((item: any) => {
+    navigation.navigate('LiveAnnouncement');
+    showBottomSheet({
+      title: item.title,
+      icon: 'calendar-outline',
+      subtitle: item.description,
+    });
+  }, []);
+
   const renderFeed = useCallback(
     ({ item }: any) => {
       return (
-        <EventItem
-          scrollYOffset={scrollYOffset}
-          headerHeight={headerHeight}
-          key={item.index}
-          data={item}
-        />
+        <Pressable onPress={() => onItemPressed(item)}>
+          <FeedItem item={item} />
+        </Pressable>
       );
     },
     [headerHeight]
   );
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.screen}>
@@ -63,6 +92,8 @@ export const FeedScreen: React.FC = () => {
         decelerationRate={'fast'}
         onScroll={onScroll}
         data={data}
+        ItemSeparatorComponent={Separator}
+        contentContainerStyle={{ padding: 16, paddingBottom: headerHeight }}
         snapToInterval={Math.round(height * 0.6) + 48}
         renderItem={renderFeed}
       />
