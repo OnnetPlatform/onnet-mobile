@@ -1,5 +1,4 @@
-import { Text } from '@Atoms';
-import { useColors } from '@Theme';
+import { Blur, Text } from '@Atoms';
 import React from 'react';
 import { SectionList } from 'react-native';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
@@ -11,7 +10,6 @@ import EmptyState from './components/EmptyState';
 export const ChatUsersList: React.FC = () => {
   const { users } = useRealmUsers();
   const sortedUsersAphabet = users.sorted('name');
-  const colors = useColors();
 
   const activeUsers = Array.from(
     sortedUsersAphabet.sorted('isActive', true).filtered('unreadCount = 0')
@@ -40,7 +38,7 @@ export const ChatUsersList: React.FC = () => {
             title: 'Unread messages',
             data: unreadMessages,
           },
-          { title: 'Users', data: activeUsers.slice(0, 10) },
+          { title: 'DM', data: activeUsers.slice(0, 10) },
         ]
       : [];
 
@@ -64,11 +62,11 @@ export const ChatUsersList: React.FC = () => {
       renderItem={renderItem}
       renderSectionHeader={({ section }) =>
         section.data.length > 0 ? (
-          <Text
-            weight="bold"
-            style={{ padding: 8, backgroundColor: colors.blur }}>
-            {section.title}
-          </Text>
+          <Blur style={{ padding: 10 }}>
+            <Text weight="bold" style={{ textTransform: 'uppercase' }}>
+              {section.title}
+            </Text>
+          </Blur>
         ) : null
       }
     />

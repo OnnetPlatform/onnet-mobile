@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { AlertProvider } from '@Context/AlertContext/AlertProvider';
 import { BottomSheetProvider } from '@Context/BottomSheet';
 import { EventProivder } from '@Context/EventContext/EventProvider';
 import { DatabaseProvider } from '@Khayat/Providers/DatabaseProvider';
@@ -10,7 +11,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AlertProvider } from '../../../Context/AlertContext/AlertProvider';
+import { appId, baseUrl } from '../../../../atlas.config.json';
 import { OnnetProvider } from '../../../Provider/OnnetProvider';
 import { AuthStack } from '../Stacks';
 
@@ -31,7 +32,7 @@ export const MainNavigator: React.FC = () => {
           <GestureHandlerRootView style={styles.mainContainer}>
             <BottomSheetProvider>
               <NavigationContainer theme={navTheme}>
-                <DatabaseProvider>
+                <DatabaseProvider id={appId} baseUrl={baseUrl}>
                   <AlertProvider>
                     <EventProivder>
                       <AuthStack />

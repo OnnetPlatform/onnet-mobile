@@ -74,7 +74,7 @@ export const HomseScreenHeader: React.FC<{
     runOnUI(() => {
       'worklet';
       const measured = measure(viewRef)?.height;
-      if (listHeight.value < measured) {
+      if (measured && listHeight.value < measured) {
         listHeight.value = withTiming(measured);
       }
     })();

@@ -24,7 +24,9 @@ export type MessageReactionNotification = {
   type: NotificationTypes.MESSAGE_REACTION;
 };
 
-export type Notification = EventScheduledNotification | MessageReactionNotification;
+export type Notification =
+  | EventScheduledNotification
+  | MessageReactionNotification;
 
 export const notifications: Notification[] = [
   {
@@ -41,31 +43,31 @@ export const notifications: Notification[] = [
   },
   {
     title: 'John Doe has reacted to your message',
-    data: { message: 'lorem ipsum dolor sit amis', emoji: `❤️` },
+    data: { message: 'lorem ipsum dolor sit amis', emoji: '❤️' },
     createdDate: yesterday,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
     title: 'John Doe has reacted to your message',
-    data: { message: 'lorem ipsum dolor sit amis', emoji: `🙏🏻` },
+    data: { message: 'lorem ipsum dolor sit amis', emoji: '🙏🏻' },
     createdDate: yesterday,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
     title: 'John Doe has reacted to your message',
-    data: { message: 'lorem ipsum dolor sit amis', emoji: `👍🏻` },
+    data: { message: 'lorem ipsum dolor sit amis', emoji: '👍🏻' },
     createdDate: day3before,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
     title: 'John Doe has reacted to your message',
-    data: { message: 'lorem ipsum dolor sit amis', emoji: `👍🏻` },
+    data: { message: 'lorem ipsum dolor sit amis', emoji: '👍🏻' },
     createdDate: weekbefore,
     type: NotificationTypes.MESSAGE_REACTION,
   },
   {
     title: 'John Doe has reacted to your message',
-    data: { message: 'lorem ipsum dolor sit amis', emoji: `👍🏻` },
+    data: { message: 'lorem ipsum dolor sit amis', emoji: '👍🏻' },
     createdDate: day3before,
     type: NotificationTypes.MESSAGE_REACTION,
   },
@@ -73,8 +75,11 @@ export const notifications: Notification[] = [
 
 export function formatList(data: Notification[]) {
   const formatted = _(data)
-    .groupBy((item) => item.createdDate)
-    .map((data, title) => ({ title: getHeaderTitle(moment(title)), data }))
+    .groupBy((item: any) => item.createdDate)
+    .map((item: any, title: any) => ({
+      title: getHeaderTitle(moment(title)),
+      data: item,
+    }))
     .value();
 
   return formatted;

@@ -1,3 +1,4 @@
+import { useColors } from '@Theme/index';
 import moment from 'moment';
 import React from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
@@ -27,7 +28,7 @@ export const Notification: React.FC<{
   const context = useSharedValue(0);
   const visible_offset = width / 2.5;
   const touchStart = useSharedValue({ x: 0, y: 0, time: 0 });
-
+  const colors = useColors();
   const gesture = Gesture.Pan()
     .manualActivation(true)
     .onTouchesDown((e) => {
@@ -96,12 +97,16 @@ export const Notification: React.FC<{
       <Animated.View style={[animatedButtonStyle, styles.closeIcon]}>
         <Pressable style={styles.deleteButton} onPress={() => {}}>
           <Animated.View
-            style={[animatedIcon, styles.button, { backgroundColor: 'green' }]}>
-            <Icon name={'trash-outline'} fill={'white'} />
+            style={[styles.button, { backgroundColor: colors.cyan }]}>
+            <Animated.View style={[animatedIcon]}>
+              <Icon name={'checkmark-outline'} fill={'white'} />
+            </Animated.View>
           </Animated.View>
           <Animated.View
-            style={[animatedIcon, styles.button, { backgroundColor: 'blue' }]}>
-            <Icon name={'trash-outline'} fill={'white'} />
+            style={[styles.button, { backgroundColor: colors.blue }]}>
+            <Animated.View style={[animatedIcon]}>
+              <Icon name={'trash-outline'} fill={'white'} />
+            </Animated.View>
           </Animated.View>
         </Pressable>
       </Animated.View>

@@ -1,4 +1,5 @@
 import { Event } from '@Khayat/Graphql/Events/types';
+import { Calendar } from '@Khayat/Redux/Reducers/EventReducer/types';
 import { EventSelector } from '@Khayat/Redux/Selectors/EventSelector';
 import { useScrollToTop } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -87,6 +88,13 @@ export const EventsList: React.FC<{
     }
   }, [ref]);
 
+  const filterEvents = useCallback(
+    (item: Calendar) =>
+      item.year === new Date().getFullYear() &&
+      item.month - 1 === new Date().getMonth(),
+    [events]
+  );
+
   return (
     <>
       <HomeScreenHeader
@@ -99,7 +107,7 @@ export const EventsList: React.FC<{
         showsVerticalScrollIndicator={false}
         bounces={true}
         ref={ref}
-        sections={events}
+        sections={events.filter(filterEvents)}
         scrollEventThrottle={0.5}
         onScroll={onScroll}
         onEndReachedThreshold={0.8}

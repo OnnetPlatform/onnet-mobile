@@ -1,6 +1,6 @@
-// @ts-nocheck
-import { Text } from '@Atoms';
+import { Separator, Text } from '@Atoms';
 import Avatar from '@Atoms/Avatar/Avatar';
+import { UserChat } from '@Khayat/Database/Models/types';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
@@ -9,7 +9,6 @@ import { Pressable, View } from 'react-native';
 import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 
-import { UserChat } from '../../../../../types';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
 
@@ -28,17 +27,18 @@ export const ChatUser: React.FC<UserChat> = ({
   return (
     <Pressable
       onPress={() => {
+        // @ts-ignore
         navigation.navigate('UserChatScreen', { user: localUser });
       }}>
       <View style={[styles.row]}>
         <Avatar {...{ avatar, isActive }} />
+        <Separator horizontal />
         <View>
           <Text fontSize={16}>
             {name.trim()}
             {id === user_id ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
-                {'  '}
-                You
+                {' You'}
               </Text>
             ) : null}
           </Text>

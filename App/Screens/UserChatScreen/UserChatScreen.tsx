@@ -1,6 +1,8 @@
 import { HeaderLoader } from '@Atoms';
+import { UploadedImage } from '@Khayat/Database/Models/types';
 import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
+import ChatEmptyState from '@Molecules/ChatEmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -19,7 +21,6 @@ import {
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { UploadedImage } from '../../../types';
 import { Icon, Separator, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
@@ -57,8 +58,8 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const onSend = useCallback(() => {
     dispatch(
       MessagingCreators.sendMessage({
-        message,
-        client: { user_id: user.user_id },
+        textMessage: message,
+        id: user.user_id,
       })
     );
     setMessage('');
@@ -74,6 +75,10 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     typingSent.current = false;
     dispatch(MessagingCreators.typingStopped(user));
   };
+
+  const ListEmptyComponent = useCallback(() => {
+    return <ChatEmptyState username={user.name} />;
+  }, []);
 
   useEffect(() => {
     if (!typingSent.current && message) {
@@ -127,9 +132,8 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           // @ts-ignore
           onPress={() => navigation.navigate('ProfileScreen')}
           style={[withColors.row, { alignItems: 'center' }]}>
-          <View>
-            <Avatar avatar={user.avatar} isActive={user.isActive} />
-          </View>
+          <Avatar avatar={user.avatar} isActive={user.isActive} />
+          <Separator horizontal />
           <Text weight="bold" fontSize={16}>
             {user.name}
           </Text>
@@ -144,10 +148,12 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         sections={msgs}
         // @ts-ignore
         getItemLayout={getItemLayout}
+        scrollEnabled={msgs.length > 0}
         contentContainerStyle={contentStyle(isOpen)}
         showsVerticalScrollIndicator={false}
         stickySectionHeadersEnabled={true}
         style={animatedStyle}
+        ListEmptyComponent={ListEmptyComponent}
         SectionSeparatorComponent={Separator}
         renderSectionHeader={(item) => {
           // @ts-ignore
