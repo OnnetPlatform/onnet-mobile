@@ -6,11 +6,27 @@ import {
 import { TakeEffect, put, take } from 'redux-saga/effects';
 import { MessagingEvents } from './types';
 import { AuthTypes } from '../../Actions/AuthActions';
+import { FetchResult } from '@apollo/client';
+import Message from '../../../Database/Models/Message';
+import client from '../../../Graphql/Client';
+import directMessageMutation from '../../../Graphql/Messaging/Mutations/directMessage';
 
-export function* sendMessage(socket: Socket): Generator<TakeEffect, any, any> {
+export function* sendMessage(): Generator<
+  TakeEffect | Promise<FetchResult<Message>>,
+  any,
+  { message: Message }
+> {
   while (true) {
     const { message } = yield take(MessagingTypes.SEND_MESSAGE);
-    socket.emit(MessagingEvents.SEND_MESSAGE, message);
+    // socket.emit(MessagingEvents.SEND_MESSAGE, message);
+    try {
+      yield client.mutate({
+        mutation: directMessageMutation,
+        variables: {
+          input: message,
+        },
+      });
+    } catch (error) {}
   }
 }
 export function* sendTyping(socket: Socket): Generator<TakeEffect, any, any> {

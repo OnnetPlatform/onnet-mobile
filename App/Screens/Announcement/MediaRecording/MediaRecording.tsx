@@ -182,6 +182,7 @@ export const MediaRecording: React.FC = () => {
   useEffect(() => {
     dispatch(BulletinCreators.stream());
   }, []);
+
   return (
     <SafeAreaView style={styles.screen}>
       {cameraDevice ? (

@@ -48,7 +48,6 @@ export function* onDisconnected(
       peerConnections[id].close();
       delete peerConnections[id];
     });
-    console.log(peerConnections);
     localStream.release();
     yield put(ConferenceCreators.setLocalStream(null));
     yield put(ConferenceCreators.setJoined(false));

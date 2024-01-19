@@ -74,7 +74,7 @@ export function* createRemoteStreamChannel(
 ) {
   return eventChannel((emit) => {
     const handler = (data: any) => emit({ stream: data.streams[0], id });
-    //@ts-ignore
+    // @ts-ignore
     peerConnection.ontrack = handler;
     return () => peerConnection.close();
   });

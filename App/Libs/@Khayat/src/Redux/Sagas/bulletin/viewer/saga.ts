@@ -10,6 +10,7 @@ export function* joinBulletin(): any {
   const socket = yield call(requestAuthorization);
   const peerConnection = new RTCPeerConnection();
   peerConnection.addTransceiver('video', { direction: 'recvonly' });
+  peerConnection.addTransceiver('audio', { direction: 'recvonly' });
   const negotationSub = yield call(createNegotiationChannel, peerConnection);
   const streamSub = yield call(createStreamAddedChannel, peerConnection);
   const offerSub = yield call(createStreamOfferChannel, socket, peerConnection);

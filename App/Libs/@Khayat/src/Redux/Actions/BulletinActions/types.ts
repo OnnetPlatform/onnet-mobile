@@ -11,7 +11,7 @@ export type BulletinActionTypes = {
 
 export type BulletinCreatorsTypes = {
   sendOffer(offer: any): any;
-  setRemoteStream: (remoteStream: MediaStream) => AnyAction;
+  setRemoteStream: (remoteStream: MediaStream | null) => AnyAction;
   joinBulletin: () => AnyAction;
   stream: () => AnyAction;
   sendViewerOffer: (data: any) => AnyAction;
