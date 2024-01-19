@@ -4,8 +4,6 @@ export default StyleSheet.create({
   avatar: {
     width: 32,
     height: 32,
-    borderRadius: 4,
-    marginRight: 8,
     overflow: 'hidden',
     backgroundColor: '#898989',
   },

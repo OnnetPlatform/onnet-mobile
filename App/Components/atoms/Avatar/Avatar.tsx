@@ -1,6 +1,10 @@
-import { useColors } from '@Theme';
-import React, { useMemo } from 'react';
-import { Image, View } from 'react-native';
+import { cyan } from '@Theme/Colors';
+import React, { useEffect } from 'react';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import styles from './Avatar.styles';
 
@@ -8,22 +12,26 @@ export const Avatar: React.FC<{ avatar: string; isActive: boolean }> = ({
   avatar,
   isActive,
 }) => {
-  const colors = useColors();
-  const indicator = useMemo(
+  const borderWidth = useSharedValue(0);
+
+  const animatedImageStyle = useAnimatedStyle(
     () => ({
-      borderColor: isActive ? 'green' : colors.text,
-      backgroundColor: isActive ? 'green' : colors.background,
+      borderColor: cyan,
+      borderWidth: borderWidth.value,
+      borderRadius: 14,
+      overflow: 'hidden',
     }),
-    [isActive]
+    [borderWidth, isActive]
   );
+
+  useEffect(() => {
+    borderWidth.value = withTiming(isActive ? 2 : 0);
+  }, [isActive]);
+
   return (
-    <View>
-      <Image source={{ uri: avatar }} style={styles.avatar} />
-      <View
-        style={[styles.indicatorWrapper, { borderColor: colors.background }]}>
-        <View style={[styles.indicator, indicator]} />
-      </View>
-    </View>
+    <Animated.View style={animatedImageStyle}>
+      <Animated.Image source={{ uri: avatar }} style={styles.avatar} />
+    </Animated.View>
   );
 };
 
