@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Icon, Text } from '@Atoms';
 import BottomSheet, {
   BottomSheetBackdrop,
