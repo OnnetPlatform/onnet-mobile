@@ -2,7 +2,7 @@ import { Separator, Text } from '@Atoms';
 import { Button } from '@Molecules';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect } from 'react';
-import { Modal, View } from 'react-native';
+import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   Easing,
@@ -22,7 +22,8 @@ export const Alert: React.FC = () => {
   const colors = useColors();
   const styles = AlertStyles(colors);
   const angleValue = useSharedValue(0);
-  const { visible, title, subtitle, onPress, customView } = useAlert();
+  const { visible, title, subtitle, onPress, customView, configureAlert } =
+    useAlert();
 
   const animatedAngle = useAnimatedProps(
     () => ({
@@ -69,6 +70,10 @@ export const Alert: React.FC = () => {
       <Animated.View
         entering={FadeInDown.duration(1000)}
         style={styles.container}>
+        <Pressable
+          style={StyleSheet.absoluteFill}
+          onPressIn={() => configureAlert({ visible: false })}
+        />
         <AnimatedLinearGradient
           animatedProps={animatedAngle}
           end={{ x: 0, y: 0.6 }}

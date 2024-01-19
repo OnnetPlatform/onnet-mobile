@@ -21,5 +21,6 @@ export default (colors: ThemeColors) =>
       borderRadius: 9,
       overflow: 'hidden',
       width: '80%',
+      zIndex: 1000,
     },
   });
