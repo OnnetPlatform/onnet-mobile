@@ -9,6 +9,7 @@ export const withColors = (colors: ThemeColors, insets: EdgeInsets) =>
       paddingTop: insets.top + 8,
       borderBottomColor: colors.secondaryBackground,
       borderBottomWidth: 0.25,
+      backgroundColor: colors.background,
     },
     row: {
       flexDirection: 'row',
