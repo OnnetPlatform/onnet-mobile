@@ -1,12 +1,11 @@
-// @ts-nocheck
-import User from 'src/Database/Models/User';
 import realmConfig from '../../../Database/config';
 import { ModelEnums, UserChat } from '../../../Database/Models/types';
 import Realm from 'realm';
+import User from '../../Models/User';
 
 export const realm = new Realm(realmConfig);
 
-export function createUser(user: UserChat): User {
+export function createUser(user: UserChat): any {
   return realm.write(() => {
     return realm.create(ModelEnums.USER, { ...user, status: '' });
   });
@@ -27,7 +26,6 @@ export function updateUser(
     user[key] = value;
   });
 }
-export function deleteUser() {}
 export function reset() {
   realm.objects<User>(ModelEnums.USER).map((model) => {
     realm.write(() => {
