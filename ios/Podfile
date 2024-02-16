@@ -27,8 +27,6 @@ end
 
 target 'Onnet' do
   config = use_native_modules!
-  
-  pod 'Socket.IO-Client-Swift', '~> 15.2.0'
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -53,8 +51,5 @@ target 'Onnet' do
       config[:reactNativePath],
       :mac_catalyst_enabled => false
     )
-    installer.pods_project.build_configurations.each do |config|
-      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
-    end
   end
 end

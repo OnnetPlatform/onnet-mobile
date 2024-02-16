@@ -67,6 +67,7 @@ export function* connectToServer(): any {
 
     // chat actions
 
+    // @ts-ignore
     yield fork(sendMessage, socket);
     yield fork(sendTyping, socket);
     yield fork(sendTypingStopped, socket);

@@ -5,5 +5,6 @@ import client from '.';
 type Prop = { children: ReactElement };
 
 export const OnnetApolloProvider: React.FC<Prop> = ({ children }) => {
+  // @ts-ignore
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };

@@ -1,4 +1,4 @@
-import { SkiaMutableValue, SkiaValue } from '@shopify/react-native-skia';
+import { SharedValue } from 'react-native-reanimated';
 import { createNoise2D } from 'simplex-noise';
 const noiseStep = 0.0001;
 const noise = createNoise2D();
@@ -26,13 +26,23 @@ export const createPoints = () => {
 
   return newPoints;
 };
-export function map(n: number, start1: number, end1: number, start2: number, end2: number) {
+export function map(
+  n: number,
+  start1: number,
+  end1: number,
+  start2: number,
+  end2: number
+) {
   return ((n - start1) / (end1 - start1)) * (end2 - start2) + start2;
 }
 
-export const computeNoise = (noiseValue: SkiaMutableValue<number>, end: number, step?: number) => {
-  noiseValue.current += step !== undefined ? step / 2 : noiseStep / 2;
-  const hueNoise = noise(noiseValue.current, noiseValue.current);
+export const computeNoise = (
+  noiseValue: SharedValue<number>,
+  end: number,
+  step?: number
+) => {
+  noiseValue.value += step !== undefined ? step / 2 : noiseStep / 2;
+  const hueNoise = noise(noiseValue.value, noiseValue.value);
   const newValue = map(hueNoise, -1, 1, 0, end);
   return newValue;
 };

@@ -7,39 +7,39 @@ import {
   Group,
   Paint,
   Rect,
-  useClockValue,
-  useComputedValue,
-  useValue,
+  useClock,
+  useDerivedValueOnJS,
 } from '@shopify/react-native-skia';
 import React from 'react';
-import {StyleSheet, useWindowDimensions} from 'react-native';
-// @ts-ignore
-import {useColors} from '@Theme';
-import {computeNoise} from '../Gradient/utils';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import { useColors } from '@Theme';
+import { computeNoise } from '../Gradient/utils';
+import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
 export const Blob: React.FC = () => {
-  const clock = useClockValue();
+  const clock = useClock();
   const colors = useColors();
-  const {width, height} = useWindowDimensions();
-  const circle_2 = useValue(width);
-  const circle_radius_3 = useValue(50);
-  const circle_3 = useValue(height * 0.7);
+  const { width, height } = useWindowDimensions();
+  const circle_2 = useSharedValue(width);
+  const circle_radius_3 = useSharedValue(50);
+  const circle_3 = useSharedValue(height * 0.7);
 
-  const circleNoise2 = useComputedValue(
+  const circleNoise2 = useDerivedValueOnJS(
     () => computeNoise(circle_2, width, 0.002),
-    [clock],
+    [clock.value]
   );
-  const circleNoise3 = useComputedValue(
+  const circleNoise3 = useDerivedValueOnJS(
     () => computeNoise(circle_radius_3, 100, 0.001),
-    [clock],
+    [clock.value]
   );
-  const circleNoise4 = useComputedValue(
+  const circleNoise4 = useDerivedValueOnJS(
     () => computeNoise(circle_3, height, 0.001),
-    [clock],
+    [clock.value]
   );
+
   return (
     <Canvas style={StyleSheet.absoluteFillObject}>
-      <Rect width={width} height={height} color={colors.background}></Rect>
+      <Rect width={width} height={height} color={colors.background} />
       <Group
         layer={
           <Paint>

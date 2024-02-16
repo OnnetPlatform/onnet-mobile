@@ -1,9 +1,9 @@
 import React from 'react';
-import {GradientLayoutProps} from './types';
-import {Blob} from '@Skia/Blob/Blob';
-import {StatusBar} from 'react-native';
+import { GradientLayoutProps } from './types';
+import { Blob } from '@Skia/Blob/Blob';
+import { StatusBar } from 'react-native';
 
-const GradientLayout: React.FC<GradientLayoutProps> = ({children}) => {
+const GradientLayout: React.FC<GradientLayoutProps> = ({ children }) => {
   return (
     <>
       <StatusBar barStyle={'default'} />

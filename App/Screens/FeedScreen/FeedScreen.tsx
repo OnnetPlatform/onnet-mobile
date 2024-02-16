@@ -2,7 +2,6 @@ import { Separator, Text } from '@Atoms';
 import { LoadingOnnet } from '@Atoms/LoadingOnnet/LoadingOnnet';
 import { useBottomSheet } from '@Context/BottomSheet';
 import { useNavigation } from '@react-navigation/native';
-import { runSpring, useValue } from '@shopify/react-native-skia';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -13,7 +12,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+import { useSharedValue, withSpring } from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -30,24 +29,24 @@ export const FeedScreen: React.FC = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const scrollYOffset = useSharedValue<number>(0);
   const colors = useColors();
-  const pullDownValue = useValue(0);
+  const pullDownValue = useSharedValue(0);
   const styles = screenStyles(colors, insets);
   const { showBottomSheet } = useBottomSheet();
   const navigation = useNavigation();
   const onScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollYOffset.value = e.nativeEvent.contentOffset.y;
     if (e.nativeEvent.contentOffset.y < 0) {
-      pullDownValue.current = Math.min(e.nativeEvent.contentOffset.y / -190, 1);
+      pullDownValue.value = Math.min(e.nativeEvent.contentOffset.y / -190, 1);
     } else if (e.nativeEvent.contentOffset.y === 0) {
-      if (pullDownValue.current > 0) {
-        runSpring(pullDownValue, { to: 1 }, { damping: 10 });
+      if (pullDownValue.value > 0) {
+        pullDownValue.value = withSpring(1, { damping: 10 });
         setTimeout(() => {
-          runSpring(pullDownValue, { to: 0 }, { damping: 100 });
+          pullDownValue.value = withSpring(0, { damping: 100 });
         }, 500);
         getData();
       }
     } else {
-      pullDownValue.current = 0;
+      pullDownValue.value = 0;
     }
   }, []);
 
@@ -56,6 +55,7 @@ export const FeedScreen: React.FC = () => {
   }, []);
 
   const onItemPressed = useCallback((item: any) => {
+    // @ts-ignore
     navigation.navigate('LiveAnnouncement');
     showBottomSheet({
       title: item.title,
