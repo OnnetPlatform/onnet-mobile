@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/react-native';
-import { LogBox } from 'react-native';
+import {LogBox} from 'react-native';
 import Config from 'react-native-config';
 
-import { MainNavigator } from './App/Navigation';
+import {MainNavigator} from './App/Navigation';
 
 LogBox.ignoreAllLogs();
 console.log(Config.SENTRY_DSN);

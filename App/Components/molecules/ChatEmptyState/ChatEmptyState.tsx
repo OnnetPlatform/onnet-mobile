@@ -38,19 +38,19 @@ export const ChatEmptyState: React.FC<{ username: string }> = ({
       <View style={withcolors.body}>
         <Card position={{ x: 32, y: 90 }} />
         <Card position={{ x: -32, y: 20 }} />
-        <Separator size={'md'} />
-        <Separator size={'md'} />
-        <Separator size={'md'} />
-        <Text weight="bold" fontSize={22} textAlign="center">
-          It's nice to chat with someone
-        </Text>
-        <Separator />
-        <Text fontSize={16} textAlign="center" weight="light">
-          This conversation is just between you and{' '}
-          <Text color={colors.cyan}>{username.trim()}</Text>. Take a look at
-          their profile to learn more about them.
-        </Text>
       </View>
+      <Separator size={'md'} />
+      <Separator size={'md'} />
+      <Separator size={'md'} />
+      <Text weight="bold" fontSize={22} textAlign="center">
+        It's nice to chat with someone
+      </Text>
+      <Separator />
+      <Text fontSize={16} textAlign="center" weight="light">
+        This conversation is just between you and{' '}
+        <Text color={colors.cyan}>{username.trim()}</Text>. Take a look at their
+        profile to learn more about them.
+      </Text>
     </View>
   );
 };
@@ -59,15 +59,15 @@ const styles = (colors: ThemeColors) =>
   StyleSheet.create({
     screen: {
       minHeight: '100%',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
+      paddingTop: 44,
+      paddingHorizontal: 44,
     },
     body: {
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 22,
       width: '100%',
-      paddingBottom: 220,
     },
     card: {
       borderRadius: 32,

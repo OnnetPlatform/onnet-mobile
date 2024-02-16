@@ -3,9 +3,8 @@ import {
   Canvas,
   Rect,
   SweepGradient,
-  useClockValue,
-  useComputedValue,
-  useValue,
+  useClock,
+  useDerivedValueOnJS,
   vec,
 } from '@shopify/react-native-skia';
 import { useColors } from '@Theme';
@@ -14,15 +13,16 @@ import { Dimensions, StyleSheet } from 'react-native';
 
 // @ts-ignore
 import { computeNoise } from './utils';
+import { useSharedValue } from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('window');
 
 export const Gradient: React.FC = () => {
-  const clock = useClockValue();
-  const hueNoiseOffset = useValue(0);
+  const clock = useClock();
+  const hueNoiseOffset = useSharedValue(0);
   const colors = useColors();
 
-  const colorNoise = useComputedValue(
+  const colorNoise = useDerivedValueOnJS(
     () => computeNoise(hueNoiseOffset, 360),
     [clock]
   );

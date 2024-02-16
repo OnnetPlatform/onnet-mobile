@@ -8,23 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* OnnetTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* OnnetTests.m */; };
-		069EF7B1D88D4EEC8F3A1E46 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55D9F2575FF74C34B8040C9E /* Inter-Bold.ttf */; };
+		0C80B921A6F3F58F76C31292 /* libPods-Onnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Onnet.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1E28301A2B26639000C372BA /* BulletinFrameProcessorPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E2830192B26639000C372BA /* BulletinFrameProcessorPlugin.swift */; };
-		1E28301C2B26640D00C372BA /* BulletinFrameProcessorPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E28301B2B26640D00C372BA /* BulletinFrameProcessorPlugin.m */; };
-		2B400D5093001D2ED83FE775 /* libPods-Onnet-OnnetTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296073F06AF184B2BFE47179 /* libPods-Onnet-OnnetTests.a */; };
-		37921FE77B3D4BA3A25A6E98 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61D5B3670A7C42E1B00D8F82 /* Inter-ExtraLight.ttf */; };
-		5FF86BCA3F974A39984BB78B /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5785A8D69A9944D6B8EBEA10 /* Inter-Medium.ttf */; };
-		6CE501F209943175E9B922BF /* libPods-Onnet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5F55F61D2E09E4A9580D9AE /* libPods-Onnet.a */; };
-		73EFD835E26A429F9928D598 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A176CA972754F729C47C941 /* Inter-SemiBold.ttf */; };
+		7699B88040F8A987B510C191 /* libPods-Onnet-OnnetTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Onnet-OnnetTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		849884089CA8497A8571A619 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7957988E9F4103A9C5F4F8 /* Inter-Thin.ttf */; };
-		C97D5D6B9F204F96ACC6D18A /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 64010F8305EA4263A3BB82B0 /* Inter-Regular.ttf */; };
-		D3D9D4C430B54098A0267AA3 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6650501338A9462DAC86BA21 /* Inter-Light.ttf */; };
-		E107036894C74F869438FF86 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B43F555FF734D4F9504D8EB /* Inter-ExtraBold.ttf */; };
-		EAD3DC830F7540D981F80ECA /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7BC38B6409744D4BBFBCD3BB /* Inter-Black.ttf */; };
+		89B190E050454F9E8123BBB2 /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A9C4C13BA6F240CC9A137C57 /* Inter-Black.ttf */; };
+		B4DCB709D445496CA8268D72 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C3D6B924614493BBA923809 /* Inter-Bold.ttf */; };
+		5B62F2EC5F8E4493A188AF02 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 374255F47E0C468693347459 /* Inter-ExtraBold.ttf */; };
+		B692DEFC8C0D471184F2191B /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1981E8D06C654D99AD966DCD /* Inter-ExtraLight.ttf */; };
+		825E5821DE954722A081B726 /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D0903D206724F8791CAD6B7 /* Inter-Light.ttf */; };
+		E0550046F9AD47D08F920C45 /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0963F8F74440457586A34DA3 /* Inter-Medium.ttf */; };
+		0AF43A75345A49BF9CB7C607 /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB2C0E7BBFC8428DAB7F1447 /* Inter-Regular.ttf */; };
+		9D4674BDEA5A4D94A649A5BF /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55D922A510F54F0CB35DA039 /* Inter-SemiBold.ttf */; };
+		55903DFDE1F543E1A3DF4182 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F933F7DCBA14A44A552168E /* Inter-Thin.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,40 +31,37 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = onnet;
+			remoteInfo = Onnet;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0086F73B47CC24B33D8BB936 /* Pods-Onnet-OnnetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.release.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.release.xcconfig"; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* OnnetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnnetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* OnnetTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OnnetTests.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Onnet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Onnet.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = onnet/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = onnet/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = onnet/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = onnet/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = onnet/main.m; sourceTree = "<group>"; };
-		1B43F555FF734D4F9504D8EB /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
-		1E2830182B26639000C372BA /* Onnet-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Onnet-Bridging-Header.h"; sourceTree = "<group>"; };
-		1E2830192B26639000C372BA /* BulletinFrameProcessorPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletinFrameProcessorPlugin.swift; sourceTree = "<group>"; };
-		1E28301B2B26640D00C372BA /* BulletinFrameProcessorPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BulletinFrameProcessorPlugin.m; sourceTree = "<group>"; };
-		296073F06AF184B2BFE47179 /* libPods-Onnet-OnnetTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet-OnnetTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		55D9F2575FF74C34B8040C9E /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		5785A8D69A9944D6B8EBEA10 /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
-		61D5B3670A7C42E1B00D8F82 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
-		64010F8305EA4263A3BB82B0 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
-		6650501338A9462DAC86BA21 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
-		7BC38B6409744D4BBFBCD3BB /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; };
-		7D7957988E9F4103A9C5F4F8 /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = onnet/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8A176CA972754F729C47C941 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
-		9CC0CB66452674ED5B04D505 /* Pods-Onnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.debug.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.debug.xcconfig"; sourceTree = "<group>"; };
-		A5F55F61D2E09E4A9580D9AE /* libPods-Onnet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9F90A2DEAACB39A0B14225A /* Pods-Onnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.release.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.release.xcconfig"; sourceTree = "<group>"; };
-		E17C3ACB6AD60F06DD93D2B9 /* Pods-Onnet-OnnetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.debug.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Onnet/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Onnet/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Onnet/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Onnet/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Onnet/main.m; sourceTree = "<group>"; };
+		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Onnet-OnnetTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet-OnnetTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3B4392A12AC88292D35C810B /* Pods-Onnet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.debug.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.debug.xcconfig"; sourceTree = "<group>"; };
+		5709B34CF0A7D63546082F79 /* Pods-Onnet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet.release.xcconfig"; path = "Target Support Files/Pods-Onnet/Pods-Onnet.release.xcconfig"; sourceTree = "<group>"; };
+		5B7EB9410499542E8C5724F5 /* Pods-Onnet-OnnetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.debug.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5DCACB8F33CDC322A6C60F78 /* libPods-Onnet.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Onnet.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Onnet/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89C6BE57DB24E9ADA2F236DE /* Pods-Onnet-OnnetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Onnet-OnnetTests.release.xcconfig"; path = "Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		A9C4C13BA6F240CC9A137C57 /* Inter-Black.ttf */ = {isa = PBXFileReference; name = "Inter-Black.ttf"; path = "../assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		7C3D6B924614493BBA923809 /* Inter-Bold.ttf */ = {isa = PBXFileReference; name = "Inter-Bold.ttf"; path = "../assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		374255F47E0C468693347459 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Inter-ExtraBold.ttf"; path = "../assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1981E8D06C654D99AD966DCD /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Inter-ExtraLight.ttf"; path = "../assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		3D0903D206724F8791CAD6B7 /* Inter-Light.ttf */ = {isa = PBXFileReference; name = "Inter-Light.ttf"; path = "../assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		0963F8F74440457586A34DA3 /* Inter-Medium.ttf */ = {isa = PBXFileReference; name = "Inter-Medium.ttf"; path = "../assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EB2C0E7BBFC8428DAB7F1447 /* Inter-Regular.ttf */ = {isa = PBXFileReference; name = "Inter-Regular.ttf"; path = "../assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		55D922A510F54F0CB35DA039 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBold.ttf"; path = "../assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		9F933F7DCBA14A44A552168E /* Inter-Thin.ttf */ = {isa = PBXFileReference; name = "Inter-Thin.ttf"; path = "../assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B400D5093001D2ED83FE775 /* libPods-Onnet-OnnetTests.a in Frameworks */,
+				7699B88040F8A987B510C191 /* libPods-Onnet-OnnetTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CE501F209943175E9B922BF /* libPods-Onnet.a in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* libPods-Onnet.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,22 +114,12 @@
 			name = Onnet;
 			sourceTree = "<group>";
 		};
-		1E2830172B2662BD00C372BA /* BulletinProcessor */ = {
-			isa = PBXGroup;
-			children = (
-				1E2830192B26639000C372BA /* BulletinFrameProcessorPlugin.swift */,
-				1E2830182B26639000C372BA /* Onnet-Bridging-Header.h */,
-				1E28301B2B26640D00C372BA /* BulletinFrameProcessorPlugin.m */,
-			);
-			path = BulletinProcessor;
-			sourceTree = "<group>";
-		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				A5F55F61D2E09E4A9580D9AE /* libPods-Onnet.a */,
-				296073F06AF184B2BFE47179 /* libPods-Onnet-OnnetTests.a */,
+				5DCACB8F33CDC322A6C60F78 /* libPods-Onnet.a */,
+				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Onnet-OnnetTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,14 +134,13 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				1E2830172B2662BD00C372BA /* BulletinProcessor */,
 				13B07FAE1A68108700A75B9A /* Onnet */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* OnnetTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
-				C609DE8544FB43DAA48E3EA3 /* Resources */,
+				AFD2EC35AA9E433680C6653D /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -175,29 +159,30 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9CC0CB66452674ED5B04D505 /* Pods-Onnet.debug.xcconfig */,
-				B9F90A2DEAACB39A0B14225A /* Pods-Onnet.release.xcconfig */,
-				E17C3ACB6AD60F06DD93D2B9 /* Pods-Onnet-OnnetTests.debug.xcconfig */,
-				0086F73B47CC24B33D8BB936 /* Pods-Onnet-OnnetTests.release.xcconfig */,
+				3B4392A12AC88292D35C810B /* Pods-Onnet.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-Onnet.release.xcconfig */,
+				5B7EB9410499542E8C5724F5 /* Pods-Onnet-OnnetTests.debug.xcconfig */,
+				89C6BE57DB24E9ADA2F236DE /* Pods-Onnet-OnnetTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		C609DE8544FB43DAA48E3EA3 /* Resources */ = {
-			isa = PBXGroup;
+		AFD2EC35AA9E433680C6653D /* Resources */ = {
+			isa = "PBXGroup";
 			children = (
-				7BC38B6409744D4BBFBCD3BB /* Inter-Black.ttf */,
-				55D9F2575FF74C34B8040C9E /* Inter-Bold.ttf */,
-				1B43F555FF734D4F9504D8EB /* Inter-ExtraBold.ttf */,
-				61D5B3670A7C42E1B00D8F82 /* Inter-ExtraLight.ttf */,
-				6650501338A9462DAC86BA21 /* Inter-Light.ttf */,
-				5785A8D69A9944D6B8EBEA10 /* Inter-Medium.ttf */,
-				64010F8305EA4263A3BB82B0 /* Inter-Regular.ttf */,
-				8A176CA972754F729C47C941 /* Inter-SemiBold.ttf */,
-				7D7957988E9F4103A9C5F4F8 /* Inter-Thin.ttf */,
+				A9C4C13BA6F240CC9A137C57 /* Inter-Black.ttf */,
+				7C3D6B924614493BBA923809 /* Inter-Bold.ttf */,
+				374255F47E0C468693347459 /* Inter-ExtraBold.ttf */,
+				1981E8D06C654D99AD966DCD /* Inter-ExtraLight.ttf */,
+				3D0903D206724F8791CAD6B7 /* Inter-Light.ttf */,
+				0963F8F74440457586A34DA3 /* Inter-Medium.ttf */,
+				EB2C0E7BBFC8428DAB7F1447 /* Inter-Regular.ttf */,
+				55D922A510F54F0CB35DA039 /* Inter-SemiBold.ttf */,
+				9F933F7DCBA14A44A552168E /* Inter-Thin.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -206,12 +191,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "OnnetTests" */;
 			buildPhases = (
-				B7C882F37A7EFBAA8DC3A61C /* [CP] Check Pods Manifest.lock */,
+				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				A9693BACBBCE7E2C28F59E9D /* [CP] Embed Pods Frameworks */,
-				E9AD30EBDDBBA7F5BD962473 /* [CP] Copy Pods Resources */,
+				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
+				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -219,7 +204,7 @@
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
 			name = OnnetTests;
-			productName = onnetTests;
+			productName = OnnetTests;
 			productReference = 00E356EE1AD99517003FC87E /* OnnetTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -227,20 +212,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Onnet" */;
 			buildPhases = (
-				BC3AD4EC33C408BCA76DDAD2 /* [CP] Check Pods Manifest.lock */,
+				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				CC73A7DBE8126F57059D6266 /* [CP] Embed Pods Frameworks */,
-				AA69290492142D5A6A49695D /* [CP] Copy Pods Resources */,
+				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
+				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = Onnet;
-			productName = onnet;
+			productName = Onnet;
 			productReference = 13B07F961A680F5B00A75B9A /* Onnet.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -257,7 +242,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1500;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -294,15 +279,15 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				EAD3DC830F7540D981F80ECA /* Inter-Black.ttf in Resources */,
-				069EF7B1D88D4EEC8F3A1E46 /* Inter-Bold.ttf in Resources */,
-				E107036894C74F869438FF86 /* Inter-ExtraBold.ttf in Resources */,
-				37921FE77B3D4BA3A25A6E98 /* Inter-ExtraLight.ttf in Resources */,
-				D3D9D4C430B54098A0267AA3 /* Inter-Light.ttf in Resources */,
-				5FF86BCA3F974A39984BB78B /* Inter-Medium.ttf in Resources */,
-				C97D5D6B9F204F96ACC6D18A /* Inter-Regular.ttf in Resources */,
-				73EFD835E26A429F9928D598 /* Inter-SemiBold.ttf in Resources */,
-				849884089CA8497A8571A619 /* Inter-Thin.ttf in Resources */,
+				89B190E050454F9E8123BBB2 /* Inter-Black.ttf in Resources */,
+				B4DCB709D445496CA8268D72 /* Inter-Bold.ttf in Resources */,
+				5B62F2EC5F8E4493A188AF02 /* Inter-ExtraBold.ttf in Resources */,
+				B692DEFC8C0D471184F2191B /* Inter-ExtraLight.ttf in Resources */,
+				825E5821DE954722A081B726 /* Inter-Light.ttf in Resources */,
+				E0550046F9AD47D08F920C45 /* Inter-Medium.ttf in Resources */,
+				0AF43A75345A49BF9CB7C607 /* Inter-Regular.ttf in Resources */,
+				9D4674BDEA5A4D94A649A5BF /* Inter-SemiBold.ttf in Resources */,
+				55903DFDE1F543E1A3DF4182 /* Inter-Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,41 +310,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		A9693BACBBCE7E2C28F59E9D /* [CP] Embed Pods Frameworks */ = {
+		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AA69290492142D5A6A49695D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B7C882F37A7EFBAA8DC3A61C /* [CP] Check Pods Manifest.lock */ = {
+		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,7 +349,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BC3AD4EC33C408BCA76DDAD2 /* [CP] Check Pods Manifest.lock */ = {
+		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -403,24 +371,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CC73A7DBE8126F57059D6266 /* [CP] Embed Pods Frameworks */ = {
+		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet-OnnetTests/Pods-Onnet-OnnetTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E9AD30EBDDBBA7F5BD962473 /* [CP] Copy Pods Resources */ = {
+		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Onnet/Pods-Onnet-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -452,9 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E28301A2B26639000C372BA /* BulletinFrameProcessorPlugin.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				1E28301C2B26640D00C372BA /* BulletinFrameProcessorPlugin.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,15 +455,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E17C3ACB6AD60F06DD93D2B9 /* Pods-Onnet-OnnetTests.debug.xcconfig */;
+			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Onnet-OnnetTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = onnetTests/Info.plist;
+				INFOPLIST_FILE = OnnetTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -500,12 +482,11 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0086F73B47CC24B33D8BB936 /* Pods-Onnet-OnnetTests.release.xcconfig */;
+			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Onnet-OnnetTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = onnetTests/Info.plist;
+				INFOPLIST_FILE = OnnetTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -525,18 +506,13 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9CC0CB66452674ED5B04D505 /* Pods-Onnet.debug.xcconfig */;
+			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-Onnet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S57UCUNV9W;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/**",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = onnet/Info.plist;
+				INFOPLIST_FILE = Onnet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -548,9 +524,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.onnet;
 				PRODUCT_NAME = Onnet;
-				SWIFT_OBJC_BRIDGING_HEADER = "BulletinProcessor/Onnet-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -559,14 +533,12 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9F90A2DEAACB39A0B14225A /* Pods-Onnet.release.xcconfig */;
+			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-Onnet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S57UCUNV9W;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
-				INFOPLIST_FILE = onnet/Info.plist;
+				INFOPLIST_FILE = Onnet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -578,9 +550,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				"PRODUCT_BUNDLE_IDENTIFIER[sdk=iphoneos*]" = org.onnet;
 				PRODUCT_NAME = Onnet;
-				SWIFT_OBJC_BRIDGING_HEADER = "BulletinProcessor/Onnet-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -657,8 +627,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
+					" ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -729,8 +698,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
+					" ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;

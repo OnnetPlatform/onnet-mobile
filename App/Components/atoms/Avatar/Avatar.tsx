@@ -1,4 +1,3 @@
-import { cyan } from '@Theme/Colors';
 import React, { useEffect } from 'react';
 import Animated, {
   useAnimatedStyle,
@@ -7,16 +6,17 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import styles from './Avatar.styles';
+import { useColors } from '@Theme/index';
 
 export const Avatar: React.FC<{ avatar: string; isActive: boolean }> = ({
   avatar,
   isActive,
 }) => {
   const borderWidth = useSharedValue(0);
-
+  const colors = useColors();
   const animatedImageStyle = useAnimatedStyle(
     () => ({
-      borderColor: cyan,
+      borderColor: colors.text,
       borderWidth: borderWidth.value,
       borderRadius: 14,
       overflow: 'hidden',
