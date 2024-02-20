@@ -51,6 +51,8 @@ const BluredBackdrop = ({
   return (
     <AnimatedBlur
       blurAmount={0}
+      // @ts-ignore
+      blurRadius={12}
       style={containerStyle}
       animatedProps={animatedProps}
       onTouchStart={() => collapse()}

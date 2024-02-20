@@ -3,11 +3,15 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   tabbar: {
-    paddingVertical: 8,
     width: '100%',
     position: 'absolute',
     bottom: 0,
     height: BOTTOM_BAR_HEIGHT,
+    justifyContent: 'center',
+    paddingVertical: 16,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+    overflow: 'hidden',
   },
   container: {
     flexDirection: 'row',
@@ -17,6 +21,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+    height: '100%',
   },
   icon: {
     width: 24,

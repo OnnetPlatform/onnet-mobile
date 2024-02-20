@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
+import Texture from '@Skia/Texture/Texture';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -49,7 +50,9 @@ export const HomeChatScreen: React.FC = () => {
           </Pressable>
         </View>
       </View>
-      {isChatUpdating && <HeaderLoader style={{ position: 'relative' }} />}
+      {isChatUpdating ? (
+        <HeaderLoader style={{ position: 'relative' }} />
+      ) : null}
       <ChatUsersList />
     </SafeAreaView>
   );

@@ -13,22 +13,16 @@ import java.util.Collections;
 import java.util.List;
 
 public class BulletinProcessorPluginPackage implements ReactPackage {
-  static {
-    FrameProcessorPluginRegistry.addFrameProcessorPlugin(
-            "bulletinProcessor",
-            options -> new BulletinProcessorPlugin(options)
-    );
-  }
 
-  @NonNull
-  @Override
-  public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
-    return Collections.emptyList();
-  }
+    @NonNull
+    @Override
+    public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
+        return Collections.emptyList();
+    }
 
-  @NonNull
-  @Override
-  public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
-    return Collections.emptyList();
-  }
+    @NonNull
+    @Override
+    public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
+        return Collections.emptyList();
+    }
 }

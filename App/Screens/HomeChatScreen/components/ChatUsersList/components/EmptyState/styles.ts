@@ -9,7 +9,6 @@ export default (colors: ThemeColors) =>
     wrapper: {
       justifyContent: 'center',
       alignItems: 'center',
-      width,
       height,
       top: -120,
       zIndex: -1,

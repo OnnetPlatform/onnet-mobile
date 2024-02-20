@@ -3,28 +3,42 @@ import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { NavigationState } from '@react-navigation/native';
-import { useColors } from '@Theme';
+import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme';
 import React from 'react';
-import { Pressable, SafeAreaView, View, ViewStyle } from 'react-native';
+import {
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  ViewStyle,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, {
-  FadeIn,
-  FadeOut,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+
 import { useSelector } from 'react-redux';
 
 import styles from './TabBar.styles';
 import useTabs from './Tabs';
+import {
+  Blend,
+  Canvas,
+  Fill,
+  LinearToSRGBGamma,
+  RadialGradient,
+  Rect,
+  Turbulence,
+  vec,
+  LinearGradient as SKiaLG,
+} from '@shopify/react-native-skia';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
     const { state } = props;
+    const { width } = useWindowDimensions();
     const colors = useColors();
     const { isConnected } = useSelector(MessagingSelector);
-    const background: ViewStyle = {
-      backgroundColor: colors.background,
-    };
+    const offset = width / 5;
+
     return (
       <>
         {isConnected ? null : (
@@ -34,7 +48,20 @@ const TabBar = React.memo(
           </View>
         )}
 
-        <View style={[styles.tabbar, background]}>
+        <View style={[styles.tabbar]}>
+          <Canvas style={[StyleSheet.absoluteFillObject]}>
+            <Rect width={width} height={BOTTOM_BAR_HEIGHT}>
+              <Blend mode="difference">
+                <SKiaLG
+                  start={vec(0, 0)}
+                  end={vec((state.index + 1) * offset, 0)}
+                  colors={[colors.background]}
+                />
+                <Turbulence freqX={1} freqY={1} octaves={4} />
+              </Blend>
+            </Rect>
+            <Fill color={colors.blur} />
+          </Canvas>
           <SafeAreaView style={styles.container}>
             {state.routes.map((route, index) => (
               // @ts-ignore
@@ -77,13 +104,6 @@ const Tab = React.memo<
         target: route.key,
       });
 
-    const animatedStyle = useAnimatedStyle(
-      () => ({
-        display: isFocused ? 'none' : 'flex',
-      }),
-      [isFocused]
-    );
-
     const badge = () => {
       if (index === 3) {
         return (
@@ -114,20 +134,10 @@ const Tab = React.memo<
           </MaskedView>
         ) : (
           <Icon
-            style={{ width: 16, height: 16 }}
+            style={{ width: 24, height: 24 }}
             name={icon + (isFocused ? '' : '-outline')}
+            // fill={colors.background}
           />
-        )}
-
-        {isFocused ? null : (
-          <Animated.View
-            entering={FadeIn.duration(500)}
-            exiting={FadeOut.duration(100)}
-            style={animatedStyle}>
-            <Text fontSize={10} weight={'regular'} style={styles.label}>
-              {tabLabel}
-            </Text>
-          </Animated.View>
         )}
       </Pressable>
     );

@@ -1,8 +1,9 @@
 import PageView from '@HOCs/PageView';
 import { BulletinCreators } from '@Khayat/Redux/Actions/BulletinActions';
 import { BulletinSelector } from '@Khayat/Redux/Selectors/BulletinSelector';
+import { TVNoise } from '@Skia/TVNoise';
 import React, { useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import { RTCView } from 'react-native-webrtc';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,11 +11,26 @@ import { useDispatch, useSelector } from 'react-redux';
 export const LiveAnnouncement: React.FC = () => {
   const { remoteStream } = useSelector(BulletinSelector);
   const dispatch = useDispatch();
-  const hide = useSharedValue(1);
+  const hide = useSharedValue(0);
+
   useEffect(() => {
     dispatch(BulletinCreators.joinBulletin());
   }, []);
 
+  useEffect(() => {
+    hide.value = remoteStream ? 1 : 0;
+    if (remoteStream) {
+      remoteStream.addEventListener('removetrack', () => {
+        dispatch(BulletinCreators.setRemoteStream(null));
+      });
+    }
+  }, [remoteStream]);
+
+  useEffect(() => {
+    return () => {
+      // dispatch(BulletinCreators.setRemoteStream(null));
+    };
+  }, []);
   return (
     <PageView
       title={'Bulletin Name'}
@@ -22,7 +38,9 @@ export const LiveAnnouncement: React.FC = () => {
       isGradientEnabled={true}
       hide={hide}
       edges={['left', 'right']}>
-      {remoteStream ? (
+      {!remoteStream ? (
+        <TVNoise />
+      ) : (
         <Pressable
           onPressIn={() => {
             hide.value = hide.value === 1 ? 0 : 1;
@@ -34,8 +52,6 @@ export const LiveAnnouncement: React.FC = () => {
             mirror
           />
         </Pressable>
-      ) : (
-        <View />
       )}
     </PageView>
   );

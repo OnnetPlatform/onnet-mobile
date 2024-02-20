@@ -4,24 +4,17 @@ export default StyleSheet.create({
   avatar: {
     width: 32,
     height: 32,
+    borderRadius: 14,
+    borderWidth: 1,
     overflow: 'hidden',
-    backgroundColor: '#898989',
   },
-  indicatorWrapper: {
-    width: 15,
-    height: 15,
-    borderRadius: 8,
-    position: 'absolute',
-    borderWidth: 8,
-    right: 4,
-    bottom: -4,
-    justifyContent: 'center',
-  },
-  indicator: {
-    width: 9,
-    height: 9,
-    borderRadius: 6,
-    borderWidth: 2,
-    alignSelf: 'center',
+  shadow: {
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    borderRadius: 14,
   },
 });

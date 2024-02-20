@@ -65,6 +65,7 @@ export function* onConnectedUsers(
 ): Generator<TakeEffect, any, UserChat[]> {
   while (true) {
     const users = yield take(channel);
+    console.log(users);
     users.map((user) => {
       updateUserStatus(user, 'isActive', true);
       updateUserStatus(user, 'avatar', user.avatar);

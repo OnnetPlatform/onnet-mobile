@@ -3,6 +3,7 @@ import Icon from '@Atoms/Icon';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
 import { faker } from '@faker-js/faker';
+import Texture from '@Skia/Texture/Texture';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
 import React from 'react';
@@ -41,10 +42,12 @@ export const FeedItem: React.FC<any> = ({ item }) => {
             </Text>
           </View>
         </View>
+
         <View
           style={{
             padding: 16,
           }}>
+          <Texture />
           <Text fontSize={22} numberOfLines={2} weight="bold">
             {item.title}
           </Text>
@@ -89,10 +92,12 @@ export const FeedItem: React.FC<any> = ({ item }) => {
         borderRadius: 16,
         overflow: 'hidden',
       }}>
+      <Texture />
+
       <View
         style={{
           padding: 16,
-          backgroundColor: colors.blur,
+          backgroundColor: colors.secondaryBackground,
         }}>
         <Text>
           <Text weight="bold">
@@ -141,7 +146,6 @@ export const FeedItem: React.FC<any> = ({ item }) => {
         {item.__typename}
       </Text>
       <Separator size={'md'} />
-
       <View
         style={{
           backgroundColor: colors.blur,

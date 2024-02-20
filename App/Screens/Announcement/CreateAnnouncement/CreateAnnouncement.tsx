@@ -44,6 +44,7 @@ export const CreateAnnouncement: React.FC = () => {
         title: 'Got it',
         color: colors.turquoise,
         textColor: colors.black,
+        variant: 'OUTLINED',
       },
     });
     setRecord((value) => !value);
@@ -98,6 +99,7 @@ export const CreateAnnouncement: React.FC = () => {
                   color={colors.turquoise}
                   title={'Start now'}
                   style={styles.flex}
+                  textColor={colors.background}
                   // @ts-ignore
                   onPress={() => navigation.navigate('MediaRecorder')}
                 />

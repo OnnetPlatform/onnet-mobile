@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
+import Texture from '@Skia/Texture/Texture';
 
 export const ChatUser: React.FC<UserChat> = ({
   name,
@@ -34,7 +35,7 @@ export const ChatUser: React.FC<UserChat> = ({
         <Avatar {...{ avatar, isActive }} />
         <Separator horizontal />
         <View>
-          <Text fontSize={16}>
+          <Text weight="bold" fontSize={16}>
             {name.trim()}
             {id === user_id ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
