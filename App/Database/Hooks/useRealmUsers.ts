@@ -9,14 +9,12 @@ export const useRealmUsers = () => {
   const deleteUser = (user: User) => realm.write(() => realm.delete(user));
   const createUser = () => {};
   const updateUser = () => {};
-  const getUser = (user: Partial<UserChat>) => {
-    const localUser = users.find((local) => local.user_id === user.user_id);
-    return localUser;
-  };
+  const getUser = (user: Partial<UserChat>) =>
+    users.find((local) => local._id === user._id);
 
   return {
     users: users
-      .sorted('name')
+      .sorted('first_name')
       .sorted('isActive', true)
       .sorted('unreadCount', true),
     deleteUser,

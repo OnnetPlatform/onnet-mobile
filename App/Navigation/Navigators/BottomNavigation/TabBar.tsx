@@ -107,9 +107,9 @@ const Tab = React.memo<
     const badge = () => {
       if (index === 3) {
         return (
-          <View style={styles.badge}>
-            <Text weight="bold" color="white" fontSize={10}>
-              {'2'}
+          <View style={[styles.badge, { backgroundColor: colors.text }]}>
+            <Text weight="bold" color={colors.background} fontSize={10}>
+              2
             </Text>
           </View>
         );

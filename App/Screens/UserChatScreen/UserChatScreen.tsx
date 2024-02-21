@@ -6,7 +6,13 @@ import ChatEmptyState from '@Molecules/ChatEmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, SectionList, View } from 'react-native';
+import {
+  ListRenderItem,
+  Pressable,
+  SectionList,
+  SectionListRenderItem,
+  View,
+} from 'react-native';
 import Animated, {
   useAnimatedKeyboard,
   useAnimatedStyle,
@@ -25,9 +31,10 @@ import { Icon, Separator, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
 import { useKeyboard } from '../../Hooks/useKeyboard';
-import { MessageInput, MessageItem } from './components';
+import { MessageItem } from './components';
 import { FormattedMessages } from './components/MessageItem/utils';
 import styles, { contentStyle } from './UserChatScreen.styles';
+import MessageInputProvider from '../../Provider/MessageInputProvider';
 
 const getItemLayout = sectionListGetItemLayout({
   getItemHeight: () => 50,
@@ -48,23 +55,11 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const { height, state } = useAnimatedKeyboard();
   const ref = useRef<SectionList>();
   const sheetInputHeight = useSharedValue<number>(0);
-  const [attachedImage, setAttachedImage] = useState<
-    UploadedImage | undefined
-  >();
+
   const dispatch = useDispatch();
   let typingSent = useRef<boolean>(false);
   const { isConnected } = useSelector(MessagingSelector);
   const { isOpen } = useKeyboard();
-  const onSend = useCallback(() => {
-    dispatch(
-      MessagingCreators.sendMessage({
-        textMessage: message,
-        id: user.user_id,
-      })
-    );
-    setMessage('');
-    setAttachedImage(undefined);
-  }, [message]);
 
   const sendTypingEvent = () => {
     typingSent.current = true;
@@ -77,7 +72,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   };
 
   const ListEmptyComponent = useCallback(() => {
-    return <ChatEmptyState username={user.name} />;
+    return <ChatEmptyState username={user.first_name} />;
   }, []);
 
   useEffect(() => {
@@ -120,6 +115,21 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     };
   }, [height.value, state.value]);
 
+  const renderMessages: SectionListRenderItem<FormattedMessages> = ({
+    item,
+    index,
+  }) => {
+    return (
+      <Text key={index} style={{ marginLeft: 12, paddingRight: 22 }}>
+        {item as any}
+      </Text>
+    );
+  };
+
+  const renderSectionHeader = useCallback((item: any) => {
+    return <MessageItem index={Math.random()} item={item.section} />;
+  }, []);
+
   return (
     <SafeAreaView style={withColors.page} edges={['bottom', 'left', 'right']}>
       <View style={withColors.header}>
@@ -135,7 +145,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           <Avatar avatar={user.avatar} isActive={user.isActive} />
           <Separator horizontal />
           <Text weight="bold" fontSize={16}>
-            {user.name}
+            {user.first_name} {user.last_name}
           </Text>
         </Pressable>
       </View>
@@ -143,8 +153,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
       <AnimatedSectionList
         // @ts-ignore
         ref={ref}
-        ItemSeparatorComponent={Separator}
-        // @ts-ignore
         sections={msgs}
         // @ts-ignore
         getItemLayout={getItemLayout}
@@ -154,29 +162,11 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         stickySectionHeadersEnabled={true}
         style={animatedStyle}
         ListEmptyComponent={ListEmptyComponent}
-        SectionSeparatorComponent={Separator}
-        renderSectionHeader={(item) => {
-          // @ts-ignore
-          return <MessageItem index={Math.random()} item={item.section} />;
-        }}
-        renderItem={({ item, index }) => {
-          return (
-            <Text key={index} style={{ marginLeft: 48, paddingRight: 22 }}>
-              {item as any}
-            </Text>
-          );
-        }}
+        renderSectionHeader={renderSectionHeader}
+        // @ts-ignore
+        renderItem={renderMessages}
       />
-      <MessageInput
-        sheetInputHeight={sheetInputHeight}
-        onSend={onSend}
-        value={message}
-        onChangeText={setMessage}
-        user={user}
-        onAttachedImage={setAttachedImage}
-        attachedImage={attachedImage}
-        onEmojiPressed={(emoji) => setMessage((msg) => msg + emoji.emoji)}
-      />
+      <MessageInputProvider user={user} />
     </SafeAreaView>
   );
 };

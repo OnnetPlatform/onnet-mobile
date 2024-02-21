@@ -1,13 +1,11 @@
 import Realm from 'realm';
 
 class User extends Realm.Object<User> {
-  name!: string;
+  fi!: string;
   avatar!: string;
   isActive!: boolean;
   unreadCount!: number;
-  id!: string;
   status: 'TYPING' | '' = '';
-  user_id!: string;
   static schema = {
     name: 'User',
     properties: {

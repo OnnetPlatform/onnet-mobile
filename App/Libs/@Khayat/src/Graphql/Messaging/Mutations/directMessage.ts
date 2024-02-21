@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 const directMessageMutation = gql`
-  mutation DirectMessageMutation($input: DirectMessageInput!) {
+  mutation DirectMessage($input: DirectMessageInput!) {
     directMessage(directMessageInput: $input) {
       id
       textMessage

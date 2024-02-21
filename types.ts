@@ -1,3 +1,4 @@
+declare type Optional<T> = T | undefined;
 export type UserChat = {
   name: string;
   avatar: string;

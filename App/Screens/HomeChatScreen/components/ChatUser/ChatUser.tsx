@@ -11,18 +11,18 @@ import { useSelector } from 'react-redux';
 
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
-import Texture from '@Skia/Texture/Texture';
 
 export const ChatUser: React.FC<UserChat> = ({
-  name,
+  first_name,
   avatar,
   isActive = false,
   unreadCount,
-  user_id,
+  _id,
 }) => {
   const navigation = useNavigation();
   const { getUser } = useRealmUsers();
-  const localUser = getUser({ user_id });
+  const localUser = getUser({ _id });
+  console.log('localUser', localUser, _id);
   const colors = useColors();
   const { id } = useSelector(AuthSelector);
   return (
@@ -36,8 +36,8 @@ export const ChatUser: React.FC<UserChat> = ({
         <Separator horizontal />
         <View>
           <Text weight="bold" fontSize={16}>
-            {name.trim()}
-            {id === user_id ? (
+            {first_name}
+            {id === _id ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
                 {' You'}
               </Text>

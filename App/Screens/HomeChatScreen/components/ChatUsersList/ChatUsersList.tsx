@@ -6,13 +6,10 @@ import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import ChatUser from '../ChatUser/ChatUser';
 import EmptyState from './components/EmptyState';
-import { useColors } from '@Theme/index';
-import Texture from '@Skia/Texture/Texture';
 
 export const ChatUsersList: React.FC = () => {
   const { users } = useRealmUsers();
-  const sortedUsersAphabet = users.sorted('name');
-  const colors = useColors();
+  const sortedUsersAphabet = users.sorted('first_name');
   const { width } = useWindowDimensions();
   const activeUsers = Array.from(
     sortedUsersAphabet.sorted('isActive', true).filtered('unreadCount = 0')
@@ -27,7 +24,7 @@ export const ChatUsersList: React.FC = () => {
           title: 'Unread messages',
           data: unreadMessages,
         },
-        { title: 'DM', data: activeUsers.slice(0, 10) },
+        { title: 'Direct Messages', data: activeUsers.slice(0, 10) },
       ];
     }
     return [];
@@ -37,13 +34,14 @@ export const ChatUsersList: React.FC = () => {
     return (
       <ChatUser
         key={item.name}
-        name={item.name}
+        first_name={item.first_name}
         avatar={item.avatar}
         isActive={item.isActive}
         id={item.id}
         unreadCount={item.unreadCount}
         status={item.status}
-        user_id={item.user_id}
+        _id={item._id}
+        last_name={item.last_name}
       />
     );
   }, []);
@@ -58,7 +56,7 @@ export const ChatUsersList: React.FC = () => {
   return (
     <SectionList
       sections={sections}
-      keyExtractor={(item) => item.id}
+      keyExtractor={(item) => item._id}
       // @ts-ignore
       getItemLayout={getItemLayout}
       maxToRenderPerBatch={10}
@@ -78,7 +76,10 @@ export const ChatUsersList: React.FC = () => {
               width,
               marginHorizontal: -22,
             }}>
-            <Text weight="bold" style={{ textTransform: 'uppercase' }}>
+            <Text
+              weight="bold"
+              fontSize={11}
+              style={{ textTransform: 'uppercase' }}>
               {section.title}
             </Text>
           </View>

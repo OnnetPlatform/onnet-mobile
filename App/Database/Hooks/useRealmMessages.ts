@@ -2,24 +2,17 @@ import { useQuery, useRealm } from '@Khayat/Database/Hooks/useRealmContext';
 import Message from '@Khayat/Database/Models/Message';
 import { UserChat } from '@Khayat/Database/Models/types';
 import User from '@Khayat/Database/Models/User';
-import { FormattedMessages } from 'App/Screens/UserChatScreen/components/MessageItem/utils';
+import { FormattedMessages } from '@Screens/UserChatScreen/components/MessageItem/utils';
 import { useEffect, useMemo } from 'react';
 
 export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
+  const realm = useRealm();
   const localUsers = useQuery(
     User,
-    (collection) => collection.filtered(`user_id == "${user.user_id}"`),
-    []
-  );
-  const realm = useRealm();
-  const data = useQuery(
-    Message,
-    (collection) =>
-      collection.filtered(
-        `to.user_id == "${user.user_id}" OR from.user_id == "${user.user_id}"`
-      ),
+    (collection) => collection.filtered(`_id == "${user._id}"`),
     [user]
   );
+  const data = useQuery(Message, (collection) => collection, [user]);
 
   useEffect(() => {
     if (realm.isClosed) {
@@ -47,18 +40,18 @@ const naiveSorting = (data: Message[]) => {
   let currentGroup = {
     user: data[0].user,
     data: [data[0].message],
-    title: data[0].user.name,
+    title: data[0].user.first_name,
   };
 
   for (let index = 1; index < data.length; index++) {
-    if (data[index].user.user_id === data[index - 1].user.user_id) {
+    if (data[index].user._id === data[index - 1].user._id) {
       currentGroup.data.push(data[index].message);
     } else {
       groupedArray.push(currentGroup);
       currentGroup = {
         user: data[index].user,
         data: [data[index].message],
-        title: data[index].user.name,
+        title: data[index].user.first_name,
       };
     }
   }

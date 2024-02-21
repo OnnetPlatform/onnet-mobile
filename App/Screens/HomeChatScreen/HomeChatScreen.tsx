@@ -1,24 +1,19 @@
 import { Icon, Separator, Text } from '@Atoms';
-import { HeaderLoader } from '@Atoms/HeaderLoader/HeaderLoader';
-import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import Images from '@Theme/Images';
 import React from 'react';
 import { Image, Pressable, SafeAreaView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
 
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
-import Texture from '@Skia/Texture/Texture';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const withColors = styles(colors, insets);
   const navigation = useNavigation();
-  const { isChatUpdating } = useSelector(MessagingSelector);
 
   // @ts-ignore
   const onSettingsPressed = () => navigation.navigate('Settings');
@@ -50,9 +45,7 @@ export const HomeChatScreen: React.FC = () => {
           </Pressable>
         </View>
       </View>
-      {isChatUpdating ? (
-        <HeaderLoader style={{ position: 'relative' }} />
-      ) : null}
+
       <ChatUsersList />
     </SafeAreaView>
   );

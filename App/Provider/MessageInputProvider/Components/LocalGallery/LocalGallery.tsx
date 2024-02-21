@@ -1,5 +1,4 @@
 import { Text } from '@Atoms';
-import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { BlurView } from '@react-native-community/blur';
 import React from 'react';
 import {
@@ -11,23 +10,26 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {} from 'react-native-safe-area-context';
 
-import { useCameraRoll } from '../../../../Hooks/useCameraRoll';
+import { useCameraRoll } from '@Hooks/useCameraRoll';
+import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
 
-export const GalleryModal: React.FC<{
-  onRequestClose(): void;
-  onImageSelected(image: PhotoIdentifier): void;
-}> = ({ onRequestClose, onImageSelected }) => {
+export const LocalGallery: React.FC = () => {
   const { width } = useWindowDimensions();
   const photos = useCameraRoll();
   const isDark = useColorScheme() === 'dark';
+
+  const onRequestClose = () => toggleLocalGalleryModel(!openLocalGallery);
+  const onImageSelected = (item: PhotoIdentifier) => {};
+  const { openLocalGallery, toggleLocalGalleryModel } =
+    useMessageInputContext();
+
   return (
     <Modal
-      visible={true}
+      visible={openLocalGallery}
       onRequestClose={onRequestClose}
       animationType={'slide'}
-      transparent
       presentationStyle={'pageSheet'}>
       <BlurView
         blurType={isDark ? 'dark' : 'light'}
@@ -69,4 +71,4 @@ export const GalleryModal: React.FC<{
     </Modal>
   );
 };
-export default GalleryModal;
+export default LocalGallery;

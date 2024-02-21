@@ -1,3 +1,4 @@
+import { Refresh } from '@Skia/Refresh/Refresh';
 import { blue, pink } from '@Theme/Colors';
 import { useColors } from '@Theme/index';
 import {
@@ -24,6 +25,7 @@ export const Blob: React.FC = () => {
   const { width, height } = useWindowDimensions();
 
   const array = Array.from({ length: 2 }, (_, i) => i);
+  return <Refresh />;
 
   return (
     <Canvas style={StyleSheet.absoluteFillObject}>

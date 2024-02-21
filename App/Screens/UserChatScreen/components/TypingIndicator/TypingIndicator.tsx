@@ -1,5 +1,5 @@
 import { useColors } from '@Theme';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -8,10 +8,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useSocketContext } from '../../../../Context/SocketContext/SocketContext';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
-import User from '../../../../Database/Models/User';
 import styles from '../../UserChatScreen.styles';
+import User from '@Khayat/Database/Models/User';
 
 export const TypingIndicator: React.FC<{ opponent: User }> = React.memo(
   ({ opponent }) => {

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.4",
+    "@expensify/react-native-live-markdown": "^0.1.11",
     "@faker-js/faker": "^8.4.1",
     "@gorhom/bottom-sheet": "^4.6.0",
     "@react-native-camera-roll/camera-roll": "^7.4.1",
@@ -26,6 +27,7 @@
     "@shopify/react-native-skia": "^0.1.238",
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
+    "add": "^2.0.6",
     "babel-plugin-module-resolver": "^5.0.0",
     "graphql": "^16.8.1",
     "lodash": "^4.17.21",
@@ -52,7 +54,8 @@
     "realm": "^12.6.0",
     "simplex-noise": "^4.0.1",
     "socket.io-client": "^4.7.4",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -64,6 +67,7 @@
     "@react-native/typescript-config": "0.73.1",
     "@tsconfig/react-native": "^3.0.3",
     "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.14.202",
     "@types/react": "^18.2.55",
     "@types/react-test-renderer": "^18.0.7",
     "@types/uuid": "^9.0.8",
