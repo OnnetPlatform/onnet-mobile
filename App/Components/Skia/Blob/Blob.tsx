@@ -1,12 +1,10 @@
 import { Refresh } from '@Skia/Refresh/Refresh';
-import { blue, pink } from '@Theme/Colors';
 import { useColors } from '@Theme/index';
 import {
   BackdropBlur,
   Canvas,
   Circle,
   Fill,
-  FractalNoise,
   useClock,
   Rect,
   Group,
@@ -79,11 +77,4 @@ const AnimatedCircle: React.FC<{ index: number; array: number[] }> = ({
   );
 
   return <Circle cx={cx} cy={cy} r={100} color={colors.text} />;
-};
-
-const generateColor = () => {
-  const randomColor = Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(4, '0');
-  return `#${randomColor}`;
 };

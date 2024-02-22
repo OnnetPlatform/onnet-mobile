@@ -12,7 +12,14 @@ export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
     (collection) => collection.filtered(`_id == "${user._id}"`),
     [user]
   );
-  const data = useQuery(Message, (collection) => collection, [user]);
+  const data = useQuery(
+    Message,
+    (collection) =>
+      collection.filtered(`from._id = "${user._id}" OR to._id = "${user._id}"`),
+    [user]
+  );
+
+  console.log(data[0]);
 
   useEffect(() => {
     if (realm.isClosed) {
@@ -39,18 +46,18 @@ const naiveSorting = (data: Message[]) => {
   const groupedArray = [];
   let currentGroup = {
     user: data[0].user,
-    data: [data[0].message],
+    data: [{ message: data[0].message, createdAt: data[0].createdAt }],
     title: data[0].user.first_name,
   };
 
   for (let index = 1; index < data.length; index++) {
     if (data[index].user._id === data[index - 1].user._id) {
-      currentGroup.data.push(data[index].message);
+      currentGroup.data.push(data[index]);
     } else {
       groupedArray.push(currentGroup);
       currentGroup = {
         user: data[index].user,
-        data: [data[index].message],
+        data: [data[index]],
         title: data[index].user.first_name,
       };
     }

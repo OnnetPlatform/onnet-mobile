@@ -37,6 +37,7 @@ export type UserChatMessage = {
   sender: User;
   reciever: User;
   textMessage: string;
+  createdAt: string;
 };
 
 export enum ModelEnums {

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MessageInputContext } from '../../Context/MessageInputContext/MessageInputContext';
 import { UploadedImage } from '../../Context/MessageInputContext/types';
 import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme/index';
@@ -17,6 +17,8 @@ import MentionList from './Components/MentionList';
 import InputBackdrop from './Components/InputBackdrop';
 import Texture from '@Skia/Texture/Texture';
 import { ThemeColors } from '@Theme/Colors';
+import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
+import { useDispatch } from 'react-redux';
 
 export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
   user,
@@ -30,8 +32,31 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
   const [openUploadedGallery, toggleUploadedGalleryModel] = useState(false);
   const [openEmojisList, toggleEmojisList] = useState(false);
   const [openMentionsList, toggleMentionsList] = useState(false);
+  const typingSent = useRef(false);
   const markdownStyle = useMarkdownStyles();
   const colors = useColors();
+  const dispatch = useDispatch();
+
+  const sendTypingEvent = () => {
+    typingSent.current = true;
+    dispatch(MessagingCreators.typing(user));
+  };
+
+  const sendTypingStoppedEvent = () => {
+    typingSent.current = false;
+    dispatch(MessagingCreators.typingStopped(user));
+  };
+
+  useEffect(() => {
+    if (!typingSent.current && textMessage) {
+      sendTypingEvent();
+    }
+    const typingStoppedTimeout = setTimeout(sendTypingStoppedEvent, 500);
+
+    return () => {
+      clearTimeout(typingStoppedTimeout);
+    };
+  }, [textMessage, typingSent.current, user]);
 
   const renderIndicator = useCallback(() => {
     if (localUser) return <TypingIndicator opponent={localUser} />;

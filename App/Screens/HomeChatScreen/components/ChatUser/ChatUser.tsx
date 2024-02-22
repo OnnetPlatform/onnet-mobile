@@ -22,7 +22,6 @@ export const ChatUser: React.FC<UserChat> = ({
   const navigation = useNavigation();
   const { getUser } = useRealmUsers();
   const localUser = getUser({ _id });
-  console.log('localUser', localUser, _id);
   const colors = useColors();
   const { id } = useSelector(AuthSelector);
   return (

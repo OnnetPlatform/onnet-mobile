@@ -21,6 +21,7 @@ class Message extends Realm.Object<UserChatMessage> {
   message: string = '';
   from!: UserChat;
   to!: UserChat;
+  createdAt!: string;
   static schema = {
     name: 'Message',
     properties: {
@@ -28,6 +29,7 @@ class Message extends Realm.Object<UserChatMessage> {
       user: 'User',
       from: 'User',
       to: 'User',
+      createdAt: 'string',
     },
   };
 }

@@ -67,8 +67,8 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: 4,
       backgroundColor: colors.background,
+      paddingVertical: 8,
     },
 
     flex: {

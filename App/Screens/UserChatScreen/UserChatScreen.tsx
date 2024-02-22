@@ -1,13 +1,10 @@
 import { HeaderLoader } from '@Atoms';
-import { UploadedImage } from '@Khayat/Database/Models/types';
-import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import ChatEmptyState from '@Molecules/ChatEmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
-  ListRenderItem,
   Pressable,
   SectionList,
   SectionListRenderItem,
@@ -25,7 +22,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Icon, Separator, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
@@ -35,6 +32,10 @@ import { MessageItem } from './components';
 import { FormattedMessages } from './components/MessageItem/utils';
 import styles, { contentStyle } from './UserChatScreen.styles';
 import MessageInputProvider from '../../Provider/MessageInputProvider';
+import moment from 'moment';
+import { humanizeDate } from '@Utils/dateFormatter';
+import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
+import { useMarkdownStyles } from '@Utils/useMarkdownStyles';
 
 const getItemLayout = sectionListGetItemLayout({
   getItemHeight: () => 50,
@@ -44,9 +45,9 @@ const getItemLayout = sectionListGetItemLayout({
 });
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
+
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
-  const [message, setMessage] = useState<string>('');
   const msgs: FormattedMessages[] = useRoomMessages(user);
   const colors = useColors();
   const navigation = useNavigation();
@@ -56,35 +57,13 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const ref = useRef<SectionList>();
   const sheetInputHeight = useSharedValue<number>(0);
 
-  const dispatch = useDispatch();
-  let typingSent = useRef<boolean>(false);
   const { isConnected } = useSelector(MessagingSelector);
   const { isOpen } = useKeyboard();
-
-  const sendTypingEvent = () => {
-    typingSent.current = true;
-    dispatch(MessagingCreators.typing(user));
-  };
-
-  const sendTypingStoppedEvent = () => {
-    typingSent.current = false;
-    dispatch(MessagingCreators.typingStopped(user));
-  };
+  const markdownStyle = useMarkdownStyles();
 
   const ListEmptyComponent = useCallback(() => {
     return <ChatEmptyState username={user.first_name} />;
   }, []);
-
-  useEffect(() => {
-    if (!typingSent.current && message) {
-      sendTypingEvent();
-    }
-    const typingStoppedTimeout = setTimeout(sendTypingStoppedEvent, 500);
-
-    return () => {
-      clearTimeout(typingStoppedTimeout);
-    };
-  }, [message, typingSent.current]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -115,14 +94,32 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     };
   }, [height.value, state.value]);
 
-  const renderMessages: SectionListRenderItem<FormattedMessages> = ({
-    item,
-    index,
-  }) => {
+  const renderMessages: SectionListRenderItem<{
+    message: string;
+    createdAt: string;
+  }> = ({ item, index }) => {
     return (
-      <Text key={index} style={{ marginLeft: 12, paddingRight: 22 }}>
-        {item as any}
-      </Text>
+      <View
+        key={index}
+        style={{
+          marginLeft: 12,
+          paddingRight: 22,
+        }}>
+        <MarkdownTextInput
+          style={{ width: '100%', color: colors.text }}
+          multiline
+          scrollEnabled={false}
+          markdownStyle={markdownStyle}
+          editable={false}>
+          {item.message}
+        </MarkdownTextInput>
+        <Separator />
+        <Text fontSize={12} style={{ opacity: 0.4 }} textAlign="right">
+          {humanizeDate(new Date(item.createdAt))}{' '}
+          {moment(new Date(item.createdAt)).format('hh:mm A')}
+        </Text>
+        <Separator />
+      </View>
     );
   };
 
@@ -163,6 +160,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         style={animatedStyle}
         ListEmptyComponent={ListEmptyComponent}
         renderSectionHeader={renderSectionHeader}
+        SectionSeparatorComponent={Separator}
         // @ts-ignore
         renderItem={renderMessages}
       />

@@ -1,4 +1,4 @@
-import { Blur, Separator, Text } from '@Atoms';
+import { Separator, Text } from '@Atoms';
 import React, { useCallback, useMemo } from 'react';
 import { SectionList, View, useWindowDimensions } from 'react-native';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';

@@ -26,6 +26,7 @@ export function createMessage(data: UserChatMessage): Realm.Object<Message> {
       user: localUser,
       from: localUser,
       to: toLocalUser,
+      createdAt: data.createdAt,
     });
   });
 }
