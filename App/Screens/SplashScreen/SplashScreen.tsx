@@ -1,12 +1,11 @@
-//  @ts-nocheck
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { GradientCard } from '../../Components/Skia/GradientCard/GradientCard';
 import { Polyrhythms } from '../../Components/Skia/Polyrhythms/Polyrhythms';
+import Texture from '@Skia/Texture/Texture';
 
 export const SplashScreen: React.FC = () => {
   const { access_token } = useSelector(AuthSelector);
@@ -18,9 +17,11 @@ export const SplashScreen: React.FC = () => {
       try {
         if (isFocused) {
           if (access_token) {
+            // @ts-ignore
             navigation.navigate('MainNavigation');
           } else {
-            navigation.navigate('LoginScreen');
+            // @ts-ignore
+            navigation.navigate('LaunchScreen');
           }
         }
       } catch (error) {}
@@ -29,7 +30,7 @@ export const SplashScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.screen}>
-      <GradientCard />
+      <Texture />
       <Polyrhythms />
     </SafeAreaView>
   );

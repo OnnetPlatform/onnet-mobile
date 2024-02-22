@@ -7,25 +7,26 @@ import Message from '../../Models/Message';
 export const realm = new Realm(realmConfig);
 
 export function createMessage(data: UserChatMessage): Realm.Object<Message> {
-  const { user, message, to } = data;
-  let localUser = findUser(user.user_id);
-  let toLocalUser = findUser(to.user_id);
+  const { sender, reciever, textMessage } = data;
+  let localUser = findUser(sender._id);
+  let toLocalUser = findUser(reciever._id);
 
   if (!localUser) {
-    localUser = createUser(user);
+    localUser = createUser(sender);
   }
 
   if (!toLocalUser) {
-    toLocalUser = createUser(to);
+    toLocalUser = createUser(reciever);
   }
   // @ts-ignore
   return realm.write(() => {
     localUser.unreadCount++;
     return realm.create(ModelEnums.MESSAGE, {
-      message,
+      message: textMessage,
       user: localUser,
       from: localUser,
       to: toLocalUser,
+      createdAt: data.createdAt,
     });
   });
 }

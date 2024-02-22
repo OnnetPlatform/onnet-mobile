@@ -13,15 +13,15 @@ import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
 
 export const ChatUser: React.FC<UserChat> = ({
-  name,
+  first_name,
   avatar,
   isActive = false,
   unreadCount,
-  user_id,
+  _id,
 }) => {
   const navigation = useNavigation();
   const { getUser } = useRealmUsers();
-  const localUser = getUser({ user_id });
+  const localUser = getUser({ _id });
   const colors = useColors();
   const { id } = useSelector(AuthSelector);
   return (
@@ -34,9 +34,9 @@ export const ChatUser: React.FC<UserChat> = ({
         <Avatar {...{ avatar, isActive }} />
         <Separator horizontal />
         <View>
-          <Text fontSize={16}>
-            {name.trim()}
-            {id === user_id ? (
+          <Text weight="bold" fontSize={16}>
+            {first_name}
+            {id === _id ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
                 {' You'}
               </Text>

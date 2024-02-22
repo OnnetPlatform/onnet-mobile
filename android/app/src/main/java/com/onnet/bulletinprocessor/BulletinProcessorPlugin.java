@@ -15,7 +15,6 @@ public class BulletinProcessorPlugin extends FrameProcessorPlugin {
    * @param options An options dictionary passed from the JS side, or null if none.
    */
   public BulletinProcessorPlugin(@Nullable Map<String, Object> options) {
-    super(options);
   }
 
   @Nullable

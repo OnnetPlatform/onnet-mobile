@@ -6,7 +6,7 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
   StyleSheet.create({
     background: {
       borderRadius: 32,
-      backgroundColor: colors.secondaryBackground,
+      backgroundColor: colors.background,
     },
     bottomSheet: {
       padding: 16,

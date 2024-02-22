@@ -10,6 +10,7 @@ import { useColors } from '@Theme';
 import React, { useEffect } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import {
+  runOnJS,
   SharedValue,
   useSharedValue,
   withSpring,
@@ -63,7 +64,7 @@ export const Glassmorphism: React.FC<{
               blue_circle_radius.value = withSpring(width * 2);
               yellow_circle_radius.value = withSpring(height * 0.7);
               white_circle_radius.value = withSpring(0, { damping: 40 });
-              onAnimationEnd();
+              runOnJS(onAnimationEnd)();
             });
           }
         });
@@ -76,7 +77,7 @@ export const Glassmorphism: React.FC<{
       runSpring(white_circle_radius, { to: 300 }, damping);
       runSpring(white_circle_x, { to: 0 }, damping);
       octaves.value = 2;
-      onAnimationEnd();
+      runOnJS(onAnimationEnd)();
     } else if (step === 3) {
       runSpring(white_circle_y, { to: 0 }, damping);
       runSpring(white_circle_x, { to: 0 }, damping);
@@ -89,7 +90,7 @@ export const Glassmorphism: React.FC<{
       runSpring(yellow_circle_radius, { to: width }, damping);
       runSpring(yellow_circle_x, { to: width }, damping);
       runSpring(yellow_circle_y, { to: height }, damping);
-      onAnimationEnd();
+      runOnJS(onAnimationEnd)();
     } else {
       runSpring(blue_circle_x, { to: 0 });
       runSpring(yellow_circle_x, { to: 0 });

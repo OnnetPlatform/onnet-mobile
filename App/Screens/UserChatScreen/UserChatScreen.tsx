@@ -1,12 +1,15 @@
 import { HeaderLoader } from '@Atoms';
-import { UploadedImage } from '@Khayat/Database/Models/types';
-import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import ChatEmptyState from '@Molecules/ChatEmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Pressable, SectionList, View } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import {
+  Pressable,
+  SectionList,
+  SectionListRenderItem,
+  View,
+} from 'react-native';
 import Animated, {
   useAnimatedKeyboard,
   useAnimatedStyle,
@@ -19,15 +22,20 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Icon, Separator, Text } from '../../Components/atoms';
 import Avatar from '../../Components/atoms/Avatar/Avatar';
 import { useRoomMessages } from '../../Database/Hooks/useRealmMessages';
 import { useKeyboard } from '../../Hooks/useKeyboard';
-import { MessageInput, MessageItem } from './components';
+import { MessageItem } from './components';
 import { FormattedMessages } from './components/MessageItem/utils';
 import styles, { contentStyle } from './UserChatScreen.styles';
+import MessageInputProvider from '../../Provider/MessageInputProvider';
+import moment from 'moment';
+import { humanizeDate } from '@Utils/dateFormatter';
+import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
+import { useMarkdownStyles } from '@Utils/useMarkdownStyles';
 
 const getItemLayout = sectionListGetItemLayout({
   getItemHeight: () => 50,
@@ -37,9 +45,9 @@ const getItemLayout = sectionListGetItemLayout({
 });
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList);
+
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
-  const [message, setMessage] = useState<string>('');
   const msgs: FormattedMessages[] = useRoomMessages(user);
   const colors = useColors();
   const navigation = useNavigation();
@@ -48,48 +56,14 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const { height, state } = useAnimatedKeyboard();
   const ref = useRef<SectionList>();
   const sheetInputHeight = useSharedValue<number>(0);
-  const [attachedImage, setAttachedImage] = useState<
-    UploadedImage | undefined
-  >();
-  const dispatch = useDispatch();
-  let typingSent = useRef<boolean>(false);
+
   const { isConnected } = useSelector(MessagingSelector);
   const { isOpen } = useKeyboard();
-  const onSend = useCallback(() => {
-    dispatch(
-      MessagingCreators.sendMessage({
-        textMessage: message,
-        id: user.user_id,
-      })
-    );
-    setMessage('');
-    setAttachedImage(undefined);
-  }, [message]);
-
-  const sendTypingEvent = () => {
-    typingSent.current = true;
-    dispatch(MessagingCreators.typing(user));
-  };
-
-  const sendTypingStoppedEvent = () => {
-    typingSent.current = false;
-    dispatch(MessagingCreators.typingStopped(user));
-  };
+  const markdownStyle = useMarkdownStyles();
 
   const ListEmptyComponent = useCallback(() => {
-    return <ChatEmptyState username={user.name} />;
+    return <ChatEmptyState username={user.first_name} />;
   }, []);
-
-  useEffect(() => {
-    if (!typingSent.current && message) {
-      sendTypingEvent();
-    }
-    const typingStoppedTimeout = setTimeout(sendTypingStoppedEvent, 500);
-
-    return () => {
-      clearTimeout(typingStoppedTimeout);
-    };
-  }, [message, typingSent.current]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -120,6 +94,39 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     };
   }, [height.value, state.value]);
 
+  const renderMessages: SectionListRenderItem<{
+    message: string;
+    createdAt: string;
+  }> = ({ item, index }) => {
+    return (
+      <View
+        key={index}
+        style={{
+          marginLeft: 12,
+          paddingRight: 22,
+        }}>
+        <MarkdownTextInput
+          style={{ width: '100%', color: colors.text }}
+          multiline
+          scrollEnabled={false}
+          markdownStyle={markdownStyle}
+          editable={false}>
+          {item.message}
+        </MarkdownTextInput>
+        <Separator />
+        <Text fontSize={12} style={{ opacity: 0.4 }} textAlign="right">
+          {humanizeDate(new Date(item.createdAt))}{' '}
+          {moment(new Date(item.createdAt)).format('hh:mm A')}
+        </Text>
+        <Separator />
+      </View>
+    );
+  };
+
+  const renderSectionHeader = useCallback((item: any) => {
+    return <MessageItem index={Math.random()} item={item.section} />;
+  }, []);
+
   return (
     <SafeAreaView style={withColors.page} edges={['bottom', 'left', 'right']}>
       <View style={withColors.header}>
@@ -135,7 +142,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           <Avatar avatar={user.avatar} isActive={user.isActive} />
           <Separator horizontal />
           <Text weight="bold" fontSize={16}>
-            {user.name}
+            {user.first_name} {user.last_name}
           </Text>
         </Pressable>
       </View>
@@ -143,8 +150,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
       <AnimatedSectionList
         // @ts-ignore
         ref={ref}
-        ItemSeparatorComponent={Separator}
-        // @ts-ignore
         sections={msgs}
         // @ts-ignore
         getItemLayout={getItemLayout}
@@ -154,29 +159,12 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         stickySectionHeadersEnabled={true}
         style={animatedStyle}
         ListEmptyComponent={ListEmptyComponent}
+        renderSectionHeader={renderSectionHeader}
         SectionSeparatorComponent={Separator}
-        renderSectionHeader={(item) => {
-          // @ts-ignore
-          return <MessageItem index={Math.random()} item={item.section} />;
-        }}
-        renderItem={({ item, index }) => {
-          return (
-            <Text key={index} style={{ marginLeft: 48, paddingRight: 22 }}>
-              {item as any}
-            </Text>
-          );
-        }}
+        // @ts-ignore
+        renderItem={renderMessages}
       />
-      <MessageInput
-        sheetInputHeight={sheetInputHeight}
-        onSend={onSend}
-        value={message}
-        onChangeText={setMessage}
-        user={user}
-        onAttachedImage={setAttachedImage}
-        attachedImage={attachedImage}
-        onEmojiPressed={(emoji) => setMessage((msg) => msg + emoji.emoji)}
-      />
+      <MessageInputProvider user={user} />
     </SafeAreaView>
   );
 };

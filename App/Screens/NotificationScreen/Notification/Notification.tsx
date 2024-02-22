@@ -1,4 +1,3 @@
-import { useColors } from '@Theme/index';
 import moment from 'moment';
 import React from 'react';
 import { Pressable, useWindowDimensions, View } from 'react-native';
@@ -15,6 +14,7 @@ import { Blur, Icon, Text } from '../../../Components/atoms';
 import { Notification as NotificationType } from '../data';
 import styles from './Notification.styles';
 import { NotificationIcon } from './NotificationIcon';
+import Texture from '@Skia/Texture/Texture';
 
 const TOUCH_SLOP = 5;
 const TIME_TO_ACTIVATE_PAN = 25;
@@ -28,7 +28,6 @@ export const Notification: React.FC<{
   const context = useSharedValue(0);
   const visible_offset = width / 2.5;
   const touchStart = useSharedValue({ x: 0, y: 0, time: 0 });
-  const colors = useColors();
   const gesture = Gesture.Pan()
     .manualActivation(true)
     .onTouchesDown((e) => {
@@ -94,16 +93,15 @@ export const Notification: React.FC<{
 
   return (
     <Animated.View style={animatedStyle} entering={FadeIn.delay(100 * index)}>
+      <Texture />
       <Animated.View style={[animatedButtonStyle, styles.closeIcon]}>
         <Pressable style={styles.deleteButton} onPress={() => {}}>
-          <Animated.View
-            style={[styles.button, { backgroundColor: colors.cyan }]}>
+          <Blur style={[styles.button]}>
             <Animated.View style={[animatedIcon]}>
               <Icon name={'checkmark-outline'} fill={'white'} />
             </Animated.View>
-          </Animated.View>
-          <Animated.View
-            style={[styles.button, { backgroundColor: colors.blue }]}>
+          </Blur>
+          <Animated.View style={[styles.button]}>
             <Animated.View style={[animatedIcon]}>
               <Icon name={'trash-outline'} fill={'white'} />
             </Animated.View>
@@ -111,7 +109,7 @@ export const Notification: React.FC<{
         </Pressable>
       </Animated.View>
       <GestureDetector userSelect="none" gesture={gesture}>
-        <Blur style={styles.notification}>
+        <View style={styles.notification}>
           <NotificationIcon notification={notification} />
           <View style={styles.left}>
             <Text>{moment(notification.createdDate).fromNow()}</Text>
@@ -119,7 +117,7 @@ export const Notification: React.FC<{
               {notification.title}
             </Text>
           </View>
-        </Blur>
+        </View>
       </GestureDetector>
     </Animated.View>
   );

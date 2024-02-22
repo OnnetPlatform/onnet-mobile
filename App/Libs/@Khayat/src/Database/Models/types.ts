@@ -1,13 +1,14 @@
 import User from './User';
 
 export type UserChat = {
-  name: string;
+  first_name: string;
+  last_name: string;
   avatar: string;
   isActive: boolean;
   id: string;
   unreadCount: number;
   status: 'TYPING' | '';
-  user_id: string;
+  _id: string;
 };
 
 export type UploadedImage = {
@@ -33,13 +34,10 @@ export type Message = {
 };
 
 export type UserChatMessage = {
-  user: User;
-  from: User;
-  to: User;
-  message: {
-    message: string;
-    date: string;
-  }[];
+  sender: User;
+  reciever: User;
+  textMessage: string;
+  createdAt: string;
 };
 
 export enum ModelEnums {

@@ -53,7 +53,7 @@ export const ProfileScreen: React.FC = () => {
   const onBackPressed = () => navigation.goBack();
 
   return (
-    <SafeAreaView edges={['bottom', 'left', 'right']} style={styles.screen}>
+    <SafeAreaView edges={['left', 'right']} style={styles.screen}>
       <Animated.Image
         style={[StyleSheet.absoluteFill, animatedStyle]}
         source={{ uri: image }}

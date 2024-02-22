@@ -6,27 +6,27 @@ import {
   Mask,
   Rect,
   Text,
-  useClockValue,
-  useComputedValue,
+  useClock,
+  useDerivedValueOnJS,
   useFont,
-  useValue,
   vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
+import { useSharedValue } from 'react-native-worklets-core';
 
 export const LogoLoading: React.FC = () => {
   const font = useFont(require('./Rubik-Black.ttf'), 64);
   const { width, height } = useWindowDimensions();
-  const clock = useClockValue();
-  const offset = useValue(0);
-  const end = useComputedValue(() => {
-    if (offset.current > (width - 128) * 15) {
-      offset.current = 0;
+  const clock = useClock();
+  const offset = useSharedValue(0);
+  const end = useDerivedValueOnJS(() => {
+    if (offset.value > (width - 128) * 15) {
+      offset.value = 0;
     }
-    offset.current = offset.current + 10;
+    offset.value = offset.value + 10;
 
-    return vec(offset.current, 0);
+    return vec(offset.value, 0);
   }, [clock]);
 
   return (

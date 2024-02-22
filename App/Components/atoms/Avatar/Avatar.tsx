@@ -1,36 +1,52 @@
 import React, { useEffect } from 'react';
 import Animated, {
+  interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
 import styles from './Avatar.styles';
-import { useColors } from '@Theme/index';
+import { useColors } from '@Theme';
+import { Image } from 'react-native';
 
 export const Avatar: React.FC<{ avatar: string; isActive: boolean }> = ({
   avatar,
   isActive,
 }) => {
-  const borderWidth = useSharedValue(0);
   const colors = useColors();
+  const borderActive = useSharedValue(isActive ? 1 : 0);
+
   const animatedImageStyle = useAnimatedStyle(
     () => ({
-      borderColor: colors.text,
-      borderWidth: borderWidth.value,
-      borderRadius: 14,
-      overflow: 'hidden',
+      borderColor: interpolateColor(
+        borderActive.value,
+        [1, 0],
+        [colors.text, colors.background]
+      ),
+      shadowColor: interpolateColor(
+        borderActive.value,
+        [1, 0],
+        [colors.text, colors.background]
+      ),
+      backgroundColor: colors.background,
     }),
-    [borderWidth, isActive]
+    [isActive, colors]
   );
 
   useEffect(() => {
-    borderWidth.value = withTiming(isActive ? 2 : 0);
+    borderActive.value = withTiming(isActive ? 1 : 0);
   }, [isActive]);
 
   return (
-    <Animated.View style={animatedImageStyle}>
-      <Animated.Image source={{ uri: avatar }} style={styles.avatar} />
+    <Animated.View style={[animatedImageStyle, styles.shadow]}>
+      <Image
+        source={{ uri: avatar }}
+        style={[
+          styles.avatar,
+          { borderColor: isActive ? colors.text : colors.background },
+        ]}
+      />
     </Animated.View>
   );
 };

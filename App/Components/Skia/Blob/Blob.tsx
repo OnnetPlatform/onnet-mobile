@@ -1,45 +1,39 @@
+import { Refresh } from '@Skia/Refresh/Refresh';
+import { useColors } from '@Theme/index';
 import {
   BackdropBlur,
-  Blur,
   Canvas,
   Circle,
-  ColorMatrix,
+  Fill,
+  useClock,
+  Rect,
   Group,
   Paint,
-  Rect,
-  useClock,
-  useDerivedValueOnJS,
+  ColorMatrix,
+  Blur,
+  LinearGradient,
+  vec,
 } from '@shopify/react-native-skia';
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
-import { useColors } from '@Theme';
-import { computeNoise } from '../Gradient/utils';
-import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
+import { useDerivedValue } from 'react-native-reanimated';
 
 export const Blob: React.FC = () => {
-  const clock = useClock();
   const colors = useColors();
   const { width, height } = useWindowDimensions();
-  const circle_2 = useSharedValue(width);
-  const circle_radius_3 = useSharedValue(50);
-  const circle_3 = useSharedValue(height * 0.7);
 
-  const circleNoise2 = useDerivedValueOnJS(
-    () => computeNoise(circle_2, width, 0.002),
-    [clock.value]
-  );
-  const circleNoise3 = useDerivedValueOnJS(
-    () => computeNoise(circle_radius_3, 100, 0.001),
-    [clock.value]
-  );
-  const circleNoise4 = useDerivedValueOnJS(
-    () => computeNoise(circle_3, height, 0.001),
-    [clock.value]
-  );
+  const array = Array.from({ length: 2 }, (_, i) => i);
+  return <Refresh />;
 
   return (
     <Canvas style={StyleSheet.absoluteFillObject}>
-      <Rect width={width} height={height} color={colors.background} />
+      <Rect width={width} height={height}>
+        <LinearGradient
+          colors={[colors.background, colors.blue]}
+          start={vec(0, 0)}
+          end={vec(width, width)}
+        />
+      </Rect>
       <Group
         layer={
           <Paint>
@@ -51,32 +45,36 @@ export const Blob: React.FC = () => {
             />
           </Paint>
         }>
-        <Circle
-          color={colors.blue}
-          cx={circleNoise2}
-          cy={height / 2}
-          r={width * 0.4}
-        />
-        <Circle
-          color={colors.cyan}
-          cx={width}
-          cy={height - 100}
-          r={circleNoise3}
-        />
-        <Circle
-          color={colors.pink}
-          cx={circleNoise4}
-          cy={circleNoise4}
-          r={width * 0.2}
-        />
-        <Circle
-          color={colors.turquoise}
-          cx={width * 0.48}
-          cy={height * 0.8}
-          r={circleNoise3}
-        />
+        {array.map((index) => {
+          return <AnimatedCircle index={index} array={array} key={index} />;
+        })}
       </Group>
       <BackdropBlur blur={100} blendMode={'overlay'} />
+      <Fill color={colors.background} />
     </Canvas>
   );
+};
+
+const AnimatedCircle: React.FC<{ index: number; array: number[] }> = ({
+  index,
+  array,
+}) => {
+  const { width, height } = useWindowDimensions();
+  const colors = useColors();
+  const clock = useClock();
+  const cx = useDerivedValue(
+    () =>
+      width / 2 +
+      Math.sin((((clock.value / 10000) * Math.PI) / array.length) * index) * 100
+  );
+  const cy = useDerivedValue(
+    () =>
+      height / 2 +
+      Math.cos(
+        (((clock.value / 100000) * Math.PI) / array.length) * index * 10
+      ) *
+        400
+  );
+
+  return <Circle cx={cx} cy={cy} r={100} color={colors.text} />;
 };

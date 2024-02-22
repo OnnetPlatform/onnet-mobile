@@ -115,19 +115,18 @@ export const MediaRecording: React.FC = () => {
   }, []);
 
   const renderCamera = useCallback(() => {
-    if (!cameraDevice) {
-      return null;
-    }
     return (
       <>
-        <Camera
-          isActive={recording && mediaSettings.video}
-          device={cameraDevice}
-          style={[StyleSheet.absoluteFillObject]}
-          ref={cameraRef}
-          onError={onError}
-          {...mediaSettings}
-        />
+        {cameraDevice ? (
+          <Camera
+            isActive={recording && mediaSettings.video}
+            device={cameraDevice}
+            style={[StyleSheet.absoluteFillObject]}
+            ref={cameraRef}
+            onError={onError}
+            {...mediaSettings}
+          />
+        ) : null}
         <View style={styles.sideControls}>
           <Pressable hitSlop={24} onPress={onRotateCamera}>
             <Icon name={'sync-outline'} />
@@ -183,14 +182,6 @@ export const MediaRecording: React.FC = () => {
     dispatch(BulletinCreators.stream());
   }, []);
 
-  return (
-    <SafeAreaView style={styles.screen}>
-      {cameraDevice ? (
-        renderCamera()
-      ) : (
-        <ActivityIndicator style={StyleSheet.absoluteFillObject} />
-      )}
-    </SafeAreaView>
-  );
+  return <SafeAreaView style={styles.screen}>{renderCamera()}</SafeAreaView>;
 };
 export default MediaRecording;

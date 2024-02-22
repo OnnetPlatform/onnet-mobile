@@ -7,7 +7,11 @@ import { useColorScheme } from 'react-native';
 export const Card: React.FC<CardProps> = ({ children, style }) => {
   const isDark = useColorScheme() === 'dark';
   return (
-    <BlurView blurAmount={10} blurType={isDark ? 'dark' : 'light'} style={[styles.card, style]}>
+    <BlurView
+      blurRadius={10}
+      blurAmount={10}
+      blurType={isDark ? 'dark' : 'light'}
+      style={[styles.card, style]}>
       {children}
     </BlurView>
   );

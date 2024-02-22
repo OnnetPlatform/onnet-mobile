@@ -34,9 +34,14 @@ export function* onMessage(
 ): Generator<any, any, UserChatMessage> {
   while (true) {
     const data = yield take(channel);
+    console.log('data', data);
     yield put(MessagingCreators.setChatUpdating(true));
-    createMessage(data);
-    yield delay(500);
+    try {
+      createMessage(data);
+    } catch (error) {
+      console.log(error);
+    }
+    yield delay(502);
     yield put(MessagingCreators.setChatUpdating(false));
   }
 }
@@ -46,8 +51,7 @@ export function* onNewUserConnected(
 ): Generator<TakeEffect, any, { user: UserChat }> {
   while (true) {
     const { user } = yield take(channel);
-    updateUserStatus(user, 'isActive', true);
-    updateUserStatus(user, 'avatar', user.avatar);
+    updateUserStatus({ ...user, isActive: true, avatar: user.avatar });
   }
 }
 
@@ -56,7 +60,7 @@ export function* onUserDisconnected(
 ): Generator<TakeEffect, any, { user: UserChat }> {
   while (true) {
     const { user } = yield take(channel);
-    updateUserStatus(user, 'isActive', false);
+    updateUserStatus({ ...user, isActive: false });
   }
 }
 
@@ -66,8 +70,8 @@ export function* onConnectedUsers(
   while (true) {
     const users = yield take(channel);
     users.map((user) => {
-      updateUserStatus(user, 'isActive', true);
-      updateUserStatus(user, 'avatar', user.avatar);
+      updateUserStatus({ ...user, isActive: true, avatar: user.avatar });
+      updateUserStatus({ ...user, isActive: true, avatar: user.avatar });
     });
   }
 }
@@ -77,7 +81,7 @@ export function* onTyping(
 ): Generator<TakeEffect, any, UserChat> {
   while (true) {
     const data = yield take(channel);
-    updateUserStatus(data, 'status', 'Typing');
+    updateUserStatus({ ...data, status: 'TYPING' });
   }
 }
 
@@ -86,14 +90,14 @@ export function* onTypingStopped(
 ): Generator<TakeEffect, any, UserChat> {
   while (true) {
     const data = yield take(channel);
-    updateUserStatus(data, 'status', '');
+    updateUserStatus({ ...data, status: '' });
   }
 }
 
-function updateUserStatus(user: UserChat, key: keyof UserChat, value: any) {
-  let isUserFound = findUser(user.user_id);
+function updateUserStatus(user: UserChat) {
+  let isUserFound = findUser(user._id);
   if (!isUserFound) {
     isUserFound = createUser(user);
   }
-  updateUser(isUserFound, key, value);
+  updateUser(isUserFound, user);
 }

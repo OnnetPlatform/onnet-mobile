@@ -1,20 +1,20 @@
-import {Circle, useClock} from '@shopify/react-native-skia';
-import {useColors} from '@Theme';
+import { Circle, useClock } from '@shopify/react-native-skia';
+import { useColors } from '@Theme';
 import React from 'react';
-import {useWindowDimensions} from 'react-native';
+import { useWindowDimensions } from 'react-native';
 
-import {ArcDimentions, ArcRect} from '../types';
-import {useDerivedValue, useSharedValue} from 'react-native-reanimated';
+import { ArcDimentions, ArcRect } from '../types';
+import { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 
 export const PolyrhythmsCircle: React.FC<{
   arc: ArcDimentions;
   rect: ArcRect;
-}> = ({arc /* rect*/}) => {
+}> = ({ arc /* rect*/ }) => {
   const clock = useClock();
   const theta = useSharedValue(Math.PI);
   // const maxAngle = Math.PI * 2;
   const colors = useColors();
-  const {width, height} = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   // const rectX = rect.x;
   const rectY = height / 2 - 24;
   const x = useDerivedValue(() => {
@@ -30,5 +30,5 @@ export const PolyrhythmsCircle: React.FC<{
     // return (arc.radius / 2) * Math.sin(maxAngle - theta.current) + rectY;
   }, [clock]);
 
-  return <Circle cx={x} cy={y} r={10} color={colors.black} />;
+  return <Circle cx={x} cy={y} r={10} color={colors.text} />;
 };
