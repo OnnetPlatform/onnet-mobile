@@ -3,6 +3,7 @@ import Icon from '@Atoms/Icon';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
 import { faker } from '@faker-js/faker';
+import { FlashList } from '@shopify/flash-list';
 import Texture from '@Skia/Texture/Texture';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
@@ -55,10 +56,9 @@ export const FeedItem: React.FC<any> = ({ item }) => {
         </View>
 
         <View style={{ backgroundColor: colors.blur, padding: 16 }}>
-          <FlatList
+          <FlashList
             data={[1, 2, 3]}
             horizontal
-            contentContainerStyle={{ alignItems: 'center' }}
             ListFooterComponent={
               <>
                 <Text textAlign={'center'} style={{ marginLeft: 4 }}>
@@ -152,12 +152,11 @@ export const FeedItem: React.FC<any> = ({ item }) => {
           padding: 8,
           paddingHorizontal: 16,
         }}>
-        <FlatList
+        <FlashList
           data={[1, 2, 3, 5, 6, 7]}
           horizontal
-          contentContainerStyle={{ alignItems: 'center' }}
           ListFooterComponent={
-            <Text textAlign={'center'} style={{ marginLeft: 4 }}>
+            <Text textAlign={'center'} style={{ marginLeft: 4, marginTop: 11 }}>
               +22 going
             </Text>
           }

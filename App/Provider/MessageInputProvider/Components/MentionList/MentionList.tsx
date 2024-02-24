@@ -2,10 +2,11 @@ import Avatar from '@Atoms/Avatar';
 import Text from '@Atoms/Text';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import React, { useCallback } from 'react';
-import { FlatList, ListRenderItem, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Separator from '@Atoms/Separator';
 import User from '@Khayat/Database/Models/User';
 import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
+import { FlashList, ListRenderItem } from '@shopify/flash-list';
 
 export const MentionList: React.FC = () => {
   const { users } = useRealmUsers();
@@ -31,7 +32,7 @@ export const MentionList: React.FC = () => {
   );
   if (openMentionsList)
     return (
-      <FlatList
+      <FlashList
         data={users}
         contentContainerStyle={styles.container}
         renderItem={renderItem}

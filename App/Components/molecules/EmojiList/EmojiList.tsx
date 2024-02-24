@@ -1,6 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
-  FlatList,
   Pressable,
   SectionList,
   TextInput,
@@ -12,6 +11,7 @@ import { Blur, Text } from '../../atoms';
 import _ from 'lodash';
 import { useColors } from '@Theme';
 import { Emoji } from './types';
+import { FlashList } from '@shopify/flash-list';
 
 export type EmojisListProps = {
   onEmojiPressed(item: Emoji): void;
@@ -33,7 +33,7 @@ export const EmojiList: React.FC<EmojisListProps> = ({ onEmojiPressed }) => {
 
   const renderSection = useCallback(({ item }: any) => {
     return (
-      <FlatList
+      <FlashList
         numColumns={7}
         keyExtractor={(item) => item.description}
         renderItem={({ item }) => (

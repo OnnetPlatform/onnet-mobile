@@ -4,16 +4,17 @@ import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
 import { useUploadImage } from '@Hooks/useUploadImage';
 import React from 'react';
-import { FlatList, Image, Pressable } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import MessageInputStyles from '../MessageInput/MessageInput.styles';
+import { FlashList } from '@shopify/flash-list';
 
 export const UploadedGallery: React.FC = () => {
   const { uploadImage, uploadedImages, getUploadedImages } = useUploadImage();
 
   return (
     <Animated.View entering={FadeIn} exiting={FadeOut}>
-      <FlatList
+      <FlashList
         style={{ maxHeight: 400 }}
         data={uploadedImages}
         numColumns={3}

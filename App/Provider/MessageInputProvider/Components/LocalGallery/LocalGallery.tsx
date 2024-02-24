@@ -2,7 +2,6 @@ import { Text } from '@Atoms';
 import { BlurView } from '@react-native-community/blur';
 import React from 'react';
 import {
-  FlatList,
   Image,
   Modal,
   Pressable,
@@ -14,6 +13,7 @@ import {
 import { useCameraRoll } from '@Hooks/useCameraRoll';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
+import { FlashList } from '@shopify/flash-list';
 
 export const LocalGallery: React.FC = () => {
   const { width } = useWindowDimensions();
@@ -40,10 +40,9 @@ export const LocalGallery: React.FC = () => {
             Select Photo
           </Text>
         </View>
-        <FlatList
+        <FlashList
           numColumns={3}
           data={photos}
-          contentContainerStyle={{ justifyContent: 'space-between' }}
           renderItem={({ item }) => {
             console.log(item);
             return (

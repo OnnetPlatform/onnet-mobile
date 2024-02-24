@@ -1,5 +1,5 @@
 import { ThemeColors } from '@Theme/Colors';
-import { StyleSheet } from 'react-native';
+import { ImageStyle, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   localStream: {
@@ -15,7 +15,6 @@ export default StyleSheet.create({
     borderWidth: 2,
     borderColor: 'white',
   },
-
   remoteStream: {
     flex: 1,
     flexGrow: 1,
@@ -49,18 +48,20 @@ export function alertStyle(colors: ThemeColors) {
       backgroundColor: colors.text,
       borderRadius: 8,
     },
-    // @ts-ignore
-    avatar: (index) => ({
-      width: 48,
-      height: 48,
-      borderRadius: 24,
-      borderColor: colors.background,
-      borderWidth: 1,
-      marginLeft: index > 0 ? -16 : 0,
-    }),
-    // @ts-ignore
     avatarContainer: {
       alignSelf: 'center',
     },
   });
 }
+
+export const avatar: { (index: number, colors: ThemeColors): ImageStyle } = (
+  index,
+  colors
+) => ({
+  width: 48,
+  height: 48,
+  borderRadius: 24,
+  borderColor: colors.background,
+  borderWidth: 1,
+  marginLeft: index > 0 ? -16 : 0,
+});
