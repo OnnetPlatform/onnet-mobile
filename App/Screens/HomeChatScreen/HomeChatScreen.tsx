@@ -45,7 +45,6 @@ export const HomeChatScreen: React.FC = () => {
           </Pressable>
         </View>
       </View>
-
       <ChatUsersList />
     </SafeAreaView>
   );

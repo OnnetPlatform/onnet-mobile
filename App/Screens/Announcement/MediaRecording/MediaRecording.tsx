@@ -8,7 +8,7 @@ import RecordButton from '@Molecules/RecordButton';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { useColors } from '@Theme/index';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native';
 import {
   SafeAreaView,
@@ -19,6 +19,7 @@ import {
   CameraPosition,
   CameraRuntimeError,
   useCameraDevice,
+  useCameraPermission,
 } from 'react-native-vision-camera';
 import { useDispatch } from 'react-redux';
 
@@ -34,6 +35,7 @@ export const MediaRecording: React.FC = () => {
   const [recording, setRecording] = useState<boolean>(false);
   const { start, reset, timer } = useTimer();
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+  const { requestPermission, hasPermission } = useCameraPermission();
   const dispatch = useDispatch();
   const [mediaSettings, setMediaSettings] = useState<{
     video: boolean;
@@ -65,35 +67,40 @@ export const MediaRecording: React.FC = () => {
       setRecording(false);
       return onStopRecordingPressed();
     }
-    if (cameraRef.current) {
-      cameraRef.current.startRecording({
-        onRecordingFinished: (video) => {
-          CameraRoll.save(`file://${video.path}`, {
-            type: 'video',
-          }).then(() => {
-            showBottomSheet({
-              icon: 'checkmark-outline',
-              title: 'Bulletin Saved',
-              subtitle: 'Bulletin saved on your device successfully',
-              cta: {
-                title: 'Close',
-                color: colors.turquoise,
-                onPress: hideBottomSheet,
-              },
-            });
+    if (hasPermission) {
+      requestPermission().then(() => {
+        dispatch(BulletinCreators.stream());
+        if (cameraRef.current) {
+          cameraRef.current.startRecording({
+            onRecordingFinished: (video) => {
+              CameraRoll.save(`file://${video.path}`, {
+                type: 'video',
+              }).then(() => {
+                showBottomSheet({
+                  icon: 'checkmark-outline',
+                  title: 'Bulletin Saved',
+                  subtitle: 'Bulletin saved on your device successfully',
+                  cta: {
+                    title: 'Close',
+                    color: colors.turquoise,
+                    onPress: hideBottomSheet,
+                  },
+                });
+              });
+            },
+            onRecordingError: (error) => {
+              showBottomSheet({
+                icon: 'info-outline',
+                title: 'Saving bulletin',
+                subtitle: error.message,
+                body: error.cause?.message,
+              });
+            },
           });
-        },
-        onRecordingError: (error) => {
-          showBottomSheet({
-            icon: 'info-outline',
-            title: 'Saving bulletin',
-            subtitle: error.message,
-            body: error.cause?.message,
-          });
-        },
+          start();
+          setRecording(true);
+        }
       });
-      start();
-      setRecording(true);
     }
   }, [cameraRef, recording]);
 
@@ -177,10 +184,6 @@ export const MediaRecording: React.FC = () => {
     onRotateCamera,
     timer,
   ]);
-
-  useEffect(() => {
-    dispatch(BulletinCreators.stream());
-  }, []);
 
   return <SafeAreaView style={styles.screen}>{renderCamera()}</SafeAreaView>;
 };

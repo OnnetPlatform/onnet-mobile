@@ -21,6 +21,7 @@ import {
 import { FeedItem } from './components/FeedItem/FeedItem';
 import screenStyles from './FeedScreen.styles';
 import { useFeedData } from './utils';
+import { FlashList } from '@shopify/flash-list';
 
 export const FeedScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -56,12 +57,7 @@ export const FeedScreen: React.FC = () => {
 
   const onItemPressed = useCallback((item: any) => {
     // @ts-ignore
-    navigation.navigate('LiveAnnouncement');
-    showBottomSheet({
-      title: item.title,
-      icon: 'calendar-outline',
-      subtitle: item.description,
-    });
+    if (item.__typename === 'Bulletin') navigation.navigate('LiveAnnouncement');
   }, []);
 
   const renderFeed = useCallback(
@@ -87,14 +83,12 @@ export const FeedScreen: React.FC = () => {
         </Text>
         <LoadingOnnet progress={pullDownValue} />
       </View>
-      <FlatList
+      <FlashList
         showsVerticalScrollIndicator={false}
-        decelerationRate={'fast'}
         onScroll={onScroll}
         data={data}
         ItemSeparatorComponent={Separator}
         contentContainerStyle={{ padding: 16, paddingBottom: headerHeight }}
-        snapToInterval={Math.round(height * 0.6) + 48}
         renderItem={renderFeed}
       />
     </SafeAreaView>

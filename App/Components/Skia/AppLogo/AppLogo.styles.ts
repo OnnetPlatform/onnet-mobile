@@ -1,8 +1,9 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 export default StyleSheet.create({
   logo: {
     textAlign: 'center',
-    width: 230,
+    width: Dimensions.get('window').width,
+    alignSelf: 'center',
   },
 });

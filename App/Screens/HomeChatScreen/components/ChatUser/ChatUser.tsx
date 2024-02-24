@@ -12,13 +12,8 @@ import { useSelector } from 'react-redux';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
 
-export const ChatUser: React.FC<UserChat> = ({
-  first_name,
-  avatar,
-  isActive = false,
-  unreadCount,
-  _id,
-}) => {
+export const ChatUser: React.FC<{ item: UserChat }> = ({ item }) => {
+  const { _id, first_name, last_name, isActive, avatar, unreadCount } = item;
   const navigation = useNavigation();
   const { getUser } = useRealmUsers();
   const localUser = getUser({ _id });
@@ -35,7 +30,7 @@ export const ChatUser: React.FC<UserChat> = ({
         <Separator horizontal />
         <View>
           <Text weight="bold" fontSize={16}>
-            {first_name}
+            {first_name} {last_name}
             {id === _id ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
                 {' You'}

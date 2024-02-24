@@ -1,7 +1,7 @@
 import { BottomSheetBackdropProps, useBottomSheet } from '@gorhom/bottom-sheet';
 import { BlurView } from '@react-native-community/blur';
 import React, { useMemo } from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { Platform, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -48,6 +48,7 @@ const BluredBackdrop = ({
     [style, animatedStyle]
   );
 
+  if (Platform.OS === 'android') return null;
   return (
     <AnimatedBlur
       blurAmount={0}
@@ -55,7 +56,9 @@ const BluredBackdrop = ({
       blurRadius={12}
       style={containerStyle}
       animatedProps={animatedProps}
-      onTouchStart={() => collapse()}
+      onTouchStart={() => {
+        collapse();
+      }}
     />
   );
 };

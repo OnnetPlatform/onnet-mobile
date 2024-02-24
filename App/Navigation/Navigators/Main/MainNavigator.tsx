@@ -1,19 +1,19 @@
 // @ts-nocheck
-import {AlertProvider} from '@Context/AlertContext/AlertProvider';
-import {BottomSheetProvider} from '@Context/BottomSheet';
-import {EventProivder} from '@Context/EventContext/EventProvider';
-import {DatabaseProvider} from '@Khayat/Providers/DatabaseProvider';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
-import {IconRegistry} from '@ui-kitten/components';
-import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import { AlertProvider } from '@Context/AlertContext/AlertProvider';
+import { BottomSheetProvider } from '@Context/BottomSheet';
+import { EventProivder } from '@Context/EventContext/EventProvider';
+import { DatabaseProvider } from '@Khayat/Providers/DatabaseProvider';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { IconRegistry } from '@ui-kitten/components';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import {appId, baseUrl} from '../../../../atlas.config.json';
-import {OnnetProvider} from '../../../Provider/OnnetProvider';
-import {AuthStack} from '../Stacks';
+import { appId, baseUrl } from '../../../../atlas.config.json';
+import { OnnetProvider } from '../../../Provider/OnnetProvider';
+import { AuthStack } from '../Stacks';
 
 const navTheme = {
   ...DefaultTheme,

@@ -7,10 +7,10 @@ import { useColorScheme, View } from 'react-native';
 
 import { withColors } from '../EventsList/EventsList.styles';
 
-export const SectionHeader: React.FC<{ section: any }> = ({ section }) => {
+export const SectionHeader: React.FC<{ title: string }> = ({ title }) => {
   const colors = useColors();
   const isDark = useColorScheme() === 'dark';
-  const colorStyles = withColors(colors);
+  const colorStyles = withColors();
 
   return (
     <BlurView
@@ -29,7 +29,7 @@ export const SectionHeader: React.FC<{ section: any }> = ({ section }) => {
         style={{ marginLeft: 8, textTransform: 'uppercase' }}
         weight="semibold"
         fontSize={12}>
-        {moment(new Date(+section.title)).format('dddd, MMMM Do')}
+        {moment(new Date(+title)).format('dddd, MMMM Do')}
       </Text>
     </BlurView>
   );
@@ -37,5 +37,5 @@ export const SectionHeader: React.FC<{ section: any }> = ({ section }) => {
 
 export default React.memo(
   SectionHeader,
-  (prev, next) => prev.section.title === next.section.title
+  (prev, next) => prev.title === next.title
 );
