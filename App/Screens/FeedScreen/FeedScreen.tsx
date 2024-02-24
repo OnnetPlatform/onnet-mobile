@@ -1,15 +1,12 @@
 import { Separator, Text } from '@Atoms';
 import { LoadingOnnet } from '@Atoms/LoadingOnnet/LoadingOnnet';
-import { useBottomSheet } from '@Context/BottomSheet';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Pressable,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import { useSharedValue, withSpring } from 'react-native-reanimated';
@@ -26,13 +23,11 @@ import { FlashList } from '@shopify/flash-list';
 export const FeedScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const { data, getData } = useFeedData();
-  const { height } = useWindowDimensions();
   const [headerHeight, setHeaderHeight] = useState(0);
   const scrollYOffset = useSharedValue<number>(0);
   const colors = useColors();
   const pullDownValue = useSharedValue(0);
   const styles = screenStyles(colors, insets);
-  const { showBottomSheet } = useBottomSheet();
   const navigation = useNavigation();
   const onScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollYOffset.value = e.nativeEvent.contentOffset.y;
