@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 export const useThemedStyle = (colors: ThemeColors) =>
   StyleSheet.create({
     wrapper: {
-      width: '50%',
+      width: '100%',
       paddingHorizontal: 2,
     },
     container: {

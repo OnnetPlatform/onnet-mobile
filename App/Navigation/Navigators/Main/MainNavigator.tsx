@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { AlertProvider } from '@Context/AlertContext/AlertProvider';
 import { BottomSheetProvider } from '@Context/BottomSheet';
 import { EventProivder } from '@Context/EventContext/EventProvider';
@@ -14,6 +13,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { appId, baseUrl } from '../../../../atlas.config.json';
 import { OnnetProvider } from '../../../Provider/OnnetProvider';
 import { AuthStack } from '../Stacks';
+import SnackbarProvider from '../../../Provider/SnackbarProvider';
 
 const navTheme = {
   ...DefaultTheme,
@@ -35,7 +35,9 @@ export const MainNavigator: React.FC = () => {
                 <DatabaseProvider id={appId} baseUrl={baseUrl}>
                   <AlertProvider>
                     <EventProivder>
-                      <AuthStack />
+                      <SnackbarProvider>
+                        <AuthStack />
+                      </SnackbarProvider>
                     </EventProivder>
                   </AlertProvider>
                 </DatabaseProvider>

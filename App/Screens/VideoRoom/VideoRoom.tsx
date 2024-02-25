@@ -4,7 +4,7 @@ import { ConferenceCreators } from '@Khayat/Redux/Actions/Conference';
 import { ConferenceSelector } from '@Khayat/Redux/Selectors/ConferenceSelector';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { FlatList, Image, Pressable, View } from 'react-native';
 import { MediaStream } from 'react-native-webrtc';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -46,11 +46,12 @@ export const VideoRoom: React.FC = () => {
           {users.length > 0 ? (
             <>
               <Separator size="md" />
-              <FlashList
+              <FlatList
                 data={users.slice(0, 5)}
                 showsHorizontalScrollIndicator={false}
                 style={alertStyles.avatarContainer}
                 horizontal
+                contentContainerStyle={{ alignItems: 'center' }}
                 ListFooterComponent={
                   users.length > 5 ? (
                     <Text style={alertStyles.separator} weight={'bold'}>
