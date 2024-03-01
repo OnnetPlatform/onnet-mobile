@@ -1,80 +1,46 @@
-import { Refresh } from '@Skia/Refresh/Refresh';
 import { useColors } from '@Theme/index';
 import {
   BackdropBlur,
   Canvas,
-  Circle,
-  Fill,
-  useClock,
   Rect,
-  Group,
-  Paint,
-  ColorMatrix,
-  Blur,
-  LinearGradient,
   vec,
+  RadialGradient,
+  Blend,
+  Turbulence,
+  Circle,
 } from '@shopify/react-native-skia';
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
-import { useDerivedValue } from 'react-native-reanimated';
 
 export const Blob: React.FC = () => {
   const colors = useColors();
   const { width, height } = useWindowDimensions();
 
-  const array = Array.from({ length: 2 }, (_, i) => i);
-  return <Refresh />;
-
   return (
     <Canvas style={StyleSheet.absoluteFillObject}>
-      <Rect width={width} height={height}>
-        <LinearGradient
-          colors={[colors.background, colors.blue]}
-          start={vec(0, 0)}
-          end={vec(width, width)}
-        />
-      </Rect>
-      <Group
-        layer={
-          <Paint>
-            <Blur blur={20} />
-            <ColorMatrix
-              matrix={[
-                1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 18, -7,
-              ]}
-            />
-          </Paint>
-        }>
-        {array.map((index) => {
-          return <AnimatedCircle index={index} array={array} key={index} />;
-        })}
-      </Group>
+      <Circle cx={0} r={height} cy={0} color={colors.background} />
+      <Circle
+        cx={width / 2}
+        r={height}
+        cy={height / 2}
+        color={colors.background}
+      />
+      <Circle cx={0} r={70} cy={height / 2} color={colors.text} />
+      <Circle cx={width} r={50} cy={height} color={colors.cyan} />
+      <Circle cx={width} r={50} cy={0} color={colors.text} />
       <BackdropBlur blur={100} blendMode={'overlay'} />
-      <Fill color={colors.background} />
+
+      <Rect width={width} height={height}>
+        <Blend mode={'dstIn'}>
+          <RadialGradient
+            colors={[colors.background, colors.text]}
+            r={6}
+            c={vec(0, 0)}
+            mode={'repeat'}
+          />
+          <Turbulence freqX={1} freqY={1} octaves={1} />
+        </Blend>
+      </Rect>
     </Canvas>
   );
-};
-
-const AnimatedCircle: React.FC<{ index: number; array: number[] }> = ({
-  index,
-  array,
-}) => {
-  const { width, height } = useWindowDimensions();
-  const colors = useColors();
-  const clock = useClock();
-  const cx = useDerivedValue(
-    () =>
-      width / 2 +
-      Math.sin((((clock.value / 10000) * Math.PI) / array.length) * index) * 100
-  );
-  const cy = useDerivedValue(
-    () =>
-      height / 2 +
-      Math.cos(
-        (((clock.value / 100000) * Math.PI) / array.length) * index * 10
-      ) *
-        400
-  );
-
-  return <Circle cx={cx} cy={cy} r={100} color={colors.text} />;
 };
