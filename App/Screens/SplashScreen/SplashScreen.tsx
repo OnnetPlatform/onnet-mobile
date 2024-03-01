@@ -21,7 +21,7 @@ export const SplashScreen: React.FC = () => {
             navigation.navigate('MainNavigation');
           } else {
             // @ts-ignore
-            navigation.navigate('LaunchScreen');
+            navigation.navigate('AuthenticationScreen');
           }
         }
       } catch (error) {}

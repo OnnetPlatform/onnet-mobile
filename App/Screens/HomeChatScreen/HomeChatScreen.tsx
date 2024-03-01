@@ -2,20 +2,19 @@ import { Icon, Separator, Text } from '@Atoms';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import Images from '@Theme/Images';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Image, Pressable, SafeAreaView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
-import { useSnackbar } from '@Context/SnackbarContext';
+import SnackbarRef from '../../Provider/SnackbarProvider/SnackbarRef';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const withColors = styles(colors, insets);
   const navigation = useNavigation();
-  const { showSnackbar } = useSnackbar();
 
   // @ts-ignore
   const onSettingsPressed = () => navigation.navigate('Settings');
@@ -42,11 +41,12 @@ export const HomeChatScreen: React.FC = () => {
           <Separator horizontal />
           <Pressable
             onPress={() => {
-              showSnackbar({
-                title: 'Welcome to Onnet!',
-                variant: 'ERROR',
-                subtitle: 'We are happy to have you.',
-              });
+              if (SnackbarRef.current)
+                SnackbarRef.current.showSnackbar({
+                  title: 'Welcome to Onnet!',
+                  variant: 'ERROR',
+                  subtitle: 'We are happy to have you.',
+                });
             }}>
             <Icon name={'person-add-outline'} />
           </Pressable>

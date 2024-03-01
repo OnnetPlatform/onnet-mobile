@@ -2,11 +2,7 @@ import { useMemo } from 'react';
 import { SnackbarProps } from './types';
 import { useColors } from '@Theme/index';
 import { StyleSheet } from 'react-native';
-// variant == 'SUCCESS'
-// ? colors.blue
-// : variant === 'ERROR'
-// ? colors.background
-// : colors.yellow,
+
 export default StyleSheet.create({
   wrapper: {
     width: '100%',
@@ -29,7 +25,8 @@ export default StyleSheet.create({
   },
 });
 
-export const useSnackbarColors = (props: SnackbarProps) => {
+export const useSnackbarColors = (props?: SnackbarProps) => {
+  if (!props) return { iconColor: '', backgroundColor: '' };
   const { variant } = props;
   const colors = useColors();
 

@@ -36,7 +36,6 @@ export const TextMessage: React.FC<{
   const setLayout = () => {
     runOnUI(() => {
       const measurement = measure(ref);
-      console.log(measurement);
       if (measurement)
         layout.value = {
           pageY: measurement?.pageY,

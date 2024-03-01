@@ -25,7 +25,7 @@ export const GradientCard: React.FC = () => {
       <Circle r={256} cx={width} cy={height / 2} color={colors.blue} />
       <BackdropBlur blur={100} blendMode={'overlay'} />
       <Rect x={0} y={0} width={width} height={height}>
-        <Turbulence freqX={1} freqY={1} octaves={1} seed={1} />
+        <Turbulence freqX={1} freqY={1} octaves={100} />
       </Rect>
     </Canvas>
   );

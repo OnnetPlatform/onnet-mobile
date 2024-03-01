@@ -1,6 +1,7 @@
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
+  AuthenticationScreen,
   LaunchScreen,
   LoginScreen,
   RegisterationScreen,
@@ -22,6 +23,7 @@ const AuthStack: React.FC = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
+
       {access_token ? (
         <>
           <Stack.Screen
@@ -62,6 +64,10 @@ const AuthStack: React.FC = () => {
         </>
       ) : (
         <>
+          <Stack.Screen
+            name="AuthenticationScreen"
+            component={AuthenticationScreen}
+          />
           <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
           <Stack.Screen name="LoginScreen" component={LoginScreen} />
           <Stack.Screen

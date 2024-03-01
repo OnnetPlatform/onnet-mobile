@@ -22,7 +22,7 @@ const LaunchScreen: React.FC = () => {
   const onLoginPressed = () => {
     setStep(1);
     // @ts-ignore
-    navigation.navigate('LoginScreen');
+    navigation.navigate('AuthenticationScreen');
   };
   useEffect(() => {
     console.log(step);

@@ -57,7 +57,7 @@ export const BottomSheet = React.forwardRef<
       index={-1}
       handleComponent={handleComponent}
       snapPoints={[1]}
-      backdropComponent={BackdropView}
+      // backdropComponent={BackdropView}
       enableDynamicSizing
       backgroundStyle={styles.background}
       style={styles.bottomSheet}

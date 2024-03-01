@@ -1,6 +1,7 @@
 import PageView from '@HOCs/PageView';
 import { BulletinCreators } from '@Khayat/Redux/Actions/BulletinActions';
 import { BulletinSelector } from '@Khayat/Redux/Selectors/BulletinSelector';
+import { RetroLoading } from '@Skia/RetroLoading/RetroLoading';
 import { TVNoise } from '@Skia/TVNoise';
 import React, { useEffect } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
@@ -39,7 +40,10 @@ export const LiveAnnouncement: React.FC = () => {
       hide={hide}
       edges={['left', 'right']}>
       {!remoteStream ? (
-        <TVNoise />
+        <>
+          <TVNoise />
+          <RetroLoading />
+        </>
       ) : (
         <Pressable
           onPressIn={() => {

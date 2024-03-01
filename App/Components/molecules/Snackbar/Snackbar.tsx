@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import { SnackbarProps } from './types';
+import React, { useCallback, useImperativeHandle, useMemo } from 'react';
+import { SnackbarProps, SnackbarRefType } from './types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Text from '@Atoms/Text';
 import Separator from '@Atoms/Separator';
@@ -11,40 +11,46 @@ import { useSnackbar } from '@Context/SnackbarContext';
 import Animated, { SlideInUp } from 'react-native-reanimated';
 import Texture from '@Skia/Texture/Texture';
 
-export const Snackbar: React.FC<SnackbarProps> = (props) => {
-  const { top } = useSafeAreaInsets();
-  const { backgroundColor } = useSnackbarColors(props);
-  const { showSnackbar } = useSnackbar();
-  const hideSnackbar = useCallback(() => {
-    showSnackbar(undefined);
-  }, []);
+export const Snackbar = React.forwardRef<SnackbarRefType, SnackbarProps>(
+  (props, ref) => {
+    const { top } = useSafeAreaInsets();
+    const { backgroundColor } = useSnackbarColors(props);
+    const { showSnackbar } = useSnackbar();
+    const hideSnackbar = useCallback(() => {
+      showSnackbar(undefined);
+    }, []);
 
-  const container = useMemo(
-    () => ({
-      marginTop: top,
-    }),
-    [backgroundColor, top]
-  );
+    const container = useMemo(
+      () => ({
+        marginTop: top,
+      }),
+      [backgroundColor, top]
+    );
 
-  return (
-    <Animated.View entering={SlideInUp} style={styles.wrapper}>
-      <View style={[container, styles.container]}>
-        <Texture />
-        <View style={styles.body}>
-          <Pressable onPress={hideSnackbar}>
-            <Icon name={'close-outline'} />
-          </Pressable>
+    useImperativeHandle(ref, () => ({ showSnackbar }));
 
-          <Separator horizontal size={'md'} />
-          <View style={styles.flex}>
-            <Title {...props} />
-            <Subtitle {...props} />
+    if (Object.keys(props).length === 0) return <View />;
+
+    return (
+      <Animated.View entering={SlideInUp} style={styles.wrapper}>
+        <View style={[container, styles.container]}>
+          <Texture />
+          <View style={styles.body}>
+            <Pressable onPress={hideSnackbar}>
+              <Icon name={'close-outline'} />
+            </Pressable>
+
+            <Separator horizontal size={'md'} />
+            <View style={styles.flex}>
+              <Title {...props} />
+              <Subtitle {...props} />
+            </View>
           </View>
         </View>
-      </View>
-    </Animated.View>
-  );
-};
+      </Animated.View>
+    );
+  }
+);
 
 const Title: React.FC<SnackbarProps> = ({ title, variant }) => {
   switch (variant) {
@@ -69,7 +75,7 @@ const Title: React.FC<SnackbarProps> = ({ title, variant }) => {
         </Text>
       );
   }
-  return <Text>{title}</Text>;
+  return <Text weight="bold">{title}</Text>;
 };
 const Subtitle: React.FC<SnackbarProps> = ({ subtitle, variant }) => {
   switch (variant) {

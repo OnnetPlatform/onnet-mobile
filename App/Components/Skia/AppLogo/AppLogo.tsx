@@ -74,7 +74,7 @@ const AppLogo: React.FC<{}> = () => {
   return (
     <MaskedView
       maskElement={
-        <Text weight="black" style={styles.logo} fontSize={64}>
+        <Text weight="black" style={styles.logo} fontSize={32}>
           ONNET
         </Text>
       }>
@@ -83,7 +83,7 @@ const AppLogo: React.FC<{}> = () => {
         animatedProps={animatedProps}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={{ width, height: 80 }}
+        style={{ width, height: 40 }}
       />
     </MaskedView>
   );

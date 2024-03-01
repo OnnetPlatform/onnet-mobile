@@ -1,6 +1,8 @@
 import { BottomSheetProps } from '@Molecules/BottomSheet/types';
 
-export type BottomSheetContextType = Optional<{
-  hideBottomSheet: () => void;
-  showBottomSheet: (props: BottomSheetProps) => void;
-}>;
+export type BottomSheetContextType =
+  | {
+      hideBottomSheet: () => void;
+      showBottomSheet: (props: BottomSheetProps) => void;
+    }
+  | undefined;
