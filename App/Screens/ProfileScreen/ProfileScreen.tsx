@@ -27,7 +27,7 @@ import { Icon, Text } from '../../Components/atoms';
 import dyanmicStyles from './ProfileScreen.styles';
 
 const image =
-  'https://images.unsplash.com/photo-1508107222753-0c236c337911?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80';
+  'https://images.unsplash.com/photo-1708348127662-6c3771e8c3bd?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 export const ProfileScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -113,7 +113,7 @@ export const ProfileScreen: React.FC = () => {
             />
             <Text>{moment().format('hh:mm A')}</Text>
           </View>
-          <View style={{ marginTop: 22 }}>
+          <View style={{ marginTop: 22, paddingBottom: 22 }}>
             <Text>Reports to</Text>
             <View
               style={{

@@ -14,7 +14,7 @@ import { useScrollToTop } from '@react-navigation/native';
 export const EventsList: React.FC<{
   onCreatePressed(): void;
 }> = ({ onCreatePressed }) => {
-  const [selectedDate] = useState<Date>();
+  const [selectedDate, setSelectedDate] = useState<Date>();
   const sorted = useSortedData();
   const animatedHeaderValue = useSharedValue(0);
   const ref = useRef<FlashList<any>>(null);
@@ -37,8 +37,12 @@ export const EventsList: React.FC<{
           const index = sorted
             .filter((item) => typeof item !== 'object')
             .find((item) => {
-              return new Date(+item).getDate() === date.getDate();
+              return (
+                new Date(+item).getDate() === date.getDate() &&
+                new Date(+item).getMonth() === date.getMonth()
+              );
             });
+          setSelectedDate(date);
           ref.current?.scrollToIndex({
             index: sorted.indexOf(index || 0),
             animated: true,

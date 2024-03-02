@@ -21,6 +21,7 @@ export const ChatUser: React.FC<{ item: UserChat }> = ({ item }) => {
   const { id } = useSelector(AuthSelector);
   return (
     <Pressable
+      style={{ marginHorizontal: 22 }}
       onPress={() => {
         // @ts-ignore
         navigation.navigate('UserChatScreen', { user: localUser });

@@ -47,3 +47,5 @@ export const Refresh: React.FC = () => {
     </Canvas>
   );
 };
+
+export default Refresh;

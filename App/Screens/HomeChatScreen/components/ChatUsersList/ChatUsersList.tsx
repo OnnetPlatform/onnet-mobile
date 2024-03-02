@@ -8,11 +8,14 @@ import EmptyState from './components/EmptyState';
 import SnackbarRef from '../../../../Provider/SnackbarProvider/SnackbarRef';
 import { realm } from '@Khayat/Database/Queries/User';
 import Message from '@Khayat/Database/Models/Message';
+import { useSelector } from 'react-redux';
+import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 
 export const ChatUsersList: React.FC = () => {
   const { users } = useRealmUsers();
   const messages = realm.objects('Message');
   const sortedUsersAphabet = users.sorted('first_name');
+  const { id } = useSelector(AuthSelector);
   const activeUsers = Array.from(
     sortedUsersAphabet.sorted('isActive', true).filtered('unreadCount = 0')
   );
@@ -36,10 +39,11 @@ export const ChatUsersList: React.FC = () => {
     messages.addListener(function (messages: Message[], changes) {
       if (changes.insertions.length > 0) {
         const message = messages[changes.insertions[0]];
-        SnackbarRef.current?.showSnackbar({
-          subtitle: message?.message,
-          title: message?.from?.first_name,
-        });
+        if (message.from._id !== id)
+          SnackbarRef.current?.showSnackbar({
+            subtitle: message?.message,
+            title: message?.from?.first_name,
+          });
       }
     });
 
@@ -55,7 +59,6 @@ export const ChatUsersList: React.FC = () => {
       SectionListItemComponent={ChatUser}
       ListEmptyComponent={EmptyState}
       ItemSeparatorComponent={Separator}
-      contentContainerStyle={{ paddingHorizontal: 22 }}
     />
   );
 };
@@ -63,7 +66,7 @@ export const ChatUsersList: React.FC = () => {
 const Header: React.FC<{ title: string }> = ({ title }) => {
   if (title === '') return null;
   return (
-    <View style={{ marginVertical: 11 }}>
+    <View style={{ marginVertical: 11, marginHorizontal: 22 }}>
       <Text weight="bold" fontSize={11} style={{ textTransform: 'uppercase' }}>
         {title}
       </Text>
