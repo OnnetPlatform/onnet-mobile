@@ -22,7 +22,7 @@ import styles from './styles';
 import Separator from '@Atoms/Separator';
 const reactions = ['❤️', '🤣', '😮', '😢', '😡'];
 
-export const TextMessage: React.FC<{
+const TextMessageComponent: React.FC<{
   item: { message: string; createdAt: string };
 }> = ({ item }) => {
   const colors = useColors();
@@ -32,7 +32,7 @@ export const TextMessage: React.FC<{
   const ref = useAnimatedRef<Animated.View>();
   const layout = useSharedValue({ pageY: 0, height: 0 });
   const stickerIndex = useSharedValue(-1);
-
+  console.log('here');
   const setLayout = () => {
     runOnUI(() => {
       const measurement = measure(ref);
@@ -163,3 +163,7 @@ const ReactionModal: React.FC<{
     </Modal>
   );
 };
+export const TextMessage = React.memo(
+  TextMessageComponent,
+  (prev, next) => prev.item.createdAt === next.item.createdAt
+);

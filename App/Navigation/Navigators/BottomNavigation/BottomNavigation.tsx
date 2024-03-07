@@ -5,13 +5,13 @@ import {
 } from '@react-navigation/bottom-tabs';
 import {
   FeedScreen,
+  HomeChatScreen,
   HomeScreen,
   NotificationScreen,
   ProfileScreen,
 } from '@Screens';
 import React from 'react';
 
-import { ChatStack } from '../Stacks/ChatStack/ChatStack';
 import TabBar from './TabBar';
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +31,7 @@ export const HomeBottomNavigation = () => {
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{ backgroundColor: 'transparent' }}
         screenOptions={screenOptions}>
-        <Tab.Screen name="HomeChat" component={ChatStack} />
+        <Tab.Screen name="HomeChat" component={HomeChatScreen} />
         <Tab.Screen name="HomeScreen" component={HomeScreen} />
         <Tab.Screen name="home" component={FeedScreen} />
         <Tab.Screen name="bell" component={NotificationScreen} />

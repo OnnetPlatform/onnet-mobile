@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MessageInputContext } from '../../Context/MessageInputContext/MessageInputContext';
 import { UploadedImage } from '../../Context/MessageInputContext/types';
-import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme/index';
+import { useColors } from '@Theme/index';
 
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
@@ -86,7 +86,6 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
       }}>
       <BottomSheet
         ref={sheetInputRef}
-        bottomInset={BOTTOM_BAR_HEIGHT - 20}
         enableDynamicSizing={true}
         index={0}
         backgroundComponent={Texture}

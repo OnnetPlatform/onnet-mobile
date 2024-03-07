@@ -1,6 +1,6 @@
 import { PageView } from '@HOCs';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ChatStackParamList } from 'App/Navigation/Navigators/Stacks/ChatStack/types';
+import { ChatStackParamList } from '../../Navigation/Navigators/Stacks/ChatStack/types';
 import React from 'react';
 
 type Props = NativeStackScreenProps<ChatStackParamList, 'CustomScreen'>;

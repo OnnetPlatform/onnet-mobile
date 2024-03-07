@@ -3,7 +3,7 @@ import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import ChatEmptyState from '@Molecules/ChatEmptyState';
 import { useNavigation } from '@react-navigation/native';
 import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Pressable, View } from 'react-native';
 
 import {
@@ -37,14 +37,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
     return <ChatEmptyState username={user.first_name} />;
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (ref.current && msgs.length > 0) {
-        ref.current.scrollToEnd({ animated: true });
-      }
-    }, 100);
-  }, [msgs, ref, ref.current]);
-
   return (
     <SafeAreaView style={withColors.page} edges={['bottom', 'left', 'right']}>
       <View style={withColors.header}>
@@ -68,6 +60,9 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
       <SectionsList
         data={msgs}
         SectionListHeaderComponent={MessageHeader}
+        onContentSizeChange={() => {
+          if (ref.current) ref.current.scrollToEnd({ animated: true });
+        }}
         SectionListItemComponent={TextMessage}
         contentContainerStyle={{ paddingBottom: BOTTOM_BAR_HEIGHT + 80 }}
         ListEmptyComponent={ListEmptyComponent}

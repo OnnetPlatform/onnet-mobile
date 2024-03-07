@@ -16,6 +16,8 @@ import SnackbarProvider from '../../../Provider/SnackbarProvider';
 
 import * as Sentry from '@sentry/react-native';
 import { AuthStack } from '..';
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
 const navTheme = {
   ...DefaultTheme,

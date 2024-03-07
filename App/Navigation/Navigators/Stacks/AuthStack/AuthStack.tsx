@@ -3,10 +3,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   AudioScreen,
   AuthenticationScreen,
+  CustomScreen,
   LaunchScreen,
   LoginScreen,
+  ProfileScreen,
   RegisterationScreen,
   SplashScreen,
+  UserChatScreen,
   VideoRoom,
 } from '@Screens';
 import { CreateAnnouncement, LiveAnnouncement } from '@Screens/Announcement';
@@ -16,6 +19,7 @@ import { useSelector } from 'react-redux';
 
 import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
 import CreateEventNavigation from '../../CreateEventNavigation';
+import SettingsNavigator from '../SettingsNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,10 +40,14 @@ const AuthStack: React.FC = () => {
             name="MainNavigation"
             component={HomeBottomNavigation}
           />
-
           <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
           <Stack.Screen name="AudioScreen" component={AudioScreen} />
           <Stack.Screen name="MediaRecorder" component={MediaRecording} />
+          <Stack.Screen name="UserChatScreen" component={UserChatScreen} />
+          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+          <Stack.Screen name="Settings" component={SettingsNavigator} />
+          {/* @ts-ignore */}
+          <Stack.Screen name="CustomScreen" component={CustomScreen} />
           <Stack.Group
             screenOptions={{
               presentation: 'modal',
@@ -49,7 +57,6 @@ const AuthStack: React.FC = () => {
               component={CreateEventNavigation}
             />
           </Stack.Group>
-
           <Stack.Screen
             options={{
               headerShown: false,
