@@ -15,3 +15,4 @@ export { default as CustomScreen } from './CustomScreen';
 export { default as RegisterationScreen } from './RegisterationScreen';
 export { default as EventDescriptionScreen } from './CreateEvent/EventDescriptionScreen';
 export { default as AuthenticationScreen } from './AuthenticationScreen';
+export { default as AudioScreen } from './AudioScreen';

@@ -1,22 +1,21 @@
 import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
+export function formatTimer(millisecond: number) {
+  const duration = moment.duration(-millisecond);
+  const hours = Math.floor(duration.asHours());
+  const minutes = duration.minutes();
+  const seconds = duration.seconds();
+  const formattedTimer = moment({ hours, minutes, seconds }).format(
+    hours > 0 ? 'HH:mm:ss' : 'mm:ss'
+  );
+  return formattedTimer;
+}
 
 export const useTimer = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [milliseconds, setMilliSeconds] = useState<number>(0);
   const [paused, setPaused] = useState<boolean>(false);
   let intervalId: any = null;
-
-  function formatTimer(millisecond: number) {
-    const duration = moment.duration(-millisecond);
-    const hours = Math.floor(duration.asHours());
-    const minutes = duration.minutes();
-    const seconds = duration.seconds();
-    const formattedTimer = moment({ hours, minutes, seconds }).format(
-      hours > 0 ? 'HH:mm:ss' : 'mm:ss'
-    );
-    return formattedTimer;
-  }
 
   const interval = () => {
     if (!paused && startDate) {

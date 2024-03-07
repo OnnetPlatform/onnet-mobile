@@ -5,15 +5,17 @@ import { DatabaseProvider } from '@Khayat/Providers/DatabaseProvider';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { Suspense } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { appId, baseUrl } from '../../../../atlas.config.json';
 import { OnnetProvider } from '../../../Provider/OnnetProvider';
-import { AuthStack } from '../Stacks';
 import SnackbarProvider from '../../../Provider/SnackbarProvider';
+
+import * as Sentry from '@sentry/react-native';
+import { AuthStack } from '..';
 
 const navTheme = {
   ...DefaultTheme,
@@ -23,15 +25,16 @@ const navTheme = {
   },
 };
 
-export const MainNavigator: React.FC = () => {
+export const MainNavigator: React.ComponentType = Sentry.wrap(() => {
   return (
-    <>
+    <Suspense fallback={<View />}>
       <IconRegistry icons={EvaIconsPack} />
       <SafeAreaProvider>
         <OnnetProvider>
           <GestureHandlerRootView style={styles.mainContainer}>
             <BottomSheetProvider>
               <NavigationContainer theme={navTheme}>
+                {/* @ts-ignore */}
                 <DatabaseProvider id={appId} baseUrl={baseUrl}>
                   <AlertProvider>
                     <EventProivder>
@@ -46,9 +49,9 @@ export const MainNavigator: React.FC = () => {
           </GestureHandlerRootView>
         </OnnetProvider>
       </SafeAreaProvider>
-    </>
+    </Suspense>
   );
-};
+});
 
 const styles = StyleSheet.create({
   mainContainer: {

@@ -13,4 +13,4 @@ export const DatabaseProvider: React.FC<
     </AppProvider>
   );
 };
-export default RealmProvider;
+export default DatabaseProvider;

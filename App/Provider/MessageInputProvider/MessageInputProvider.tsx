@@ -19,6 +19,7 @@ import Texture from '@Skia/Texture/Texture';
 import { ThemeColors } from '@Theme/Colors';
 import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { useDispatch } from 'react-redux';
+import RecordingModal from './Components/RecordingModal';
 
 export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
   user,
@@ -32,6 +33,7 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
   const [openUploadedGallery, toggleUploadedGalleryModel] = useState(false);
   const [openEmojisList, toggleEmojisList] = useState(false);
   const [openMentionsList, toggleMentionsList] = useState(false);
+  const [openRecordingModal, toggleRecordingModal] = useState<boolean>(false);
   const typingSent = useRef(false);
   const markdownStyle = useMarkdownStyles();
   const colors = useColors();
@@ -79,6 +81,8 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
         openMentionsList,
         toggleMentionsList,
         user: localUser,
+        openRecordingModal,
+        toggleRecordingModal,
       }}>
       <BottomSheet
         ref={sheetInputRef}
@@ -107,6 +111,7 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
           <LocalGallery />
           <InputEmojisList />
           <MentionList />
+          <RecordingModal />
         </BottomSheetView>
       </BottomSheet>
     </MessageInputContext.Provider>

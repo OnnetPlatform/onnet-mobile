@@ -39,10 +39,16 @@ export type UploadedImage = {
   width: number;
 };
 
+export type Recording = {
+  openRecordingModal: boolean;
+  toggleRecordingModal(open: boolean): void;
+};
+
 export type MessageInputContext = Optional<
   TextMessage &
     LocalGalleryContext &
     UploadedGalleryContext &
     EmojisListContext &
-    MentionsList
+    MentionsList &
+    Recording
 >;

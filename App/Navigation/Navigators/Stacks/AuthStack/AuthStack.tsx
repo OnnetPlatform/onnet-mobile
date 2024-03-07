@@ -1,6 +1,7 @@
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
+  AudioScreen,
   AuthenticationScreen,
   LaunchScreen,
   LoginScreen,
@@ -35,7 +36,9 @@ const AuthStack: React.FC = () => {
             name="MainNavigation"
             component={HomeBottomNavigation}
           />
+
           <Stack.Screen name="ConferenceScreen" component={VideoRoom} />
+          <Stack.Screen name="AudioScreen" component={AudioScreen} />
           <Stack.Screen name="MediaRecorder" component={MediaRecording} />
           <Stack.Group
             screenOptions={{

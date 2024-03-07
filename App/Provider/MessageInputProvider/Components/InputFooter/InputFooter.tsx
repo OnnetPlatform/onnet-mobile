@@ -35,6 +35,10 @@ export const InputFooter: React.FC = () => {
         icon: 'at-outline',
         action: () => toggleMentionsList(!openMentionsList),
       },
+      {
+        icon: 'mic-outline',
+        action: () => toggleMentionsList(!openMentionsList),
+      },
     ],
     [openEmojisList, openEmojisList, openLocalGallery, openMentionsList]
   );

@@ -1,4 +1,11 @@
 {
   "name": "Onnet",
-  "displayName": "Onnet"
+  "displayName": "Onnet",
+  "expo": {
+    "name": "Onnet",
+    "slug": "Onnet",
+    "version": "0.0.2",
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["@config-plugins/react-native-webrtc"]
+  }
 }
