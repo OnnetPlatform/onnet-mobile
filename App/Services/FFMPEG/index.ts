@@ -1,4 +1,4 @@
-import { FFmpegKit } from 'ffmpeg-kit-react-native';
+import { FFmpegKit, FFprobeKit } from 'ffmpeg-kit-react-native';
 import * as FileSystem from 'expo-file-system';
 const getFileNameFromPath = (path: string) => {
   const fragments = path.split('/');
@@ -17,6 +17,15 @@ const getBitrate = async (uri: string) => {
     `-i ${uri} -filter_complex \ "[0:a]aformat=channel_layouts=mono, \ compand=gain=20, \ showwavespic=s=600x120:colors=#ffffff@0.9[fg]; \ color=s=600x120:color=#ffffff@0.0001, \ drawgrid=width=iw/10:height=ih/5:color=#9cf42f@0.1[bg]; \ [bg][fg]overlay=format=auto,drawbox=x=(iw-w)/2:y=(ih-h)/2:w=iw:h=1:color=#ffffff" \ -frames:v 1 ${output}`
   )
     .then(() => output)
+    .catch(console.log);
+};
+
+export const getLiveAudioData = (uri: string) => {
+  return FFmpegKit.execute(`-i ${uri}`)
+    .then(async (session) => {
+      const output = await session.getOutput();
+      console.log('output', output);
+    })
     .catch(console.log);
 };
 

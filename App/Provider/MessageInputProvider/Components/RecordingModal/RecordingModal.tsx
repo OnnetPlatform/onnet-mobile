@@ -12,6 +12,7 @@ import { Image, Pressable, View } from 'react-native';
 
 import { SlideInLeft, useSharedValue } from 'react-native-reanimated';
 import useStyles from './styles';
+import Pulse from '@Skia/Pulse';
 
 export const RecordingModal: React.FC = () => {
   const colors = useColors();
@@ -23,7 +24,7 @@ export const RecordingModal: React.FC = () => {
   const [uri, setUri] = useState<string | null>(null);
   const position = useSharedValue(0.8);
   const duration = useSharedValue(100);
-
+  const metring = useSharedValue(0);
   const onRecordingPressed = useCallback(async () => {
     if (currentRecording) {
       await currentRecording.stopAndUnloadAsync();
@@ -48,6 +49,8 @@ export const RecordingModal: React.FC = () => {
       position.value = 0;
       recording.setProgressUpdateInterval(100);
       recording.setOnRecordingStatusUpdate((status) => {
+        if (status.metering !== undefined) metring.value = status.metering;
+        else metring.value = 0;
         setRecordingStatus(status);
       });
     });
@@ -68,9 +71,18 @@ export const RecordingModal: React.FC = () => {
   return (
     <>
       <View style={styles.container}>
-        <Pressable onPress={onRecordingPressed} style={styles.button}>
-          <Icon name={`${currentRecording ? 'square' : 'mic'}-outline`} />
-        </Pressable>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative',
+          }}>
+          {currentRecording ? <Pulse peak={metring} /> : null}
+          <Pressable onPress={onRecordingPressed} style={styles.button}>
+            <Icon name={`${currentRecording ? 'square' : 'mic'}-outline`} />
+          </Pressable>
+        </View>
+
         <Separator horizontal />
         {currentRecording && recordingStatus ? (
           <Text entering={SlideInLeft}>

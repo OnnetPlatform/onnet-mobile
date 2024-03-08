@@ -12,7 +12,7 @@ export default (colors: ThemeColors) =>
       height: 48,
       width: 48,
       borderRadius: 24,
-      backgroundColor: colors.cyan,
+      backgroundColor: colors.background,
       justifyContent: 'center',
       alignItems: 'center',
       overflow: 'hidden',
