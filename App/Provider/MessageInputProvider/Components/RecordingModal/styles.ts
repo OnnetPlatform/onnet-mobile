@@ -21,4 +21,9 @@ export default (colors: ThemeColors) =>
       height: 48,
       width: 300,
     },
+    wave_container: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'relative',
+    },
   });

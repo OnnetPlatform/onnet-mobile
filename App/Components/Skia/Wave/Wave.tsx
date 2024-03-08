@@ -5,7 +5,9 @@ import {
   vec,
   Rect,
   Blend,
-  FractalNoise,
+  useImage,
+  Image,
+  Mask,
 } from '@shopify/react-native-skia';
 
 import { useColors } from '@Theme/index';
@@ -15,34 +17,56 @@ export const Wave: React.FC<{
   progress: SharedValue<number>;
   width: number;
   height: number;
-}> = ({ progress, width, height }) => {
+  uri: string;
+}> = ({ progress, width, height, uri }) => {
   const colors = useColors();
+  const image = useImage(uri);
 
   return (
-    <Canvas style={{ width, height, backgroundColor: colors.background }}>
-      <Rect x={0} width={width} height={height}>
-        <LinearGradient
-          start={vec(3, 0)}
-          end={vec(0, 0)}
-          colors={[colors.background, colors.text, colors.background]}
-          mode={'mirror'}
-        />
-      </Rect>
-      <Rect width={progress} height={height}>
-        <Blend mode={'multiply'}>
-          <LinearGradient
-            start={vec(0, 0)}
-            end={vec(width, width)}
-            colors={[colors.cyan, colors.pink, colors.pink]}
+    <Canvas style={{ width, height, backgroundColor: 'transparent' }}>
+      <Mask
+        mask={
+          <Image
+            image={image}
+            fit={'fill'}
+            height={height}
+            width={width}
+            color={colors.text}
           />
-          <LinearGradient
-            start={vec(3, 0)}
-            end={vec(0, 0)}
-            colors={[colors.background, 'transparent', colors.background]}
-            mode={'mirror'}
-          />
-        </Blend>
-      </Rect>
+        }>
+        <>
+          <Rect width={width} height={height}>
+            <Blend mode={'multiply'}>
+              <LinearGradient
+                start={vec(0, 0)}
+                end={vec(width, width)}
+                colors={[colors.text, colors.text]}
+              />
+              <LinearGradient
+                start={vec(4, 0)}
+                end={vec(0, 0)}
+                colors={[colors.background, 'transparent', colors.background]}
+                mode={'repeat'}
+              />
+            </Blend>
+          </Rect>
+          <Rect width={progress} height={height}>
+            <Blend mode={'multiply'}>
+              <LinearGradient
+                start={vec(0, 0)}
+                end={vec(width, width)}
+                colors={[colors.cyan, colors.pink, colors.pink]}
+              />
+              <LinearGradient
+                start={vec(4, 0)}
+                end={vec(0, 0)}
+                colors={[colors.background, 'transparent', colors.background]}
+                mode={'repeat'}
+              />
+            </Blend>
+          </Rect>
+        </>
+      </Mask>
     </Canvas>
   );
 };

@@ -4,11 +4,10 @@ import Text from '@Atoms/Text';
 import { formatTimer } from '@Hooks/useTimer';
 import Wave from '@Skia/Wave';
 import { useColors } from '@Theme/index';
-import MaskedView from '@react-native-masked-view/masked-view';
 import { getBitrate } from 'Services/FFMPEG';
 import { AVPlaybackStatusSuccess, Audio } from 'expo-av';
-import React, { useCallback, useState } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import { Pressable, View } from 'react-native';
 
 import { SlideInLeft, useSharedValue } from 'react-native-reanimated';
 import useStyles from './styles';
@@ -25,6 +24,8 @@ export const RecordingModal: React.FC = () => {
   const position = useSharedValue(0.8);
   const duration = useSharedValue(100);
   const metring = useSharedValue(0);
+  const soundInstance = useRef<Audio.Sound>();
+
   const onRecordingPressed = useCallback(async () => {
     if (currentRecording) {
       await currentRecording.stopAndUnloadAsync();
@@ -58,25 +59,39 @@ export const RecordingModal: React.FC = () => {
 
   const onPlayPressed = useCallback(async () => {
     if (uri === null) return;
-    const { sound } = await Audio.Sound.createAsync({ uri });
-    await sound.playAsync();
-    await sound.setProgressUpdateIntervalAsync(1);
-    // @ts-ignore
-    sound.setOnPlaybackStatusUpdate((event: AVPlaybackStatusSuccess) => {
-      position.value =
-        (event.positionMillis / (event.durationMillis || 1)) * 300;
-    });
-  }, [uri]);
+    if (soundInstance.current) {
+      await soundInstance.current.stopAsync();
+      await soundInstance.current.unloadAsync();
+      soundInstance.current = undefined;
+      position.value = 0;
+      return;
+    }
+    try {
+      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+      const { sound: playObject } = await Audio.Sound.createAsync(
+        { uri },
+        { shouldPlay: true }
+      );
+      soundInstance.current = playObject;
+      await playObject.setProgressUpdateIntervalAsync(1);
+
+      playObject.setOnPlaybackStatusUpdate(
+        // @ts-ignore
+        (event: AVPlaybackStatusSuccess) => {
+          position.value =
+            (event.positionMillis / (event.durationMillis || 1)) * 300;
+        }
+      );
+      await soundInstance.current.playAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [uri, soundInstance.current]);
 
   return (
     <>
       <View style={styles.container}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative',
-          }}>
+        <View style={styles.wave_container}>
           {currentRecording ? <Pulse peak={metring} /> : null}
           <Pressable onPress={onRecordingPressed} style={styles.button}>
             <Icon name={`${currentRecording ? 'square' : 'mic'}-outline`} />
@@ -96,20 +111,8 @@ export const RecordingModal: React.FC = () => {
           </Pressable>
         ) : null}
 
-        {uri && wave ? (
-          <>
-            <Separator horizontal />
-            <MaskedView
-              maskElement={
-                <Image
-                  source={{ uri: wave }}
-                  resizeMode="stretch"
-                  style={styles.wave}
-                />
-              }>
-              <Wave progress={position} width={300} height={48} />
-            </MaskedView>
-          </>
+        {wave && uri ? (
+          <Wave progress={position} width={300} height={48} uri={wave} />
         ) : null}
       </View>
     </>

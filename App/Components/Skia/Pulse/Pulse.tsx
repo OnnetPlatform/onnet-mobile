@@ -10,6 +10,8 @@ import {
   withSpring,
 } from 'react-native-reanimated';
 
+const RADIUS = 100;
+
 export const Pulse: React.FC<{ peak: SharedValue<number> }> = ({ peak }) => {
   const one = useDerivedValue(() =>
     interpolate(peak.value, [-160, 50], [0, 30])
@@ -32,7 +34,7 @@ export const Pulse: React.FC<{ peak: SharedValue<number> }> = ({ peak }) => {
     () => two.value,
     (_, previousValue) => {
       if (previousValue !== null) {
-        three.value = withSpring(previousValue + 10);
+        three.value = previousValue + 10;
       }
     }
   );
@@ -48,19 +50,24 @@ export const Pulse: React.FC<{ peak: SharedValue<number> }> = ({ peak }) => {
   return (
     <Canvas
       style={{
-        width: 150,
-        height: 150,
-        borderRadius: 75,
+        width: RADIUS,
+        height: RADIUS,
+        borderRadius: RADIUS / 2,
         overflow: 'hidden',
         position: 'absolute',
       }}>
-      <Circle cx={75} cy={75} r={200} color={'transparent'} />
-      <Circle cx={75} cy={75} r={four} color={colors.cyan} />
-      <Circle cx={75} cy={75} r={three} color={colors.pink} />
-      <Circle cx={75} cy={75} r={two} color={colors.blue} />
-      <Circle cx={75} cy={75} r={one} color={colors.text} />
+      <Circle cx={RADIUS / 2} cy={RADIUS / 2} r={200} color={'transparent'} />
+      <Circle cx={RADIUS / 2} cy={RADIUS / 2} r={four} color={colors.cyan} />
+      <Circle cx={RADIUS / 2} cy={RADIUS / 2} r={three} color={colors.pink} />
+      <Circle cx={RADIUS / 2} cy={RADIUS / 2} r={two} color={colors.blue} />
+      <Circle cx={RADIUS / 2} cy={RADIUS / 2} r={one} color={colors.text} />
       <BackdropBlur blur={10} />
-      <Circle cx={75} cy={75} r={one} color={colors.background} />
+      <Circle
+        cx={RADIUS / 2}
+        cy={RADIUS / 2}
+        r={one}
+        color={colors.background}
+      />
     </Canvas>
   );
 };
