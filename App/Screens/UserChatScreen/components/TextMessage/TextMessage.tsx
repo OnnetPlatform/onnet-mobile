@@ -32,7 +32,7 @@ const TextMessageComponent: React.FC<{
   const ref = useAnimatedRef<Animated.View>();
   const layout = useSharedValue({ pageY: 0, height: 0 });
   const stickerIndex = useSharedValue(-1);
-  console.log('here');
+
   const setLayout = () => {
     runOnUI(() => {
       const measurement = measure(ref);
@@ -46,12 +46,12 @@ const TextMessageComponent: React.FC<{
   const gestureHandler = Gesture.Simultaneous(
     Gesture.LongPress()
       .onStart(() => {
-        isActive.value = withTiming(1, { duration: 500 });
+        isActive.value = withTiming(1, { duration: 10 });
         runOnJS(setLayout)();
         runOnJS(setOpenModal)(true);
       })
       .onEnd(() => {
-        isActive.value = withTiming(0, { duration: 500 });
+        isActive.value = withTiming(0, { duration: 10 });
       }),
     Gesture.Pan()
       .manualActivation(true)
@@ -61,7 +61,7 @@ const TextMessageComponent: React.FC<{
         }
       })
       .onUpdate(({ absoluteX }) => {
-        stickerIndex.value = Math.floor(absoluteX / 40);
+        stickerIndex.value = Math.round(absoluteX / 40);
       })
       .onEnd(() => {
         runOnJS(setOpenModal)(false);

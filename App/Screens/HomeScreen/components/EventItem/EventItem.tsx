@@ -1,11 +1,10 @@
-import { Separator, Text } from '@Atoms';
-import { Collapsible } from '@Atoms/Collapsible/Collapsible';
+import { Text } from '@Atoms';
 import { Event } from '@Khayat/Graphql/Events/types';
 import { Button } from '@Molecules';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import moment, { Moment } from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -19,11 +18,9 @@ import styles, { pastBackground, withColors } from './EventItem.styles';
 const pastBackgroundImage = require('../../../../../assets/images/striped.png');
 
 export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
   const navigation = useNavigation();
   const colors = useColors();
   const style = withColors(colors);
-  const collapsibleValue = useSharedValue(0);
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
   const endDate = new Date(item.date);
@@ -62,7 +59,7 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
       ) : null}
       <Pressable
         style={[styles.itemWrapper, style.borderLeft]}
-        onPress={() => setExpanded(!expanded)}>
+        onPress={() => navigation.navigate('EventScreen', { event: item })}>
         <View style={styles.row}>
           <View>
             <Text fontSize={12} style={styles.time} weight={'semibold'}>
@@ -82,15 +79,6 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
           ) : null}
         </View>
       </Pressable>
-
-      <Collapsible animatedValue={collapsibleValue} expanded={expanded}>
-        <View style={style.joinedUsersContainer}>
-          <Text weight="bold">Duration: {item.duration} mins</Text>
-          <Separator />
-          <Text>{item.description}</Text>
-          <View style={styles.joinedUsersContainer} />
-        </View>
-      </Collapsible>
     </View>
   );
 };

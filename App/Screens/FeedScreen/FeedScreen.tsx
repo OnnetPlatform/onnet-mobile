@@ -19,8 +19,9 @@ import { FeedItem } from './components/FeedItem/FeedItem';
 import screenStyles from './FeedScreen.styles';
 import { useFeedData } from './utils';
 import { FlashList } from '@shopify/flash-list';
+import { FeedScreenProps } from './types';
 
-export const FeedScreen: React.FC = () => {
+export const FeedScreen: React.FC<FeedScreenProps> = () => {
   const insets = useSafeAreaInsets();
   const { data, getData } = useFeedData();
   const [headerHeight, setHeaderHeight] = useState(0);
@@ -28,7 +29,8 @@ export const FeedScreen: React.FC = () => {
   const colors = useColors();
   const pullDownValue = useSharedValue(0);
   const styles = screenStyles(colors, insets);
-  const navigation = useNavigation();
+  const navigation = useNavigation<FeedScreenProps>();
+
   const onScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollYOffset.value = e.nativeEvent.contentOffset.y;
     if (e.nativeEvent.contentOffset.y < 0) {
@@ -51,8 +53,8 @@ export const FeedScreen: React.FC = () => {
   }, []);
 
   const onItemPressed = useCallback((item: any) => {
-    // @ts-ignore
     if (item.__typename === 'Bulletin') navigation.navigate('LiveAnnouncement');
+    navigation.navigate('EventScreen', { event: item });
   }, []);
 
   const renderFeed = useCallback(

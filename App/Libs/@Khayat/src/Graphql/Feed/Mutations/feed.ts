@@ -24,6 +24,7 @@ export const FEED_MUTATION = gql`
           last_name
           first_name
           email
+          avatar
         }
         date
         duration

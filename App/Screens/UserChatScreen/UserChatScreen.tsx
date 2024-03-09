@@ -57,13 +57,11 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         </Pressable>
       </View>
       {isConnected ? null : <HeaderLoader />}
-
       <SectionsList
         data={msgs}
         SectionListHeaderComponent={MessageHeader}
         onContentSizeChange={() => {
-          if (ref.current && msgs.length > 10)
-            ref.current.scrollToEnd({ animated: true });
+          if (ref.current) ref.current.scrollToEnd({ animated: true });
         }}
         SectionListItemComponent={TextMessage}
         contentContainerStyle={{ paddingBottom: BOTTOM_BAR_HEIGHT + 80 }}

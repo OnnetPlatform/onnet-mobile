@@ -13,8 +13,9 @@ import {
 import React from 'react';
 
 import TabBar from './TabBar';
+import { MainNavigationStackList } from './types';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<MainNavigationStackList>();
 
 const screenOptions: BottomTabNavigationOptions = {
   headerShown: false,
@@ -33,6 +34,7 @@ export const HomeBottomNavigation = () => {
         screenOptions={screenOptions}>
         <Tab.Screen name="HomeChat" component={HomeChatScreen} />
         <Tab.Screen name="HomeScreen" component={HomeScreen} />
+        {/* @ts-ignore */}
         <Tab.Screen name="home" component={FeedScreen} />
         <Tab.Screen name="bell" component={NotificationScreen} />
         <Tab.Screen name="person" component={ProfileScreen} />

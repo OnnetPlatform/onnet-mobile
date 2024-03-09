@@ -4,6 +4,7 @@ import {
   AudioScreen,
   AuthenticationScreen,
   CustomScreen,
+  EventScreen,
   LaunchScreen,
   LoginScreen,
   ProfileScreen,
@@ -20,8 +21,9 @@ import { useSelector } from 'react-redux';
 import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
 import CreateEventNavigation from '../../CreateEventNavigation';
 import SettingsNavigator from '../SettingsNavigator';
+import { AppNavigationParamsList } from './types';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<AppNavigationParamsList>();
 
 const AuthStack: React.FC = () => {
   const { access_token } = useSelector(AuthSelector);
@@ -46,6 +48,8 @@ const AuthStack: React.FC = () => {
           <Stack.Screen name="UserChatScreen" component={UserChatScreen} />
           <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
           <Stack.Screen name="Settings" component={SettingsNavigator} />
+          <Stack.Screen name="EventScreen" component={EventScreen} />
+
           {/* @ts-ignore */}
           <Stack.Screen name="CustomScreen" component={CustomScreen} />
           <Stack.Group
