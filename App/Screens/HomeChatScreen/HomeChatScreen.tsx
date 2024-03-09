@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
+import SnackbarRef from '../../Provider/SnackbarProvider/SnackbarRef';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -38,14 +39,24 @@ export const HomeChatScreen: React.FC = () => {
             <Icon name={'radio-outline'} />
           </Pressable>
           <Separator horizontal />
-          <Icon name={'person-add-outline'} />
+          <Pressable
+            onPress={() => {
+              if (SnackbarRef.current)
+                SnackbarRef.current.showSnackbar({
+                  title: 'Welcome to Onnet!',
+                  variant: 'ERROR',
+                  subtitle: 'We are happy to have you.',
+                });
+            }}>
+            <Icon name={'person-add-outline'} />
+          </Pressable>
+
           <Separator horizontal />
           <Pressable onPress={onSettingsPressed}>
             <Icon name={'settings-outline'} />
           </Pressable>
         </View>
       </View>
-
       <ChatUsersList />
     </SafeAreaView>
   );

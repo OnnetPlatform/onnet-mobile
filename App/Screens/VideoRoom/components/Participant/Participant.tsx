@@ -1,6 +1,5 @@
 import { useColors } from '@Theme';
-import { ThemeColors } from '@Theme/Colors';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { View } from 'react-native';
 import { MediaStream, RTCView } from 'react-native-webrtc';
 
@@ -11,14 +10,6 @@ export const Participant: React.FC<{
 }> = ({ stream }) => {
   const colors = useColors();
   const styles = useThemedStyle(colors);
-
-  useEffect(() => {
-    stream.getTracks().map((track) => {
-      track.addEventListener('muted', () => {
-        console.log('muted');
-      });
-    });
-  }, [stream]);
 
   return (
     <View style={styles.wrapper}>

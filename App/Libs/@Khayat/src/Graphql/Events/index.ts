@@ -13,6 +13,12 @@ export const GetCalendarQuery = gql`
         title
         duration
         description
+        organizer {
+          last_name
+          first_name
+          email
+          avatar
+        }
       }
     }
   }

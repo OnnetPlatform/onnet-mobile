@@ -1,44 +1,63 @@
-import moment from 'moment';
-import React, { useEffect, useRef } from 'react';
-import { SectionList } from 'react-native';
+import React, { useCallback, useMemo } from 'react';
 
-import { SectionsListProps } from './types';
+import { FlashList, FlashListProps, ListRenderItem } from '@shopify/flash-list';
 
-export const SectionsList: React.FC<SectionsListProps> = ({
-  data,
-  scrollToDate,
-  ...props
-}) => {
-  const ref = useRef<SectionList<any, any>>(null);
-
-  useEffect(() => {
-    if (scrollToDate && ref.current) {
-      const index = data.findIndex(
-        (date: any) =>
-          date.title === moment(scrollToDate).format('dddd, MMMM Do')
-      );
-      if (index > -1) {
-        ref.current.scrollToLocation({
-          sectionIndex: index,
-          animated: true,
-          itemIndex: 0,
-        });
-      }
-    }
-  }, [scrollToDate]);
-
-  return (
-    <SectionList
-      ref={ref}
-      {...props}
-      sections={data}
-      // @ts-ignore
-    />
-  );
+export type CustomSectionList = {
+  SectionListHeaderComponent: React.FunctionComponent<{ title: string }>;
+  SectionListItemComponent: React.FunctionComponent<{ item: any }>;
 };
-export default React.memo(
-  SectionsList,
-  (prev, next) =>
-    prev.data.length === next.data.length &&
-    prev.scrollToDate?.toString() === next.scrollToDate?.toString()
+
+export type SectionListProps = CustomSectionList &
+  Omit<FlashListProps<any>, 'renderItem'>;
+
+export const SectionsList = React.forwardRef<FlashList<any>, SectionListProps>(
+  (props, ref) => {
+    const { data, SectionListHeaderComponent, SectionListItemComponent } =
+      props;
+
+    const stickyHeaderIndices = data
+      ? useMemo(
+          () =>
+            data
+              .map((item, index) => {
+                if (typeof item === 'string') {
+                  return index;
+                } else {
+                  return null;
+                }
+              })
+              .filter((item) => item !== null) as number[],
+          [data]
+        )
+      : [];
+
+    const itemType = useCallback((item: string | any) => {
+      return typeof item === 'string' ? 'sectionHeader' : 'row';
+    }, []);
+
+    const renderItem: ListRenderItem<string | any> = useCallback(
+      ({ item, index }) => {
+        if (typeof item === 'string') {
+          return <SectionListHeaderComponent title={item} key={item} />;
+        } else {
+          return <SectionListItemComponent item={item} key={index} />;
+        }
+      },
+      []
+    );
+
+    return (
+      <FlashList
+        {...props}
+        stickyHeaderIndices={stickyHeaderIndices}
+        getItemType={itemType}
+        estimatedItemSize={100}
+        data={data}
+        renderItem={renderItem}
+        ref={ref}
+      />
+    );
+  }
 );
+
+export default SectionsList;

@@ -1,11 +1,10 @@
-import { Separator, Text } from '@Atoms';
-import { Collapsible } from '@Atoms/Collapsible/Collapsible';
+import { Text } from '@Atoms';
 import { Event } from '@Khayat/Graphql/Events/types';
 import { Button } from '@Molecules';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import moment, { Moment } from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -18,21 +17,19 @@ import styles, { pastBackground, withColors } from './EventItem.styles';
 
 const pastBackgroundImage = require('../../../../../assets/images/striped.png');
 
-export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
-  const [expanded, setExpanded] = useState<boolean>(false);
+export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
   const navigation = useNavigation();
   const colors = useColors();
   const style = withColors(colors);
-  const collapsibleValue = useSharedValue(0);
   const opacity = useSharedValue(1);
   const scale = useSharedValue(1);
-  const endDate = new Date(event.date);
-  endDate.setMinutes(endDate.getMinutes() + event.duration);
+  const endDate = new Date(item.date);
+  endDate.setMinutes(endDate.getMinutes() + item.duration);
 
   const isPast = isItBeforeToday(moment(endDate));
   const isStarted =
     moment(endDate).diff(moment(), 'minutes') >= 0 &&
-    moment(endDate).diff(moment(), 'minutes') <= event.duration;
+    moment(endDate).diff(moment(), 'minutes') <= item.duration;
   const animatedStyle = useAnimatedStyle(
     () => ({
       backgroundColor: isStarted ? colors.pink : colors.background,
@@ -45,12 +42,6 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
     return MomentDate.diff(moment(0, 'minutes')) < 0;
   }
 
-  const blur = useSharedValue<number>(0);
-
-  useEffect(() => {
-    blur.value = withTiming(expanded ? 100 : 0, { duration: 1000 });
-  }, [expanded]);
-
   useEffect(() => {
     opacity.value = 1;
     scale.value = 1;
@@ -58,7 +49,7 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
       opacity.value = withRepeat(withTiming(0, { duration: 500 }), -1);
       scale.value = withRepeat(withTiming(0, { duration: 500 }), -1);
     }
-  }, [isStarted, event]);
+  }, [isStarted, item]);
 
   return (
     <View style={[style.itemWrapper, pastBackground(isPast, colors)]}>
@@ -68,16 +59,16 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
       ) : null}
       <Pressable
         style={[styles.itemWrapper, style.borderLeft]}
-        onPress={() => setExpanded(!expanded)}>
+        onPress={() => navigation.navigate('EventScreen', { event: item })}>
         <View style={styles.row}>
           <View>
             <Text fontSize={12} style={styles.time} weight={'semibold'}>
-              {moment(event.date).format('hh:mm A')}
+              {moment(item.date).format('hh:mm A')}
               {' - '}
               {moment(endDate).format('hh:mm A')}
             </Text>
             <Text fontSize={16} weight="bold">
-              {event.title}
+              {item.title}
             </Text>
           </View>
           {isStarted ? (
@@ -88,20 +79,11 @@ export const EventItem: React.FC<{ event: Event }> = ({ event }) => {
           ) : null}
         </View>
       </Pressable>
-
-      <Collapsible animatedValue={collapsibleValue} expanded={expanded}>
-        <View style={style.joinedUsersContainer}>
-          <Text weight="bold">Duration: {event.duration} mins</Text>
-          <Separator />
-          <Text>{event.description}</Text>
-          <View style={styles.joinedUsersContainer} />
-        </View>
-      </Collapsible>
     </View>
   );
 };
 
 export default React.memo(
   EventItem,
-  (prev, next) => prev.event.id.toString() === next.event.id.toString()
+  (prev, next) => prev.item.id.toString() === next.item.id.toString()
 );

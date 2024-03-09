@@ -7,7 +7,7 @@
     "isolatedModules": true,
     "jsx": "react",
     "lib": ["es2017"],
-    "module": "es2015",
+    "module": "es2020",
     "moduleResolution": "bundler",
     "noEmit": true,
     "strict": true,

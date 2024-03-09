@@ -2,7 +2,6 @@ import { Separator, Text } from '@Atoms';
 import { realm } from '@Khayat/Database/Queries/User';
 import { AuthCreators } from '@Khayat/Redux';
 import React, { useMemo } from 'react';
-import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
 import { SettingItem } from './components';
@@ -10,6 +9,7 @@ import {
   SettingItem as SettingItemType,
   SettingsScreenNavigationProps,
 } from './types';
+import { FlashList } from '@shopify/flash-list';
 
 export const useSettings: (
   navigation: SettingsScreenNavigationProps
@@ -24,7 +24,7 @@ export const useSettings: (
           navigation.navigate('CustomScreen', {
             title: 'Notifications',
             content: (
-              <FlatList
+              <FlashList
                 data={[
                   {
                     title: 'Notifications',

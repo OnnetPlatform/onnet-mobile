@@ -15,7 +15,8 @@ export const Slot: React.FC<SlotProps> = React.memo(
     const slotRef = useRef<View>(null);
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
     const isCurrentMonth = month === date.getMonth();
-    const isToday = isCurrentMonth && new Date().getDate() === date.getDate();
+    const isToday =
+      month == new Date().getMonth() && new Date().getDate() === date.getDate();
     const { date: calendarDate, setDate } = useCalendarContext();
     const isSelected =
       calendarDate.getDate() === date.getDate() &&

@@ -2,19 +2,19 @@ import Avatar from '@Atoms/Avatar';
 import Text from '@Atoms/Text';
 import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import React, { useCallback } from 'react';
-import { FlatList, ListRenderItem, Pressable, StyleSheet } from 'react-native';
+import { FlatList, Pressable, StyleSheet, ListRenderItem } from 'react-native';
 import Separator from '@Atoms/Separator';
 import User from '@Khayat/Database/Models/User';
 import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
 
 export const MentionList: React.FC = () => {
   const { users } = useRealmUsers();
-  const { setTextMessage, openMentionsList, toggleMentionsList } =
-    useMessageInputContext();
+  const { setTextMessage, openMentionsList } = useMessageInputContext();
 
-  const onItemPressed = (item: User) => {
+  const onItemPressed = useCallback((item: User) => {
     setTextMessage((text) => `${text}\n@${item.first_name} ${item.last_name}`);
-  };
+  }, []);
+
   const renderItem: ListRenderItem<User> = useCallback(
     ({ item }) => {
       return (
@@ -27,7 +27,7 @@ export const MentionList: React.FC = () => {
         </Pressable>
       );
     },
-    [users]
+    [users, openMentionsList]
   );
   if (openMentionsList)
     return (

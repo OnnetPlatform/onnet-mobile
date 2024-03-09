@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MessageInputContext } from '../../Context/MessageInputContext/MessageInputContext';
 import { UploadedImage } from '../../Context/MessageInputContext/types';
-import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme/index';
+import { useColors } from '@Theme/index';
 
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
@@ -19,6 +19,7 @@ import Texture from '@Skia/Texture/Texture';
 import { ThemeColors } from '@Theme/Colors';
 import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { useDispatch } from 'react-redux';
+import RecordingModal from './Components/RecordingModal';
 
 export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
   user,
@@ -32,6 +33,7 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
   const [openUploadedGallery, toggleUploadedGalleryModel] = useState(false);
   const [openEmojisList, toggleEmojisList] = useState(false);
   const [openMentionsList, toggleMentionsList] = useState(false);
+  const [openRecordingModal, toggleRecordingModal] = useState<boolean>(false);
   const typingSent = useRef(false);
   const markdownStyle = useMarkdownStyles();
   const colors = useColors();
@@ -79,10 +81,11 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
         openMentionsList,
         toggleMentionsList,
         user: localUser,
+        openRecordingModal,
+        toggleRecordingModal,
       }}>
       <BottomSheet
         ref={sheetInputRef}
-        bottomInset={BOTTOM_BAR_HEIGHT - 20}
         enableDynamicSizing={true}
         index={0}
         backgroundComponent={Texture}
@@ -107,6 +110,7 @@ export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
           <LocalGallery />
           <InputEmojisList />
           <MentionList />
+          <RecordingModal />
         </BottomSheetView>
       </BottomSheet>
     </MessageInputContext.Provider>

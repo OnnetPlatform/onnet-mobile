@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useQuery, useRealm } from '@Khayat/Database/Hooks/useRealmContext';
 import Message from '@Khayat/Database/Models/Message';
 import { UserChat } from '@Khayat/Database/Models/types';
@@ -19,24 +20,29 @@ export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
     [user]
   );
 
-  console.log(data[0]);
-
   useEffect(() => {
-    if (realm.isClosed) {
-      try {
-        realm.write(() => {
-          localUsers.map((item) => {
-            item.unreadCount = 0;
-          });
+    try {
+      realm.write(() => {
+        localUsers.map((item) => {
+          item.unreadCount = 0;
         });
-      } catch (error) {
-        console.log(error);
-      }
+      });
+    } catch (error) {
+      console.log(error);
     }
   }, [realm]);
 
-  // @ts-ignore
-  return useMemo(() => naiveSorting(Array.from(data)), [data, user]);
+  return useMemo(() => {
+    const sorted = naiveSorting(Array.from(data));
+    const maniulpulated = [];
+    sorted.map((item) => {
+      maniulpulated.push(`${item.user.first_name} ${item.user.last_name}`);
+      item.data.map((nested) => {
+        maniulpulated.push(nested);
+      });
+    });
+    return maniulpulated;
+  }, [data, user]);
 };
 
 const naiveSorting = (data: Message[]) => {

@@ -1,8 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
-import React, { useState } from 'react';
-import { Pressable, SafeAreaView, StatusBar } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StatusBar } from 'react-native';
+import {
+  useSafeAreaInsets,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 import { Icon } from '../../Components/atoms';
 import { Glassmorphism } from '../../Components/Skia';
@@ -19,8 +22,11 @@ const LaunchScreen: React.FC = () => {
   const onLoginPressed = () => {
     setStep(1);
     // @ts-ignore
-    navigation.navigate('LoginScreen');
+    navigation.navigate('AuthenticationScreen');
   };
+  useEffect(() => {
+    console.log(step);
+  }, [step]);
   return (
     <SafeAreaView style={[styles.screen, { backgroundColor: colors.black }]}>
       <StatusBar barStyle={'light-content'} />

@@ -13,7 +13,7 @@ import {
 } from '@shopify/react-native-skia';
 import React from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
-import { useSharedValue } from 'react-native-worklets-core';
+import { useSharedValue } from 'react-native-reanimated';
 
 export const LogoLoading: React.FC = () => {
   const font = useFont(require('./Rubik-Black.ttf'), 64);

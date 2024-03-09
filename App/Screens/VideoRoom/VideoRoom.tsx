@@ -12,7 +12,8 @@ import useAlert from '../../Context/AlertContext/AlertContext';
 import { Participant } from './components';
 import { useMediaControl } from './components/VideoControlsHeader/useMediaControl';
 import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
-import { alertStyle } from './VideoRoom.styles';
+import { alertStyle, avatar } from './VideoRoom.styles';
+import { FlashList } from '@shopify/flash-list';
 
 const uri =
   'https://images.unsplash.com/photo-1700605149722-50c0d7fe003d?q=80&w=2815&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
@@ -50,7 +51,7 @@ export const VideoRoom: React.FC = () => {
                 showsHorizontalScrollIndicator={false}
                 style={alertStyles.avatarContainer}
                 horizontal
-                contentContainerStyle={alertStyles.itemsCenter}
+                contentContainerStyle={{ alignItems: 'center' }}
                 ListFooterComponent={
                   users.length > 5 ? (
                     <Text style={alertStyles.separator} weight={'bold'}>
@@ -62,8 +63,7 @@ export const VideoRoom: React.FC = () => {
                   <Image
                     key={item}
                     source={{ uri }}
-                    // @ts-ignore
-                    style={alertStyles.avatar(index)}
+                    style={avatar(index, colors)}
                   />
                 )}
               />
@@ -133,7 +133,7 @@ export const VideoRoom: React.FC = () => {
   return (
     <PageView title="Meeting name">
       <>
-        <FlatList
+        <FlashList
           numColumns={2}
           data={remoteStreams}
           renderItem={renderRemoteStreams}

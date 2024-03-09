@@ -1,15 +1,12 @@
 import { Separator, Text } from '@Atoms';
 import { LoadingOnnet } from '@Atoms/LoadingOnnet/LoadingOnnet';
-import { useBottomSheet } from '@Context/BottomSheet';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  FlatList,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Pressable,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import { useSharedValue, withSpring } from 'react-native-reanimated';
@@ -21,18 +18,19 @@ import {
 import { FeedItem } from './components/FeedItem/FeedItem';
 import screenStyles from './FeedScreen.styles';
 import { useFeedData } from './utils';
+import { FlashList } from '@shopify/flash-list';
+import { FeedScreenProps } from './types';
 
-export const FeedScreen: React.FC = () => {
+export const FeedScreen: React.FC<FeedScreenProps> = () => {
   const insets = useSafeAreaInsets();
   const { data, getData } = useFeedData();
-  const { height } = useWindowDimensions();
   const [headerHeight, setHeaderHeight] = useState(0);
   const scrollYOffset = useSharedValue<number>(0);
   const colors = useColors();
   const pullDownValue = useSharedValue(0);
   const styles = screenStyles(colors, insets);
-  const { showBottomSheet } = useBottomSheet();
-  const navigation = useNavigation();
+  const navigation = useNavigation<FeedScreenProps>();
+
   const onScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollYOffset.value = e.nativeEvent.contentOffset.y;
     if (e.nativeEvent.contentOffset.y < 0) {
@@ -55,13 +53,8 @@ export const FeedScreen: React.FC = () => {
   }, []);
 
   const onItemPressed = useCallback((item: any) => {
-    // @ts-ignore
-    navigation.navigate('LiveAnnouncement');
-    showBottomSheet({
-      title: item.title,
-      icon: 'calendar-outline',
-      subtitle: item.description,
-    });
+    if (item.__typename === 'Bulletin') navigation.navigate('LiveAnnouncement');
+    navigation.navigate('EventScreen', { event: item });
   }, []);
 
   const renderFeed = useCallback(
@@ -87,14 +80,12 @@ export const FeedScreen: React.FC = () => {
         </Text>
         <LoadingOnnet progress={pullDownValue} />
       </View>
-      <FlatList
+      <FlashList
         showsVerticalScrollIndicator={false}
-        decelerationRate={'fast'}
         onScroll={onScroll}
         data={data}
         ItemSeparatorComponent={Separator}
         contentContainerStyle={{ padding: 16, paddingBottom: headerHeight }}
-        snapToInterval={Math.round(height * 0.6) + 48}
         renderItem={renderFeed}
       />
     </SafeAreaView>

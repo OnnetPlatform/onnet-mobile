@@ -1,8 +1,9 @@
+import { BOTTOM_BAR_HEIGHT } from '@Theme/index';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    paddingBottom: 120,
+    paddingBottom: BOTTOM_BAR_HEIGHT,
   },
   spacer: {
     height: 4,

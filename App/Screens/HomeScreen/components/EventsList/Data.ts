@@ -3,8 +3,10 @@ import 'react-native-get-random-values';
 import { faker } from '@faker-js/faker';
 import _ from 'lodash';
 import moment from 'moment';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
+import { EventSelector } from '@Khayat/Redux/Selectors/EventSelector';
 
 let startDate = new Date();
 let endDate = new Date().setDate(new Date().getDate() + 7);
@@ -62,4 +64,26 @@ export const useFakerData = () => {
     nextPage,
     data,
   };
+};
+
+export const useSortedData = () => {
+  const { events } = useSelector(EventSelector);
+  const [data, setData] = useState<(string | {})[]>([]);
+  const sort = useCallback(
+    () =>
+      events
+        .filter((item) => item.month - 1 === new Date().getMonth())
+        .map((item) => {
+          const nested = item.data;
+          setData((stored) => [...stored, item.title.toString()]);
+          nested.map((item) => setData((stored) => [...stored, item]));
+        }),
+    [events]
+  );
+  useEffect(() => {
+    setData([]);
+    sort();
+  }, [events]);
+
+  return data;
 };

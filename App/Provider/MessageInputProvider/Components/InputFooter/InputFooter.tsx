@@ -2,14 +2,9 @@ import Icon from '@Atoms/Icon';
 import Separator from '@Atoms/Separator';
 import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
 import React, { useCallback, useMemo } from 'react';
-import {
-  FlatList,
-  ListRenderItem,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import SendButton from '../SendButton';
+import { FlashList, ListRenderItem } from '@shopify/flash-list';
 
 type FooterItem = {
   icon: string;
@@ -40,6 +35,10 @@ export const InputFooter: React.FC = () => {
         icon: 'at-outline',
         action: () => toggleMentionsList(!openMentionsList),
       },
+      {
+        icon: 'mic-outline',
+        action: () => toggleMentionsList(!openMentionsList),
+      },
     ],
     [openEmojisList, openEmojisList, openLocalGallery, openMentionsList]
   );
@@ -54,7 +53,7 @@ export const InputFooter: React.FC = () => {
 
   return (
     <View style={styles.row}>
-      <FlatList
+      <FlashList
         data={items}
         keyExtractor={(item) => item.icon}
         scrollEnabled={false}

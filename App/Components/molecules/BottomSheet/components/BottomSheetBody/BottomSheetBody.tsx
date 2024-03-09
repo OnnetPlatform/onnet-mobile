@@ -4,8 +4,9 @@ import { BottomSheetProps } from '@Molecules/BottomSheet/types';
 import React from 'react';
 
 export const BottomSheetBody: React.FC<BottomSheetProps> = (props) => {
-  const { body } = props;
+  const { body, customView } = props;
 
+  if (customView) return customView;
   if (!body) {
     return null;
   }
