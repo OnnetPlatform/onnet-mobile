@@ -27,8 +27,8 @@ export const TypingIndicator: React.FC<{ opponent: Profile }> = React.memo(
     }));
 
     useEffect(() => {
-      opacity.value = withTiming(localUser?.status ? 1 : 0, { duration: 500 });
-    }, [localUser, localUser?.status]);
+      opacity.value = withTiming(localUser?.typing ? 1 : 0, { duration: 500 });
+    }, [localUser, localUser?.typing]);
 
     return (
       <View style={withColors.handleWrapper}>

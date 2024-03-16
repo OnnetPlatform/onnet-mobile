@@ -63,4 +63,5 @@ export type ProfileObject = {
   last_name?: string;
   first_name?: string;
   full_name?: string;
+  typing?: boolean;
 };

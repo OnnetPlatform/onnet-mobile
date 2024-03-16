@@ -14,7 +14,6 @@ import { useRealmProfiles } from '../../../../Database/Hooks/useRealmProfiles';
 
 export const ChatUser: React.FC<{ item: ProfileObject }> = ({ item }) => {
   const { user, first_name, last_name, avatar, active } = item;
-  console.log(item);
   const navigation = useNavigation();
   const { getUser } = useRealmProfiles();
   const localUser = getUser({ user });
@@ -40,11 +39,11 @@ export const ChatUser: React.FC<{ item: ProfileObject }> = ({ item }) => {
               </Text>
             ) : null}
           </Text>
-          {localUser?.status ? (
+          {localUser?.typing ? (
             <Animated.View
               entering={FadeInLeft.duration(500)}
               exiting={FadeOutLeft.duration(500)}>
-              <Text fontSize={12}>{localUser?.status}</Text>
+              <Text fontSize={12}>Typing</Text>
             </Animated.View>
           ) : null}
         </View>

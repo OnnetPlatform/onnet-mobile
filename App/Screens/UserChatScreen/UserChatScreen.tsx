@@ -51,7 +51,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
             navigation.navigate('ProfileScreen', { id: user.user })
           }
           style={[withColors.row, { alignItems: 'center' }]}>
-          <Avatar avatar={user.avatar} isActive={user.isActive} />
+          <Avatar avatar={user.avatar} isActive={user.active} />
           <Separator horizontal />
           <Text weight="bold" fontSize={16}>
             {user.first_name} {user.last_name}

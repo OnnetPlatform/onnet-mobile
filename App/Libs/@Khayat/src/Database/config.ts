@@ -6,7 +6,7 @@ import User from './Models/User';
 import Realm from 'realm';
 import { Profile } from './Profile';
 
-export const SCHEMA_VERSION = 26;
+export const SCHEMA_VERSION = 27;
 
 const realmConfig: Realm.Configuration = {
   schema: [User, Message, TextMessage, Attachment, UploadedImage, Profile],

@@ -17,7 +17,7 @@ export class Profile extends Realm.Object<ProfileObject> {
   last_name?: string;
   first_name?: string;
   full_name?: string;
-  typeing?: boolean;
+  typing?: boolean;
   static schema = {
     name: 'Profile',
     properties: {
@@ -37,7 +37,7 @@ export class Profile extends Realm.Object<ProfileObject> {
       last_name: 'string?',
       first_name: 'string?',
       full_name: 'string?',
-      typeing: 'bool?',
+      typing: 'bool?',
     },
   };
 }

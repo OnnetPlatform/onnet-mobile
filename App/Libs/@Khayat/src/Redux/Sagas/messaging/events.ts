@@ -84,7 +84,7 @@ export function* onTyping(
 ): Generator<TakeEffect, any, ProfileObject> {
   while (true) {
     const data = yield take(channel);
-    updateUserStatus({ ...data, status: 'TYPING' });
+    updateUserStatus({ ...data, typing: true });
   }
 }
 
@@ -93,7 +93,7 @@ export function* onTypingStopped(
 ): Generator<TakeEffect, any, ProfileObject> {
   while (true) {
     const data = yield take(channel);
-    updateUserStatus(data);
+    updateUserStatus({ ...data, typing: false });
   }
 }
 
