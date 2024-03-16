@@ -1,24 +1,22 @@
 import realmConfig from '../../../Database/config';
 import { ModelEnums } from '../../../Database/Models/types';
 import Realm from 'realm';
-import User from '../../Models/User';
+import { Profile } from '../../Profile';
 
 export const realm = new Realm(realmConfig);
 
 export function createUser(user: any): any {
   return realm.write(() => {
-    return realm.create(ModelEnums.USER, {
+    return realm.create(ModelEnums.PROFILE, {
       ...user,
-      status: '',
-      isActive: true,
-      unreadCount: 0,
+      active: true,
     });
   });
 }
-export function findUser(user_id: string): User {
+export function findUser(user_id: string): Profile {
   const user = realm
-    .objects<User>(ModelEnums.USER)
-    .filtered(`_id = "${user_id}"`)[0];
+    .objects<Profile>(ModelEnums.PROFILE)
+    .filtered(`user = "${user_id}"`)[0];
   return user;
 }
 export function updateUser(user: any, newData: any) {
@@ -30,9 +28,9 @@ export function updateUser(user: any, newData: any) {
   });
 }
 export function reset() {
-  realm.objects<User>(ModelEnums.USER).map((model) => {
+  realm.objects<Profile>(ModelEnums.PROFILE).map((model) => {
     realm.write(() => {
-      model.isActive = false;
+      model.active = false;
       model.status = '';
     });
   });

@@ -12,7 +12,7 @@ export const useStyles = (colors: ThemeColors) =>
     date_container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.blue,
+      backgroundColor: colors.secondaryBackground,
       padding: 2,
       height: 20,
       borderRadius: 4,

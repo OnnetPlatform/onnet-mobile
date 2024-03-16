@@ -1,6 +1,6 @@
 import { Separator, Text } from '@Atoms';
 import Avatar from '@Atoms/Avatar/Avatar';
-import { UserChat } from '@Khayat/Database/Models/types';
+import { ProfileObject } from '@Khayat/Database/Models/types';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
@@ -9,16 +9,18 @@ import { Pressable, View } from 'react-native';
 import Animated, { FadeInLeft, FadeOutLeft } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 
-import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
 import styles from './ChatUser.styles';
+import { useRealmProfiles } from '../../../../Database/Hooks/useRealmProfiles';
 
-export const ChatUser: React.FC<{ item: UserChat }> = ({ item }) => {
-  const { _id, first_name, last_name, isActive, avatar, unreadCount } = item;
+export const ChatUser: React.FC<{ item: ProfileObject }> = ({ item }) => {
+  const { user, first_name, last_name, avatar, active } = item;
+  console.log(item);
   const navigation = useNavigation();
-  const { getUser } = useRealmUsers();
-  const localUser = getUser({ _id });
+  const { getUser } = useRealmProfiles();
+  const localUser = getUser({ user });
   const colors = useColors();
   const { id } = useSelector(AuthSelector);
+
   return (
     <Pressable
       style={{ marginHorizontal: 22 }}
@@ -27,12 +29,12 @@ export const ChatUser: React.FC<{ item: UserChat }> = ({ item }) => {
         navigation.navigate('UserChatScreen', { user: localUser });
       }}>
       <View style={[styles.row]}>
-        <Avatar {...{ avatar, isActive }} />
+        <Avatar {...{ avatar, isActive: active === true }} />
         <Separator horizontal />
         <View>
           <Text weight="bold" fontSize={16}>
             {first_name} {last_name}
-            {id === _id ? (
+            {id === user ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>
                 {' You'}
               </Text>
@@ -46,13 +48,13 @@ export const ChatUser: React.FC<{ item: UserChat }> = ({ item }) => {
             </Animated.View>
           ) : null}
         </View>
-        {unreadCount > 0 ? (
+        {/* {unreadCount > 0 ? (
           <View style={styles.badge}>
             <Text fontSize={10} color="white" weight="bold">
               {unreadCount}
             </Text>
           </View>
-        ) : null}
+        ) : null} */}
       </View>
     </Pressable>
   );

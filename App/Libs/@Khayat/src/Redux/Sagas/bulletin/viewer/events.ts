@@ -26,7 +26,6 @@ export function* onStreamOffer(channel: ActionPattern): any {
   while (true) {
     const { data, peer } = yield take(channel);
     const desc = new RTCSessionDescription(data.sdp);
-    console.log(peer.connectionState);
     try {
       yield peer.setRemoteDescription(desc);
     } catch (error) {

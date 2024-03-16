@@ -14,6 +14,7 @@ export default (colors: ThemeColors, insets: EdgeInsets) =>
     container: {
       paddingBottom: insets.bottom + 22,
       alignItems: 'center',
+      width: '100%',
     },
     mainIcon: {
       width: 64,

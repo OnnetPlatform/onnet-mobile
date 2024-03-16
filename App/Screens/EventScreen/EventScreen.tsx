@@ -57,7 +57,7 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
         </View>
         <Pressable
           onPress={() => {
-            navigation.navigate('ProfileScreen');
+            navigation.navigate('ProfileScreen', { id: event.organizer.id });
           }}
           style={styles.organizer}>
           <Avatar isActive={false} avatar={event.organizer.avatar} />
@@ -73,7 +73,16 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
         </Pressable>
         <View style={styles.button_container}>
           <SolidButton>
-            <Text weight="bold">Set Reminder</Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Icon name={'bell-outline'} />
+              <Separator horizontal />
+              <Text weight="bold">Set Reminder</Text>
+            </View>
           </SolidButton>
         </View>
 
@@ -97,7 +106,9 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
             renderItem={({ item }) => (
               <Pressable
                 onPress={() => {
-                  navigation.navigate('ProfileScreen');
+                  navigation.navigate('ProfileScreen', {
+                    id: event.organizer.id,
+                  });
                 }}
                 style={styles.joined_user}>
                 <Avatar avatar={item.avatar} isActive={item.isActive} />

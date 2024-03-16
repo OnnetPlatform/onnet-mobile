@@ -10,7 +10,7 @@ import styles from './Avatar.styles';
 import { useColors } from '@Theme';
 import { Image } from 'react-native';
 
-export const Avatar: React.FC<{ avatar: string; isActive: boolean }> = ({
+export const Avatar: React.FC<{ avatar?: string; isActive: boolean }> = ({
   avatar,
   isActive,
 }) => {

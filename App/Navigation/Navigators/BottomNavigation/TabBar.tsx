@@ -11,7 +11,6 @@ import {
   StyleSheet,
   useWindowDimensions,
   View,
-  ViewStyle,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -23,8 +22,6 @@ import {
   Blend,
   Canvas,
   Fill,
-  LinearToSRGBGamma,
-  RadialGradient,
   Rect,
   Turbulence,
   vec,
@@ -83,7 +80,7 @@ const Tab = React.memo<
 
     const colors = useColors();
     const isFocused = state.index === index;
-    const { icon, label: tabLabel } = tabs[index];
+    const { icon } = tabs[index];
 
     const onPress = () => {
       const event = navigation.emit({
@@ -136,7 +133,6 @@ const Tab = React.memo<
           <Icon
             style={{ width: 24, height: 24 }}
             name={icon + (isFocused ? '' : '-outline')}
-            // fill={colors.background}
           />
         )}
       </Pressable>

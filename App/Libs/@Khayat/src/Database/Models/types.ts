@@ -1,4 +1,4 @@
-import User from './User';
+import { Profile } from '../Profile';
 
 export type UserChat = {
   first_name: string;
@@ -34,8 +34,8 @@ export type Message = {
 };
 
 export type UserChatMessage = {
-  sender: User;
-  reciever: User;
+  sender: Profile;
+  reciever: Profile;
   textMessage: string;
   createdAt: string;
 };
@@ -43,4 +43,24 @@ export type UserChatMessage = {
 export enum ModelEnums {
   USER = 'User',
   MESSAGE = 'Message',
+  PROFILE = 'Profile',
 }
+
+export type ProfileObject = {
+  username?: string;
+  avatar?: string;
+  bio?: string;
+  cover?: string;
+  workspace?: string;
+  user: string;
+  active?: boolean;
+  status?: string;
+  title?: string;
+  city?: string;
+  country?: string;
+  department?: string;
+  phone?: string;
+  last_name?: string;
+  first_name?: string;
+  full_name?: string;
+};

@@ -17,7 +17,7 @@ export const SendButton: React.FC = () => {
     dispatch(
       MessagingCreators.sendMessage({
         textMessage,
-        id: user._id,
+        id: user.user,
       })
     );
   };

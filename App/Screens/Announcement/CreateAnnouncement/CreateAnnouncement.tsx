@@ -3,12 +3,11 @@ import RadioButton from '@Atoms/RadioButton';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
 import { useBottomSheet } from '@Context/BottomSheet';
-import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { PageView } from '@HOCs';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme/index';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -29,7 +28,6 @@ export const CreateAnnouncement: React.FC = () => {
   const styles = withColors(colors);
   const insets = useSafeAreaInsets();
   const [record, setRecord] = useState<boolean>(false);
-  const ref = useRef<BottomSheetMethods>(null);
   const { requestPermission } = useCameraPermission();
   const { requestPermission: requestMicPermission } = useMicrophonePermission();
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
@@ -48,7 +46,7 @@ export const CreateAnnouncement: React.FC = () => {
       },
     });
     setRecord((value) => !value);
-  }, [ref]);
+  }, [record]);
 
   useEffect(() => {
     if (record) {

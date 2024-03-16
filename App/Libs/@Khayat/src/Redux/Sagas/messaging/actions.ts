@@ -36,7 +36,6 @@ export function* sendMessage(): Generator<
 export function* sendTyping(socket: Socket): Generator<TakeEffect, any, any> {
   while (true) {
     const { user } = yield take(MessagingTypes.TYPING);
-    console.log('TYPING', user);
     socket.emit(MessagingEvents.TYPING, user);
   }
 }

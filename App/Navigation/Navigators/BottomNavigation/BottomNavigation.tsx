@@ -14,6 +14,8 @@ import React from 'react';
 
 import TabBar from './TabBar';
 import { MainNavigationStackList } from './types';
+import { useSelector } from 'react-redux';
+import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 
 const Tab = createBottomTabNavigator<MainNavigationStackList>();
 
@@ -26,6 +28,7 @@ const screenOptions: BottomTabNavigationOptions = {
 };
 
 export const HomeBottomNavigation = () => {
+  const { id } = useSelector(AuthSelector);
   return (
     <GradientLayout>
       <Tab.Navigator
@@ -37,7 +40,11 @@ export const HomeBottomNavigation = () => {
         {/* @ts-ignore */}
         <Tab.Screen name="home" component={FeedScreen} />
         <Tab.Screen name="bell" component={NotificationScreen} />
-        <Tab.Screen name="person" component={ProfileScreen} />
+        <Tab.Screen
+          name="person"
+          component={ProfileScreen}
+          initialParams={{ id }}
+        />
       </Tab.Navigator>
     </GradientLayout>
   );

@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 
 import { Polyrhythms } from '../../Components/Skia/Polyrhythms/Polyrhythms';
 import Texture from '@Skia/Texture/Texture';
+import { UserSelector } from '@Khayat/Redux/Selectors/UserSelector';
 
 export const SplashScreen: React.FC = () => {
   const { access_token } = useSelector(AuthSelector);
+  const { current_workspace } = useSelector(UserSelector);
   const isFocused = useIsFocused();
   const navigation = useNavigation();
 
@@ -16,12 +18,15 @@ export const SplashScreen: React.FC = () => {
     setTimeout(() => {
       try {
         if (isFocused) {
-          if (access_token) {
+          if (access_token && !current_workspace.workspace_access_token) {
+            // @ts-ignore
+            navigation.navigate('UserJoinedWorkspaces');
+          } else if (access_token && current_workspace.workspace_access_token) {
             // @ts-ignore
             navigation.navigate('MainNavigation');
           } else {
             // @ts-ignore
-            navigation.navigate('LaunchScreen');
+            navigation.navigate('AuthenticationScreen');
           }
         }
       } catch (error) {}

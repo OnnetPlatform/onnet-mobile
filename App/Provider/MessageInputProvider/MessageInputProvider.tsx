@@ -5,8 +5,7 @@ import { useColors } from '@Theme/index';
 
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
-import { UserChat } from '@Khayat/Database/Models/types';
-import { useRealmUsers } from '../../Database/Hooks/useRealmUsers';
+
 import TypingIndicator from './Components/TypingIndicator';
 import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
 import { useMarkdownStyles } from '@Utils/useMarkdownStyles';
@@ -20,11 +19,11 @@ import { ThemeColors } from '@Theme/Colors';
 import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 import { useDispatch } from 'react-redux';
 import RecordingModal from './Components/RecordingModal';
+import { Profile } from '@Khayat/Database/Profile';
+import { useRealmProfiles } from '../../Database/Hooks/useRealmProfiles';
 
-export const MessageInputProvider: React.FC<{ user: UserChat }> = ({
-  user,
-}) => {
-  const { getUser } = useRealmUsers();
+export const MessageInputProvider: React.FC<{ user: Profile }> = ({ user }) => {
+  const { getUser } = useRealmProfiles();
   const localUser = getUser(user);
   const sheetInputRef = useRef<BottomSheet>(null);
   const [textMessage, setTextMessage] = useState<string>('');

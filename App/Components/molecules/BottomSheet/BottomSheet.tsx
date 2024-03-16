@@ -5,11 +5,10 @@ import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { useColors } from '@Theme/index';
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetBody, BottomSheetIcon } from './components';
-import BluredBackdrop from './components/Backdrop';
 import withColors from './styles';
 import { BottomSheetProps } from './types';
 
@@ -20,11 +19,7 @@ export const BottomSheet = React.forwardRef<
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const styles = withColors(colors, insets);
-  const BackdropView = useCallback(
-    (args: any) => <BluredBackdrop {...args} />,
-    []
-  );
-
+  const { height } = useWindowDimensions();
   const renderBottomsheetContent = useCallback(
     () => (
       <>
@@ -57,8 +52,8 @@ export const BottomSheet = React.forwardRef<
       index={-1}
       handleComponent={handleComponent}
       snapPoints={[1]}
-      // backdropComponent={BackdropView}
       enableDynamicSizing
+      maxDynamicContentSize={height * 0.75}
       backgroundStyle={styles.background}
       style={styles.bottomSheet}
       enablePanDownToClose={true}>

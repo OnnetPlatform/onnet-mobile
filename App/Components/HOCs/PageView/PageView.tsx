@@ -22,7 +22,7 @@ export const PageView: React.FC<PageViewProps> = ({
     () => ({
       backgroundColor: isGradientEnabled ? 'transparent' : colors.background,
     }),
-    [isGradientEnabled]
+    [isGradientEnabled, colors]
   );
 
   const Page = useCallback(
@@ -43,7 +43,15 @@ export const PageView: React.FC<PageViewProps> = ({
       </GradientLayout>
     );
   }
-  return <Page />;
+  return Page();
 };
 
-export default PageView;
+export default React.memo(
+  PageView,
+  (prev, next) =>
+    prev.children === next.children &&
+    prev.hide === next.hide &&
+    prev.isGradientEnabled === next.isGradientEnabled &&
+    prev.loading === next.loading &&
+    prev.title === next.title
+);

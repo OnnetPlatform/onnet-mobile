@@ -5,6 +5,8 @@ export type MainNavigationStackList = {
   HomeScreen: undefined;
   home: undefined;
   bell: undefined;
-  person: undefined;
+  person: {
+    id: string;
+  };
 };
 export type MainNavigationType = BottomTabNavigationProp<{}>;

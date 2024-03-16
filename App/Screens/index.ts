@@ -17,3 +17,5 @@ export { default as EventDescriptionScreen } from './CreateEvent/EventDescriptio
 export { default as AuthenticationScreen } from './AuthenticationScreen';
 export { default as AudioScreen } from './AudioScreen';
 export { default as EventScreen } from './EventScreen';
+export { default as UserJoinedWorkspaces } from './Auth/UserJoinedWorkspaces';
+export { default as EditProfileScreen } from './EditProfileScreen';

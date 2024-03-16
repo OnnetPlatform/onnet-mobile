@@ -8,17 +8,17 @@ import {
 } from 'react-native-reanimated';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
-import User from '@Khayat/Database/Models/User';
 import { ThemeColors } from '@Theme/Colors';
 import Text from '@Atoms/Text';
+import { Profile } from '@Khayat/Database/Profile';
+import { useRealmProfiles } from '../../../../Database/Hooks/useRealmProfiles';
 
-export const TypingIndicator: React.FC<{ opponent: User }> = React.memo(
+export const TypingIndicator: React.FC<{ opponent: Profile }> = React.memo(
   ({ opponent }) => {
     const colors = useColors();
     const insets = useSafeAreaInsets();
     const withColors = styles(colors, insets);
-    const { getUser } = useRealmUsers();
+    const { getUser } = useRealmProfiles();
     const opacity = useSharedValue(0);
     const localUser = getUser(opponent);
 

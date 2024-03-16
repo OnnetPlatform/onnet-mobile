@@ -1,42 +1,25 @@
-// @ts-nocheck
-import { useQuery, useRealm } from '@Khayat/Database/Hooks/useRealmContext';
+import { useQuery } from '@Khayat/Database/Hooks/useRealmContext';
 import Message from '@Khayat/Database/Models/Message';
-import { UserChat } from '@Khayat/Database/Models/types';
-import User from '@Khayat/Database/Models/User';
+import { Profile } from '@Khayat/Database/Profile';
 import { FormattedMessages } from '@Screens/UserChatScreen/components/MessageItem/utils';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
-export const useRoomMessages = (user: UserChat): FormattedMessages[] => {
-  const realm = useRealm();
-  const localUsers = useQuery(
-    User,
-    (collection) => collection.filtered(`_id == "${user._id}"`),
-    [user]
-  );
+export const useRoomMessages = (user: Profile): FormattedMessages[] => {
   const data = useQuery(
     Message,
     (collection) =>
-      collection.filtered(`from._id = "${user._id}" OR to._id = "${user._id}"`),
+      collection.filtered(
+        `from.user = "${user.user}" OR to.user = "${user.user}"`
+      ),
     [user]
   );
 
-  useEffect(() => {
-    try {
-      realm.write(() => {
-        localUsers.map((item) => {
-          item.unreadCount = 0;
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [realm]);
-
   return useMemo(() => {
     const sorted = naiveSorting(Array.from(data));
-    const maniulpulated = [];
+    const maniulpulated: any = [];
     sorted.map((item) => {
       maniulpulated.push(`${item.user.first_name} ${item.user.last_name}`);
+      // @ts-ignore
       item.data.map((nested) => {
         maniulpulated.push(nested);
       });

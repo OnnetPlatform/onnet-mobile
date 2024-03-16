@@ -48,7 +48,7 @@ export const ChatEmptyState: React.FC<{ username: string }> = ({
       <Separator />
       <Text fontSize={16} textAlign="center" weight="light">
         This conversation is just between you and{' '}
-        <Text color={colors.cyan}>{username.trim()}</Text>. Take a look at their
+        <Text color={colors.cyan}>{username}</Text>. Take a look at their
         profile to learn more about them.
       </Text>
     </View>

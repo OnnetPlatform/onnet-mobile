@@ -22,14 +22,16 @@ class Message extends Realm.Object<UserChatMessage> {
   from!: UserChat;
   to!: UserChat;
   createdAt!: string;
+  read!: boolean;
   static schema = {
     name: 'Message',
     properties: {
       message: 'string',
-      user: 'User',
-      from: 'User',
-      to: 'User',
+      user: 'Profile',
+      from: 'Profile',
+      to: 'Profile',
       createdAt: 'string',
+      read: 'bool?',
     },
   };
 }

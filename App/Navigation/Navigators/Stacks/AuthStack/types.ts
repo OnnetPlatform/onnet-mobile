@@ -8,7 +8,7 @@ export type AppNavigationParamsList = {
   AudioScreen: undefined;
   MediaRecorder: undefined;
   UserChatScreen: { user: UserChat };
-  ProfileScreen: undefined;
+  ProfileScreen: { id: string };
   Settings: undefined;
   EventInfo: undefined;
   CreateAnnouncement: undefined;
@@ -17,7 +17,9 @@ export type AppNavigationParamsList = {
   LaunchScreen: undefined;
   LoginScreen: undefined;
   RegisterationScreen: undefined;
+  UserJoinedWorkspaces: undefined;
   EventScreen: {
     event: Event;
   };
+  EditProfile: undefined;
 };

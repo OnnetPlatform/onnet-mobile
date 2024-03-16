@@ -34,8 +34,8 @@ export const MainNavigator: React.ComponentType = Sentry.wrap(() => {
       <SafeAreaProvider>
         <OnnetProvider>
           <GestureHandlerRootView style={styles.mainContainer}>
-            <BottomSheetProvider>
-              <NavigationContainer theme={navTheme}>
+            <NavigationContainer theme={navTheme}>
+              <BottomSheetProvider>
                 {/* @ts-ignore */}
                 <DatabaseProvider id={appId} baseUrl={baseUrl}>
                   <AlertProvider>
@@ -46,8 +46,8 @@ export const MainNavigator: React.ComponentType = Sentry.wrap(() => {
                     </EventProivder>
                   </AlertProvider>
                 </DatabaseProvider>
-              </NavigationContainer>
-            </BottomSheetProvider>
+              </BottomSheetProvider>
+            </NavigationContainer>
           </GestureHandlerRootView>
         </OnnetProvider>
       </SafeAreaProvider>

@@ -7,7 +7,7 @@ import Conference from './Conference';
 import Events from './EventReducer';
 import Bulletin from './BulletinReducer';
 
-export const ReducersWhiteList = ['AuthReducer'];
+export const ReducersWhiteList = ['AuthReducer', 'UserReducer'];
 export default combineReducers({
   UserReducer,
   AuthReducer,

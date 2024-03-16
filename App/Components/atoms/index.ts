@@ -9,3 +9,4 @@ export { default as Separator } from './Separator';
 export { default as Collapsible } from './Collapsible';
 export { default as HeaderLoader } from './HeaderLoader';
 export { default as SectionsList } from './SectionsList';
+export { default as Video } from './Video';

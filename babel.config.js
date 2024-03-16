@@ -19,6 +19,7 @@ module.exports = {
           '@Khayat': './App/Libs/@Khayat/src',
           '@Context': './App/Context/',
           '@Hooks': './App/Hooks/',
+          '@Icons': './App/Components/Icons',
         },
       },
     ],

@@ -7,6 +7,13 @@ export const { Types: UserTypes, Creators: UserCreators } = createActions<
 >(
   {
     getCurrentUser: null,
+    getUserWorkspaces: null,
+    setUserWorkspaces: ['workspaces'],
+    createWorkspace: ['name'],
+    setCurrentWorkspace: ['current_workspace'],
+    joinWorkspace: ['workspace_id'],
+    setProfile: ['profile'],
+    updateProfile: ['profile', 'onUpdate'],
   },
   { prefix: '/User' }
 );

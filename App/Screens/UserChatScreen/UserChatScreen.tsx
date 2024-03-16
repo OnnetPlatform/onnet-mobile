@@ -46,8 +46,10 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           <Icon name={'arrow-ios-back'} />
         </Pressable>
         <Pressable
-          // @ts-ignore
-          onPress={() => navigation.navigate('ProfileScreen')}
+          onPress={() =>
+            // @ts-ignore
+            navigation.navigate('ProfileScreen', { id: user.user })
+          }
           style={[withColors.row, { alignItems: 'center' }]}>
           <Avatar avatar={user.avatar} isActive={user.isActive} />
           <Separator horizontal />
@@ -61,7 +63,8 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         data={msgs}
         SectionListHeaderComponent={MessageHeader}
         onContentSizeChange={() => {
-          if (ref.current) ref.current.scrollToEnd({ animated: true });
+          if (ref.current && msgs.length > 10)
+            ref.current.scrollToEnd({ animated: true });
         }}
         SectionListItemComponent={TextMessage}
         contentContainerStyle={{ paddingBottom: BOTTOM_BAR_HEIGHT + 80 }}

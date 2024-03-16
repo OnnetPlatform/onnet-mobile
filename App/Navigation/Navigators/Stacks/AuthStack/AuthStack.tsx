@@ -4,6 +4,7 @@ import {
   AudioScreen,
   AuthenticationScreen,
   CustomScreen,
+  EditProfileScreen,
   EventScreen,
   LaunchScreen,
   LoginScreen,
@@ -11,6 +12,7 @@ import {
   RegisterationScreen,
   SplashScreen,
   UserChatScreen,
+  UserJoinedWorkspaces,
   VideoRoom,
 } from '@Screens';
 import { CreateAnnouncement, LiveAnnouncement } from '@Screens/Announcement';
@@ -22,11 +24,15 @@ import HomeBottomNavigation from '../../BottomNavigation/BottomNavigation';
 import CreateEventNavigation from '../../CreateEventNavigation';
 import SettingsNavigator from '../SettingsNavigator';
 import { AppNavigationParamsList } from './types';
+import { UserSelector } from '@Khayat/Redux/Selectors/UserSelector';
 
 const Stack = createNativeStackNavigator<AppNavigationParamsList>();
 
 const AuthStack: React.FC = () => {
   const { access_token } = useSelector(AuthSelector);
+
+  const { current_workspace } = useSelector(UserSelector);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
@@ -46,10 +52,20 @@ const AuthStack: React.FC = () => {
           <Stack.Screen name="AudioScreen" component={AudioScreen} />
           <Stack.Screen name="MediaRecorder" component={MediaRecording} />
           <Stack.Screen name="UserChatScreen" component={UserChatScreen} />
-          <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+          <Stack.Screen
+            name="ProfileScreen"
+            component={ProfileScreen}
+            initialParams={{ id: '' }}
+          />
+          <Stack.Screen name="EditProfile" component={EditProfileScreen} />
           <Stack.Screen name="Settings" component={SettingsNavigator} />
           <Stack.Screen name="EventScreen" component={EventScreen} />
-
+          {current_workspace.workspace_access_token ? null : (
+            <Stack.Screen
+              name="UserJoinedWorkspaces"
+              component={UserJoinedWorkspaces}
+            />
+          )}
           {/* @ts-ignore */}
           <Stack.Screen name="CustomScreen" component={CustomScreen} />
           <Stack.Group
