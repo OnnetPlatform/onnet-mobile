@@ -53,7 +53,8 @@ export const FeedScreen: React.FC<FeedScreenProps> = () => {
   }, []);
 
   const onItemPressed = useCallback((item: any) => {
-    if (item.__typename === 'Bulletin') navigation.navigate('LiveAnnouncement');
+    if (item.__typename === 'Bulletin')
+      return navigation.navigate('LiveAnnouncement');
     navigation.navigate('EventScreen', { event: item });
   }, []);
 

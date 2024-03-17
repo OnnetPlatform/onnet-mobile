@@ -16,7 +16,7 @@ export const GetCalendarQuery = gql`
         organizer {
           last_name
           first_name
-          email
+          full_name
           avatar
         }
       }

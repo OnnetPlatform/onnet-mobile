@@ -25,7 +25,6 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
   const scale = useSharedValue(1);
   const endDate = new Date(item.date);
   endDate.setMinutes(endDate.getMinutes() + item.duration);
-
   const isPast = isItBeforeToday(moment(endDate));
   const isStarted =
     moment(endDate).diff(moment(), 'minutes') >= 0 &&
@@ -59,6 +58,7 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
       ) : null}
       <Pressable
         style={[styles.itemWrapper, style.borderLeft]}
+        // @ts-ignore
         onPress={() => navigation.navigate('EventScreen', { event: item })}>
         <View style={styles.row}>
           <View>

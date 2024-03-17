@@ -22,6 +22,8 @@ import {
 } from 'react-native-vision-camera';
 
 import withColors from './CreateAnnouncement.styles';
+import { BulletinCreators } from '@Khayat/Redux/Actions/BulletinActions';
+import { useDispatch } from 'react-redux';
 
 export const CreateAnnouncement: React.FC = () => {
   const colors = useColors();
@@ -31,7 +33,10 @@ export const CreateAnnouncement: React.FC = () => {
   const { requestPermission } = useCameraPermission();
   const { requestPermission: requestMicPermission } = useMicrophonePermission();
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+  const [title, setTitle] = useState<string>('');
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
   const onRadioPressed = useCallback(() => {
     showBottomSheet({
       icon: 'mic-outline',
@@ -48,11 +53,11 @@ export const CreateAnnouncement: React.FC = () => {
     setRecord((value) => !value);
   }, [record]);
 
-  useEffect(() => {
-    if (record) {
-      requestPermission().then(requestMicPermission);
-    }
-  }, [record]);
+  const onStartPressed = useCallback(() => {
+    dispatch(BulletinCreators.createBulletin(title));
+    // @ts-ignore
+    navigation.navigate('MediaRecorder');
+  }, [title]);
 
   const onInfoPressed = useCallback(() => {
     showBottomSheet({
@@ -70,58 +75,60 @@ export const CreateAnnouncement: React.FC = () => {
       },
     });
   }, []);
+  useEffect(() => {
+    if (record) {
+      requestPermission().then(requestMicPermission);
+    }
+  }, [record]);
 
   return (
-    <>
-      <PageView title={'Bulletin'} isGradientEnabled>
-        <>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.screen}
-            keyboardVerticalOffset={insets.bottom + insets.top + 30}>
-            <View style={styles.screen}>
-              <TextInput
-                placeholder="What's your bulletin about?"
-                style={styles.input}
-              />
-              <Separator size={'md'} />
-              <RadioButton
-                title="Record"
-                active={record}
-                onPress={onRadioPressed}
-              />
-            </View>
-            <View>
-              <View style={styles.rowCenter}>
-                <SolidButton
-                  color={colors.turquoise}
-                  title={'Start now'}
-                  style={styles.flex}
-                  textColor={colors.background}
-                  // @ts-ignore
-                  onPress={() => navigation.navigate('MediaRecorder')}
-                />
-                <Separator horizontal />
+    <PageView title={'Bulletin'} isGradientEnabled>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.screen}
+        keyboardVerticalOffset={insets.bottom + insets.top + 30}>
+        <View style={styles.screen}>
+          <TextInput
+            placeholder="What's your bulletin about?"
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+          />
+          <Separator size={'md'} />
+          <RadioButton
+            title="Record"
+            active={record}
+            onPress={onRadioPressed}
+          />
+        </View>
+        <View>
+          <View style={styles.rowCenter}>
+            <SolidButton
+              color={colors.turquoise}
+              title={'Start now'}
+              style={styles.flex}
+              textColor={colors.background}
+              onPress={onStartPressed}
+            />
+            <Separator horizontal />
 
-                <SolidButton variant="OUTLINED" title={''} color={''}>
-                  <Icon name={'mic-outline'} />
-                </SolidButton>
-              </View>
-              <Separator />
-              <View style={styles.info}>
-                <Icon name={'alert-circle-outline'} style={styles.infoIcon} />
-                <Separator horizontal />
-                <Pressable onPress={onInfoPressed}>
-                  <Text fontSize={14}>Know more about Bulletins</Text>
-                </Pressable>
-              </View>
+            <SolidButton variant="OUTLINED" title={''} color={''}>
+              <Icon name={'mic-outline'} />
+            </SolidButton>
+          </View>
+          <Separator />
+          <View style={styles.info}>
+            <Icon name={'alert-circle-outline'} style={styles.infoIcon} />
+            <Separator horizontal />
+            <Pressable onPress={onInfoPressed}>
+              <Text fontSize={14}>Know more about Bulletins</Text>
+            </Pressable>
+          </View>
 
-              <Separator />
-            </View>
-          </KeyboardAvoidingView>
-        </>
-      </PageView>
-    </>
+          <Separator />
+        </View>
+      </KeyboardAvoidingView>
+    </PageView>
   );
 };
 

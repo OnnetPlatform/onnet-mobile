@@ -11,7 +11,7 @@ export const FEED_MUTATION = gql`
         streamer {
           last_name
           first_name
-          email
+          full_name
         }
         startDate
         duration
@@ -23,9 +23,8 @@ export const FEED_MUTATION = gql`
         organizer {
           last_name
           first_name
-          email
           avatar
-          id
+          full_name
         }
         date
         duration

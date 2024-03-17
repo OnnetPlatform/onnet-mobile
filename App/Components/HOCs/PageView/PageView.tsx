@@ -35,13 +35,14 @@ export const PageView: React.FC<PageViewProps> = ({
     ),
     [loading, edges, hide]
   );
+  const renderWithGradient = useCallback(
+    () => <GradientLayout>{Page()}</GradientLayout>,
+
+    [isGradientEnabled, loading, edges, hide]
+  );
 
   if (isGradientEnabled) {
-    return (
-      <GradientLayout>
-        <Page />
-      </GradientLayout>
-    );
+    return renderWithGradient();
   }
   return Page();
 };

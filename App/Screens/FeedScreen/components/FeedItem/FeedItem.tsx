@@ -2,21 +2,17 @@ import Blur from '@Atoms/Blur';
 import Icon from '@Atoms/Icon';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
-import Video from '@Atoms/Video';
 import { faker } from '@faker-js/faker';
 import { FlashList } from '@shopify/flash-list';
 import Texture from '@Skia/Texture/Texture';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
 import React from 'react';
-import { FlatList, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 export const FeedItem: React.FC<any> = ({ item }) => {
   const colors = useColors();
   if (item.__typename === 'Bulletin') {
-    return (
-      <Video url="https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smart-watch-with-the-stopwatch-running-32808-large.mp4" />
-    );
     return (
       <Blur
         style={{
