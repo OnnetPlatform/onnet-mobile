@@ -25,6 +25,7 @@ import CreateEventNavigation from '../../CreateEventNavigation';
 import SettingsNavigator from '../SettingsNavigator';
 import { AppNavigationParamsList } from './types';
 import { UserSelector } from '@Khayat/Redux/Selectors/UserSelector';
+import EditEvent from '@Screens/Event/EditEvent';
 
 const Stack = createNativeStackNavigator<AppNavigationParamsList>();
 
@@ -76,6 +77,7 @@ const AuthStack: React.FC = () => {
               name={'EventInfo'}
               component={CreateEventNavigation}
             />
+            <Stack.Screen name="EditEventScreen" component={EditEvent} />
           </Stack.Group>
           <Stack.Screen
             options={{

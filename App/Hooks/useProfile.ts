@@ -12,15 +12,18 @@ export const useProfile: (id?: string) => {
   profile?: Profile;
   updateProfile(input: Partial<Profile>): void;
   notFound: boolean;
+  loading: boolean;
 } = (id) => {
   const [profile, setProfile] = useState<Profile>();
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const { id: user_id } = useSelector(AuthSelector);
   const isOwned = id === user_id;
 
   const fetch = useCallback(() => {
+    setLoading(true);
     client
       .query({
         query: GET_PROFILE_QUERY,
@@ -33,6 +36,7 @@ export const useProfile: (id?: string) => {
         }
         setNotFound(data.profile === null && !isOwned);
         setProfile(data.profile);
+        setLoading(false);
       });
   }, [id, isFocused]);
 
@@ -53,8 +57,9 @@ export const useProfile: (id?: string) => {
     return () => {
       setProfile(undefined);
       setNotFound(false);
+      setLoading(true);
     };
   }, [id, isFocused]);
 
-  return { profile, updateProfile, notFound };
+  return { profile, updateProfile, notFound, loading };
 };

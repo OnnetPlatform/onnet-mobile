@@ -6,7 +6,7 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import React, { Suspense } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -17,6 +17,8 @@ import SnackbarProvider from '../../../Provider/SnackbarProvider';
 import * as Sentry from '@sentry/react-native';
 import { AuthStack } from '..';
 import { enableScreens } from 'react-native-screens';
+import { Loading } from '@Atoms/Loading/Loading';
+
 enableScreens();
 
 const navTheme = {
@@ -29,27 +31,29 @@ const navTheme = {
 
 export const MainNavigator: React.ComponentType = Sentry.wrap(() => {
   return (
-    <Suspense fallback={<View />}>
+    <Suspense fallback={<Loading />}>
       <IconRegistry icons={EvaIconsPack} />
       <SafeAreaProvider>
-        <OnnetProvider>
-          <GestureHandlerRootView style={styles.mainContainer}>
-            <NavigationContainer theme={navTheme}>
-              <BottomSheetProvider>
-                {/* @ts-ignore */}
-                <DatabaseProvider id={appId} baseUrl={baseUrl}>
-                  <AlertProvider>
-                    <EventProivder>
-                      <SnackbarProvider>
-                        <AuthStack />
-                      </SnackbarProvider>
-                    </EventProivder>
-                  </AlertProvider>
-                </DatabaseProvider>
-              </BottomSheetProvider>
-            </NavigationContainer>
-          </GestureHandlerRootView>
-        </OnnetProvider>
+        <AlertProvider>
+          <OnnetProvider>
+            <GestureHandlerRootView style={styles.mainContainer}>
+              <NavigationContainer theme={navTheme}>
+                <BottomSheetProvider>
+                  {/* @ts-ignore */}
+                  <DatabaseProvider id={appId} baseUrl={baseUrl}>
+                    <AlertProvider>
+                      <EventProivder>
+                        <SnackbarProvider>
+                          <AuthStack />
+                        </SnackbarProvider>
+                      </EventProivder>
+                    </AlertProvider>
+                  </DatabaseProvider>
+                </BottomSheetProvider>
+              </NavigationContainer>
+            </GestureHandlerRootView>
+          </OnnetProvider>
+        </AlertProvider>
       </SafeAreaProvider>
     </Suspense>
   );

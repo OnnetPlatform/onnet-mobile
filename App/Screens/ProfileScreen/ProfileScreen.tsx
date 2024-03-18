@@ -1,18 +1,22 @@
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import moment from 'moment';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
-  Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Pressable,
   StyleSheet,
   View,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { useAnimatedRef, useSharedValue } from 'react-native-reanimated';
+import {
+  interpolate,
+  useAnimatedRef,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -23,13 +27,14 @@ import dyanmicStyles from './ProfileScreen.styles';
 import { useProfile } from '@Hooks/useProfile';
 import { useSelector } from 'react-redux';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
-
+import Refresh from '@Skia/Refresh';
+import Image from '@Atoms/Image';
 const image =
   'https://images.unsplash.com/photo-1708348127662-6c3771e8c3bd?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 export const ProfileScreen: React.FC<{}> = ({ route }: any) => {
   const { id } = route.params;
-  const { profile, notFound } = useProfile(id);
+  const { profile, notFound, loading } = useProfile(id);
   const { id: userId } = useSelector(AuthSelector);
   const insets = useSafeAreaInsets();
   const colors = useColors();
@@ -41,12 +46,12 @@ export const ProfileScreen: React.FC<{}> = ({ route }: any) => {
   const canGoBack = navigation.canGoBack();
   useScrollToTop(scrollRef);
 
-  // const animatedStyle = useAnimatedStyle(
-  //   () => ({
-  //     transform: [{ scale: interpolate(scrollValue.value, [0, 1], [1, 0]) }],
-  //   }),
-  //   []
-  // );
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      transform: [{ scale: interpolate(scrollValue.value, [0, 1], [1, 0]) }],
+    }),
+    []
+  );
 
   const onScroll = ({
     nativeEvent: { contentOffset },
@@ -57,7 +62,11 @@ export const ProfileScreen: React.FC<{}> = ({ route }: any) => {
   const onBackPressed = () => navigation.goBack();
   //@ts-ignore
   const onEditPressed = () => navigation.navigate('EditProfile');
-
+  useEffect(() => {
+    if (profile) {
+      scrollRef.current?.scrollTo({ y: 200, animated: true });
+    }
+  }, [profile]);
   if (notFound)
     return (
       <View
@@ -77,13 +86,13 @@ export const ProfileScreen: React.FC<{}> = ({ route }: any) => {
     );
   return (
     <SafeAreaView edges={['left', 'right']} style={styles.screen}>
-      {/* {profile?.cover ? (
-        <Animated.Image
+      <Refresh loading={loading} />
+      {loading ? null : (
+        <Image
           style={[StyleSheet.absoluteFill, animatedStyle]}
-          source={{ uri: profile?.cover }}
-          resizeMode={'cover'}
+          source={{ uri: image }}
         />
-      ) : null} */}
+      )}
       {canGoBack ? (
         <Pressable onPress={onBackPressed} style={styles.backArrow}>
           <Icon name={'arrow-ios-back-outline'} />

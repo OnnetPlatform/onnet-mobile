@@ -5,6 +5,7 @@ export type EventData = {
   description: string;
   date: number;
   duration: number;
+  invitations: string[];
 };
 export type EventContextType =
   | {

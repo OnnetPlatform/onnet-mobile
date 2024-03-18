@@ -18,8 +18,12 @@ export type AppNavigationParamsList = {
   LoginScreen: undefined;
   RegisterationScreen: undefined;
   UserJoinedWorkspaces: undefined;
+  EventInvitations: undefined;
   EventScreen: {
     event: Event;
   };
   EditProfile: undefined;
+  EditEventScreen: {
+    event: Event;
+  };
 };

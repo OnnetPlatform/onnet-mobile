@@ -1,7 +1,8 @@
 import { ThemeColors } from '@Theme/Colors';
 import { StyleSheet } from 'react-native';
+import { EdgeInsets } from 'react-native-safe-area-context';
 
-export const useStyles = (colors: ThemeColors) =>
+export const useStyles = (colors: ThemeColors, insets: EdgeInsets) =>
   StyleSheet.create({
     infoRow: {
       flexDirection: 'row',
@@ -12,25 +13,19 @@ export const useStyles = (colors: ThemeColors) =>
     date_container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.secondaryBackground,
-      padding: 2,
-      height: 20,
-      borderRadius: 4,
-      paddingHorizontal: 4,
     },
     calendar_icon: {
-      width: 16,
-      marginRight: 2,
+      width: 24,
+      height: 24,
     },
     organizer: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginVertical: 44,
+      paddingHorizontal: 12,
     },
     button_container: {
       flexDirection: 'row',
-      alignItems: 'flex-start',
-      marginBottom: 44,
+      alignItems: 'center',
     },
     summary_container: {
       padding: 16,
@@ -45,5 +40,22 @@ export const useStyles = (colors: ThemeColors) =>
     joined_user: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    reminder_button: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    mins_button: {
+      width: 48,
+      height: 48,
+      borderRadius: 24,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    cta: {
+      alignSelf: 'center',
+      position: 'absolute',
+      bottom: insets.bottom,
     },
   });

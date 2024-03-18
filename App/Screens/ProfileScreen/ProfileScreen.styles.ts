@@ -9,6 +9,7 @@ export default (insets: EdgeInsets, colors: ThemeColors) =>
     screen: {
       flex: 1,
       flexGrow: 1,
+      backgroundColor: colors.background,
     },
     header: {
       padding: 11,

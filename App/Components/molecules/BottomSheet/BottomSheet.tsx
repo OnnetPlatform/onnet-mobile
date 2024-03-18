@@ -5,12 +5,13 @@ import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { useColors } from '@Theme/index';
 import React, { useCallback } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetBody, BottomSheetIcon } from './components';
 import withColors from './styles';
 import { BottomSheetProps } from './types';
+import Backdrop from './components/Backdrop';
 
 export const BottomSheet = React.forwardRef<
   BottomSheetMethods,
@@ -31,6 +32,7 @@ export const BottomSheet = React.forwardRef<
         )}
         {props.subtitle ? (
           <>
+            <Separator />
             <Text textAlign="center" weight="light">
               {props.subtitle}
             </Text>
@@ -44,16 +46,22 @@ export const BottomSheet = React.forwardRef<
     [props]
   );
 
-  const handleComponent = useCallback(() => <View />, []);
-
   return (
     <GorhomBottomSheet
       ref={ref}
       index={-1}
-      handleComponent={handleComponent}
+      backdropComponent={Backdrop}
       snapPoints={[1]}
       enableDynamicSizing
       maxDynamicContentSize={height * 0.75}
+      handleIndicatorStyle={{
+        width: 30,
+        height: 3,
+        backgroundColor: colors.secondaryBackground,
+
+        borderRadius: 3,
+        overflow: 'hidden',
+      }}
       backgroundStyle={styles.background}
       style={styles.bottomSheet}
       enablePanDownToClose={true}>

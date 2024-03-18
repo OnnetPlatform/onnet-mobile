@@ -15,11 +15,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from '../Icon';
 import Text from '../Text';
 import { withColors } from './styles';
+import { PageViewProps } from '@HOCs/PageView/types';
 
 export const Header: React.FC<{
   title: string;
   hide?: SharedValue<number>;
-}> = ({ title, hide }) => {
+  rightAction?: {
+    rightIcon: PageViewProps['rightIcon'];
+    onRightIconPressed: PageViewProps['onRightIconPressed'];
+  };
+}> = ({ title, hide, rightAction }) => {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const styles = withColors(colors, insets);
@@ -60,7 +65,17 @@ export const Header: React.FC<{
         <Text fontSize={18} weight="bold" style={styles.title}>
           {title}
         </Text>
-        <View style={styles.element} />
+        <View style={[styles.element, { alignItems: 'flex-end' }]}>
+          {rightAction ? (
+            <View>
+              {rightAction.rightIcon ? (
+                <Pressable onPress={rightAction.onRightIconPressed}>
+                  <Icon name={rightAction.rightIcon} />
+                </Pressable>
+              ) : null}
+            </View>
+          ) : null}
+        </View>
       </View>
     </Animated.View>
   );

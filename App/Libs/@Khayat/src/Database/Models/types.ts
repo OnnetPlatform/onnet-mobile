@@ -47,6 +47,7 @@ export enum ModelEnums {
 }
 
 export type ProfileObject = {
+  id: string;
   username?: string;
   avatar?: string;
   bio?: string;

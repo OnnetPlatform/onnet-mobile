@@ -3,4 +3,5 @@ export const initial_event_data = {
   description: '',
   date: new Date().getTime(),
   duration: 120,
+  invitations: [],
 };

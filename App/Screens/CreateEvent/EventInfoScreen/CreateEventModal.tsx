@@ -102,7 +102,7 @@ export const CreateEvetModal: React.FC = () => {
           style={styles.item}
           onPress={() => {
             // @ts-ignore
-            navigation.navigate('EventDescription');
+            navigation.navigate('EventInvitations');
           }}>
           <View style={styles.row}>
             <Icon name={'people-outline'} />

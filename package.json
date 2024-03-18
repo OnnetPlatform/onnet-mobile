@@ -34,6 +34,7 @@
     "expo": "^50.0.0",
     "expo-av": "~13.10.5",
     "expo-file-system": "~16.0.7",
+    "expo-image": "~1.10.6",
     "ffmpeg-kit-react-native": "^6.0.2",
     "graphql": "^16.8.1",
     "lodash": "^4.17.21",

@@ -34,3 +34,66 @@ export const CreateEventMutation = gql`
     }
   }
 `;
+
+export const GET_EVENT_INVITATIONS = gql`
+  query GetEventInvitations($input: GetEventInvitationsInput) {
+    getEventInvitations(input: $input) {
+      status
+      createdAt
+      user {
+        username
+        avatar
+        bio
+        cover
+        workspace
+        user
+        active
+        status
+        title
+        city
+        country
+        department
+        phone
+        last_name
+        first_name
+        full_name
+      }
+    }
+  }
+`;
+
+export const GET_EVENT_BY_ID_QUERY = gql`
+  query Event($id: String) {
+    event(id: $id) {
+      title
+      description
+      id
+      date
+      organizer {
+        id
+        username
+        avatar
+        active
+        last_name
+        user
+        first_name
+      }
+      duration
+      createdAt
+    }
+  }
+`;
+
+export const UPDATE_EVENT_BY_ID_MUTATION = gql`
+  mutation UpdateEvent($input: UpdateEventInput) {
+    updateEvent(updateEventInput: $input) {
+      title
+      description
+      id
+      date
+      duration
+      createdAt
+      is_organizer
+    }
+  }
+`;

@@ -1,6 +1,6 @@
 import { Header, HeaderLoader } from '@Atoms';
 import { useColors } from '@Theme';
-import React, { useCallback, useMemo } from 'react';
+import React, { PropsWithChildren, useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,13 +8,15 @@ import { GradientLayout } from '..';
 import withColors from './styles';
 import { PageViewProps } from './types';
 
-export const PageView: React.FC<PageViewProps> = ({
+export const PageView: React.FC<PropsWithChildren<PageViewProps>> = ({
   title,
   children,
   loading,
   isGradientEnabled,
   edges = ['bottom', 'left', 'right'],
   hide,
+  rightIcon,
+  onRightIconPressed,
 }) => {
   const colors = useColors();
   const styles = withColors(colors);
@@ -28,7 +30,11 @@ export const PageView: React.FC<PageViewProps> = ({
   const Page = useCallback(
     () => (
       <SafeAreaView style={[styles.screen, background]} edges={edges}>
-        <Header hide={hide} title={title} />
+        <Header
+          hide={hide}
+          title={title}
+          rightAction={{ rightIcon, onRightIconPressed }}
+        />
         {loading ? <HeaderLoader /> : null}
         <View style={styles.content}>{children}</View>
       </SafeAreaView>

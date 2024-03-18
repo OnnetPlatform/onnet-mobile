@@ -1,5 +1,11 @@
 import { useMemo } from 'react';
-import { ColorSchemeName, useColorScheme } from 'react-native';
+import {
+  ColorSchemeName,
+  TextStyle,
+  ViewStyle,
+  useColorScheme,
+} from 'react-native';
+import { useColors } from '.';
 
 export type ThemeColors = {
   pink: string;
@@ -48,4 +54,24 @@ export const colors: (scheme: ColorSchemeName) => ThemeColors = (
 export default () => {
   const scheme = useColorScheme();
   return useMemo(() => colors(scheme), [scheme]);
+};
+
+export const useStyles = () => {
+  const { background, text, secondaryBackground } = useColors();
+  const backgroundColor: ViewStyle = useMemo(
+    () => ({ backgroundColor: background }),
+    [background]
+  );
+  const textColor: TextStyle = useMemo(() => ({ color: text }), [text]);
+
+  const screenStyle: ViewStyle = useMemo(
+    () => ({ flex: 1, flexGrow: 1, backgroundColor: background }),
+    [background]
+  );
+  const backgroundSecondary: ViewStyle = useMemo(
+    () => ({ backgroundColor: secondaryBackground }),
+    [background]
+  );
+
+  return { backgroundColor, textColor, screenStyle, backgroundSecondary };
 };
