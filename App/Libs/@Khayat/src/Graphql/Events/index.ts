@@ -1,4 +1,9 @@
 import { gql } from '@apollo/client';
+export type InvitationStatus =
+  | 'INVITED'
+  | 'ACCEPTED'
+  | 'DECLINED'
+  | 'TENTATIVE';
 
 export const GetCalendarQuery = gql`
   query GetCalendar {
@@ -95,5 +100,17 @@ export const UPDATE_EVENT_BY_ID_MUTATION = gql`
       createdAt
       is_organizer
     }
+  }
+`;
+
+export const REMOVE_EVENT_MUTATION = gql`
+  mutation RemoveEvent($input: String) {
+    removeEvent(id: $input)
+  }
+`;
+
+export const UPDATE_INVITATION_BY_EVENT = gql`
+  mutation UpdateInvitation($input: UpdateInvitaionInput) {
+    updateInvitation(input: $input)
   }
 `;

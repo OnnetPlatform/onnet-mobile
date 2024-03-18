@@ -5,7 +5,9 @@ import { ProfileObject } from '@Khayat/Database/Models/types';
 import React from 'react';
 import { View } from 'react-native';
 
-export const User: React.FC<ProfileObject> = (props) => {
+export const User: React.FC<ProfileObject & { subtitle?: string }> = (
+  props
+) => {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Avatar isActive={props.active === true} avatar={props.avatar} />
@@ -14,6 +16,7 @@ export const User: React.FC<ProfileObject> = (props) => {
         <Text weight="bold" fontSize={16}>
           {props.first_name} {props.last_name}
         </Text>
+        {props.subtitle ? <Text>{props.subtitle}</Text> : null}
       </View>
     </View>
   );

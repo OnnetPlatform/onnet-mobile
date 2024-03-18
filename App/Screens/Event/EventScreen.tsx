@@ -1,4 +1,3 @@
-import Avatar from '@Atoms/Avatar';
 import Icon from '@Atoms/Icon';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
@@ -44,13 +43,14 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
   }, [isFocused]);
 
   const onRSVPPressed = useCallback(() => {
-    showBottomSheet({
-      title: 'Availability',
-      subtitle: 'Confirm your availability, all guests will be notified',
-      body() {
-        return <RSVP />;
-      },
-    });
+    if (fetchedEvent)
+      showBottomSheet({
+        title: 'Availability',
+        subtitle: 'Confirm your availability, all guests will be notified',
+        body() {
+          return <RSVP event_id={fetchedEvent?.id} />;
+        },
+      });
   }, [fetchedEvent, colors]);
 
   const is_organizer = id === fetchedEvent?.organizer.user;
@@ -127,35 +127,19 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
           <Separator size={'md'} />
           <Separator size={'md'} />
           <View style={styles.summary_container}>
-            <Text fontSize={18} weight="bold">
-              Summary
-            </Text>
-            <Separator />
-            <Text>{fetchedEvent.description}</Text>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('ProfileScreen', {
+                  id: fetchedEvent.organizer.user,
+                });
+              }}
+              style={styles.organizer}>
+              <User {...fetchedEvent.organizer} subtitle="Organizer" />
+            </Pressable>
+            {fetchedEvent.description && (
+              <Text>{fetchedEvent.description}</Text>
+            )}
           </View>
-
-          <Pressable
-            onPress={() => {
-              navigation.navigate('ProfileScreen', {
-                id: fetchedEvent.organizer.user,
-              });
-            }}
-            style={styles.organizer}>
-            <Avatar
-              isActive={fetchedEvent.organizer.active === true}
-              avatar={fetchedEvent.organizer.avatar}
-            />
-            <Separator horizontal />
-            <View>
-              <Text fontSize={18} weight="bold">
-                {fetchedEvent.organizer.first_name}{' '}
-                {fetchedEvent.organizer.last_name} (Organizer)
-              </Text>
-              <Text fontSize={14} weight="light">
-                @{fetchedEvent.organizer.last_name}
-              </Text>
-            </View>
-          </Pressable>
           <Separator size={'md'} />
           <View>
             <Separator />
@@ -177,7 +161,13 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
                       id: item.user?.user,
                     });
                   }}>
-                  <User {...item.user} key={item.user.id} />
+                  <User
+                    subtitle={
+                      item.user?.id === event.organizer.id ? 'Organizer' : ''
+                    }
+                    {...item.user}
+                    key={item?.user?.id}
+                  />
                 </Pressable>
               )}
             />

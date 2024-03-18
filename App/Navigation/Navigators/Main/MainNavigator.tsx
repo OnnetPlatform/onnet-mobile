@@ -34,26 +34,26 @@ export const MainNavigator: React.ComponentType = Sentry.wrap(() => {
     <Suspense fallback={<Loading />}>
       <IconRegistry icons={EvaIconsPack} />
       <SafeAreaProvider>
-        <AlertProvider>
-          <OnnetProvider>
-            <GestureHandlerRootView style={styles.mainContainer}>
-              <NavigationContainer theme={navTheme}>
-                <BottomSheetProvider>
-                  {/* @ts-ignore */}
-                  <DatabaseProvider id={appId} baseUrl={baseUrl}>
-                    <AlertProvider>
-                      <EventProivder>
-                        <SnackbarProvider>
+        <SnackbarProvider>
+          <AlertProvider>
+            <OnnetProvider>
+              <GestureHandlerRootView style={styles.mainContainer}>
+                <NavigationContainer theme={navTheme}>
+                  <BottomSheetProvider>
+                    {/* @ts-ignore */}
+                    <DatabaseProvider id={appId} baseUrl={baseUrl}>
+                      <AlertProvider>
+                        <EventProivder>
                           <AuthStack />
-                        </SnackbarProvider>
-                      </EventProivder>
-                    </AlertProvider>
-                  </DatabaseProvider>
-                </BottomSheetProvider>
-              </NavigationContainer>
-            </GestureHandlerRootView>
-          </OnnetProvider>
-        </AlertProvider>
+                        </EventProivder>
+                      </AlertProvider>
+                    </DatabaseProvider>
+                  </BottomSheetProvider>
+                </NavigationContainer>
+              </GestureHandlerRootView>
+            </OnnetProvider>
+          </AlertProvider>
+        </SnackbarProvider>
       </SafeAreaProvider>
     </Suspense>
   );
