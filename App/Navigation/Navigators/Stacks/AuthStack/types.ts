@@ -1,4 +1,4 @@
-import { UserChat } from '@Khayat/Database/Models/types';
+import { Profile } from '@Khayat/Database/Profile';
 import { Event } from '@Khayat/Graphql/Events/types';
 
 export type AppNavigationParamsList = {
@@ -7,7 +7,7 @@ export type AppNavigationParamsList = {
   ConferenceScreen: undefined;
   AudioScreen: undefined;
   MediaRecorder: undefined;
-  UserChatScreen: { user: UserChat };
+  UserChatScreen: { user: Profile };
   ProfileScreen: { id: string };
   Settings: undefined;
   EventInfo: undefined;
@@ -23,6 +23,8 @@ export type AppNavigationParamsList = {
     event: Event;
   };
   EditProfile: undefined;
+  EventDescription: undefined;
+  EventTime: undefined;
   EditEventScreen: {
     event: Event;
   };

@@ -1,4 +1,3 @@
-import Avatar from '@Atoms/Avatar';
 import { useWorkspaceUsers } from '@Hooks/useWorkspaceUsers';
 import { useColors } from '@Theme/index';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -7,16 +6,23 @@ import { SafeAreaView } from 'react-native';
 import NestedScreenHeader from '../Components/NestedScreenHeader/NestedScreenHeader';
 import useSave from '../Hooks/useSave';
 import Separator from '@Atoms/Separator';
-import Text from '@Atoms/Text';
 
 import { ProfileObject } from '@Khayat/Database/Models/types';
 import CheckBox from '@Atoms/CheckBox';
 import styles from './styles';
+import { useEventContext } from '@Context/EventContext/EventContext';
+import User from '@Molecules/User';
+import { useSelector } from 'react-redux';
+import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 
 export const EventInvitations: React.FC = () => {
   const colors = useColors();
   const { users } = useWorkspaceUsers();
-  const [invites, setInvites] = useState<string[]>([]);
+  const {
+    event: { invitations },
+  } = useEventContext();
+  const [invites, setInvites] = useState<string[]>(invitations);
+  const { id } = useSelector(AuthSelector);
   const { onBackPressed, onSavePressed } = useSave({
     key: 'invitations',
     value: invites,
@@ -50,19 +56,17 @@ export const EventInvitations: React.FC = () => {
   const renderItem: ListRenderItem<ProfileObject> = useCallback(
     ({ item }) => {
       const isChecked = invites.find((i) => i === item.id) !== undefined;
+      const isYou = id === item.user;
       return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <CheckBox
             isChecked={isChecked}
+            disabled={isYou}
             onChange={() => onCheckItem(item, !isChecked)}
           />
           <Separator horizontal size={'md'} />
           <Separator horizontal size={'md'} />
-          <Avatar avatar={item.avatar} isActive={item.active === true} />
-          <Separator horizontal />
-          <Text fontSize={16} weight="bold">
-            {item.first_name} {item.last_name}
-          </Text>
+          <User disabled {...item} />
         </View>
       );
     },

@@ -1,5 +1,4 @@
 import { Icon, Separator, Text } from '@Atoms';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import Images from '@Theme/Images';
 import React from 'react';
@@ -13,15 +12,16 @@ import { useSelector } from 'react-redux';
 import { UserSelector } from '@Khayat/Redux/Selectors/UserSelector';
 import { useBottomSheet } from '@Context/BottomSheet';
 import { WorkspacesLists } from '@Screens/Auth/UserJoinedWorkspaces/components/WrokspacesList';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const withColors = styles(colors, insets);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const { showBottomSheet } = useBottomSheet();
   const { current_workspace } = useSelector(UserSelector);
-  // @ts-ignore
+
   const onSettingsPressed = () => navigation.navigate('Settings');
   const onWorkspacePressed = () => {
     showBottomSheet({
@@ -58,7 +58,6 @@ export const HomeChatScreen: React.FC = () => {
         <View style={withColors.rowWrapper}>
           <Pressable
             onPress={() => {
-              //@ts-ignore
               navigation.navigate('CreateAnnouncement');
             }}>
             <Icon name={'radio-outline'} />

@@ -1,7 +1,6 @@
 import { Text } from '@Atoms';
 import { Event } from '@Khayat/Graphql/Events/types';
 import { Button } from '@Molecules';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import moment, { Moment } from 'moment';
 import React, { useEffect } from 'react';
@@ -14,11 +13,12 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import styles, { pastBackground, withColors } from './EventItem.styles';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 const pastBackgroundImage = require('../../../../../assets/images/striped.png');
 
 export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const colors = useColors();
   const style = withColors(colors);
   const opacity = useSharedValue(1);
@@ -58,7 +58,6 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
       ) : null}
       <Pressable
         style={[styles.itemWrapper, style.borderLeft]}
-        // @ts-ignore
         onPress={() => navigation.navigate('EventScreen', { event: item })}>
         <View style={styles.row}>
           <View>
@@ -72,7 +71,6 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
             </Text>
           </View>
           {isStarted ? (
-            // @ts-ignore
             <Button onPress={() => navigation.navigate('ConferenceScreen')}>
               <Text weight="bold">Join</Text>
             </Button>

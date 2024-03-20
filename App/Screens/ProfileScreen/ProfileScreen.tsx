@@ -1,4 +1,4 @@
-import { useNavigation, useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import moment from 'moment';
 import React, { useEffect } from 'react';
@@ -29,6 +29,7 @@ import { useSelector } from 'react-redux';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import Refresh from '@Skia/Refresh';
 import Image from '@Atoms/Image';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 const image =
   'https://images.unsplash.com/photo-1708348127662-6c3771e8c3bd?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
@@ -42,7 +43,7 @@ export const ProfileScreen: React.FC<{}> = ({ route }: any) => {
   const scrollValue = useSharedValue(0);
   const scrollRef = useAnimatedRef<ScrollView>();
   const gradientColors = ['transparent', colors.background];
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const canGoBack = navigation.canGoBack();
   useScrollToTop(scrollRef);
 
@@ -60,7 +61,6 @@ export const ProfileScreen: React.FC<{}> = ({ route }: any) => {
   };
 
   const onBackPressed = () => navigation.goBack();
-  //@ts-ignore
   const onEditPressed = () => navigation.navigate('EditProfile');
   useEffect(() => {
     if (profile) {

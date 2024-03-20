@@ -1,16 +1,18 @@
 import { EventCreators } from '@Khayat/Redux';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
 import { EventsList } from './components';
 import styles from './HomeScreen.styles';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
+import EventCalendar from '@Molecules/EventCalendar';
 
 const HomeScreen: React.FC = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   useEffect(() => {
     if (isFocused) {
@@ -19,12 +21,7 @@ const HomeScreen: React.FC = () => {
   }, [isFocused]);
   return (
     <SafeAreaView edges={['left', 'right']} style={[styles.screen]}>
-      <EventsList
-        onCreatePressed={() => {
-          // @ts-ignore
-          navigation.navigate('EventInfo');
-        }}
-      />
+      <EventCalendar />
     </SafeAreaView>
   );
 };

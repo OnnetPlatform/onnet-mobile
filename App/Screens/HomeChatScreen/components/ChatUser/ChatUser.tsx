@@ -2,7 +2,6 @@ import { Separator, Text } from '@Atoms';
 import Avatar from '@Atoms/Avatar/Avatar';
 import { ProfileObject } from '@Khayat/Database/Models/types';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React from 'react';
 import { Pressable, View } from 'react-native';
@@ -11,10 +10,11 @@ import { useSelector } from 'react-redux';
 
 import styles from './ChatUser.styles';
 import { useRealmProfiles } from '../../../../Database/Hooks/useRealmProfiles';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const ChatUser: React.FC<{ item: ProfileObject }> = ({ item }) => {
   const { user, first_name, last_name, avatar, active } = item;
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const { getUser } = useRealmProfiles();
   const localUser = getUser({ user });
   const colors = useColors();
@@ -24,8 +24,8 @@ export const ChatUser: React.FC<{ item: ProfileObject }> = ({ item }) => {
     <Pressable
       style={{ marginHorizontal: 22 }}
       onPress={() => {
-        // @ts-ignore
-        navigation.navigate('UserChatScreen', { user: localUser });
+        if (localUser)
+          navigation.navigate('UserChatScreen', { user: localUser });
       }}>
       <View style={[styles.row]}>
         <Avatar {...{ avatar, isActive: active === true }} />

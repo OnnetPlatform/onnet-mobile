@@ -46,6 +46,7 @@ export const GET_EVENT_INVITATIONS = gql`
       status
       createdAt
       user {
+        id
         username
         avatar
         bio
@@ -79,6 +80,7 @@ export const GET_EVENT_BY_ID_QUERY = gql`
         username
         avatar
         active
+        user
         last_name
         user
         first_name

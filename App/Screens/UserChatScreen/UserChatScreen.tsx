@@ -1,7 +1,6 @@
 import { HeaderLoader, SectionsList } from '@Atoms';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import ChatEmptyState from '@Molecules/ChatEmptyState';
-import { useNavigation } from '@react-navigation/native';
 import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme';
 import React, { useCallback, useRef } from 'react';
 import { Pressable, View } from 'react-native';
@@ -21,6 +20,7 @@ import styles from './UserChatScreen.styles';
 import MessageInputProvider from '../../Provider/MessageInputProvider';
 import { TextMessage } from './components/TextMessage/TextMessage';
 import { FlashList } from '@shopify/flash-list';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const UserChatScreen: React.FC = ({ route }: any) => {
   const { user } = route.params;
@@ -28,7 +28,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
 
   const msgs: FormattedMessages[] = useRoomMessages(user);
   const colors = useColors();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const insets = useSafeAreaInsets();
   const withColors = styles(colors, insets);
   const { isConnected } = useSelector(MessagingSelector);
@@ -47,7 +47,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         </Pressable>
         <Pressable
           onPress={() =>
-            // @ts-ignore
             navigation.navigate('ProfileScreen', { id: user.user })
           }
           style={[withColors.row, { alignItems: 'center' }]}>

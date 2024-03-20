@@ -75,7 +75,7 @@ const TabBar = React.memo(
 const Tab = React.memo<
   BottomTabBarProps & { index: number; route: NavigationState }
 >(
-  ({ state, index, navigation, route }) => {
+  ({ state, index, navigation, route }: any) => {
     const tabs = useTabs();
 
     const colors = useColors();
@@ -90,7 +90,6 @@ const Tab = React.memo<
       });
 
       if (!isFocused && !event.defaultPrevented) {
-        //@ts-ignore
         navigation.navigate({ name: route.name, merge: true });
       }
     };

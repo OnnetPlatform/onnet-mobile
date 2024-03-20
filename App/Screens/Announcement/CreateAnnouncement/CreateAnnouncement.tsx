@@ -5,7 +5,6 @@ import Text from '@Atoms/Text';
 import { useBottomSheet } from '@Context/BottomSheet';
 import { PageView } from '@HOCs';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme/index';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -24,6 +23,7 @@ import {
 import withColors from './CreateAnnouncement.styles';
 import { BulletinCreators } from '@Khayat/Redux/Actions/BulletinActions';
 import { useDispatch } from 'react-redux';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const CreateAnnouncement: React.FC = () => {
   const colors = useColors();
@@ -35,7 +35,7 @@ export const CreateAnnouncement: React.FC = () => {
   const { showBottomSheet, hideBottomSheet } = useBottomSheet();
   const [title, setTitle] = useState<string>('');
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   const onRadioPressed = useCallback(() => {
     showBottomSheet({
@@ -55,7 +55,6 @@ export const CreateAnnouncement: React.FC = () => {
 
   const onStartPressed = useCallback(() => {
     dispatch(BulletinCreators.createBulletin(title));
-    // @ts-ignore
     navigation.navigate('MediaRecorder');
   }, [title]);
 

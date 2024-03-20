@@ -5,13 +5,13 @@ import PageView from '@HOCs/PageView';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Image, Pressable, ScrollView, View } from 'react-native';
 import { EventScreenProps } from './types';
-import { FlashList } from '@shopify/flash-list';
+import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import { useStyles } from './styles';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { useEventUsers } from '@Hooks/useEventUsers';
+import { InvitationResponse, useEventUsers } from '@Hooks/useEventUsers';
 import { useEvent } from '@Hooks/useEvent';
 import { useBottomSheet } from '@Context/BottomSheet';
 import { RSVP } from './components/RSVP';
@@ -22,6 +22,7 @@ import EventActionSheet from './components/EventActionSheet';
 import { useSelector } from 'react-redux';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import User from '@Molecules/User';
+import { getStatus } from './utils';
 
 export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
   const { event } = route.params;
@@ -30,7 +31,7 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
   const insets = useSafeAreaInsets();
   const styles = useStyles(colors, insets);
   const navigation = useNavigation<EventScreenProps['navigation']>();
-  const { users } = useEventUsers(event.id);
+  const { users, fetchUsers } = useEventUsers(event.id);
   const { event: fetchedEvent, fetchEvent, loading } = useEvent(event.id);
   const { showBottomSheet } = useBottomSheet();
   const { id } = useSelector(AuthSelector);
@@ -48,13 +49,38 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
         title: 'Availability',
         subtitle: 'Confirm your availability, all guests will be notified',
         body() {
-          return <RSVP event_id={fetchedEvent?.id} />;
+          return <RSVP event_id={fetchedEvent?.id} onUpdate={fetchUsers} />;
         },
       });
   }, [fetchedEvent, colors]);
 
-  const is_organizer = id === fetchedEvent?.organizer.user;
+  const is_organizer = useMemo(
+    () => id === fetchedEvent?.organizer.user,
+    [id, fetchedEvent]
+  );
 
+  const renderInvitations: ListRenderItem<InvitationResponse> = useCallback(
+    ({ item }) => {
+      if (!fetchedEvent) return <View />;
+      const is_organizer = item.user?.id === fetchedEvent.organizer.id;
+      const status = getStatus(item.status);
+      console.log(item);
+      return (
+        <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+          <User
+            subtitle={
+              <Text color={status?.color}>
+                {is_organizer ? 'Host' : ''} • {status?.title}
+              </Text>
+            }
+            {...item.user}
+            key={item?.user?.id}
+          />
+        </View>
+      );
+    },
+    [users, is_organizer]
+  );
   return (
     <PageView
       edges={[]}
@@ -137,41 +163,25 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
               <User {...fetchedEvent.organizer} subtitle="Organizer" />
             </Pressable>
             {fetchedEvent.description && (
-              <Text>{fetchedEvent.description}</Text>
+              <>
+                <Separator size={'md'} />
+                <Text>{fetchedEvent.description}</Text>
+              </>
             )}
           </View>
-          <Separator size={'md'} />
-          <View>
-            <Separator />
-            <FlashList
-              scrollEnabled={false}
-              data={users}
-              extraData={users}
-              ListHeaderComponent={
-                <Text fontSize={18} style={{ marginBottom: 16 }} weight="bold">
-                  ({users.length}) Guests
-                </Text>
-              }
-              ItemSeparatorComponent={() => <Separator size={'md'} />}
-              contentContainerStyle={styles.list_content}
-              renderItem={({ item }) => (
-                <Pressable
-                  onPress={() => {
-                    navigation.navigate('ProfileScreen', {
-                      id: item.user?.user,
-                    });
-                  }}>
-                  <User
-                    subtitle={
-                      item.user?.id === event.organizer.id ? 'Organizer' : ''
-                    }
-                    {...item.user}
-                    key={item?.user?.id}
-                  />
-                </Pressable>
-              )}
-            />
-          </View>
+          <FlashList
+            scrollEnabled={false}
+            data={users}
+            extraData={users}
+            ListHeaderComponent={
+              <Text fontSize={18} style={{ marginBottom: 16 }} weight="bold">
+                ({users.length}) Guests
+              </Text>
+            }
+            ItemSeparatorComponent={() => <Separator size={'md'} />}
+            contentContainerStyle={styles.list_content}
+            renderItem={renderInvitations}
+          />
         </ScrollView>
       ) : null}
       <SolidButton style={styles.cta} onPress={onRSVPPressed}>

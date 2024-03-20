@@ -21,7 +21,6 @@ export const useEvent = (id?: string) => {
 
   const fetchEvent = useCallback(async () => {
     setLoading(true);
-    console.log(id);
     try {
       const { data } = await client.query({
         query: GET_EVENT_BY_ID_QUERY,

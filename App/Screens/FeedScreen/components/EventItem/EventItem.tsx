@@ -1,6 +1,5 @@
 import { Story } from '@Molecules/Story/Story';
 import type { Story as StoryType } from '@Molecules/Story/types';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useEffect, useRef } from 'react';
 import { Pressable, useWindowDimensions } from 'react-native';
@@ -14,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import styles from './EventItem.styles';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const EventItem: React.FC<{
   headerHeight: number;
@@ -26,7 +26,7 @@ export const EventItem: React.FC<{
   const y = useSharedValue(0);
   const storyHeight = useSharedValue(0);
   const { width } = useWindowDimensions();
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   const isFocused = useDerivedValue(() => {
     const lowerBound = y.value - storyHeight.value / 2;

@@ -2,17 +2,13 @@ import { ProfileObject } from '@Khayat/Database/Models/types';
 import client from '@Khayat/Graphql/Client';
 import { GET_EVENT_INVITATIONS } from '@Khayat/Graphql/Events';
 import { useCallback, useEffect, useState } from 'react';
-
+export type InvitationResponse = {
+  createdAt: string;
+  status: string;
+  user: ProfileObject;
+};
 export const useEventUsers = (event_id: string) => {
-  const [users, setUsers] = useState<
-    {
-      Invitation: {
-        createdAt: string;
-        status: string;
-      };
-      user: ProfileObject;
-    }[]
-  >([]);
+  const [users, setUsers] = useState<InvitationResponse[]>([]);
 
   const [loading, setLoading] = useState<boolean>(true);
 

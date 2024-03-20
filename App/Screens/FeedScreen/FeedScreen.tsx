@@ -1,6 +1,5 @@
 import { Separator, Text } from '@Atoms';
 import { LoadingOnnet } from '@Atoms/LoadingOnnet/LoadingOnnet';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect, useState } from 'react';
 import {
@@ -20,6 +19,7 @@ import screenStyles from './FeedScreen.styles';
 import { useFeedData } from './utils';
 import { FlashList } from '@shopify/flash-list';
 import { FeedScreenProps } from './types';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const FeedScreen: React.FC<FeedScreenProps> = () => {
   const insets = useSafeAreaInsets();
@@ -29,7 +29,7 @@ export const FeedScreen: React.FC<FeedScreenProps> = () => {
   const colors = useColors();
   const pullDownValue = useSharedValue(0);
   const styles = screenStyles(colors, insets);
-  const navigation = useNavigation<FeedScreenProps>();
+  const navigation = useAppNavigation();
 
   const onScroll = useCallback((e: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollYOffset.value = e.nativeEvent.contentOffset.y;

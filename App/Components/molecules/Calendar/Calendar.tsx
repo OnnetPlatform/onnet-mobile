@@ -50,10 +50,7 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
 
     return (
       <View>
-        <Text
-          fontSize={16}
-          style={styles(width).currentMonth}
-          color={colors.black}>
+        <Text weight="bold" fontSize={16} style={styles(width).currentMonth}>
           {moment(new Date(now.getFullYear(), MONTHS[index])).format('MMMM')}
         </Text>
         <FlatList

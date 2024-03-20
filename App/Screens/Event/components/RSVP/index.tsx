@@ -9,7 +9,10 @@ import { useEvent } from '@Hooks/useEvent';
 import { InvitationStatus } from '@Khayat/Graphql/Events';
 import { useBottomSheet } from '@Context/BottomSheet';
 
-export const RSVP: React.FC<{ event_id: string }> = ({ event_id }) => {
+export const RSVP: React.FC<{ event_id: string; onUpdate(): void }> = ({
+  event_id,
+  onUpdate,
+}) => {
   const { backgroundSecondary } = useStyles();
   const status = useStatus();
   const { updateInvitation } = useEvent();
@@ -26,6 +29,7 @@ export const RSVP: React.FC<{ event_id: string }> = ({ event_id }) => {
             status: item.key as InvitationStatus,
           });
           hideBottomSheet();
+          onUpdate();
         };
         return (
           <Pressable

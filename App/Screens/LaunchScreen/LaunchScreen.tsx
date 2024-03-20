@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useEffect, useState } from 'react';
 import { Pressable, StatusBar } from 'react-native';
@@ -11,6 +10,7 @@ import { Icon } from '../../Components/atoms';
 import { Glassmorphism } from '../../Components/Skia';
 import styles, { withInsets } from './LaunchScreen.styles';
 import { SceneContainer } from './SceneContainer/SceneContainer';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 const LaunchScreen: React.FC = () => {
   const [step, setStep] = useState<number>(0);
@@ -18,10 +18,9 @@ const LaunchScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const insetsStyles = withInsets(insets, colors);
   const [isEnded, setEnded] = useState<boolean>(false);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const onLoginPressed = () => {
     setStep(1);
-    // @ts-ignore
     navigation.navigate('AuthenticationScreen');
   };
   useEffect(() => {

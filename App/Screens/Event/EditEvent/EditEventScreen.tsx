@@ -5,15 +5,13 @@ import {
 } from 'react-native-safe-area-context';
 import { EditEventScreenProps } from './types';
 import { useStyles as useAppStyles } from '@Theme/Colors';
-import { FlatList, Pressable, ScrollView, TextInput, View } from 'react-native';
+import { Pressable, ScrollView, TextInput, View } from 'react-native';
 import Text from '@Atoms/Text';
 import Icon from '@Atoms/Icon';
 import { useColors } from '@Theme/index';
 import { useStyles } from './styles';
 import moment from 'moment';
 import Separator from '@Atoms/Separator';
-import { useEventUsers } from '@Hooks/useEventUsers';
-import User from '@Molecules/User';
 import { Event } from '@Khayat/Graphql/Events/types';
 import { useAppNavigation } from '@Hooks/useAppNavigation';
 import { CalendarProvider } from '@Molecules/Calendar/CalendarContext';
@@ -28,7 +26,6 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
   const colors = useColors();
   const style = useStyles();
   const { updateEvent, loading, event: fetchedEvent } = useEvent(event.id);
-  const { users } = useEventUsers(event.id);
   const [stagedEvent, setStagedEvent] = useState<Partial<Event>>();
   const navigation = useAppNavigation();
   const [expandCalendar, setCalendar] = useState<boolean>(false);
@@ -126,6 +123,7 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
             <Icon name={`chevron-${expandCalendar ? 'up' : 'down'}-outline`} />
           </Pressable>
           <Collapsible expanded={expandCalendar}>
+            <Separator size={'md'} />
             <CalendarProvider
               width={404}
               onDateChange={(selectedDate) => {
@@ -137,16 +135,6 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
             />
           </Collapsible>
         </View>
-        <Separator size={'md'} />
-        <Text fontSize={18} weight="bold">
-          Guests
-        </Text>
-        <FlatList
-          data={users}
-          ItemSeparatorComponent={() => <Separator size={'md'} />}
-          contentContainerStyle={{ paddingHorizontal: 16, paddingVertical: 22 }}
-          renderItem={({ item, index }) => <User key={index} {...item.user} />}
-        />
       </ScrollView>
       <SolidButton
         onPress={onUpdatedPressed}
