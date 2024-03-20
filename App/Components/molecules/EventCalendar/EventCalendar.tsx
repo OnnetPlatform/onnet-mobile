@@ -1,12 +1,8 @@
 import {
   BackdropBlur,
   Canvas,
-  FontWeight,
   Group,
-  Paragraph,
   Rect,
-  RoundedRect,
-  Skia,
   useFonts,
 } from '@shopify/react-native-skia';
 import React, { PropsWithChildren, useEffect } from 'react';
@@ -22,13 +18,11 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { DATA } from './DATA';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
 import { TableHeader } from './components';
 import TableHours from './components/TableHours/TableHours';
 import { HOURS_WIDTH } from './constants';
-import { TableCell } from './components/TableCell/TableCell';
 import { TableBody } from './components/TableBody/TableBody';
 import { useSelector } from 'react-redux';
 import { EventSelector } from '@Khayat/Redux/Selectors/EventSelector';
