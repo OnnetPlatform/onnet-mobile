@@ -9,6 +9,7 @@ import {
   useFont,
   vec,
   BackdropBlur,
+  Fill,
 } from '@shopify/react-native-skia';
 import React from 'react';
 import { TableSeparator } from '..';
@@ -23,8 +24,9 @@ export const TableHours: React.FC = () => {
     <Group>
       <BackdropBlur
         blur={5}
-        clip={{ x: 0, y: 0, width: HOURS_WIDTH, height: 24 * CELL_HEIGHT }}
-      />
+        clip={{ x: 0, y: 0, width: HOURS_WIDTH, height: 24 * CELL_HEIGHT }}>
+        <Fill color={colors.blur} />
+      </BackdropBlur>
       {HOURS.map((item, index) => {
         const gab = index * 4;
         return (

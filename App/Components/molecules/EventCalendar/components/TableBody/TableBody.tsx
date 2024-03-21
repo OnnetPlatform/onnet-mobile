@@ -24,7 +24,7 @@ export const TableBody: React.FC<{ data: Calendar[] }> = ({ data }) => {
         const toHour = moment(item.date)
           .add(60 * item.duration * 1000)
           .hour();
-        const y = fromHour * CELL_HEIGHT + toHour * 4;
+        const y = fromHour * CELL_HEIGHT + toHour * 4 - 6;
 
         const titleParagraph = Skia.ParagraphBuilder.Make(
           undefined,
