@@ -16,7 +16,7 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
-export const Loading: React.FC = () => {
+export const Loader: React.FC = () => {
   const colors = useColors();
   const { width, height } = useWindowDimensions();
   const points = [vec(40, height / 2), vec(width - 40, height / 2)];
@@ -58,3 +58,4 @@ export const Loading: React.FC = () => {
     </Canvas>
   );
 };
+export default Loader;

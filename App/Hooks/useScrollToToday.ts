@@ -7,7 +7,7 @@ import {
 import React from 'react';
 
 export type Args = () => void;
-export function useScrollToToday(callback: Args) {
+export function useScrollToToday(callback: Args, deps?: any[]) {
   const navigation = useNavigation();
   const route = useRoute();
 
@@ -50,5 +50,5 @@ export function useScrollToToday(callback: Args) {
     return () => {
       unsubscribers.forEach((unsubscribe) => unsubscribe());
     };
-  }, [navigation, route.key]);
+  }, [navigation, route.key, deps]);
 }

@@ -1,8 +1,10 @@
 import {
   BackdropBlur,
   Canvas,
+  Circle,
   Fill,
   Group,
+  GroupProps,
   Rect,
   useFonts,
 } from '@shopify/react-native-skia';
@@ -15,33 +17,33 @@ import {
   useDerivedValue,
   useSharedValue,
   withDecay,
+  withDelay,
   withSpring,
+  withTiming,
 } from 'react-native-reanimated';
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme/index';
+import { useColors } from '@Theme/index';
 import moment from 'moment';
 import { TableHeader } from './components';
 import TableHours from './components/TableHours/TableHours';
-import { HOURS_WIDTH } from './constants';
+import { HOURS_WIDTH, CELL_WIDTH, CELL_HEIGHT } from './constants';
 import { TableBody } from './components/TableBody/TableBody';
 import { useSelector } from 'react-redux';
 import { EventSelector } from '@Khayat/Redux/Selectors/EventSelector';
 import { TbaleCusrsor } from './components/TableCursor/TableCusrsor';
-import { SolidButton } from '@Molecules/SolidButton/SolidButton';
-import Text from '@Atoms/Text';
 import { useAppNavigation } from '@Hooks/useAppNavigation';
 import { useScrollToToday } from '@Hooks/useScrollToToday';
 
-const CELL_WIDTH = 200;
-const CELL_HEIGHT = 100;
 export enum SCROLLING_STATE {
   YES = 'yes',
   NO = 'no',
 }
-export const EventCalendar: React.FC = () => {
+export const EventCalendar: React.FC<{ expandButton: SharedValue<number> }> = ({
+  expandButton,
+}) => {
   const { width, height } = useWindowDimensions();
   const rightBoundary = 0;
   const translateX = useSharedValue(0);
@@ -67,9 +69,7 @@ export const EventCalendar: React.FC = () => {
           day === moment().date()
       );
       translateX.value = withSpring(
-        -(currentDate * CELL_WIDTH + currentDate * 4) +
-          CELL_WIDTH / 2 -
-          HOURS_WIDTH
+        -(currentDate * CELL_WIDTH + currentDate * 4) + 4
       );
     }
   }, [events]);
@@ -100,20 +100,39 @@ export const EventCalendar: React.FC = () => {
   const panGesture = Gesture.Pan()
     .onStart(() => {
       isScolling.value = SCROLLING_STATE.YES;
+      expandButton.value = withTiming(0, { duration: 100 });
     })
     .onChange((e) => {
       translateX.value += e.changeX;
       translateY.value += e.changeY;
     })
     .onEnd((e) => {
-      translateX.value = withDecay({
-        velocity: e.velocityX,
-        clamp: [leftBoundary, rightBoundary],
-      });
-      translateY.value = withDecay({
-        velocity: e.velocityY,
-        clamp: [-2400, 0],
-      });
+      translateX.value = withDecay(
+        {
+          velocity: e.velocityX,
+          clamp: [leftBoundary, rightBoundary],
+        },
+        (isFinished) => {
+          if (isFinished)
+            expandButton.value = withDelay(
+              100,
+              withTiming(1, { duration: 200 })
+            );
+        }
+      );
+      translateY.value = withDecay(
+        {
+          velocity: e.velocityY,
+          clamp: [-2500, 0],
+        },
+        (isFinished) => {
+          if (isFinished)
+            expandButton.value = withDelay(
+              100,
+              withTiming(1, { duration: 200 })
+            );
+        }
+      );
     });
 
   const gesture = Gesture.Simultaneous(panGesture, tapGesture);
@@ -126,25 +145,29 @@ export const EventCalendar: React.FC = () => {
           month === moment().month() + 1 &&
           day === moment().date()
       );
-      translateX.value =
-        -(currentDate * CELL_WIDTH + currentDate * 4) +
-        CELL_WIDTH / 2 -
-        HOURS_WIDTH;
+      translateX.value = -(currentDate * CELL_WIDTH + currentDate * 4) + 4;
     }
   }, [events]);
 
   useScrollToToday(() => {
     scrollToX();
     isScolling.value = SCROLLING_STATE.NO;
-  });
+  }, [events]);
 
   if (!customFontMgr) return null;
-
+  // return null;
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, flexGrow: 1 }}>
       <GestureDetector gesture={gesture}>
         <Canvas style={{ flex: 1, flexGrow: 1 }}>
-          <Rect width={width} height={height} color={colors.background} />
+          <Rect width={width} height={height} color={colors.background}></Rect>
+          <Circle
+            r={75}
+            cx={HOURS_WIDTH / 2 + width / 2}
+            cy={height / 2}
+            color={colors.cyan}
+          />
+          <BackdropBlur blur={100} />
           <GroupContainer
             x={HOURS_WIDTH}
             y={insets.top + CELL_HEIGHT / 2 + 8}
@@ -174,10 +197,11 @@ export const EventCalendar: React.FC = () => {
           </GroupContainer>
           <BackdropBlur
             blur={4}
+            blendMode={'color'}
             clip={{
               x: 0,
               y: 0,
-              height: CELL_HEIGHT / 2 + insets.top,
+              height: CELL_HEIGHT / 2 + insets.top + 16,
               width: 8 * CELL_WIDTH,
             }}>
             <Fill color={colors.blur} />
@@ -199,17 +223,6 @@ export const EventCalendar: React.FC = () => {
           </GroupContainer>
         </Canvas>
       </GestureDetector>
-
-      <SolidButton
-        onPress={() => navigation.navigate('EventInfo')}
-        style={{
-          position: 'absolute',
-          alignSelf: 'center',
-          zIndex: 100,
-          bottom: BOTTOM_BAR_HEIGHT + 8,
-        }}>
-        <Text weight="bold">Create</Text>
-      </SolidButton>
     </SafeAreaView>
   );
 };
@@ -223,8 +236,18 @@ const GroupContainer: React.FC<
     disableVertical?: boolean;
     disableHorizontal?: boolean;
     maxLeft?: number;
+    blendMode?: GroupProps['blendMode'];
   }>
-> = ({ pageX, pageY, disableVertical, x, y, children, disableHorizontal }) => {
+> = ({
+  pageX,
+  pageY,
+  disableVertical,
+  x,
+  y,
+  children,
+  disableHorizontal,
+  blendMode,
+}) => {
   const translateY = useDerivedValue(
     () => (disableVertical ? y : y + pageY.value),
     [disableVertical]
@@ -246,7 +269,11 @@ const GroupContainer: React.FC<
     ],
     []
   );
-  return <Group transform={transform}>{children}</Group>;
+  return (
+    <Group blendMode={blendMode} transform={transform}>
+      {children}
+    </Group>
+  );
 };
 
 export default EventCalendar;

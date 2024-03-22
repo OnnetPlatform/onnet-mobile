@@ -4,6 +4,7 @@ import { ConferenceState } from '../Reducers/Conference/types';
 import { EventState } from '../Reducers/EventReducer/types';
 import { BulletinState } from '../Reducers/BulletinReducer/types';
 import { UserReducerType } from '../Reducers/UserReducer/types';
+import { SettingsState } from '../Reducers/SettingsReducer/types';
 
 export type State = {
   AuthReducer: AuthState;
@@ -12,4 +13,5 @@ export type State = {
   Events: EventState;
   Bulletin: BulletinState;
   UserReducer: UserReducerType;
+  SettingsReducer: SettingsState;
 };

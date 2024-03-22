@@ -30,16 +30,10 @@ import styles, {
 const { width } = Dimensions.get('window');
 
 export const HomseScreenHeader: React.FC<{
-  onCreatePressed?(): void;
   animatedHeaderValue?: SharedValue<number>;
   selectedDate: Date | undefined;
   onDateSelected: (date: Date) => void;
-}> = ({
-  onCreatePressed,
-  animatedHeaderValue,
-  selectedDate,
-  onDateSelected,
-}) => {
+}> = ({ animatedHeaderValue, selectedDate, onDateSelected }) => {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const insetStyles = withInsets(insets);
@@ -170,9 +164,6 @@ export const HomseScreenHeader: React.FC<{
               {moment(selectedDate || new Date()).format('dddd, MMMM Do')}
             </Text>
           </View>
-          <Pressable onPress={onCreatePressed}>
-            <Icon fill={colors.text} name={'plus-outline'} />
-          </Pressable>
         </View>
 
         <Animated.View ref={viewRef} style={animatedFlatListStyle}>

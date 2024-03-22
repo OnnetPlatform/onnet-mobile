@@ -41,7 +41,7 @@ export const TbaleCusrsor: React.FC<{
       CELL_HEIGHT / 2 +
       minutesOffset +
       secondOffset;
-    if (isScolling.value !== SCROLLING_STATE.YES) {
+    if (isScolling.value === SCROLLING_STATE.NO) {
       pageY.value = withSpring(Math.min(-newOffset + height / 2, 0));
     }
     return vec(0, newOffset);

@@ -17,7 +17,6 @@ import SnackbarProvider from '../../../Provider/SnackbarProvider';
 import * as Sentry from '@sentry/react-native';
 import { AuthStack } from '..';
 import { enableScreens } from 'react-native-screens';
-import { Loading } from '@Atoms/Loading/Loading';
 
 enableScreens();
 
@@ -31,7 +30,7 @@ const navTheme = {
 
 export const MainNavigator: React.ComponentType = Sentry.wrap(() => {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense>
       <IconRegistry icons={EvaIconsPack} />
       <SafeAreaProvider>
         <SnackbarProvider>

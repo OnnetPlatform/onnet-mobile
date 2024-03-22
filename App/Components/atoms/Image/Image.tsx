@@ -1,4 +1,4 @@
-import { Loading } from '@Atoms/Loading/Loading';
+import { Loader } from '@Atoms';
 import React, { useState } from 'react';
 import { ImageProps } from 'react-native';
 import Animated from 'react-native-reanimated';
@@ -12,7 +12,7 @@ export const ImageComponent: React.FC<ImageProps> = (props) => {
         onLoadStart={() => setLoaded(false)}
         onLoadEnd={() => setLoaded(true)}
       />
-      {loaded ? null : <Loading />}
+      {loaded ? null : <Loader />}
     </>
   );
 };
