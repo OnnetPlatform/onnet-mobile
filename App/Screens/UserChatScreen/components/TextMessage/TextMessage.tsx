@@ -2,7 +2,6 @@ import Text from '@Atoms/Text';
 import { useColors } from '@Theme/index';
 import { humanizeDate } from '@Utils/dateFormatter';
 import { useMarkdownStyles } from '@Utils/useMarkdownStyles';
-import { MarkdownTextInput } from '@expensify/react-native-live-markdown';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
@@ -20,6 +19,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import styles from './styles';
 import Separator from '@Atoms/Separator';
+import Markdown from 'react-native-markdown-display';
 const reactions = ['❤️', '🤣', '😮', '😢', '😡'];
 
 const TextMessageComponent: React.FC<{
@@ -84,15 +84,7 @@ const TextMessageComponent: React.FC<{
   return (
     <GestureDetector gesture={gestureHandler}>
       <Animated.View ref={ref} style={[styles.messageContainer, animatedStyle]}>
-        <MarkdownTextInput
-          style={{ width: '100%', color: colors.text }}
-          multiline
-          pointerEvents="none"
-          scrollEnabled={false}
-          markdownStyle={markdownStyle}
-          editable={false}>
-          {item.message}
-        </MarkdownTextInput>
+        <Markdown style={markdownStyle}>{item.message}</Markdown>
         <Separator />
         <Text fontSize={12} style={{ opacity: 0.4 }} textAlign="right">
           {humanizeDate(new Date(item.createdAt))}{' '}

@@ -1,20 +1,17 @@
 import { Separator, Text } from '@Atoms';
-import { useColors } from '@Theme';
 import React from 'react';
 import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import styles from '../../UserChatScreen.styles';
+import { useStyles } from '@Theme/Colors';
 
 export const MessageItem: React.FC<{ title: string }> = React.memo(
   ({ title }) => {
-    const colors = useColors();
-    const insets = useSafeAreaInsets();
-    const withColors = styles(colors, insets);
+    const { backgroundSecondary } = useStyles();
     return (
-      <View style={withColors.row}>
+      <View style={[styles.row, backgroundSecondary]}>
         <Separator horizontal />
-        <View style={withColors.flex}>
+        <View style={styles.flex}>
           <Text fontSize={15} weight={'bold'}>
             {title}
           </Text>

@@ -2,8 +2,6 @@ import { useColors } from '@Theme/index';
 import {
   Canvas,
   LinearGradient,
-  Mask,
-  Points,
   Rect,
   vec,
   useVectorInterpolation,
@@ -19,42 +17,31 @@ import {
 export const Loader: React.FC = () => {
   const colors = useColors();
   const { width, height } = useWindowDimensions();
-  const points = [vec(40, height / 2), vec(width - 40, height / 2)];
   const value = useSharedValue(0);
   const position = useVectorInterpolation(
     value,
     [0, 1],
-    [vec(-width, width), vec(width, width)]
+    [vec(width / 2, 0), vec(-width, 0)]
+  );
+  const start = useVectorInterpolation(
+    value,
+    [0, 1],
+    [vec(width / 2, 0), vec(width * 2, 0)]
   );
   useEffect(() => {
-    value.value = withRepeat(withTiming(2, { duration: 1500 }), -1, true);
+    value.value = 0;
+    value.value = withRepeat(withTiming(1, { duration: 700 }), -1, true);
   }, []);
 
   return (
     <Canvas style={StyleSheet.absoluteFill}>
-      <Mask
-        mask={
-          <Points
-            points={points}
-            mode="lines"
-            color="lightblue"
-            style="stroke"
-            strokeWidth={3}
-          />
-        }>
-        <Rect width={width - 80} height={3} x={40} y={height / 2}>
-          <LinearGradient
-            colors={[colors.pink, colors.cyan, colors.pink]}
-            start={vec(0, 0)}
-            end={position}
-          />
-        </Rect>
-      </Mask>
-      <LinearGradient
-        colors={[colors.pink, colors.cyan, colors.pink]}
-        start={vec(0, 0)}
-        end={position}
-      />
+      <Rect width={width - 44} height={1} x={22} y={height / 2}>
+        <LinearGradient
+          colors={['transparent', colors.text, 'transparent']}
+          start={start}
+          end={position}
+        />
+      </Rect>
     </Canvas>
   );
 };

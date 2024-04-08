@@ -27,6 +27,7 @@ export const TableHeader: React.FC<{
     const x = CELL_WIDTH * index + gab;
     const start = index * CELL_WIDTH + gab - 2;
     const isToday = item.subtitle === new Date().getDate().toString();
+
     const titleParagraph = buildParagraph(
       item.title,
       FontWeight.Bold,

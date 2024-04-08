@@ -5,7 +5,13 @@ import {
 } from 'react-native-safe-area-context';
 import { EditEventScreenProps } from './types';
 import { useStyles as useAppStyles } from '@Theme/Colors';
-import { Pressable, ScrollView, TextInput, View } from 'react-native';
+import {
+  Pressable,
+  ScrollView,
+  TextInput,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import Text from '@Atoms/Text';
 import Icon from '@Atoms/Icon';
 import { useColors } from '@Theme/index';
@@ -30,6 +36,7 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
   const navigation = useAppNavigation();
   const [expandCalendar, setCalendar] = useState<boolean>(false);
   const insets = useSafeAreaInsets();
+  const { width } = useWindowDimensions();
   const onChangeText = useCallback(
     (key: keyof Event, value: string) => {
       setStagedEvent((data) => ({ ...data, [key]: value }));
@@ -100,7 +107,6 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
         <Separator size={'md'} />
         <View
           style={{
-            padding: 16,
             borderRadius: 8,
             backgroundColor: colors.secondaryBackground,
           }}>
@@ -109,6 +115,7 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
               flexDirection: 'row',
               alignItems: 'flex-start',
               justifyContent: 'space-between',
+              padding: 16,
             }}
             onPress={() => setCalendar(!expandCalendar)}>
             <View>
@@ -125,7 +132,7 @@ export const EditEventScreen: React.FC<EditEventScreenProps> = ({ route }) => {
           <Collapsible expanded={expandCalendar}>
             <Separator size={'md'} />
             <CalendarProvider
-              width={404}
+              width={width - 54}
               onDateChange={(selectedDate) => {
                 setStagedEvent((data) => ({
                   ...data,

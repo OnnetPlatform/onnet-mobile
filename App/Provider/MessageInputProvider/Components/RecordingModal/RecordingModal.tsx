@@ -5,13 +5,18 @@ import { formatTimer } from '@Hooks/useTimer';
 import Wave from '@Skia/Wave';
 import { useColors } from '@Theme/index';
 import { getBitrate } from 'Services/FFMPEG';
-import { AVPlaybackStatusSuccess, Audio } from 'expo-av';
+import {
+  AVPlaybackStatusSuccess,
+  Audio,
+  InterruptionModeAndroid,
+} from 'expo-av';
 import React, { useCallback, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 import { SlideInLeft, useSharedValue } from 'react-native-reanimated';
 import useStyles from './styles';
 import Pulse from '@Skia/Pulse';
+import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
 
 export const RecordingModal: React.FC = () => {
   const colors = useColors();
@@ -25,7 +30,7 @@ export const RecordingModal: React.FC = () => {
   const duration = useSharedValue(100);
   const metring = useSharedValue(0);
   const soundInstance = useRef<Audio.Sound>();
-
+  const { openRecordingModal } = useMessageInputContext();
   const onRecordingPressed = useCallback(async () => {
     if (currentRecording) {
       await currentRecording.stopAndUnloadAsync();
@@ -39,22 +44,32 @@ export const RecordingModal: React.FC = () => {
     }
     await Audio.setAudioModeAsync({
       playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
       allowsRecordingIOS: true,
     });
-    Audio.Recording.createAsync(
-      Audio.RecordingOptionsPresets.HIGH_QUALITY
-    ).then(({ recording }) => {
-      setUri('');
-      setWave(undefined);
-      setCurrentRecording(recording);
-      position.value = 0;
-      recording.setProgressUpdateInterval(100);
+
+    await Audio.requestPermissionsAsync();
+    const recording = new Audio.Recording();
+    try {
+      await recording.prepareToRecordAsync(
+        Audio.RecordingOptionsPresets.HIGH_QUALITY
+      );
       recording.setOnRecordingStatusUpdate((status) => {
         if (status.metering !== undefined) metring.value = status.metering;
         else metring.value = 0;
         setRecordingStatus(status);
       });
-    });
+      await recording.startAsync();
+      setCurrentRecording(recording);
+      setWave(undefined);
+      position.value = 0;
+      recording.setProgressUpdateInterval(100);
+    } catch (error) {
+      console.log(error);
+    }
   }, [currentRecording]);
 
   const onPlayPressed = useCallback(async () => {
@@ -87,6 +102,8 @@ export const RecordingModal: React.FC = () => {
       console.log(error);
     }
   }, [uri, soundInstance.current]);
+
+  if (!openRecordingModal) return null;
 
   return (
     <>

@@ -1,4 +1,3 @@
-import { useColors } from '@Theme';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import {
@@ -18,7 +17,6 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
   ({ width }) => {
     const [index, setIndex] = useState<number>(0);
     const now = new Date();
-    const colors = useColors();
     const onScroll = ({
       nativeEvent: {
         contentOffset: { x },

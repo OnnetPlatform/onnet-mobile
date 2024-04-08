@@ -14,11 +14,10 @@ export const TableCell: React.FC<{
   container: Exclude<RoundedRectProps, 'r'>;
   subtitle: ParagraphProps;
   title: ParagraphProps;
-  index: number;
-}> = ({ container, subtitle, title, index }) => {
+}> = ({ container, subtitle, title }) => {
   const colors = useColors();
   return (
-    <Group key={index}>
+    <Group>
       <RoundedRect {...container} r={18} color={colors.secondaryBackground}>
         <LinearGradient
           colors={[

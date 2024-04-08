@@ -11,15 +11,25 @@ import {
   BackdropBlur,
   Fill,
 } from '@shopify/react-native-skia';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TableSeparator } from '..';
 import { useWindowDimensions } from 'react-native';
 import { useColors } from '@Theme/index';
+import {
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 
 export const TableHours: React.FC = () => {
   const { width } = useWindowDimensions();
   const colors = useColors();
   const title = useFont(require('../../Inter-Regular.ttf'), 12);
+  const value = useSharedValue(0);
+
+  useEffect(() => {
+    value.value = withRepeat(withTiming(1, { duration: 3000 }), -1, true);
+  }, []);
   return (
     <Group>
       <BackdropBlur
@@ -32,6 +42,7 @@ export const TableHours: React.FC = () => {
         }}>
         <Fill color={colors.blur} />
       </BackdropBlur>
+
       {HOURS.map((item, index) => {
         const gab = index * 4;
         return (

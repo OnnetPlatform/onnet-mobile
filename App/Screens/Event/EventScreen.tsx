@@ -5,8 +5,8 @@ import PageView from '@HOCs/PageView';
 import { SolidButton } from '@Molecules/SolidButton/SolidButton';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { Image, Pressable, ScrollView, View } from 'react-native';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { Pressable, ScrollView, View } from 'react-native';
 import { EventScreenProps } from './types';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import { useStyles } from './styles';
@@ -15,7 +15,6 @@ import { InvitationResponse, useEventUsers } from '@Hooks/useEventUsers';
 import { useEvent } from '@Hooks/useEvent';
 import { useBottomSheet } from '@Context/BottomSheet';
 import { RSVP } from './components/RSVP';
-import Images from '@Theme/Images';
 import { useStyles as useAppStyles } from '@Theme/Colors';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import EventActionSheet from './components/EventActionSheet';
@@ -36,7 +35,7 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
   const { showBottomSheet } = useBottomSheet();
   const { id } = useSelector(AuthSelector);
   const isFocused = useIsFocused();
-
+  const [fromNow, setFromNow] = useState<string>('');
   useEffect(() => {
     if (isFocused) {
       fetchEvent();
@@ -58,6 +57,19 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
     () => id === fetchedEvent?.organizer.user,
     [id, fetchedEvent]
   );
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (fetchedEvent) {
+      setFromNow(moment(moment(fetchedEvent.date)).fromNow());
+      interval = setInterval(() => {
+        setFromNow(moment(moment(fetchedEvent.date)).fromNow());
+      }, 1000);
+    }
+
+    return () => {
+      if (interval !== undefined) clearInterval(interval);
+    };
+  }, [fetchedEvent]);
 
   const renderInvitations: ListRenderItem<InvitationResponse> = useCallback(
     ({ item }) => {
@@ -109,19 +121,22 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
             <View style={styles.date_container}>
               <Icon name={'calendar-outline'} style={styles.calendar_icon} />
               <Separator horizontal />
-              <Text weight="semibold" fontSize={16}>
+              <Text style={{ flex: 1 }} weight="semibold" fontSize={16}>
                 {moment(fetchedEvent?.date).format('Do, MMMM YYYY hh:mm A')}
+                <Text weight="light" fontSize={16}>
+                  {' '}
+                  ({fromNow})
+                </Text>
               </Text>
             </View>
             <Separator size={'md'} />
-            <View style={[styles.date_container]}>
-              <Image source={Images.logo} style={styles.calendar_icon} />
-              <Separator horizontal />
-              <View>
-                <Text weight="semibold">Join with Onnet</Text>
-                <Text style={{ opacity: 0.67 }}>onnet.meet/{event.id}</Text>
-              </View>
-            </View>
+            <Pressable
+              onPress={() =>
+                navigation.navigate('ConferenceScreen', { event: fetchedEvent })
+              }
+              style={styles.start_button}>
+              <Text weight="bold">Start Meeting</Text>
+            </Pressable>
           </View>
 
           <Separator size={'md'} />

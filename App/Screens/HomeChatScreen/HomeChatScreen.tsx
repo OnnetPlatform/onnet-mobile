@@ -44,6 +44,7 @@ export const HomeChatScreen: React.FC = () => {
       ),
     });
   };
+
   return (
     <SafeAreaView style={withColors.screen}>
       <View style={withColors.header}>

@@ -9,6 +9,7 @@ export const useFeedData = () => {
   const getData = async () => {
     const result = await client.mutate({
       mutation: FEED_MUTATION,
+      fetchPolicy: 'network-only',
     });
     setData(result.data.feed);
   };

@@ -54,7 +54,6 @@ export const EventCalendar: React.FC<{ expandButton: SharedValue<number> }> = ({
   const { events } = useSelector(EventSelector);
   const leftBoundary = -width * events.length;
   const navigation = useAppNavigation();
-
   const HEADER_HEIGHT = insets.top + CELL_HEIGHT / 2 + 8;
   const customFontMgr = useFonts({
     Inter: [require('./Inter-Bold.ttf'), require('./Inter-Regular.ttf')],
@@ -76,6 +75,7 @@ export const EventCalendar: React.FC<{ expandButton: SharedValue<number> }> = ({
 
   const navigateToEvent = (hour: number, day: number) => {
     const eventData = events.find((item) => item.day === day);
+    console.log(eventData);
     if (eventData) {
       const event = eventData.data.find(
         (item) => moment(item.date).hours() === hour
@@ -94,6 +94,7 @@ export const EventCalendar: React.FC<{ expandButton: SharedValue<number> }> = ({
         (translateY.value - e.absoluteY + HEADER_HEIGHT) / (CELL_HEIGHT + 4)
       )
     );
+    console.log(day, hour);
     runOnJS(navigateToEvent)(hour, day);
   });
 
@@ -175,18 +176,7 @@ export const EventCalendar: React.FC<{ expandButton: SharedValue<number> }> = ({
             pageY={translateY}>
             <TableBody data={events} />
           </GroupContainer>
-          <GroupContainer
-            disableHorizontal
-            x={0}
-            y={0}
-            pageX={translateX}
-            pageY={translateY}>
-            <TbaleCusrsor
-              isScolling={isScolling}
-              pageY={translateY}
-              insets={insets}
-            />
-          </GroupContainer>
+
           <GroupContainer
             x={0}
             y={insets.top + CELL_HEIGHT / 2 + 8}
@@ -221,13 +211,26 @@ export const EventCalendar: React.FC<{ expandButton: SharedValue<number> }> = ({
               }))}
             />
           </GroupContainer>
+          <GroupContainer
+            disableHorizontal
+            x={0}
+            y={insets.top + CELL_HEIGHT / 2 + 8}
+            pageX={translateX}
+            pageY={translateY}>
+            <TbaleCusrsor
+              isScolling={isScolling}
+              pageY={translateY}
+              pageX={translateX}
+              insets={insets}
+            />
+          </GroupContainer>
         </Canvas>
       </GestureDetector>
     </SafeAreaView>
   );
 };
 
-const GroupContainer: React.FC<
+export const GroupContainer: React.FC<
   PropsWithChildren<{
     pageY: SharedValue<number>;
     pageX: SharedValue<number>;

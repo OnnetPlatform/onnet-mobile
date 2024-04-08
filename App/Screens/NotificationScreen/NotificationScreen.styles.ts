@@ -7,8 +7,9 @@ export default StyleSheet.create({
     flex: 1,
     flexGrow: 1,
   },
-  titleLeft: {
-    marginLeft: 16,
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
@@ -26,5 +27,6 @@ export const withInsets = (insets: EdgeInsets) =>
       paddingTop: insets.top + 16,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-between',
     },
   });

@@ -6,7 +6,7 @@ import React, { useCallback, useMemo } from 'react';
 import { LayoutChangeEvent, Pressable, ViewStyle } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './styles';
-import Animated, {
+import {
   SharedValue,
   interpolate,
   useAnimatedStyle,
@@ -14,7 +14,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useBottomSheet } from '@Context/BottomSheet';
 import SheetOptions from '../SheetOptions';
-const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 export const OptionButton: React.FC<{ expandButton: SharedValue<number> }> = ({
   expandButton,
 }) => {
@@ -53,7 +53,7 @@ export const OptionButton: React.FC<{ expandButton: SharedValue<number> }> = ({
     [expandButton]
   );
   return (
-    <AnimatedPressable
+    <Pressable
       style={[buttonStyle, styles.button]}
       onPress={() => {
         showBottomSheet({
@@ -80,7 +80,7 @@ export const OptionButton: React.FC<{ expandButton: SharedValue<number> }> = ({
         weight="bold">
         OPTIONS
       </Text>
-    </AnimatedPressable>
+    </Pressable>
   );
 };
 

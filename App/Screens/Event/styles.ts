@@ -14,6 +14,15 @@ export const useStyles = (colors: ThemeColors, insets: EdgeInsets) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    start_button: {
+      alignSelf: 'flex-start',
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      borderRadius: 8,
+      borderColor: colors.blue,
+      borderWidth: 1,
+      backgroundColor: colors.background,
+    },
     calendar_icon: {
       width: 24,
       height: 24,

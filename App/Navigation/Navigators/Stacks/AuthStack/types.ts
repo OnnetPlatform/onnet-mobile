@@ -4,7 +4,7 @@ import { Event } from '@Khayat/Graphql/Events/types';
 export type AppNavigationParamsList = {
   SplashScreen: undefined;
   MainNavigation: undefined;
-  ConferenceScreen: undefined;
+  ConferenceScreen: { event: Event };
   AudioScreen: undefined;
   MediaRecorder: undefined;
   UserChatScreen: { user: Profile };

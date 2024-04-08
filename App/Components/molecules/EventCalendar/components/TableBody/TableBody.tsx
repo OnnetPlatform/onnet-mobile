@@ -61,7 +61,6 @@ export const TableBody: React.FC<{ data: Calendar[] }> = ({ data }) => {
         const height = Math.abs(item.duration / 60) * CELL_HEIGHT;
         return (
           <TableCell
-            index={index}
             key={index}
             container={{
               height,

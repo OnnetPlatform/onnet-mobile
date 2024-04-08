@@ -14,11 +14,13 @@ import { useMediaControl } from './components/VideoControlsHeader/useMediaContro
 import { VideoRoomChatSheet } from './components/VideoRoomChatSheet/VideoRoomChatSheet';
 import { alertStyle, avatar } from './VideoRoom.styles';
 import { FlashList } from '@shopify/flash-list';
+import { VideoRoomProps } from './types';
 
 const uri =
   'https://images.unsplash.com/photo-1700605149722-50c0d7fe003d?q=80&w=2815&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
-export const VideoRoom: React.FC = () => {
+export const VideoRoom: React.FC<VideoRoomProps> = ({ route }) => {
+  const { event } = route.params;
   const { users, remoteStreams, joined, connected } =
     useSelector(ConferenceSelector);
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ export const VideoRoom: React.FC = () => {
       customView: () => (
         <>
           <Text style={alertStyles.textCenter} weight="bold" fontSize={18}>
-            Meeting name
+            {event.title}
           </Text>
           <Separator />
           <Text style={alertStyles.textCenter}>
@@ -131,7 +133,7 @@ export const VideoRoom: React.FC = () => {
   }, [joined]);
 
   return (
-    <PageView title="Meeting name">
+    <PageView title={event.title}>
       <>
         <FlashList
           numColumns={2}

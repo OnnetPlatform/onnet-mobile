@@ -71,7 +71,10 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
             </Text>
           </View>
           {isStarted ? (
-            <Button onPress={() => navigation.navigate('ConferenceScreen')}>
+            <Button
+              onPress={() =>
+                navigation.navigate('ConferenceScreen', { event: item })
+              }>
               <Text weight="bold">Join</Text>
             </Button>
           ) : null}
