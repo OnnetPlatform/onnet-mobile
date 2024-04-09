@@ -13,7 +13,6 @@ export const CalendarProvider: React.FC<{
   const [date, setDate] = useState<Date>(new Date());
 
   useEffect(() => {
-    console.log(' onDateChange(date);', date);
     onDateChange(date);
   }, [date]);
 

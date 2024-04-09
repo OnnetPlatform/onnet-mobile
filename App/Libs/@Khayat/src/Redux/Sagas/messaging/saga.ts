@@ -28,6 +28,8 @@ import {
   sendTyping,
   sendTypingStopped,
 } from './actions';
+import { UserSelector } from '../../Selectors/UserSelector';
+import { UserReducerType } from '../../Reducers/UserReducer/types';
 
 const socketConfig = {
   transports: ['websocket'],
@@ -36,8 +38,15 @@ const socketConfig = {
 export function* connectToServer(): any {
   try {
     const { access_token }: AuthState = yield select(AuthSelector);
-
-    const socket: Socket = yield call(requestAuthorization, access_token);
+    const {
+      current_workspace: { workspace_access_token },
+    }: UserReducerType = yield select(UserSelector);
+    if (!workspace_access_token) return;
+    const socket: Socket = yield call(
+      requestAuthorization,
+      access_token,
+      workspace_access_token
+    );
     const conncetionSub = yield call(createSocketConnectionChannel, socket);
     const disconncetionSub = yield call(
       createSocketDisconnectionChannel,
@@ -77,11 +86,15 @@ export function* connectToServer(): any {
   }
 }
 
-const requestAuthorization = (access_token: string) => {
+const requestAuthorization = (
+  access_token: string,
+  workspace_access_token: string
+) => {
   const socket = io('http://192.168.1.5:80', {
     ...socketConfig,
     query: {
       token: access_token,
+      workspace_access_token,
     },
   });
   return new Promise((resolve) => resolve(socket));

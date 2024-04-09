@@ -19,56 +19,61 @@ type Props = {
   textStyle?: TextStyle;
   onRightImagePressed?(): void;
 };
-export const RadioButton: React.FC<Props> = (props) => {
-  const { active, onPress, title } = props;
-  const value = useSharedValue<number>(0);
-  const colors = useColors();
-  const animatedBackground = useAnimatedStyle(
-    () => ({
-      backgroundColor: interpolateColor(
-        value.value,
-        [0, 25],
-        [colors.secondaryBackground, colors.turquoise]
-      ),
-    }),
-    [value]
-  );
-  const radioStyle = useAnimatedStyle(
-    () => ({
-      transform: [{ translateX: value.value }],
-      backgroundColor: interpolateColor(
-        value.value,
-        [0, 25],
-        ['#ddd', colors.secondaryBackground]
-      ),
-    }),
-    [value]
-  );
-  useEffect(() => {
-    value.value = withTiming(active ? 25 : 0, {
-      duration: 500,
-    });
-  }, [active]);
+export const RadioButton: React.FC<Props> = React.memo(
+  (props) => {
+    const { active, onPress, title } = props;
+    const value = useSharedValue<number>(0);
+    const colors = useColors();
+    const animatedBackground = useAnimatedStyle(
+      () => ({
+        backgroundColor: interpolateColor(
+          value.value,
+          [0, 25],
+          [colors.secondaryBackground, colors.turquoise]
+        ),
+      }),
+      [value]
+    );
+    const radioStyle = useAnimatedStyle(
+      () => ({
+        transform: [{ translateX: value.value }],
+        backgroundColor: interpolateColor(
+          value.value,
+          [0, 25],
+          ['#ddd', colors.secondaryBackground]
+        ),
+      }),
+      [value]
+    );
+    useEffect(() => {
+      value.value = withTiming(active ? 25 : 0, {
+        duration: 500,
+      });
+    }, [active]);
 
-  return (
-    <Pressable onPress={onPress} style={styles.container}>
-      <View style={styles.rowContainer}>
-        <Pressable
-          hitSlop={20}
-          onPress={props.onRightImagePressed ? props.onRightImagePressed : null}
-        />
+    return (
+      <Pressable onPress={onPress} style={styles.container}>
+        <View style={styles.rowContainer}>
+          <Pressable
+            hitSlop={20}
+            onPress={
+              props.onRightImagePressed ? props.onRightImagePressed : null
+            }
+          />
 
-        <Text weight="semibold" fontSize={18}>
-          {title}
-        </Text>
-      </View>
+          <Text weight="semibold" fontSize={18}>
+            {title}
+          </Text>
+        </View>
 
-      <Animated.View style={[styles.radioContainer, animatedBackground]}>
-        <Animated.View style={[radioStyle, styles.radio]} />
-      </Animated.View>
-    </Pressable>
-  );
-};
+        <Animated.View style={[styles.radioContainer, animatedBackground]}>
+          <Animated.View style={[radioStyle, styles.radio]} />
+        </Animated.View>
+      </Pressable>
+    );
+  },
+  (prev, next) => prev.active === next.active
+);
 
 export default RadioButton;
 const styles = StyleSheet.create({

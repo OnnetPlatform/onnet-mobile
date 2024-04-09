@@ -1,6 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+import {
+  SharedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import EventItem from '../EventItem/EventItem';
 import HomeScreenHeader from '../HomeScreenHeader';
@@ -11,9 +15,9 @@ import styles from './EventsList.styles';
 import { FlashList } from '@shopify/flash-list';
 import { useScrollToTop } from '@react-navigation/native';
 
-export const EventsList: React.FC<{
-  onCreatePressed(): void;
-}> = ({ onCreatePressed }) => {
+export const EventsList: React.FC<{ expandButton: SharedValue<number> }> = ({
+  expandButton,
+}) => {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const sorted = useSortedData();
   const animatedHeaderValue = useSharedValue(0);
@@ -31,7 +35,6 @@ export const EventsList: React.FC<{
     <>
       <HomeScreenHeader
         animatedHeaderValue={animatedHeaderValue}
-        onCreatePressed={onCreatePressed}
         selectedDate={selectedDate}
         onDateSelected={(date) => {
           const index = sorted
@@ -51,6 +54,18 @@ export const EventsList: React.FC<{
       />
       <SectionsList
         data={sorted}
+        onMomentumScrollEnd={() => {
+          expandButton.value = withTiming(1, { duration: 200 });
+        }}
+        onMomentumScrollBegin={() => {
+          expandButton.value = withTiming(0, { duration: 100 });
+        }}
+        onScrollBeginDrag={() => {
+          expandButton.value = withTiming(0, { duration: 100 });
+        }}
+        onScrollEndDrag={() => {
+          expandButton.value = withTiming(1, { duration: 200 });
+        }}
         SectionListHeaderComponent={SectionHeader}
         SectionListItemComponent={EventItem}
         onScroll={onScroll}

@@ -43,12 +43,13 @@ export const ChatEmptyState: React.FC<{ username: string }> = ({
       <Separator size={'md'} />
       <Separator size={'md'} />
       <Text weight="bold" fontSize={22} textAlign="center">
-        It's nice to chat with someone
+        It seems like the chat room is currently empty. Start a conversation and
+        get it going!
       </Text>
       <Separator />
       <Text fontSize={16} textAlign="center" weight="light">
         This conversation is just between you and{' '}
-        <Text color={colors.cyan}>{username.trim()}</Text>. Take a look at their
+        <Text color={colors.cyan}>{username}</Text>. Take a look at their
         profile to learn more about them.
       </Text>
     </View>

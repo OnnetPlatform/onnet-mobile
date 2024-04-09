@@ -18,21 +18,20 @@ export function* register({ credentials }: { credentials: Credentials }) {
     });
 
     yield put(AuthCreators.setAuthData(result.data.register));
-    setAppLink(result.data.register.access_token);
+    setAppLink(result.data.register.access_token, '');
   } catch (error) {
     console.log(error);
   }
 }
 
 export function* login({ credentials }: { credentials: LoginCredentials }) {
-  console.log(credentials);
   try {
     const result: LoginResponse = yield client.query({
       query: LoginQuery,
       variables: { input: credentials },
     });
     yield put(AuthCreators.setAuthData(result.data.login));
-    setAppLink(result.data.login.access_token);
+    setAppLink(result.data.login.access_token, '');
   } catch (error) {
     console.log(error);
   }

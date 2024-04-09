@@ -1,7 +1,6 @@
 import { Icon, Separator, Text } from '@Atoms';
 import { useEventContext } from '@Context/EventContext/EventContext';
 import { EventCreators } from '@Khayat/Redux';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import { humanizeDate } from '@Utils/dateFormatter';
 import moment from 'moment';
@@ -18,11 +17,12 @@ import { useDispatch } from 'react-redux';
 import Header from '../Components/Header/Header';
 import withColors from './CreateEventModal.styles';
 import { initial_event_data } from './types';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const CreateEvetModal: React.FC = () => {
   const colors = useColors();
   const styles = withColors(colors);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const { setEventData, event } = useEventContext();
   const dispatch = useDispatch();
   const goBack = () => navigation.goBack();
@@ -31,7 +31,6 @@ export const CreateEvetModal: React.FC = () => {
     goBack();
   };
   const onSavePressed = () => {
-    console.log(event);
     if (!event.title) {
       Alert.alert('Error', 'Title is required');
     } else {
@@ -54,7 +53,7 @@ export const CreateEvetModal: React.FC = () => {
   };
 
   useEffect(() => {
-    setEventData(initial_event_data);
+    setEventData({ ...initial_event_data, date: new Date().getTime() });
     return () => {
       setEventData(initial_event_data);
     };
@@ -85,7 +84,6 @@ export const CreateEvetModal: React.FC = () => {
         <Pressable
           style={styles.item}
           onPress={() => {
-            // @ts-ignore
             navigation.navigate('EventDescription');
           }}>
           <View style={styles.row}>
@@ -101,8 +99,7 @@ export const CreateEvetModal: React.FC = () => {
         <Pressable
           style={styles.item}
           onPress={() => {
-            // @ts-ignore
-            navigation.navigate('EventDescription');
+            navigation.navigate('EventInvitations');
           }}>
           <View style={styles.row}>
             <Icon name={'people-outline'} />
@@ -124,7 +121,6 @@ export const CreateEvetModal: React.FC = () => {
           <Pressable
             style={styles.section}
             onPress={() => {
-              // @ts-ignore
               navigation.navigate('EventTime');
             }}>
             <View style={styles.flex}>

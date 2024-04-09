@@ -6,16 +6,40 @@ const directMessageMutation = gql`
       id
       textMessage
       sender {
-        email
-        first_name
+        username
+        avatar
+        bio
+        cover
+        workspace
+        user
+        active
+        status
+        title
+        city
+        country
+        department
+        phone
         last_name
-        id
+        first_name
+        full_name
       }
       reciever {
-        email
-        first_name
+        username
+        avatar
+        bio
+        cover
+        workspace
+        user
+        active
+        status
+        title
+        city
+        country
+        department
+        phone
         last_name
-        id
+        first_name
+        full_name
       }
       createdAt
       updatedAt

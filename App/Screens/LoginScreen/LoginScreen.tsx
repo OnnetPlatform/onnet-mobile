@@ -1,7 +1,6 @@
 import { Collapsible } from '@Atoms';
 import { AuthCreators } from '@Khayat/Redux';
 import { LoginCredentials } from '@Khayat/Redux/Reducers/AuthReducer/types';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import React, { useState } from 'react';
 import { Pressable, SafeAreaView, View } from 'react-native';
@@ -12,9 +11,10 @@ import { GradientLayout, KeyboardAvoidingView } from '../../Components/HOCs';
 import { Button, Input } from '../../Components/molecules';
 import AppLogo from '../../Components/Skia/AppLogo/AppLogo';
 import styles, { withColors } from './LoginScreen.style';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const LoginScreen: React.FC<{}> = () => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
   const colors = useColors();
   const coloredSyles = withColors(colors);
   const [credentials, setCredentials] = useState<LoginCredentials>({
@@ -69,9 +69,7 @@ export const LoginScreen: React.FC<{}> = () => {
             <Text>Continue with Email</Text>
           </Button>
           <Separator />
-          <Pressable
-            // @ts-ignore
-            onPress={() => navigation.navigate('RegisterationScreen')}>
+          <Pressable onPress={() => navigation.navigate('RegisterationScreen')}>
             <Text weight="semibold">Register</Text>
           </Pressable>
         </KeyboardAvoidingView>

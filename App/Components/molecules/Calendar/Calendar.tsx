@@ -1,4 +1,3 @@
-import { useColors } from '@Theme';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import {
@@ -18,7 +17,6 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
   ({ width }) => {
     const [index, setIndex] = useState<number>(0);
     const now = new Date();
-    const colors = useColors();
     const onScroll = ({
       nativeEvent: {
         contentOffset: { x },
@@ -50,10 +48,7 @@ export const Calendar: React.FC<CalendarProps> = React.memo(
 
     return (
       <View>
-        <Text
-          fontSize={16}
-          style={styles(width).currentMonth}
-          color={colors.black}>
+        <Text weight="bold" fontSize={16} style={styles(width).currentMonth}>
           {moment(new Date(now.getFullYear(), MONTHS[index])).format('MMMM')}
         </Text>
         <FlatList

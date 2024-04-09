@@ -7,6 +7,7 @@ export type BulletinActionTypes = {
   JOIN_BULLETIN: any;
   SEND_OFFER: any;
   SEND_VIEWER_OFFER: any;
+  CREATE_BULLETIN: any;
 };
 
 export type BulletinCreatorsTypes = {
@@ -15,4 +16,5 @@ export type BulletinCreatorsTypes = {
   joinBulletin: () => AnyAction;
   stream: () => AnyAction;
   sendViewerOffer: (data: any) => AnyAction;
+  createBulletin: (title: string) => AnyAction;
 };

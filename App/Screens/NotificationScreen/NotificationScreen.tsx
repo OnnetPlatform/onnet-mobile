@@ -1,9 +1,14 @@
 import { useColors } from '@Theme';
 import React from 'react';
-import { SafeAreaView, SectionList, SectionListRenderItem } from 'react-native';
+import {
+  SafeAreaView,
+  SectionList,
+  SectionListRenderItem,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Blur, Icon, Text } from '../../Components/atoms';
+import { Blur, Icon, Separator, Text } from '@Atoms';
 import data, { formatList, Notification as NotificationType } from './data';
 import Notification from './Notification/Notification';
 import styles, { withColors, withInsets } from './NotificationScreen.styles';
@@ -23,10 +28,14 @@ export const NotificationScreen: React.FC = () => {
   return (
     <>
       <Blur style={insetedStyles.header}>
-        <Icon name={'bell-outline'} />
-        <Text fontSize={18} weight="bold" style={styles.titleLeft}>
-          Notifications
-        </Text>
+        <View style={styles.row}>
+          <Icon name={'bell-outline'} />
+          <Separator size={'md'} horizontal />
+          <Text fontSize={18} weight="bold">
+            Notifications
+          </Text>
+        </View>
+        <Icon name={'settings-outline'} />
       </Blur>
 
       <SafeAreaView style={styles.screen}>

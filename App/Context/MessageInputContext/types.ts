@@ -1,11 +1,11 @@
-import User from '@Khayat/Database/Models/User';
+import { Profile } from '@Khayat/Database/Profile';
 
 declare type Optional<T> = T | undefined;
 
 export type TextMessage = {
   textMessage: string;
   setTextMessage: React.Dispatch<React.SetStateAction<string>>;
-  user: User;
+  user: Profile;
 };
 
 export type LocalGalleryContext = {

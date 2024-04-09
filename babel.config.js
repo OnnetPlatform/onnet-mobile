@@ -1,7 +1,6 @@
 module.exports = {
   presets: ['babel-preset-expo'],
   plugins: [
-    ['react-native-worklets-core/plugin'],
     [
       require.resolve('babel-plugin-module-resolver'),
       {
@@ -19,6 +18,7 @@ module.exports = {
           '@Khayat': './App/Libs/@Khayat/src',
           '@Context': './App/Context/',
           '@Hooks': './App/Hooks/',
+          '@Icons': './App/Components/Icons',
         },
       },
     ],

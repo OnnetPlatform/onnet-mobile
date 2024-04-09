@@ -1,5 +1,4 @@
 import { Icon, Separator, Text } from '@Atoms';
-import { useNavigation } from '@react-navigation/native';
 import { useColors } from '@Theme';
 import Images from '@Theme/Images';
 import React from 'react';
@@ -9,31 +8,57 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChatUsersList } from './components/ChatUsersList/ChatUsersList';
 import styles from './HomeChatScreen.styles';
 import SnackbarRef from '../../Provider/SnackbarProvider/SnackbarRef';
+import { useSelector } from 'react-redux';
+import { UserSelector } from '@Khayat/Redux/Selectors/UserSelector';
+import { useBottomSheet } from '@Context/BottomSheet';
+import { WorkspacesLists } from '@Screens/Auth/UserJoinedWorkspaces/components/WrokspacesList';
+import { useAppNavigation } from '@Hooks/useAppNavigation';
 
 export const HomeChatScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const withColors = styles(colors, insets);
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
+  const { showBottomSheet } = useBottomSheet();
+  const { current_workspace } = useSelector(UserSelector);
 
-  // @ts-ignore
   const onSettingsPressed = () => navigation.navigate('Settings');
+  const onWorkspacePressed = () => {
+    showBottomSheet({
+      body: () => (
+        <View
+          style={{
+            width: '100%',
+            paddingHorizontal: 22,
+            paddingBottom: 22 + insets.bottom,
+          }}>
+          <Text
+            fontSize={24}
+            style={{ padding: 8, paddingBottom: 16 }}
+            weight="bold"
+            textAlign="center">
+            Select workspace
+          </Text>
+          <WorkspacesLists style={{ paddingBottom: insets.bottom + 44 }} />
+        </View>
+      ),
+    });
+  };
 
   return (
     <SafeAreaView style={withColors.screen}>
       <View style={withColors.header}>
-        <View style={withColors.rowWrapper}>
+        <Pressable onPress={onWorkspacePressed} style={withColors.rowWrapper}>
           <View style={withColors.logoWrapper}>
             <Image source={Images.logo} style={withColors.logo} />
           </View>
           <Text weight="bold" fontSize={18}>
-            Onnet
+            {current_workspace.workspace.name}
           </Text>
-        </View>
+        </Pressable>
         <View style={withColors.rowWrapper}>
           <Pressable
             onPress={() => {
-              //@ts-ignore
               navigation.navigate('CreateAnnouncement');
             }}>
             <Icon name={'radio-outline'} />
@@ -44,7 +69,7 @@ export const HomeChatScreen: React.FC = () => {
               if (SnackbarRef.current)
                 SnackbarRef.current.showSnackbar({
                   title: 'Welcome to Onnet!',
-                  variant: 'ERROR',
+                  variant: 'SUCCESS',
                   subtitle: 'We are happy to have you.',
                 });
             }}>

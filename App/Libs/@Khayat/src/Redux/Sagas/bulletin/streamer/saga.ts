@@ -6,6 +6,8 @@ import { sendOffer } from './actions';
 import { getLocalStream } from './utils';
 import { createNegotiationChannel } from '../common/channels';
 import { requestAuthorization } from '../common/utils';
+import client from '../../../../Graphql/Client';
+import { CREATE_BULLETIN_MUTATION } from '../../../../Graphql/Bulletin/Mutations/bulletin';
 
 export function* stream(): any {
   const socket = yield call(requestAuthorization);
@@ -25,4 +27,14 @@ export function* stream(): any {
   yield fork(onStreamerAnswer, streamAnswerSub);
 
   yield fork(sendOffer, socket);
+}
+
+export function* createBulletin({ title }: { title: string }): any {
+  try {
+    yield client.mutate({
+      mutation: CREATE_BULLETIN_MUTATION,
+      variables: { input: { title } },
+      fetchPolicy: 'no-cache',
+    });
+  } catch (error) {}
 }

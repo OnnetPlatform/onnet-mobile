@@ -10,7 +10,8 @@ import styles from './Snackbar.styles';
 import { useSnackbar } from '@Context/SnackbarContext';
 import Animated, { SlideInUp } from 'react-native-reanimated';
 import Texture from '@Skia/Texture/Texture';
-
+import Markdown from 'react-native-markdown-display';
+import { useMarkdownStyles } from '@Utils/useMarkdownStyles';
 export const Snackbar = React.forwardRef<SnackbarRefType, SnackbarProps>(
   (props, ref) => {
     const { top } = useSafeAreaInsets();
@@ -43,6 +44,7 @@ export const Snackbar = React.forwardRef<SnackbarRefType, SnackbarProps>(
             <Separator horizontal size={'md'} />
             <View style={styles.flex}>
               <Title {...props} />
+              <Separator size={'md'} />
               <Subtitle {...props} />
             </View>
           </View>
@@ -78,29 +80,18 @@ const Title: React.FC<SnackbarProps> = ({ title, variant }) => {
   return <Text weight="bold">{title}</Text>;
 };
 const Subtitle: React.FC<SnackbarProps> = ({ subtitle, variant }) => {
+  const style = useMarkdownStyles();
   switch (variant) {
     case 'SUCCESS':
-      return (
-        <Text fontSize={14} numberOfLines={3}>
-          {subtitle}
-        </Text>
-      );
+      return <Markdown style={style}>{subtitle}</Markdown>;
 
     case 'WARRNING':
-      return (
-        <Text fontSize={14} numberOfLines={3}>
-          {subtitle}
-        </Text>
-      );
+      return <Markdown style={style}>{subtitle}</Markdown>;
 
     case 'ERROR':
-      return (
-        <Text fontSize={14} numberOfLines={3}>
-          {subtitle}
-        </Text>
-      );
+      return <Markdown style={style}>{subtitle}</Markdown>;
   }
-  return <Text>{subtitle}</Text>;
+  return <Markdown style={style}>{subtitle}</Markdown>;
 };
 
 export default Snackbar;

@@ -36,7 +36,7 @@ export const Wave: React.FC<{
         }>
         <>
           <Rect width={width} height={height}>
-            <Blend mode={'multiply'}>
+            <Blend mode={'dstIn'}>
               <LinearGradient
                 start={vec(0, 0)}
                 end={vec(width, width)}
@@ -51,7 +51,7 @@ export const Wave: React.FC<{
             </Blend>
           </Rect>
           <Rect width={progress} height={height}>
-            <Blend mode={'multiply'}>
+            <Blend mode={'dstIn'}>
               <LinearGradient
                 start={vec(0, 0)}
                 end={vec(width, width)}

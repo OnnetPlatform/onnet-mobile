@@ -6,6 +6,8 @@ import Button from '@Molecules/Button';
 import Separator from '@Atoms/Separator';
 import { Audio } from 'expo-av';
 
+/** @deprecated */
+
 export const AudioScreen: React.FC = () => {
   const [recording, setRecording] = useState<Audio.Recording>();
   const [isAllowRecord, setAllowRecord] = useState('No');
@@ -16,7 +18,6 @@ export const AudioScreen: React.FC = () => {
     try {
       const response = await Audio.requestPermissionsAsync();
       setAllowRecord(response.status);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }

@@ -16,21 +16,25 @@ const Input: React.FC<TextInputProps> = (props) => {
   const sharedValue = useSharedValue(0);
   const colors = useColors();
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [inputMetrics, setInputMetrics] = useState<{ width: number }>({
+  const [inputMetrics, setInputMetrics] = useState<{
+    width: number;
+    height: number;
+  }>({
     width: 0,
+    height: 0,
   });
 
   const animatedStyle = useAnimatedStyle(
     () => ({
-      height: 3,
-      alignSelf: 'flex-start',
+      height: 2,
+      alignSelf: 'flex-end',
       width: sharedValue.value,
     }),
     [sharedValue.value]
   );
 
   const reversedAnimatedStyle = useAnimatedStyle(() => ({
-    height: 3,
+    height: 2,
     alignSelf: 'flex-end',
     width: inputMetrics.width - sharedValue.value,
     backgroundColor: colors.text,
@@ -40,6 +44,7 @@ const Input: React.FC<TextInputProps> = (props) => {
     backgroundColor: colors.blur,
     borderRadius: 8,
     overflow: 'hidden',
+    flex: 1,
   }));
 
   useEffect(() => {
@@ -47,33 +52,31 @@ const Input: React.FC<TextInputProps> = (props) => {
   }, [isFocused, inputMetrics]);
 
   return (
-    <>
-      <Animated.View
-        onLayout={({
-          nativeEvent: {
-            layout: { width },
-          },
-        }) => setInputMetrics({ width })}
-        style={[animatedLGStyle, props.style]}>
-        <TextInput
-          placeholder="Phone"
-          onFocus={() => setIsFocused(true)}
-          placeholderTextColor={colors.text}
-          onBlur={() => setIsFocused(false)}
-          {...props}
-          style={[{ padding: 16, color: colors.text }]}
+    <Animated.View
+      onLayout={({
+        nativeEvent: {
+          layout: { width, height },
+        },
+      }) => setInputMetrics({ width, height })}
+      style={[animatedLGStyle]}>
+      <TextInput
+        placeholder="Phone"
+        onFocus={() => setIsFocused(true)}
+        placeholderTextColor={colors.text}
+        onBlur={() => setIsFocused(false)}
+        {...props}
+        style={[{ padding: 16, color: colors.text }, props.style]}
+      />
+      <View style={{ flexDirection: 'row' }}>
+        <AnimatedLinearGradient
+          colors={[colors.cyan, colors.pink]}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 1 }}
+          style={animatedStyle}
         />
-        <View style={{ flexDirection: 'row' }}>
-          <AnimatedLinearGradient
-            colors={[colors.cyan, colors.pink]}
-            start={{ x: 0, y: 0.5 }}
-            end={{ x: 1, y: 1 }}
-            style={animatedStyle}
-          />
-          <Animated.View style={reversedAnimatedStyle} />
-        </View>
-      </Animated.View>
-    </>
+        <Animated.View style={reversedAnimatedStyle} />
+      </View>
+    </Animated.View>
   );
 };
 

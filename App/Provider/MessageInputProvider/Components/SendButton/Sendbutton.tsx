@@ -10,15 +10,20 @@ import { useDispatch } from 'react-redux';
 import { MessagingCreators } from '@Khayat/Redux/Actions/MessagingActions';
 
 export const SendButton: React.FC = () => {
-  const { textMessage, user } = useMessageInputContext();
+  const { textMessage, user, setTextMessage } = useMessageInputContext();
   const colors = useColors();
   const dispatch = useDispatch();
   const onSendPressed = () => {
     dispatch(
-      MessagingCreators.sendMessage({
-        textMessage,
-        id: user._id,
-      })
+      MessagingCreators.sendMessage(
+        {
+          textMessage,
+          id: user.user,
+        },
+        () => {
+          setTextMessage('');
+        }
+      )
     );
   };
 

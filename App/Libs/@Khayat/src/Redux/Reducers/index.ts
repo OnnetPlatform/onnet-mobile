@@ -6,8 +6,13 @@ import MessagingReducer from './MessagingReducer';
 import Conference from './Conference';
 import Events from './EventReducer';
 import Bulletin from './BulletinReducer';
+import SettingsReducer from './SettingsReducer/SettingsReducer';
 
-export const ReducersWhiteList = ['AuthReducer'];
+export const ReducersWhiteList = [
+  'AuthReducer',
+  'UserReducer',
+  'SettingsReducer',
+];
 export default combineReducers({
   UserReducer,
   AuthReducer,
@@ -15,4 +20,5 @@ export default combineReducers({
   Conference,
   Events,
   Bulletin,
+  SettingsReducer,
 });

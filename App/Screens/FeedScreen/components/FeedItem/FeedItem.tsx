@@ -8,7 +8,7 @@ import Texture from '@Skia/Texture/Texture';
 import { useColors } from '@Theme/index';
 import moment from 'moment';
 import React from 'react';
-import { FlatList, Image, View } from 'react-native';
+import { Image, View } from 'react-native';
 
 export const FeedItem: React.FC<any> = ({ item }) => {
   const colors = useColors();
@@ -101,7 +101,9 @@ export const FeedItem: React.FC<any> = ({ item }) => {
         }}>
         <Text>
           <Text weight="bold">
-            {`${item.organizer.first_name} ${item.organizer.last_name}`.trim()}
+            {`${String(item.organizer.first_name)} ${String(
+              item.organizer.last_name
+            )}`.trim()}
           </Text>{' '}
           scheduled a Meeting
         </Text>

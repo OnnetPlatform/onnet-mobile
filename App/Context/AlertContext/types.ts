@@ -6,6 +6,7 @@ export type AlertStateTypes = {
   title?: string;
   subtitle?: string;
   customView?(): ReactElement;
+  actionTitle?: string;
 };
 
 export type AlertContextTypes =

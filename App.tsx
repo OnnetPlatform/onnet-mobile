@@ -1,7 +1,9 @@
 import * as Sentry from '@sentry/react-native';
-import { ActivityIndicator, LogBox, StyleSheet } from 'react-native';
+import { LogBox } from 'react-native';
 import Config from 'react-native-config';
 import React, { Suspense, lazy } from 'react';
+import { Loader } from '@Atoms';
+import Texture from '@Skia/Texture/Texture';
 
 const MainNavigator = lazy(
   () => import('./App/Navigation/Navigators/Main/MainNavigator')
@@ -15,7 +17,13 @@ Sentry.init({
 
 export default () => {
   return (
-    <Suspense fallback={<ActivityIndicator style={StyleSheet.absoluteFill} />}>
+    <Suspense
+      fallback={
+        <>
+          <Texture />
+          <Loader />
+        </>
+      }>
       <MainNavigator />
     </Suspense>
   );

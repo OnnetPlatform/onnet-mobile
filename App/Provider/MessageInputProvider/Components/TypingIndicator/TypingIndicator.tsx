@@ -1,4 +1,3 @@
-import { useColors } from '@Theme';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
@@ -6,19 +5,14 @@ import {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useRealmUsers } from '../../../../Database/Hooks/useRealmUsers';
-import User from '@Khayat/Database/Models/User';
-import { ThemeColors } from '@Theme/Colors';
 import Text from '@Atoms/Text';
+import { Profile } from '@Khayat/Database/Profile';
+import { useRealmProfiles } from '../../../../Database/Hooks/useRealmProfiles';
 
-export const TypingIndicator: React.FC<{ opponent: User }> = React.memo(
+export const TypingIndicator: React.FC<{ opponent: Profile }> = React.memo(
   ({ opponent }) => {
-    const colors = useColors();
-    const insets = useSafeAreaInsets();
-    const withColors = styles(colors, insets);
-    const { getUser } = useRealmUsers();
+    const { getUser } = useRealmProfiles();
     const opacity = useSharedValue(0);
     const localUser = getUser(opponent);
 
@@ -27,13 +21,12 @@ export const TypingIndicator: React.FC<{ opponent: User }> = React.memo(
     }));
 
     useEffect(() => {
-      opacity.value = withTiming(localUser?.status ? 1 : 0, { duration: 500 });
-    }, [localUser, localUser?.status]);
+      opacity.value = withTiming(localUser?.typing ? 1 : 0, { duration: 500 });
+    }, [localUser, localUser?.typing]);
 
     return (
-      <View style={withColors.handleWrapper}>
-        <View style={withColors.handleIndicator} />
-        <View style={withColors.typingWrapper}>
+      <View style={styles.handleWrapper}>
+        <View style={styles.typingWrapper}>
           <Text style={animatedStyle}>typing...</Text>
         </View>
       </View>
@@ -41,28 +34,28 @@ export const TypingIndicator: React.FC<{ opponent: User }> = React.memo(
   }
 );
 
-const styles = (colors: ThemeColors, insets: EdgeInsets) =>
-  StyleSheet.create({
-    handleWrapper: {
-      justifyContent: 'center',
-      height: 33,
-    },
-    handleIndicator: {
-      height: 3,
-      width: 40,
-      backgroundColor: colors.cyan,
-      alignSelf: 'center',
-      position: 'absolute',
-      zIndex: 100,
-      borderRadius: 4,
-      opacity: 0.6,
-    },
-    typingWrapper: {
-      overflow: 'hidden',
-      borderRadius: 16,
-      paddingLeft: 22,
-    },
-  });
+const styles = StyleSheet.create({
+  handleWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 22,
+    paddingVertical: 8,
+    position: 'absolute',
+  },
+  handleIndicator: {
+    height: 2,
+    width: 30,
+    backgroundColor: '#323232',
+    zIndex: 100,
+    borderRadius: 4,
+  },
+  typingWrapper: {
+    overflow: 'hidden',
+    borderRadius: 16,
+    width: 130,
+  },
+});
 
 export function contentStyle(isOpen: boolean) {
   return {

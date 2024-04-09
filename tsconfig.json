@@ -41,7 +41,9 @@
       "@Context/*": ["./Context/*"],
 
       "@Hooks": ["./Hooks/"],
-      "@Hooks/*": ["./Hooks/*"]
+      "@Hooks/*": ["./Hooks/*"],
+      "@Icons": ["./Components/Icons/"],
+      "@Icons/*": ["./Components/Icons/*"]
     }
   },
   "exclude": [

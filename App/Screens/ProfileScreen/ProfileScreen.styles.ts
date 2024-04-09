@@ -54,6 +54,7 @@ export default (insets: EdgeInsets, colors: ThemeColors) =>
       justifyContent: 'center',
       alignItems: 'center',
       zIndex: 100,
+      left: 0,
     },
     limit: {
       backgroundColor: colors.background,

@@ -5,7 +5,7 @@ import {
   put,
   take,
 } from 'redux-saga/effects';
-import { UserChat, UserChatMessage } from '../../../Database/Models/types';
+import { ProfileObject, UserChatMessage } from '../../../Database/Models/types';
 import {
   createUser,
   findUser,
@@ -48,54 +48,57 @@ export function* onMessage(
 
 export function* onNewUserConnected(
   channel: ActionPattern
-): Generator<TakeEffect, any, { user: UserChat }> {
+): Generator<TakeEffect, any, { user: ProfileObject }> {
   while (true) {
-    const { user } = yield take(channel);
-    updateUserStatus({ ...user, isActive: true, avatar: user.avatar });
+    try {
+      const { user } = yield take(channel);
+      updateUserStatus(user);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
 export function* onUserDisconnected(
   channel: ActionPattern
-): Generator<TakeEffect, any, { user: UserChat }> {
+): Generator<TakeEffect, any, { user: ProfileObject }> {
   while (true) {
     const { user } = yield take(channel);
-    updateUserStatus({ ...user, isActive: false });
+    updateUserStatus({ ...user, active: false });
   }
 }
 
 export function* onConnectedUsers(
   channel: ActionPattern
-): Generator<TakeEffect, any, UserChat[]> {
+): Generator<TakeEffect, any, ProfileObject[]> {
   while (true) {
     const users = yield take(channel);
     users.map((user) => {
-      updateUserStatus({ ...user, isActive: true, avatar: user.avatar });
-      updateUserStatus({ ...user, isActive: true, avatar: user.avatar });
+      updateUserStatus({ ...user });
     });
   }
 }
 
 export function* onTyping(
   channel: ActionPattern
-): Generator<TakeEffect, any, UserChat> {
+): Generator<TakeEffect, any, ProfileObject> {
   while (true) {
     const data = yield take(channel);
-    updateUserStatus({ ...data, status: 'TYPING' });
+    updateUserStatus({ ...data, typing: true });
   }
 }
 
 export function* onTypingStopped(
   channel: ActionPattern
-): Generator<TakeEffect, any, UserChat> {
+): Generator<TakeEffect, any, ProfileObject> {
   while (true) {
     const data = yield take(channel);
-    updateUserStatus({ ...data, status: '' });
+    updateUserStatus({ ...data, typing: false });
   }
 }
 
-function updateUserStatus(user: UserChat) {
-  let isUserFound = findUser(user._id);
+function updateUserStatus(user: ProfileObject) {
+  let isUserFound = findUser(user.user);
   if (!isUserFound) {
     isUserFound = createUser(user);
   }

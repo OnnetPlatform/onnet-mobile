@@ -10,7 +10,7 @@ export type MessagingActionTypes = {
 export type MessagingCreatorTypes = {
   setConnected(isConnected: boolean): AnyAction;
   setChatUpdating(isChatUpdating: boolean): AnyAction;
-  sendMessage(message: any): AnyAction;
+  sendMessage(message: any, callback: () => void): AnyAction;
   typing(user: any): AnyAction;
   typingStopped(user: any): AnyAction;
 };

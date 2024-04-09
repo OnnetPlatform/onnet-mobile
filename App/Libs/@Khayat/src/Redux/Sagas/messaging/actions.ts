@@ -14,10 +14,10 @@ import directMessageMutation from '../../../Graphql/Messaging/Mutations/directMe
 export function* sendMessage(): Generator<
   TakeEffect | Promise<FetchResult<Message>>,
   any,
-  { message: { textMessage: string; id: string } }
+  { message: { textMessage: string; id: string }; callback: () => void }
 > {
   while (true) {
-    const { message } = yield take(MessagingTypes.SEND_MESSAGE);
+    const { message, callback } = yield take(MessagingTypes.SEND_MESSAGE);
     try {
       yield client.mutate({
         mutation: directMessageMutation,
@@ -28,6 +28,7 @@ export function* sendMessage(): Generator<
           },
         },
       });
+      callback();
     } catch (error: any) {
       console.log(error);
     }
@@ -36,7 +37,6 @@ export function* sendMessage(): Generator<
 export function* sendTyping(socket: Socket): Generator<TakeEffect, any, any> {
   while (true) {
     const { user } = yield take(MessagingTypes.TYPING);
-    console.log('TYPING', user);
     socket.emit(MessagingEvents.TYPING, user);
   }
 }

@@ -8,4 +8,5 @@ export const { Types: BulletinTypes, Creators: BulletinCreators } =
     stream: null,
     sendOffer: ['data'],
     sendViewerOffer: ['data'],
+    createBulletin: ['title'],
   });
