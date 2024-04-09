@@ -5,7 +5,7 @@ import { Path, Svg } from 'react-native-svg';
 export const BoldIcon: React.FC = () => {
   const colors = useColors();
   return (
-    <Svg fill={colors.text} height="18" width="18" viewBox="0 0 202 202">
+    <Svg fill={colors.text} height="12" width="12" viewBox="0 0 202 202">
       <Path
         d="M148.004,94.812c18.332-8.126,28.671-23.362,28.671-42.752c0-17.261-6.954-31.206-20.11-40.328
 	C145.653,4.166,130.438,0,113.721,0H16.957v34h17v134h-17v34h90.905c14.819,0,35.992-2.245,52.705-12.94

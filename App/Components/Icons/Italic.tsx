@@ -5,7 +5,7 @@ import { Path, Svg } from 'react-native-svg';
 export const ItalicIcon: React.FC = () => {
   const colors = useColors();
   return (
-    <Svg height="18" width="18" viewBox="0 0 24 24">
+    <Svg height="14" width="14" viewBox="0 0 24 24">
       <Path
         d="M10 3H20M4 21H14M15 3L9 21"
         stroke={colors.text}
