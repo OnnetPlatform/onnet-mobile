@@ -1,34 +1,60 @@
 import StarsIcon from '@Icons/StarsIcon';
 import { useStyles } from '@Theme/Colors';
 import { useColors } from '@Theme/index';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Separator, Text } from '..';
 import MaskedView from '@react-native-masked-view/masked-view';
 import LinearGradient from 'react-native-linear-gradient';
-import { Keyboard } from 'react-native-ui-lib';
-
-export const GeminiButton: React.FC = () => {
+import Animated, {
+  Easing,
+  FadeIn,
+  FadeOut,
+  useAnimatedProps,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
+const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+export const GeminiButton: React.FC<{
+  onPress: () => void;
+  loading: boolean;
+}> = ({ onPress, loading }) => {
   const colors = useColors();
   const { backgroundColor, borderColor } = useStyles();
+  const angle = useSharedValue(0);
+  const animatedProps = useAnimatedProps(() => ({ angle: angle.value }));
 
+  useEffect(() => {
+    if (loading)
+      angle.value = withRepeat(
+        withTiming(360, { duration: 1000, easing: Easing.linear }),
+        -1,
+        false
+      );
+    else angle.value = 0;
+  }, [loading]);
   return (
     <Pressable
+      disabled={loading}
       style={[backgroundColor, styles.button, borderColor]}
-      onPress={() => {
-        console.log('aslknxask');
-        Keyboard.KeyboardRegistry.requestShowKeyboard(
-          'unicorn.InputEmojisList'
-        );
-      }}>
+      onPress={onPress}>
       <MaskedView maskElement={<StarsIcon />}>
-        <LinearGradient
+        <AnimatedLinearGradient
           style={{ width: 24, height: 24 }}
-          colors={[colors.pink, colors.cyan]}
+          useAngle={true}
+          colors={[colors.yellow, colors.pink, colors.cyan]}
+          animatedProps={animatedProps}
         />
       </MaskedView>
-      <Separator horizontal />
-      <Text weight="bold">Ask</Text>
+      {loading ? null : (
+        <>
+          <Separator horizontal />
+          <Text exiting={FadeOut} entering={FadeIn} weight="bold">
+            Ask
+          </Text>
+        </>
+      )}
     </Pressable>
   );
 };

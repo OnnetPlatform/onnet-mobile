@@ -1,5 +1,4 @@
 import { Separator, Text } from '@Atoms';
-import { Button } from '..';
 import { useColors } from '@Theme';
 import React, { useCallback, useEffect } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';

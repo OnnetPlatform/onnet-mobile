@@ -1,20 +1,35 @@
 import GeminiButton from '@Atoms/GeminiButton';
+import HeaderLoader from '@Atoms/HeaderLoader';
 import Separator from '@Atoms/Separator';
 import Text from '@Atoms/Text';
+import { useGemini } from '@Hooks/useGemini';
+import { CopyIcon } from '@Icons/Copy';
 import { useStyles } from '@Theme/Colors';
 import { useColors } from '@Theme/index';
+import { useMarkdownStyles } from '@Utils/useMarkdownStyles';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import MaskedView from '@react-native-masked-view/masked-view';
-import React, { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Markdown from 'react-native-markdown-display';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Clipboard from 'expo-clipboard';
 
 export const AiInput: React.FC = () => {
   const colors = useColors();
   const [toggleInput, setInput] = useState<boolean>(false);
   const [value, setValue] = useState('');
   const { textColor, borderColor } = useStyles();
+  const { ask, loading } = useGemini();
+  const style = useMarkdownStyles();
+  const insets = useSafeAreaInsets();
+  const [answer, setAnswer] = useState<string>('');
+
+  const copy = useCallback(async () => {
+    await Clipboard.setStringAsync(answer);
+  }, [answer]);
 
   useEffect(() => {
     if (value === '') {
@@ -62,7 +77,39 @@ export const AiInput: React.FC = () => {
         )}
       </View>
       <Separator />
-      <GeminiButton />
+      {value && (
+        <GeminiButton
+          loading={loading}
+          onPress={() => {
+            ask(value).then(setAnswer);
+          }}
+        />
+      )}
+      <Separator size={'md'} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 200 + insets.bottom }}>
+        {loading ? <HeaderLoader /> : null}
+        <Markdown style={style}>{answer}</Markdown>
+      </ScrollView>
+      <Separator size={'md'} />
+      {answer !== '' && (
+        <Pressable
+          onPress={copy}
+          android_ripple={{ color: colors.pink }}
+          style={[
+            styles.fab,
+            {
+              backgroundColor: colors.background,
+              borderColor: colors.border,
+              bottom: 220 + insets.bottom,
+              shadowColor: colors.text,
+              marginTop: 22,
+            },
+          ]}>
+          <CopyIcon />
+        </Pressable>
+      )}
     </Animated.View>
   );
 };
@@ -88,5 +135,21 @@ const styles = StyleSheet.create({
   lg: {
     width: '50%',
     height: 48,
+  },
+  fab: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 6.27,
+    elevation: 10,
+    alignSelf: 'flex-end',
   },
 });

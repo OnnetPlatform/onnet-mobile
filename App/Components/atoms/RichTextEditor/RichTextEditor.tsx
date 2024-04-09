@@ -196,8 +196,7 @@ export const RichTextEditor: React.FC<{
       <Modal
         presentationStyle="pageSheet"
         animationType="fade"
-        visible={expand}
-        onRequestClose={() => setExpand(false)}>
+        visible={expand}>
         <SafeAreaView style={screenStyle}>{editor()}</SafeAreaView>
       </Modal>
     );
