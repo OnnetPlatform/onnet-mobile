@@ -35,13 +35,13 @@ export const HomeBottomNavigation = () => {
         tabBar={(props) => <TabBar {...props} />}
         sceneContainerStyle={{ backgroundColor: 'transparent' }}
         screenOptions={screenOptions}>
-        <Tab.Screen name="HomeChat" component={HomeChatScreen} />
-        <Tab.Screen name="HomeScreen" component={HomeScreen} />
+        <Tab.Screen name="Chat" component={HomeChatScreen} />
+        <Tab.Screen name="Calendar" component={HomeScreen} />
         {/* @ts-ignore */}
-        <Tab.Screen name="home" component={FeedScreen} />
-        <Tab.Screen name="bell" component={NotificationScreen} />
+        <Tab.Screen name="Feed" component={FeedScreen} />
+        <Tab.Screen name="Notifications" component={NotificationScreen} />
         <Tab.Screen
-          name="person"
+          name="Profile"
           component={ProfileScreen}
           initialParams={{ id }}
         />

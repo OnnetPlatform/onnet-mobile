@@ -16,6 +16,7 @@ import Markdown from 'react-native-markdown-display';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
+import { useMessageInputContext } from '@Context/MessageInputContext/MessageInputContext';
 
 export const AiInput: React.FC = () => {
   const colors = useColors();
@@ -26,9 +27,10 @@ export const AiInput: React.FC = () => {
   const style = useMarkdownStyles();
   const insets = useSafeAreaInsets();
   const [answer, setAnswer] = useState<string>('');
-
+  const { setTextMessage } = useMessageInputContext();
   const copy = useCallback(async () => {
     await Clipboard.setStringAsync(answer);
+    setTextMessage(answer);
   }, [answer]);
 
   useEffect(() => {

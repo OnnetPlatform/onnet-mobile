@@ -43,7 +43,8 @@ export const ChatEmptyState: React.FC<{ username: string }> = ({
       <Separator size={'md'} />
       <Separator size={'md'} />
       <Text weight="bold" fontSize={22} textAlign="center">
-        It's nice to chat with someone
+        It seems like the chat room is currently empty. Start a conversation and
+        get it going!
       </Text>
       <Separator />
       <Text fontSize={16} textAlign="center" weight="light">

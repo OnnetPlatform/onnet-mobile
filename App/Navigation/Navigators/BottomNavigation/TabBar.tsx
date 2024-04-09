@@ -1,10 +1,10 @@
-import { HeaderLoader, Icon, Text } from '@Atoms';
+import { HeaderLoader, Text } from '@Atoms';
 import { MessagingSelector } from '@Khayat/Redux/Selectors/MessagingSelector';
 import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { NavigationState } from '@react-navigation/native';
 import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -113,6 +113,21 @@ const Tab = React.memo<
       return null;
     };
 
+    const renderIcon = useCallback(() => {
+      if (isFocused) {
+        return (
+          <MaskedView maskElement={icon}>
+            <LinearGradient
+              style={styles.icon}
+              colors={[colors.pink, colors.cyan]}
+            />
+          </MaskedView>
+        );
+      }
+
+      return icon;
+    }, [isFocused, tabs]);
+
     return (
       <Pressable
         onPress={onPress}
@@ -120,20 +135,7 @@ const Tab = React.memo<
         style={styles.tab}
         key={index}>
         {badge()}
-        {isFocused ? (
-          <MaskedView
-            maskElement={<Icon name={icon + (isFocused ? '' : '-outline')} />}>
-            <LinearGradient
-              style={styles.icon}
-              colors={[colors.pink, colors.cyan]}
-            />
-          </MaskedView>
-        ) : (
-          <Icon
-            style={{ width: 24, height: 24 }}
-            name={icon + (isFocused ? '' : '-outline')}
-          />
-        )}
+        {renderIcon()}
       </Pressable>
     );
   },
