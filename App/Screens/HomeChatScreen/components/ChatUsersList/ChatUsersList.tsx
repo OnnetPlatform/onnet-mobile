@@ -28,20 +28,20 @@ export const ChatUsersList: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     messages.addListener(function (messages: Message[], changes) {
-      // if (changes.insertions.length > 0) {
-      //   const message = messages[changes.insertions[0]];
-      //   if (message.from._id !== id)
-      //     SnackbarRef.current?.showSnackbar({
-      //       subtitle: message?.message,
-      //       title: message?.from?.first_name,
-      //     });
-      // }
+      if (changes.insertions.length > 0) {
+        const message = messages[changes.insertions[0]];
+        if (message.to.id === id)
+          SnackbarRef.current?.showSnackbar({
+            subtitle: message?.message,
+            title: message?.from?.first_name,
+          });
+      }
     });
 
     return () => {
       messages.removeAllListeners();
     };
-  }, []);
+  }, [id]);
 
   return (
     <SectionsList

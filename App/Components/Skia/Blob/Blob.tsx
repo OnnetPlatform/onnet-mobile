@@ -58,9 +58,9 @@ export const Blob: React.FC = () => {
       <BackdropBlur blur={100} blendMode={'overlay'} />
 
       <Rect width={width} height={height}>
-        <Blend mode={'dstIn'}>
+        <Blend mode={'dstOut'}>
           <RadialGradient
-            colors={[colors.background, colors.text]}
+            colors={[colors.background, colors.secondaryBackground]}
             r={6}
             c={vec(0, 0)}
             mode={'repeat'}

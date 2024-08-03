@@ -52,7 +52,7 @@ export const HomeChatScreen: React.FC = () => {
           <View style={withColors.logoWrapper}>
             <Image source={Images.logo} style={withColors.logo} />
           </View>
-          <Text weight="bold" fontSize={18}>
+          <Text weight="bold" fontSize={14}>
             {current_workspace.workspace.name}
           </Text>
         </Pressable>
@@ -61,7 +61,7 @@ export const HomeChatScreen: React.FC = () => {
             onPress={() => {
               navigation.navigate('CreateAnnouncement');
             }}>
-            <Icon name={'radio-outline'} />
+            <Icon name={'radio-outline'} width={18} />
           </Pressable>
           <Separator horizontal />
           <Pressable
@@ -73,12 +73,12 @@ export const HomeChatScreen: React.FC = () => {
                   subtitle: 'We are happy to have you.',
                 });
             }}>
-            <Icon name={'person-add-outline'} />
+            <Icon name={'person-add-outline'} width={18} />
           </Pressable>
 
           <Separator horizontal />
           <Pressable onPress={onSettingsPressed}>
-            <Icon name={'settings-outline'} />
+            <Icon name={'settings-outline'} width={18} />
           </Pressable>
         </View>
       </View>

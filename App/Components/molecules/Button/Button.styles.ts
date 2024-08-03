@@ -15,4 +15,18 @@ export default StyleSheet.create({
   textButton: {
     textAlign: 'center',
   },
+  shadow: {
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 6.27,
+    elevation: 10,
+    paddingHorizontal: 22,
+    paddingVertical: 12,
+    borderRadius: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

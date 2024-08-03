@@ -5,4 +5,5 @@ export type ButtonProps = {
   children: string | ReactElement;
   onPress?(): void;
   style?: ViewStyle;
+  variant?: 'REGULAR' | 'SHADOW';
 };

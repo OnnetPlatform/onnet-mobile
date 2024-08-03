@@ -10,7 +10,11 @@ export const Text: React.FC<TextProps> = ({
   style,
   ...props
 }) => {
-  const styles = useTextStyle({ ...props, weight });
+  const styles = useTextStyle({
+    ...props,
+    weight,
+    fontSize: props.fontSize || 12,
+  });
 
   return (
     <Animated.Text {...props} style={[styles.text, style]}>

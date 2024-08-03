@@ -5,7 +5,7 @@ import { Path, Svg } from 'react-native-svg';
 export const HomeIcon: React.FC = () => {
   const colors = useColors();
   return (
-    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <Svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <Path
         d="M9 16C9.85038 16.6303 10.8846 17 12 17C13.1154 17 14.1496 16.6303 15 16"
         stroke={colors.text}

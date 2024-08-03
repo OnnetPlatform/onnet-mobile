@@ -76,6 +76,7 @@ export const OptionButton: React.FC<{ expandButton: SharedValue<number> }> = ({
       <Text
         onLayout={onTextLoaded}
         style={[animatedWidthStyle]}
+        fontSize={12}
         textAlign="right"
         weight="bold">
         OPTIONS

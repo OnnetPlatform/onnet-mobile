@@ -20,7 +20,7 @@ export default StyleSheet.create({
     elevation: 5,
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 18,
+    height: 18,
   },
 });

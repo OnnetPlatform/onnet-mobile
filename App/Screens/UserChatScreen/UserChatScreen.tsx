@@ -40,7 +40,6 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
   const { screenStyle } = useStyles();
   const { isConnected } = useSelector(MessagingSelector);
   const { state, height } = useAnimatedKeyboard();
-  let scroll = false;
   const animatedHeight = useAnimatedStyle(() => ({
     height: [1, 2].includes(state.value) ? height.value : 0,
   }));
@@ -54,7 +53,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
         <Pressable
           style={styles.headerBack}
           onPress={() => navigation.goBack()}>
-          <Icon name={'arrow-ios-back'} />
+          <Icon name={'arrow-ios-back'} width={18} />
         </Pressable>
         <Pressable
           onPress={() =>
@@ -63,7 +62,7 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
           style={[styles.row, { alignItems: 'center' }]}>
           <Avatar avatar={user.avatar} isActive={user.active} />
           <Separator horizontal />
-          <Text weight="bold" fontSize={16}>
+          <Text weight="bold" fontSize={14}>
             {user.first_name} {user.last_name}
           </Text>
         </Pressable>
@@ -71,13 +70,10 @@ export const UserChatScreen: React.FC = ({ route }: any) => {
       {isConnected ? null : <HeaderLoader />}
       <SectionsList
         data={msgs}
-        onScroll={() => (scroll = true)}
-        onScrollAnimationEnd={() => (scroll = false)}
         SectionListHeaderComponent={MessageHeader}
         ListFooterComponent={<Animated.View style={animatedHeight} />}
         onContentSizeChange={() => {
-          if (ref.current && msgs.length > 1 && !scroll)
-            ref.current.scrollToEnd();
+          if (ref.current && msgs.length > 1) ref.current.scrollToEnd();
         }}
         SectionListItemComponent={TextMessage}
         contentContainerStyle={{ paddingBottom: BOTTOM_BAR_HEIGHT + 44 }}

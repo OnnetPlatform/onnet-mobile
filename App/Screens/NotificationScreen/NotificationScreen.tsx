@@ -29,13 +29,13 @@ export const NotificationScreen: React.FC = () => {
     <>
       <Blur style={insetedStyles.header}>
         <View style={styles.row}>
-          <Icon name={'bell-outline'} />
+          <Icon name={'bell-outline'} width={16} />
           <Separator size={'md'} horizontal />
-          <Text fontSize={18} weight="bold">
+          <Text fontSize={14} weight="bold">
             Notifications
           </Text>
         </View>
-        <Icon name={'settings-outline'} />
+        <Icon name={'settings-outline'} width={16} />
       </Blur>
 
       <SafeAreaView style={styles.screen}>

@@ -26,7 +26,7 @@ export const BottomSheet = React.forwardRef<
       <>
         <BottomSheetIcon {...props} />
         {props.title && (
-          <Text fontSize={22} weight="bold">
+          <Text fontSize={16} weight="bold">
             {props.title}
           </Text>
         )}

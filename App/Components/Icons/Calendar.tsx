@@ -5,7 +5,7 @@ import { Circle, Path, Svg } from 'react-native-svg';
 export const CalendarIcon: React.FC = () => {
   const colors = useColors();
   return (
-    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <Svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <Path
         d="M7 4V2.5"
         stroke={colors.text}

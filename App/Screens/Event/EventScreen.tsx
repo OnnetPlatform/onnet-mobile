@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { AuthSelector } from '@Khayat/Redux/Selectors/AuthSelector';
 import User from '@Molecules/User';
 import { getStatus } from './utils';
+import Button from '@Molecules/Button';
 
 export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
   const { event } = route.params;
@@ -199,9 +200,9 @@ export const EventScreen: React.FC<EventScreenProps> = ({ route }) => {
           />
         </ScrollView>
       ) : null}
-      <SolidButton style={styles.cta} onPress={onRSVPPressed}>
+      <Button variant="SHADOW" style={styles.cta} onPress={onRSVPPressed}>
         <Text weight="bold">RSVP</Text>
-      </SolidButton>
+      </Button>
     </PageView>
   );
 };

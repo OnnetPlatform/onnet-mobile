@@ -72,6 +72,7 @@ export const EventItem: React.FC<{ item: Event }> = ({ item }) => {
           </View>
           {isStarted ? (
             <Button
+              variant="SHADOW"
               onPress={() =>
                 navigation.navigate('ConferenceScreen', { event: item })
               }>

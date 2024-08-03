@@ -31,7 +31,7 @@ export const ChatUser: React.FC<{ item: ProfileObject }> = ({ item }) => {
         <Avatar {...{ avatar, isActive: active === true }} />
         <Separator horizontal />
         <View>
-          <Text weight="bold" fontSize={16}>
+          <Text weight="bold" fontSize={14}>
             {first_name} {last_name}
             {id === user ? (
               <Text style={styles.indicator} fontSize={12} color={colors.text}>

@@ -4,7 +4,7 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { NavigationState } from '@react-navigation/native';
 import { BOTTOM_BAR_HEIGHT, useColors } from '@Theme';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -27,6 +27,12 @@ import {
   vec,
   LinearGradient as SKiaLG,
 } from '@shopify/react-native-skia';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated';
+import { useStyles } from '@Theme/Colors';
 
 const TabBar = React.memo(
   (props: BottomTabBarProps) => {
@@ -35,6 +41,24 @@ const TabBar = React.memo(
     const colors = useColors();
     const { isConnected } = useSelector(MessagingSelector);
     const offset = width / 5;
+    const currentOffset = useSharedValue(0);
+    const { shadow } = useStyles();
+    const animatedStyle = useAnimatedStyle(
+      () => ({
+        width: 4,
+        height: 4,
+        left: currentOffset.value,
+        backgroundColor: colors.text,
+        borderRadius: 2,
+      }),
+      [currentOffset]
+    );
+
+    useEffect(() => {
+      currentOffset.value = withSpring(state.index * offset + offset / 2 - 3, {
+        damping: 50,
+      });
+    }, [state]);
 
     return (
       <>
@@ -65,6 +89,7 @@ const TabBar = React.memo(
               <Tab key={index} {...props} {...{ route, index }} />
             ))}
           </SafeAreaView>
+          <Animated.View style={[animatedStyle, shadow]} />
         </View>
       </>
     );

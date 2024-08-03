@@ -5,7 +5,7 @@ import { Path, Svg } from 'react-native-svg';
 export const ProfileIcon: React.FC = () => {
   const colors = useColors();
   return (
-    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <Svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <Path
         d="M12.16 10.87C12.06 10.86 11.94 10.86 11.83 10.87C9.44997 10.79 7.55997 8.84 7.55997 6.44C7.54997 3.99 9.53997 2 11.99 2C14.44 2 16.43 3.99 16.43 6.44C16.43 8.84 14.53 10.79 12.16 10.87Z"
         stroke={colors.text}

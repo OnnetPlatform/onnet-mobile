@@ -3,7 +3,7 @@ import Text from '@Atoms/Text';
 import PageView from '@HOCs/PageView';
 import { UserCreators } from '@Khayat/Redux';
 import { UserSelector } from '@Khayat/Redux/Selectors/UserSelector';
-import { SolidButton } from '@Molecules/SolidButton/SolidButton';
+import Button from '@Molecules/Button';
 import { ThemeColors } from '@Theme/Colors';
 import { useColors } from '@Theme/index';
 import SnackbarRef from 'Provider/SnackbarProvider/SnackbarRef';
@@ -153,7 +153,9 @@ export const EditProfileScreen: React.FC = () => {
             />
           </View>
         </ScrollView>
-        <SolidButton
+        <Button
+          variant="SHADOW"
+          style={{ alignSelf: 'center' }}
           onPress={() => {
             dispatch(
               UserCreators.updateProfile(
@@ -182,7 +184,7 @@ export const EditProfileScreen: React.FC = () => {
           <Text fontSize={12} weight="bold">
             Save
           </Text>
-        </SolidButton>
+        </Button>
       </View>
     </PageView>
   );
@@ -200,7 +202,7 @@ const useStyles = (colors: ThemeColors) => {
           flex: 1,
           padding: 16,
           borderWidth: 1,
-          borderColor: colors.secondaryBackground,
+          borderColor: colors.border,
           borderRadius: 8,
           color: colors.text,
         },

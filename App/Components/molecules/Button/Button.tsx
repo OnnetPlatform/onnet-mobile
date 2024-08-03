@@ -1,20 +1,45 @@
 import { useColors } from '@Theme';
-import React, { useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { Pressable, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { Text } from '../../atoms';
 import styles from './Button.styles';
 import { ButtonProps } from './types';
+import { useStyles } from '@Theme/Colors';
 
-const Button: React.FC<ButtonProps> = ({ children, onPress, style }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  onPress,
+  style,
+  variant = 'REGULAR',
+}) => {
   const colors = useColors();
-  const backgroundColor = useMemo(
-    () => ({
-      backgroundColor: colors.background,
-    }),
-    [colors]
-  );
+  const { backgroundColor } = useStyles();
+
+  const renderShadowButton = useCallback(() => {
+    return (
+      <Pressable
+        onPress={onPress}
+        android_ripple={{ color: colors.pink }}
+        style={[
+          styles.shadow,
+          backgroundColor,
+          {
+            backgroundColor: colors.background,
+            borderColor: colors.border,
+            shadowColor: colors.text,
+            marginTop: 22,
+          },
+          style,
+        ]}>
+        {children}
+      </Pressable>
+    );
+  }, [style, children, onPress]);
+
+  if (variant === 'SHADOW') return renderShadowButton();
+
   return (
     <Pressable onPress={onPress}>
       <LinearGradient

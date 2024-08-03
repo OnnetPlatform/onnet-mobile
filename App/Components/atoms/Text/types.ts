@@ -9,3 +9,12 @@ export type TextProps = {
   style?: TextStyle;
   textAlign?: TextStyle['textAlign'];
 } & AnimateProps<NTP>;
+
+export type TextVariants = 'sm' | 'md' | 'lg';
+/**
+ * xs:8
+ * sm:10
+ * md:12
+ * lg:14
+ * xl:16
+ */

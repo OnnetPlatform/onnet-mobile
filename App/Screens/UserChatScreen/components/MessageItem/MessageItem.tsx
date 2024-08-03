@@ -12,7 +12,7 @@ export const MessageItem: React.FC<{ title: string }> = React.memo(
       <View style={[styles.row, backgroundSecondary]}>
         <Separator horizontal />
         <View style={styles.flex}>
-          <Text fontSize={15} weight={'bold'}>
+          <Text fontSize={12} weight={'bold'}>
             {title}
           </Text>
         </View>

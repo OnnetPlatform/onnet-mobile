@@ -10,6 +10,7 @@ export const useMarkdownStyles = () => {
       body: {
         color: colors.text,
         fontFamily: fonts.regular,
+        fontSize: 12,
       },
       heading1: {
         flexDirection: 'row',

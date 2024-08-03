@@ -112,8 +112,10 @@ export const Notification: React.FC<{
         <View style={styles.notification}>
           <NotificationIcon notification={notification} />
           <View style={styles.left}>
-            <Text>{moment(notification.createdDate).fromNow()}</Text>
-            <Text style={styles.top} weight="semibold">
+            <Text fontSize={10}>
+              {moment(notification.createdDate).fromNow()}
+            </Text>
+            <Text fontSize={12} style={styles.top} weight="semibold">
               {notification.title}
             </Text>
           </View>

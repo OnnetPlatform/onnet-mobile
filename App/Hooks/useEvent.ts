@@ -55,8 +55,6 @@ export const useEvent = (id?: string) => {
       });
       fetchEvent();
     } catch (error) {
-      console.log(JSON.stringify(error));
-
       showSnackbar({
         title: 'Error!',
         subtitle: 'Something went wrong',

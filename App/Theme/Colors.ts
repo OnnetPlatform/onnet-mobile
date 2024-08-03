@@ -60,7 +60,8 @@ export default () => {
 };
 
 export const useStyles = () => {
-  const { background, text, secondaryBackground, border } = useColors();
+  const { background, text, secondaryBackground, border, ...colors } =
+    useColors();
   const backgroundColor: ViewStyle = useMemo(
     () => ({ backgroundColor: background }),
     [background]
@@ -82,11 +83,23 @@ export const useStyles = () => {
     [background]
   );
 
+  const shadow = useMemo(
+    () => ({
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 1,
+      shadowRadius: 6.27,
+      elevation: 10,
+      shadowColor: text,
+    }),
+    [colors]
+  );
+
   return {
     backgroundColor,
     textColor,
     screenStyle,
     backgroundSecondary,
     borderColor,
+    shadow,
   };
 };

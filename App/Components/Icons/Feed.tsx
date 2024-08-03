@@ -9,8 +9,8 @@ export const FeedIcon: React.FC = () => {
       strokeWidth={2}
       stroke={colors.text}
       fill={colors.text}
-      width="18"
-      height="18"
+      width="14"
+      height="14"
       style={{ marginTop: 4, marginLeft: 4 }}
       viewBox="0 0 32 32">
       <Path

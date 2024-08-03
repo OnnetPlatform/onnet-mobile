@@ -78,7 +78,7 @@ export const FeedScreen: React.FC<FeedScreenProps> = () => {
   return (
     <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.screen}>
       <View onLayout={onHeader} style={styles.header}>
-        <Text fontSize={32} weight="bold">
+        <Text fontSize={22} weight="bold">
           FEED <Text fontSize={10}>BETA</Text>
         </Text>
         <LoadingOnnet progress={pullDownValue} />

@@ -16,7 +16,6 @@ export const useGemini = () => {
       variables: { question },
     });
     setLoading(false);
-    console.log(data);
     return data.prompt;
   }, []);
 

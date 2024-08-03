@@ -1,7 +1,7 @@
 import StarsIcon from '@Icons/StarsIcon';
 import { useStyles } from '@Theme/Colors';
 import { useColors } from '@Theme/index';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Separator, Text } from '..';
 import MaskedView from '@react-native-masked-view/masked-view';
@@ -24,7 +24,10 @@ export const GeminiButton: React.FC<{
   const { backgroundColor, borderColor } = useStyles();
   const angle = useSharedValue(0);
   const animatedProps = useAnimatedProps(() => ({ angle: angle.value }));
-
+  const shadowColor = useMemo(
+    () => ({ shadowColor: loading ? colors.border : colors.text }),
+    [colors, loading]
+  );
   useEffect(() => {
     if (loading)
       angle.value = withRepeat(
@@ -37,7 +40,7 @@ export const GeminiButton: React.FC<{
   return (
     <Pressable
       disabled={loading}
-      style={[backgroundColor, styles.button, borderColor]}
+      style={[backgroundColor, styles.button, borderColor, shadowColor]}
       onPress={onPress}>
       <MaskedView maskElement={<StarsIcon />}>
         <AnimatedLinearGradient
@@ -67,6 +70,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 22,
     alignSelf: 'flex-end',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 6.27,
+    elevation: 10,
   },
 });
 
